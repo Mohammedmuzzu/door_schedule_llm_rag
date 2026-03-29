@@ -1,0 +1,10 @@
+## Virtual Environment
+
+All Python, pip, and streamlit commands MUST use the venv at:
+`c:\Users\muzaf\my_lab\computervision\`
+
+- Python: `c:\Users\muzaf\my_lab\computervision\Scripts\python.exe`
+- Pip: `c:\Users\muzaf\my_lab\computervision\Scripts\pip.exe`
+- Streamlit: `c:\Users\muzaf\my_lab\computervision\Scripts\streamlit.exe`
+
+NEVER use bare `python`, `pip`, or `streamlit` commands.

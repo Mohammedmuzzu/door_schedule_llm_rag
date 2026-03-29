@@ -1,0 +1,23 @@
+# Door Schedule LLM + RAG Extraction Pipeline
+# ─── PDF Parsing & OCR ───
+pdfplumber>=0.11.0
+pymupdf4llm
+img2table
+paddlepaddle
+paddleocr
+
+# ─── RAG: vector store + embeddings (local) ───
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# ─── LLM: local Ollama ───
+requests>=2.28.0
+
+# ─── Data & Export ───
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# ─── Utilities ───
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+streamlit>=1.30.0

@@ -1,0 +1,32 @@
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+computervision/
+
+# Security - STRICTLY IGNORE API KEYS
+**/.env
+.env
+secret/
+
+# Proprietary Documents & Large Binaries
+pdfs/
+*.pdf
+*.zip
+*.tar.gz
+
+# Outputs & Extracted Data
+**/*.xlsx
+**/*.csv
+extracted_data/
+evaluation_output/
+evaluation_output_v2/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
