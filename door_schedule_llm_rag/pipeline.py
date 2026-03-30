@@ -211,8 +211,8 @@ def run_pipeline(
                 logger.warning("Anomaly: Classified DOOR_SCHEDULE but 0 doors extracted for %s! Auto-logging.", fname)
                 log_anomaly_to_skills(fname, page_idx, "DOOR", text)
                 
-            if page_type == PageType.HARDWARE_SCHEDULE and not hardware:
-                logger.warning("Anomaly: Classified HARDWARE_SCHEDULE but 0 hardware items extracted for %s! Auto-logging.", fname)
+            if page_type == PageType.HARDWARE_SET and not hardware:
+                logger.warning("Anomaly: Classified HARDWARE_SET but 0 hardware items extracted for %s! Auto-logging.", fname)
                 log_anomaly_to_skills(fname, page_idx, "HARDWARE", text)
 
             # Tag and collect doors
