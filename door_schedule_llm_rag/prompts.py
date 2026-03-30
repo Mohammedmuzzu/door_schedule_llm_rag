@@ -36,7 +36,7 @@ CRITICAL RULES:
 6. Preserve EXACT strings from the document (e.g., "3'-0\\"", "6'-0\\"", "HM", "WD").
 7. Do NOT invent or guess values. If a field is not present, set it to null.
 8. Do NOT skip ANY door rows — extract them ALL, even from messy/borderless tables or vertical key-value profiles.
-9. For pair detection: set is_pair=true ONLY if the width is >= 5'-0" (60 inches) OR the door type explicitly says PAIR/PR/DBL/DOUBLE.
+9. For pair detection: set is_pair=true ONLY if the width is >= 5'-0" (60 inches) OR the text "PAIR", "PR", "DBL", or "DOUBLE" appears ANYWHERE in the door row's Size, Dimension, Description, or Type cells.
 10. Set door_leaves=2 if is_pair=true, otherwise door_leaves=1.
 11. If a cell contains multiple door numbers (e.g., "100A 100B"), create SEPARATE rows for each.
 12. Hardware set is usually a short number (1, 2, 3, 103). If the hardware is defined directly under the door profile, you may use a synthesized ID (e.g., "HW-1").
@@ -47,7 +47,7 @@ CRITICAL RULES:
 17. BLOCK FORMATS: If doors are defined as vertical Key-Value profiles (e.g., "DOOR TYPE: A, FRAME TYPE: B") instead of a table, treat each vertical cluster as a separate door row.
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
-- door_number: The door mark/number (e.g., "101A", "103", "200"). If a standard num is missing in profile formats, use the alphanumeric Type identifier (e.g., "A", "B", "ALUM STOREFRONT") to prevent dropping the data.
+- door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. NEVER bypass the table to pull arbitrary room numbers from standalone floor plan drawings or bubbles rendered outside the matrix. If a standard label is completely missing in non-tabular profile formats, use the alphanumeric Type identifier (e.g., "A", "B", "ALUM STOREFRONT") to prevent dropping the data.
 - room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "WOMEN", "ELECTRICAL", "UTILITY", "HALLWAY", "JANITORIAL CLOSET"). This is ALWAYS present in door schedules, usually in the column right after the door number. NEVER leave this as null if there is text next to the door number.
 - hardware_set: The hardware set number assigned to this door
 - door_width and door_height: Dimensions like "3'-0\"" or "6'-0\""
