@@ -49,8 +49,8 @@ CRITICAL RULES:
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
 - door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. NEVER bypass the table to pull arbitrary room numbers from standalone floor plan drawings or bubbles rendered outside the matrix. If a standard label is completely missing in non-tabular profile formats, use the alphanumeric Type identifier (e.g., "A", "B", "ALUM STOREFRONT") to prevent dropping the data.
 - room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "WOMEN", "ELECTRICAL", "UTILITY", "HALLWAY", "JANITORIAL CLOSET"). This is ALWAYS present in door schedules, usually in the column right after the door number. NEVER leave this as null if there is text next to the door number.
-- hardware_set: The hardware set number assigned to this door
-- door_width and door_height: Dimensions like "3'-0\"" or "6'-0\""
+- hardware_set: The exact hardware set identifier assigned to this door. CRITICAL: You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A") so it can securely join the Hardware table database.
+- door_width and door_height: Dimensions like "3'-0\"" or "6'-0\"". CRITICAL: If the document uses CAD shorthand (e.g., "3070", "30x70"), you MUST mathematically split it into width and height sizes! For example, "3070" -> door_width="3'-0\"", door_height="7'-0\"". NEVER leave dimensions null if shorthand is provided!
 """
 
 # ═══════════════════════════════════════════════════════════════════
@@ -87,7 +87,7 @@ CRITICAL RULES:
 15. Your response MUST start with { and end with }. No other text allowed.
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields:
-- hardware_set_id: The set number (e.g., "1", "2", "3") or synthesized ID ("HW-A").
+- hardware_set_id: The set number (e.g., "1", "2"). CRITICAL: You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A") so it can securely join the Door table database. If synthesized, use "HW-A".
 - hardware_set_name: The set name/function from the header, e.g., "HARDWARE SET NO. 1 (ENTRY DOOR)" → hardware_set_name="ENTRY DOOR". Look for text in parentheses or after a dash in set headers. Examples: "REAR EXIT", "BACKROOM", "OFFICE", "RESTROOM", "SIDE/FRONT EXIT ONLY DOORS". NEVER leave this as null if the set header contains a name.
 - qty: The quantity number (derived from tokens like `(3 EA.)` -> `3`).
 - description: The component description.
