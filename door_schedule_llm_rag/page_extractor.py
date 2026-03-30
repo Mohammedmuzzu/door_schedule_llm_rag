@@ -63,68 +63,48 @@ class PageType:
     OTHER = "other"
 
 
-_DOOR_KW = {
-    "DOOR SCHEDULE", "DOOR AND HARDWARE SCHEDULE", "DOOR AND WINDOW SCHEDULE",
-    "OPENING SCHEDULE", "DOOR SCHED", "DOOR NO.", "DOOR NUMBER", "DOOR MARK",
-    "DOOR AND FRAME SCHEDULE", "DOOR & FRAME SCHEDULE"
-}
-_HW_KW = {
-    "HARDWARE GROUP", "HARDWARE SET NO", "DIVISION 8", "HARDWARE SET #",
-    "GROUP NO", "HDWR GRP", "SET NO.", "HARDWARE SCHEDULE",
-}
-_DOOR_TABLE_HEADERS = re.compile(
-    r"(?:door\s*(?:number|no|mark|tag|#)|"
-    r"frame\s*type|frame\s*material|fire\s*rat|room\s*name|opening\s*no)",
-    re.IGNORECASE,
-)
-_HW_SET_HEADER = re.compile(
-    r"(?:hardware\s*(?:set|group)\s*(?:no\.?|#|number|–|-|[A-Z])?|"
-    r"group\s*(?:no\.?|#)?\s*[\d]+|"
-    r"set\s*(?:no\.?|#)?\s*[\d]+\s*[-–—]\s*)",
-    re.IGNORECASE,
-)
-
+# ─── Page Classification (Hybrid LLM Architecture) ───────────────
 
 def classify_page(text: str) -> str:
-    """Classify a page as door_schedule, hardware_set, mixed, or other."""
+    """
+    Classify a page using a Fast Gatekeeper + LLM Arbiter hybrid logic.
+    Returns: door_schedule, hardware_set, mixed, or other.
+    """
     upper = text.upper()
-    has_door = any(kw in upper for kw in _DOOR_KW) or bool(_DOOR_TABLE_HEADERS.search(text))
-    has_hw = any(kw in upper for kw in _HW_KW) or bool(_HW_SET_HEADER.search(text))
+    
+    # 1. Fast Gatekeeper (Heuristic)
+    # If the page has absolutely no architectural schedule terminology, skip it Instantly (0s).
+    # This prevents sending 800 pages of plumbing/electrical diagrams to the LLM.
+    if not any(kw in upper for kw in ("DOOR", "HARDWARE", "HDWR", "FRAME", "OPENING")):
+        return PageType.OTHER
 
-    # Door number patterns (101, 101A, D2) inside tables (heuristic: a lot of them)
-    door_nums = re.findall(r"\b(?:10[0-9]|1[1-9][0-9]|[2-9][0-9]{2})[A-Za-z]?\b", text)
-    if len(door_nums) >= 5:
-        has_door = True
-
-    # Hardware quantity patterns (2 EA, 1 PAIR)
-    hw_qty = re.findall(r"\b\d+\s*(?:EA|PAIR|SET|EACH)\b", upper)
-    if len(hw_qty) >= 2:
-        has_hw = True
+    # 2. The Smart LLM Arbiter
+    # If it passed the gatekeeper, we let the LLM definitively classify the raw text.
+    # This completely eliminates Regex false-positives and handles split-headers natively!
+    system_prompt = (
+        "You are an expert architectural document classifier evaluating raw extracted PDF text. "
+        "Analyze the text and determine if it contains a tabular 'Door Schedule', a 'Hardware Schedule' glossary/matrix, 'Both' (Mixed), or 'Neither'. "
+        "General floor plans, diagrams, drawing notes, index pages, or paragraphs that just mention 'doors' but are NOT schedule matrices should be classified as 'Neither'. "
+        "Your output must be EXACTLY ONE WORD from this list: [DOOR, HARDWARE, MIXED, OTHER]"
+    )
+    
+    try:
+        # Give the LLM a large 4000-char chunk so it can see deep into complex pages
+        llm_response = _llm_chat(system_prompt, text[:4000], force_json=False).strip().upper()
         
-    # If the page specifically explicitly says "HARDWARE SCHEDULE" only
-    if "HARDWARE SCHEDULE" in upper and not any(kw in upper for kw in _DOOR_KW):
-        has_door = False
-        has_hw = True
-
-    if has_door and has_hw:
-        return PageType.MIXED
-    elif has_door:
-        return PageType.DOOR_SCHEDULE
-    elif has_hw:
-        return PageType.HARDWARE_SET
-        
-    # Phase 4 Upgrade: Dynamic LLM Fallback for classification if text is decent length
-    if len(text) > 200:
-        system_prompt = "You are a document classifier. Is the following text from a 'door_schedule', 'hardware_set', 'mixed', or 'other' document? Reply with ONLY ONE of those four words."
-        try:
-            llm_class = _llm_chat(system_prompt, text[:2000], force_json=False).strip().lower()
-            if "mixed" in llm_class: return PageType.MIXED
-            if "door" in llm_class: return PageType.DOOR_SCHEDULE
-            if "hardware" in llm_class: return PageType.HARDWARE_SET
-        except Exception as e:
-            logger.debug("LLM dynamic classification failed: %s", e)
+        # Parse the definitive response securely
+        if "MIXED" in llm_response or "BOTH" in llm_response:
+            return PageType.MIXED
+        if "DOOR" in llm_response:
+            return PageType.DOOR_SCHEDULE
+        if "HARDWARE" in llm_response or "HDWR" in llm_response:
+            return PageType.HARDWARE_SET
             
-    return PageType.OTHER
+        return PageType.OTHER
+        
+    except Exception as e:
+        logger.error("LLM Arbiter classification failed: %s", e)
+        return PageType.OTHER
 
 
 # ═══════════════════════════════════════════════════════════════════
