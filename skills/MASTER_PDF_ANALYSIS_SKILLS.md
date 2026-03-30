@@ -1036,3 +1036,21 @@ Based on the provided metadata and text snippet, here's the analysis:
 
 ---
 
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-03-31 00:34:23
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (44x6) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                      |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------------|
+| GROUP#1)                     |                              | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                        |
+|                              |                              | HINGE:                    |                                |                                |                        |
+|                      ...
+[TRUNCATED]
+```
+---
