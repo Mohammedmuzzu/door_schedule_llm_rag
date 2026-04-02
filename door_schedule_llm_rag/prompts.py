@@ -31,7 +31,7 @@ CRITICAL RULES:
 1. Output ONLY a valid JSON object starting with {"rows": [...]} where each element is a door row.
 2. Absolutely DO NOT include document metadata (Project, Date, Notes) as top-level JSON keys.
 3. Every object in "rows" MUST have "door_number". Skip header/title rows.
-4. ONLY extract from actual schedules or tabular/profile lists. DO NOT extract from floor plan callouts or standalone notes.
+4. ONLY extract from actual schedules or tabular/profile lists. DO NOT extract from floor plan callouts or standalone notes. CRITICAL: Absolutely DO NOT extract the Architectural Title Block (e.g., text containing "PROJECT NO", "DRAWN BY", "CHECKED BY", "SHEET", Architecture Firm Names, or Street Addresses) as data rows. Title blocks are NOT schedules. Discard them entirely.
 5. If there is NO visible structured door schedule, output {"rows": []}.
 6. Preserve EXACT strings from the document (e.g., "3'-0\\"", "6'-0\\"", "HM", "WD").
 7. Do NOT invent or guess values. If a field is not present, set it to null.
@@ -69,7 +69,7 @@ INPUT FORMAT:
 CRITICAL RULES:
 1. Output ONLY a valid JSON object: {"rows": [...]} where each element is a hardware component.
 2. Do NOT output markdown, tables, explanations, or code blocks. ONLY JSON.
-3. ONLY extract from actual hardware sets/lists. DO NOT hallucinate components from generic notes.
+3. ONLY extract from actual hardware sets/lists. DO NOT hallucinate components from generic notes. CRITICAL: Absolutely DO NOT extract the Architectural Title Block (e.g., text containing "PROJECT NO", "DRAWN BY", "CHECKED BY", "SHEET", Architecture Firm Names, or Street Addresses) as generic sets. Title blocks are NOT schedules. Discard them entirely.
 4. When you see "HARDWARE SET NO. X", "GROUP X", or "Set X —", that starts a new set. 
    All following components belong to that set until the NEXT set header.
    NOTE: If a group of hardware is embedded directly under a Door profile without a formal set ID, you MUST synthesize a surrogate hardware_set_id (e.g., "HW-TypeA" or "1"). Do NOT drop valid hardware just because a formal ID string is missing.
