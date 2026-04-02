@@ -208,7 +208,7 @@ def _is_quality_table(table: list) -> bool:
     if not table or len(table) < 2:
         return False
     n_cols = max(len(r) for r in table)
-    if n_cols > 20:
+    if n_cols > 40:
         return False
     total = sum(len(r) for r in table)
     filled = sum(1 for r in table for c in r if str(c or "").strip())
