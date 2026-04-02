@@ -87,7 +87,7 @@ CRITICAL RULES:
 15. Your response MUST start with { and end with }. No other text allowed.
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields:
-- hardware_set_id: The set number (e.g., "1", "2"). CRITICAL: You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A") so it can securely join the Door table database. If synthesized, use "HW-A".
+- hardware_set_id: The set number (e.g., "1", "2"). CRITICAL: You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A") so it can securely join the Door table database. If synthesized, use "HW-A". PRECEDENCE RULE: If the header contains multiple numbers (e.g., "HARDWARE GROUP NO. 01 (103)"), you MUST prioritize the primary sequential identifier ("01" -> "1") and IGNORE numbers in parentheses, as they are room location context. ONLY extract parenthetical numbers if they are the ONLY identifier provided.
 - hardware_set_name: The set name/function from the header, e.g., "HARDWARE SET NO. 1 (ENTRY DOOR)" → hardware_set_name="ENTRY DOOR". Look for text in parentheses or after a dash in set headers. Examples: "REAR EXIT", "BACKROOM", "OFFICE", "RESTROOM", "SIDE/FRONT EXIT ONLY DOORS". NEVER leave this as null if the set header contains a name.
 - qty: The quantity number (derived from tokens like `(3 EA.)` -> `3`).
 - description: The component description.
