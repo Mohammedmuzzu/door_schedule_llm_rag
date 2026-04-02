@@ -203,13 +203,10 @@ with tab1:
         total_time = time.time() - start_t
         st.success(f"✅ Extraction Complete in {total_time:.1f} seconds using `{selected_model}`!")
 
-        col1, col2 = st.columns(2)
-        with col1:
-            st.subheader("🚪 Doors")
-            st.dataframe(df_doors.astype(str), use_container_width=True)
-        with col2:
-            st.subheader("⚙️ Hardware")
-            st.dataframe(df_hw.astype(str), use_container_width=True)
+        st.subheader("🚪 Doors")
+        st.dataframe(df_doors.astype(str), use_container_width=True)
+        st.subheader("⚙️ Hardware")
+        st.dataframe(df_hw.astype(str), use_container_width=True)
 
         # Read Excel into memory BEFORE cleaning up temp dir
         excel_path = Path(temp_dir) / "extraction_results_llm.xlsx"
@@ -272,13 +269,10 @@ with tab2:
 
             st.success(f"✅ Bulk Extraction Complete! Results saved to `{out_dir}`")
 
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader("🚪 Doors")
-                st.dataframe(df_doors.astype(str), use_container_width=True)
-            with col2:
-                st.subheader("⚙️ Hardware")
-                st.dataframe(df_hw.astype(str), use_container_width=True)
+            st.subheader("🚪 Doors")
+            st.dataframe(df_doors.astype(str), use_container_width=True)
+            st.subheader("⚙️ Hardware")
+            st.dataframe(df_hw.astype(str), use_container_width=True)
 
             excel_path = Path(out_dir) / "extraction_results_llm.xlsx"
             if excel_path.exists():
