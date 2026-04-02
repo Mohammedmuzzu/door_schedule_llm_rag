@@ -426,6 +426,81 @@ def _fix_reversed_text(text: str) -> str:
     return text
 
 
+# ═══════════════════════════════════════════════════════════════════
+#  TEXT PRE-PROCESSING: Decode Unicode Private Use Area (PUA) fonts
+# ═══════════════════════════════════════════════════════════════════
+# Some CAD software (AutoCAD, Revit) maps standard ASCII into the
+# Unicode Private Use Area (U+F000-F0FF). This makes the text
+# invisible to LLMs — e.g., "DOOR" is stored as \uF044\uF04F\uF04F\uF052.
+# The fix is simple: subtract 0xF000 to recover the original ASCII.
+
+def _decode_pua_text(text: str) -> str:
+    """Decode Unicode Private Use Area (PUA) encoded text from CAD PDFs.
+    
+    Detects if >10% of characters fall in the U+F000-F0FF range,
+    and if so, maps them back to standard ASCII (U+0000-00FF).
+    """
+    if not text:
+        return text
+    
+    total = len(text)
+    pua_count = sum(1 for ch in text if 0xF000 <= ord(ch) <= 0xF0FF)
+    
+    # Only apply if >10% of chars are PUA-encoded (avoids false positives)
+    if total == 0 or (pua_count / total) < 0.10:
+        return text
+    
+    logger.info("PUA font encoding detected (%d/%d chars). Decoding...", pua_count, total)
+    
+    result = []
+    for ch in text:
+        cp = ord(ch)
+        if 0xF000 <= cp <= 0xF0FF:
+            result.append(chr(cp - 0xF000))
+        else:
+            result.append(ch)
+    return ''.join(result)
+
+
+def _destutter_text(text: str) -> str:
+    """Fix doubled/stuttered text from CAD bold-simulation rendering.
+    
+    Some CAD tools simulate bold text by printing each character twice
+    with a slight offset, resulting in 'MMAARRKK' instead of 'MARK'.
+    This detects consecutive character-pair runs and collapses them.
+    """
+    if not text:
+        return text
+    
+    lines = text.split('\n')
+    fixed_lines = []
+    
+    for line in lines:
+        stripped = line.strip()
+        # Only attempt destutter on lines that are mostly alphabetic
+        # and where the length is even (every char doubled)
+        if (len(stripped) >= 4 
+            and len(stripped) % 2 == 0
+            and sum(1 for c in stripped if c.isalpha()) > len(stripped) * 0.6):
+            
+            # Check if ALL adjacent character pairs match: AA BB CC ...
+            pairs_match = all(
+                stripped[i] == stripped[i + 1]
+                for i in range(0, len(stripped) - 1, 2)
+            )
+            
+            if pairs_match:
+                destuttered = stripped[::2]  # Take every other char
+                # Preserve leading whitespace
+                leading = len(line) - len(line.lstrip())
+                fixed_lines.append(line[:leading] + destuttered)
+                continue
+        
+        fixed_lines.append(line)
+    
+    return '\n'.join(fixed_lines)
+
+
 def _merge_backends(
     pymupdf_md: str,
     plumber_tables: str,
@@ -576,8 +651,10 @@ def extract_structured_page(
     if not content or len(content.strip()) < 30:
         return "", PageType.OTHER, False
 
-    # ── Step 4: Fix reversed text from CAD PDFs ──
-    content = _fix_reversed_text(content)
+    # ── Step 4: Fix CAD text corruption ──
+    content = _decode_pua_text(content)       # Decrypt PUA-encoded fonts
+    content = _destutter_text(content)         # Collapse doubled bold characters
+    content = _fix_reversed_text(content)      # Fix mirrored/reversed headers
 
     # Classify page
     page_type = classify_page(content)
