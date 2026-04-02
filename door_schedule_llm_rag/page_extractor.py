@@ -651,6 +651,25 @@ def extract_structured_page(
     if not content or len(content.strip()) < 30:
         return "", PageType.OTHER, False
 
+    # ── Step 3b: CID font corruption fallback ──
+    # pdfplumber can't decode CID-mapped fonts and produces "(cid:XX)" garbage.
+    # When this happens, raw fitz.get_text() usually decodes correctly.
+    cid_ratio = content.count("(cid:") / max(len(content), 1)
+    if cid_ratio > 0.05:  # >5% of content is CID references
+        logger.warning("Page %d: CID-encoded text detected (%.0f%%). Falling back to raw fitz extraction.",
+                        page_idx + 1, cid_ratio * 100)
+        try:
+            doc = pymupdf.open(str(pdf_path))
+            fitz_text = doc[page_idx].get_text()
+            doc.close()
+            if fitz_text and len(fitz_text.strip()) > 30:
+                content = fitz_text[:max_chars]
+                if "pdfplumber_text" in backends_used and "fitz_fallback" not in backends_used:
+                    backends_used.append("fitz_fallback")
+                logger.info("Page %d: fitz fallback recovered %d chars of clean text.", page_idx + 1, len(content))
+        except Exception as e:
+            logger.debug("fitz CID fallback failed: %s", e)
+
     # ── Step 4: Fix CAD text corruption ──
     content = _decode_pua_text(content)       # Decrypt PUA-encoded fonts
     content = _destutter_text(content)         # Collapse doubled bold characters
