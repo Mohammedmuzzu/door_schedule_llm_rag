@@ -288,9 +288,15 @@ def run_pipeline(
     door_agg = pd.DataFrame()
 
     if not df_doors_out.empty and "hardware_set" in df_doors_out.columns:
-        df_doors_out["hardware_set_clean"] = (
-            df_doors_out["hardware_set"].fillna("").astype(str).str.strip()
-        )
+        def _clean_hw(val):
+            if pd.isna(val) or val == "":
+                return ""
+            s = str(val).strip().upper()
+            if s.endswith(".0"):
+                s = s[:-2]
+            return s
+
+        df_doors_out["hardware_set_clean"] = df_doors_out["hardware_set"].apply(_clean_hw)
 
         # Only aggregate doors with valid hardware sets
         valid = df_doors_out[df_doors_out["hardware_set_clean"] != ""]
@@ -313,6 +319,9 @@ def run_pipeline(
                 "finish_code", "manufacturer_code",
             ] if c in df_comp_out.columns
         ]].copy()
+        
+        # Clean the right-hand join key identically
+        comp_for_merge["hardware_set_id"] = comp_for_merge["hardware_set_id"].apply(_clean_hw)
 
         milestone1 = door_agg.merge(
             comp_for_merge,
