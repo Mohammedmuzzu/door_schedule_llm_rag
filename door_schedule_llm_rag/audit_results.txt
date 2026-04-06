@@ -1,0 +1,40 @@
+================================================================================
+PROJECT_ID           | FILE                                     | EXTRACTED  | EXPECTED (RAW PDF GUESS)
+================================================================================
+project_820          | A.820 - Door Schedule.pdf                | 0          | ~7 lines (OK)
+project_12           | Door Schedule.pdf                        | 39         | ~0 lines (OK)
+project_13           | Door Schedule.pdf                        | 18         | ~4 lines (OK)
+project_14           | Door Schedule.pdf                        | 35         | ~0 lines (OK)
+project_209          | 209-A4.2-Schedules Notes and Details REV 1.pdf | 0          | ~1 lines (OK)
+project_0            | A0.03 - DOOR AND WINDOW SCHEDULE, _ HARDWARE.pdf | 0          | ~2 lines (OK)
+project_049          | 049 A600 DOOR SCHEDULE ELEVATIONS & DETAILS.pdf | 0          | ~0 lines (OK)
+project_611          | A611 - Door Schedule.pdf                 | 0          | ~0 lines (OK)
+project_501          | A501 Door and Hardware Schedule.pdf      | 0          | ~0 lines (OK)
+project_611          | A-611 Door Schedule.pdf                  | 0          | ~22 lines (⚠️ SUSPICIOUS 0)
+project_220          | A-220 Door Schedule.pdf                  | 0          | ~1 lines (OK)
+project_600          | A600 - Door Schedule.pdf                 | 0          | ~0 lines (OK)
+project_0            | A0.30 Door and Hardware Schedule (Addendum 5).pdf | 0          | ~132 lines (⚠️ SUSPICIOUS 0)
+project_62           | A62-01 - Door Schedule.pdf               | 0          | ~1 lines (OK)
+project_5            | A5.1 - Door Schedule.pdf                 | 6          | ~1 lines (OK)
+project_8            | A8.0 - Door Schedule.pdf                 | 0          | ~0 lines (OK)
+project_602          | A602 - Door Schedule.pdf                 | 0          | ~0 lines (OK)
+project_610          | A610 - Door Schedule.pdf                 | 0          | ~1 lines (OK)
+project_601          | ID-601 Door Schedule.pdf                 | 0          | ~0 lines (OK)
+project_6            | A6.10 - Door Schedule.pdf                | 0          | ~0 lines (OK)
+project_8            | A8.0 - Door Schedule.pdf                 | 0          | ~1 lines (OK)
+project_39           | Door Schedule.pdf                        | 5          | ~1 lines (OK)
+project_40           | Door Schedule.pdf                        | 3          | ~3 lines (OK)
+project_9            | Door Schedule and Hardware Set.pdf       | 7          | ~0 lines (OK)
+project_1            | project 1_less10doors.pdf                | 9          | ~1 lines (OK)
+project_2            | Project 2 _lessthan10doors(1).pdf        | 0          | ~1 lines (OK)
+project_3            | project 3_lessthan10door.pdf             | 2          | ~0 lines (OK)
+project_5            | A5.20-DOOR-SCHEDULE,-DETAILS-_-WINDOW-DETAILS-Rev.0.pdf | 6          | ~0 lines (OK)
+project_11           | Door Schedule.pdf                        | 8          | ~0 lines (OK)
+project_4            | project4_lessthan10door.pdf              | 0          | ~0 lines (OK)
+project_5            | project5_lessthan10door.pdf              | 6          | ~0 lines (OK)
+project_7            | project7_lessthan10door_outlier.pdf      | 15         | ~18 lines (OK)
+
+
+Audit completed. Found 2 potential anomalies:
+- A-611 Door Schedule.pdf
+- A0.30 Door and Hardware Schedule (Addendum 5).pdf

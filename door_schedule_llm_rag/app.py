@@ -9,6 +9,7 @@ import sys
 from config import (
     LLM_PROVIDER, OPENAI_API_KEY, OPENAI_MODEL,
     GROQ_API_KEY, GROQ_MODEL, OLLAMA_MODEL,
+    DEPLOYMENT_ENV,
 )
 from llm_extract import llm_config
 from pipeline import run_pipeline
@@ -64,12 +65,16 @@ with st.sidebar:
     st.subheader("🤖 LLM Configuration")
 
     # Provider selector
-    provider_options = ["openai", "groq", "ollama"]
-    provider_labels = {
-        "openai": "☁️ OpenAI (GPT-4o-mini, GPT-4o)",
-        "groq": "⚡ Groq (Fast cloud inference)",
-        "ollama": "🖥️ Ollama (Local, no API needed)",
-    }
+    if DEPLOYMENT_ENV == "production":
+        provider_options = ["openai"]
+        provider_labels = {"openai": "☁️ OpenAI (GPT)"}
+    else:
+        provider_options = ["openai", "groq", "ollama"]
+        provider_labels = {
+            "openai": "☁️ OpenAI (GPT-4o-mini, GPT-4o)",
+            "groq": "⚡ Groq (Fast cloud inference)",
+            "ollama": "🖥️ Ollama (Local, no API needed)",
+        }
 
     # Default to whatever .env says
     default_provider_idx = provider_options.index(LLM_PROVIDER) if LLM_PROVIDER in provider_options else 0
