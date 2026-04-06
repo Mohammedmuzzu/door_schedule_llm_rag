@@ -3,9 +3,6 @@
 pdfplumber>=0.11.0
 pymupdf4llm
 img2table
-paddlepaddle
-paddleocr
-
 # ─── RAG: vector store + embeddings (local) ───
 chromadb>=0.4.0
 sentence-transformers>=2.2.0
