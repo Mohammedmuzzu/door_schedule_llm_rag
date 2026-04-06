@@ -16,16 +16,27 @@ OUTPUT_DIR = os.environ.get("OUTPUT_DIR") or str(BASE_DIR / "extracted_data")
 RAG_DATA_DIR = os.environ.get("RAG_DATA_DIR") or str(BASE_DIR / "rag_data")
 INSTRUCTIONS_DIR = BASE_DIR / "instructions"
 
+def get_env(key, default=""):
+    try:
+        import streamlit as st
+        if key in st.secrets:
+            return st.secrets[key]
+    except Exception:
+        pass
+    return os.environ.get(key, default)
+
+DEPLOYMENT_ENV = get_env("DEPLOYMENT_ENV", "local")
+
 # ── LLM Provider ──
-LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "ollama").lower()
+LLM_PROVIDER = get_env("LLM_PROVIDER", "ollama").lower()
 
 # ── Groq ──
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+GROQ_API_KEY = get_env("GROQ_API_KEY", "")
+GROQ_MODEL = get_env("GROQ_MODEL", "llama-3.3-70b-versatile")
 
 # ── OpenAI ──
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_API_KEY = get_env("OPENAI_API_KEY", "")
+OPENAI_MODEL = get_env("OPENAI_MODEL", "gpt-4o-mini")
 
 # ── Ollama ──
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
