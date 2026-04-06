@@ -18,6 +18,16 @@ from pipeline import run_pipeline
 st.set_page_config(page_title="Door Schedule Extractor", layout="wide", page_icon="🚪")
 st.title("🚪 Door & Hardware Schedule Extractor")
 
+# Hide Streamlit UI Chrome (Menu, Footer, Header)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 
 # --- Capture Logs to UI ---
 class StreamlitLogHandler(logging.Handler):
