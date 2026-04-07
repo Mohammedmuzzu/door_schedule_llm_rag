@@ -32,6 +32,12 @@ class DoorScheduleRow(BaseModel):
     finish: Optional[str] = Field(default=None, description="Surface finish, e.g. STC 42, Painted Metal")
     is_pair: bool = Field(default=False, description="True if this is a pair/double door")
     door_leaves: int = Field(default=1, description="Number of leaves: 1 for single, 2 for pair")
+    door_thickness: Optional[str] = Field(default=None, description="Door thickness, e.g. 1 3/4\"")
+    door_material: Optional[str] = Field(default=None, description="Door material, e.g. WD, ALUM, HM, SCWD")
+    door_finish: Optional[str] = Field(default=None, description="Door finish, e.g. PL1, EX, PAINT")
+    frame_material: Optional[str] = Field(default=None, description="Frame material, e.g. ALUMINUM, HM")
+    frame_finish: Optional[str] = Field(default=None, description="Frame finish, e.g. BLACK ANOD, PT")
+    elevation: Optional[str] = Field(default=None, description="Door/Frame Elevation reference number")
     extra_fields: Optional[dict] = Field(default_factory=dict, description="Any extra or unrecognized fields found for this door")
 
     @field_validator("door_number", mode="before")
@@ -174,6 +180,12 @@ Each door row must have these fields:
 - vision_panel (optional): vision panel size
 - glazing_type (optional): glass type
 - finish (optional): surface finish
+- door_thickness (optional): Door thickness dimension
+- door_material (optional): Door material like WOOD, HM, SCWD
+- door_finish (optional): Door finish code/name
+- frame_material (optional): Frame material like ALUMINUM, HM
+- frame_finish (optional): Frame finish code/name
+- elevation (optional): Elevation reference designator
 - is_pair (optional): boolean, true ONLY if width >= 5'-0" or type says PAIR/DBL/DOUBLE
 - extra_fields (optional): dictionary of any other key-value pairs/columns found in the row that do not map to the standard schema above.
 """

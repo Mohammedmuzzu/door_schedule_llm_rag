@@ -249,9 +249,18 @@ def run_pipeline(
     #  POST-PROCESSING
     # ═══════════════════════════════════════════════════════════════
 
-    # Build DataFrames
-    df_doors = pd.DataFrame(all_doors)
-    df_components = pd.DataFrame(all_components)
+    # Flatten extra_fields to native columns before making DataFrames
+    def _flatten(data_list):
+        for d in data_list:
+            if "extra_fields" in d and isinstance(d["extra_fields"], dict):
+                for k, v in d["extra_fields"].items():
+                    if k not in d:
+                        d[k] = v
+                del d["extra_fields"]
+        return pd.DataFrame(data_list)
+
+    df_doors = _flatten(all_doors)
+    df_components = _flatten(all_components)
 
     # Deduplicate doors by (project_id, door_number) — keep first occurrence
     if not df_doors.empty and "project_id" in df_doors.columns and "door_number" in df_doors.columns:
@@ -265,8 +274,8 @@ def run_pipeline(
 
     # ── Columns for output ──
     door_cols = [
-        "project_id", "source_file", "page", "door_number", "level_area",
-        "room_name", "door_type", "frame_type", "frame_width", "frame_height",
+        "project_id", "source_file", "page", "door_number", "elevation", "level_area",
+        "room_name", "door_type", "door_thickness", "door_material", "door_finish", "frame_type", "frame_material", "frame_finish", "frame_width", "frame_height",
         "door_width", "door_height", "hardware_set", "fire_rating",
         "head_jamb_sill_detail", "keyed_notes", "remarks",
         "door_slab_material", "vision_panel", "glazing_type", "finish",
