@@ -492,8 +492,15 @@ def extract_doors_llm(system: str, user: str) -> List[dict]:
                 vision_panel=r.get("vision_panel"),
                 glazing_type=r.get("glazing_type"),
                 finish=r.get("finish"),
+                door_thickness=r.get("door_thickness"),
+                door_material=r.get("door_material"),
+                door_finish=r.get("door_finish"),
+                frame_material=r.get("frame_material"),
+                frame_finish=r.get("frame_finish"),
+                elevation=r.get("elevation"),
                 is_pair=is_pair,
                 door_leaves=2 if is_pair else 1,
+                extra_fields=r.get("extra_fields", {}),
             )
             out.append(row.model_dump())
         except Exception as e:
@@ -545,6 +552,7 @@ def extract_hardware_llm(system: str, user: str) -> List[dict]:
                 finish_code=r.get("finish_code"),
                 manufacturer_code=r.get("manufacturer_code"),
                 notes=r.get("notes"),
+                extra_fields=r.get("extra_fields", {}),
             )
             out.append(row.model_dump())
         except Exception as e:
