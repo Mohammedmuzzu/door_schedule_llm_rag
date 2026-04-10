@@ -45,12 +45,30 @@ CRITICAL RULES:
 15. Any column or key-value pair that doesn't fit standard fields must go into `extra_fields`.
 16. Your response MUST start with { and end with }. No other text allowed.
 17. BLOCK FORMATS: If doors are defined as vertical Key-Value profiles (e.g., "DOOR TYPE: A, FRAME TYPE: B") instead of a table, treat each vertical cluster as a separate door row.
+18. COLUMN MAPPING GUIDE: Door schedule tables often have MULTI-ROW headers that get garbled during extraction. You MUST analyze the ACTUAL DATA VALUES in each column to determine which schema field they belong to. Use this mapping:
+    - Column with values like "101", "101A", "D2" → door_number
+    - Column with "PR", "SGL", "PAIR" → door_type (NOT room_name!)
+    - Column with "3'-0\"", "3'-6\"" (feet-inches) → door_width OR door_height (width is typically 2'-6" to 4'-0", height is typically 6'-8" to 10'-0")
+    - Column with "1 3/4\"", "1 3/8\"" → door_thickness
+    - Column with "ALUM", "HM", "WD", "SOLID CORE", "FRP", "SCWD" → door_material
+    - Column with "PTD", "PREFINISHED", "PT", "PL1", "PAINT", "WOOD SIDING" → door_finish
+    - Column with "HM", "ALUM", "ALUMINUM", "WD", "WOOD" appearing AFTER material/finish columns → frame_material
+    - Column with letter codes "A", "B", "D", "E" or drawing refs "SEE S5 ON A621" → elevation
+    - Column with single digits "1", "2", "3" near the end of the table → hardware_set
+    - Column with "45 MIN", "1 HR", "20 MIN", "----" → fire_rating
+    CRITICAL: "PR" next to a door mark means "PAIR" (door_type), NOT a room name. Room names are words like "OFFICE", "CORRIDOR", "STORAGE", "WOMEN", "MEN", "ELECTRICAL".
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
 - door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. NEVER bypass the table to pull arbitrary room numbers from standalone floor plan drawings or bubbles rendered outside the matrix. If a standard label is completely missing in non-tabular profile formats, use the alphanumeric Type identifier (e.g., "A", "B", "ALUM STOREFRONT") to prevent dropping the data.
 - room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "WOMEN", "ELECTRICAL", "UTILITY", "HALLWAY", "JANITORIAL CLOSET"). This is ALWAYS present in door schedules, usually in the column right after the door number. NEVER leave this as null if there is text next to the door number.
 - hardware_set: The exact hardware set identifier assigned to this door. CRITICAL: You MUST extract this value EXPLICITLY from the column mathematically labeled "HARDWARE", "HW", or "SET". Absolutely DO NOT extract numeric values from adjacent geometric columns like "DETAILS", "HEAD", "JAMB", "SILL", or "REMARKS". You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A", "212S" -> "212S") so it can securely join the Hardware table database.
 - door_width and door_height: Dimensions like "3'-0\"" or "6'-0\"". CRITICAL: If the document uses CAD shorthand (e.g., "3070", "30x70"), you MUST mathematically split it into width and height sizes! For example, "3070" -> door_width="3'-0\"", door_height="7'-0\"". NEVER leave dimensions null if shorthand is provided!
+- door_thickness: The door slab thickness, often labeled "THICK", "THICKNESS", "THK", or "DOOR THICK" in the table. Common values: "1 3/4\"", "1 3/8\"". Extract the exact string.
+- door_material: The door leaf material, often labeled "MATERIAL", "DOOR MATERIAL", "DR MATL", or "DOOR". Common values: "WD", "HM", "ALUM", "SOLID CORE", "FRP", "SCWD", "GL". Extract the exact string from the PDF.
+- door_finish: The door finish/coating, often labeled "FINISH", "DOOR FINISH", "DR FIN". Common values: "PT", "PTD", "PREFINISHED", "PL1", "EX", "PAINT", "WOOD SIDING". Extract the exact string.
+- frame_material: The frame material, often labeled "FRAME", "FRAME TYPE", "FRAME MATERIAL", "FR MATL". Common values: "HM", "ALUMINUM", "ALUM", "WD", "WOOD". Extract the exact string.
+- frame_finish: The frame finish, often labeled "FRAME FINISH", "FR FIN". Extract the exact string if present.
+- elevation: The door elevation reference, often labeled "ELEVATION", "ELEV", "DOOR ELEV". This can be a letter code (e.g., "A", "B", "D"), a drawing reference (e.g., "SEE S5 ON A621"), or a number. Extract the exact string.
 """
 
 # ═══════════════════════════════════════════════════════════════════
