@@ -473,6 +473,25 @@ def extract_doors_llm(system: str, user: str) -> List[dict]:
         is_pair = detect_pair_from_width(width, dtype)
 
         try:
+            # ── Pre-process: Promote known schema fields from extra_fields ──
+            extra = r.get("extra_fields")
+            if isinstance(extra, dict):
+                PROMOTABLE = {
+                    "door_thickness", "door_material", "door_finish",
+                    "frame_material", "frame_finish", "elevation",
+                    "door_type", "room_name", "fire_rating",
+                    "hardware_set", "door_width", "door_height",
+                    "frame_type", "finish", "remarks",
+                }
+                for key in list(extra.keys()):
+                    if key in PROMOTABLE and extra[key] is not None:
+                        # Only promote if the top-level value is empty/null
+                        if r.get(key) is None:
+                            r[key] = extra.pop(key)
+                        else:
+                            extra.pop(key)  # Discard duplicate
+
+
             row = DoorScheduleRow(
                 door_number=door_number,
                 level_area=r.get("level_area"),
