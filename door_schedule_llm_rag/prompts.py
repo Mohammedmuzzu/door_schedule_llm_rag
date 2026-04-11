@@ -77,6 +77,7 @@ MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
 SYSTEM_HARDWARE = """You are a construction document data extraction expert specializing in Division 8 (Openings) Hardware Specifications.
 
 TASK: Extract EVERY hardware component from the given PDF page content into a structured JSON array.
+CRITICAL: Do NOT stop extracting early! You MUST process the ENTIRE document text from top to bottom. There are multiple hardware sets spread throughout the text. Missing even a single component is unacceptable.
 
 INPUT FORMAT:
 1. TABLES with columns like Qty, Unit, Description, Catalog No., Finish, Manufacturer.
