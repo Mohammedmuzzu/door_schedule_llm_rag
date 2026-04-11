@@ -120,12 +120,12 @@ def extract_page_with_llm(
         )
         hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"])
 
-        # Retry if empty and page looks like it has hardware data
-        if not hardware and retry_with_hint and len(text) > 200:
+        # Retry if empty or suspiciously small (e.g., LLM gave up early on a huge document)
+        if (not hardware or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
             hint = (
-                "\n\nNOTE: The previous extraction returned no results. "
-                "Look for hardware set headers (SET NO, GROUP, HARDWARE SET) "
-                "and component lines (qty + description like HINGE, CLOSER, LOCK)."
+                "\n\nNOTE: The previous extraction was incomplete. "
+                "You MUST process the entire document. Look for all hardware set headers (SET NO, GROUP, HARDWARE SET, HW.1, HW.2, etc.) "
+                "and component lines (qty + description like HINGE, CLOSER, LOCK) located deep in the text."
             )
             hw_prompt2 = build_hardware_prompt(
                 hw_chunks, text + hint,
