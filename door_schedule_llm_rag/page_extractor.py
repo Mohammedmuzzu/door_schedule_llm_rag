@@ -97,18 +97,43 @@ def classify_page(text: str) -> str:
     )
     
     try:
-        # Give the LLM a large 4000-char chunk so it can see deep into complex pages
-        llm_response = _llm_chat(system_prompt, text[:4000], force_json=False).strip().upper()
+        # Give the LLM a generous chunk so it sees both door AND hardware sections.
+        # For mixed pages, the hardware section is often at the bottom, so include the tail too.
+        if len(text) > 7000:
+            # Head + tail to catch hardware sections at the bottom of the page
+            classifier_text = text[:4000] + "\n\n[...content trimmed...]\n\n" + text[-3000:]
+        else:
+            classifier_text = text[:7000]
+        llm_response = _llm_chat(system_prompt, classifier_text, force_json=False).strip().upper()
         
         # Parse the definitive response securely
         if "MIXED" in llm_response or "BOTH" in llm_response:
             return PageType.MIXED
         if "DOOR" in llm_response:
-            return PageType.DOOR_SCHEDULE
-        if "HARDWARE" in llm_response or "HDWR" in llm_response:
-            return PageType.HARDWARE_SET
-            
-        return PageType.OTHER
+            page_type = PageType.DOOR_SCHEDULE
+        elif "HARDWARE" in llm_response or "HDWR" in llm_response:
+            page_type = PageType.HARDWARE_SET
+        else:
+            page_type = PageType.OTHER
+        
+        # ── Deterministic Upgrade: DOOR → MIXED ──
+        # The LLM only sees a truncated text snippet. Check the FULL text for 
+        # hardware component signatures that the LLM might have missed.
+        # This catches mixed-content PDFs where hardware is in the middle of the document.
+        if page_type == PageType.DOOR_SCHEDULE:
+            hw_component_keywords = ("BUTT HINGE", "SURFACE CLOSER", "FLOOR STOP", 
+                                     "WALL STOP", "LOCKSET", "DEADBOLT", "KICK PLATE",
+                                     "THRESHOLD", "DOOR STOP")
+            hw_manufacturer_keywords = ("MCKINNEY", "YALE", "NORTON", "ROCKWOOD", 
+                                        "SARGENT", "IVES", "PEMKO", "TRIMCO", "LCN",
+                                        "SCHLAGE", "BEST", "HAGER", "STANLEY")
+            has_hw_components = sum(1 for kw in hw_component_keywords if kw in upper) >= 2
+            has_hw_manufacturers = any(mfr in upper for mfr in hw_manufacturer_keywords)
+            if has_hw_components and has_hw_manufacturers:
+                logger.info("Deterministic upgrade: DOOR → MIXED (found hardware components + manufacturers in full text)")
+                page_type = PageType.MIXED
+        
+        return page_type
         
     except Exception as e:
         logger.error("LLM Arbiter classification failed: %s", e)
@@ -519,6 +544,7 @@ def _merge_backends(
     """
     Merge outputs from all backends into a single context string.
     Strategy: Use the highest-quality structured content, supplement with text.
+    Always reserves budget for plain text to ensure hardware sections on mixed pages aren't lost.
     """
     # Score each backend
     scores = {
@@ -535,9 +561,12 @@ def _merge_backends(
     logger.debug("Backend scores: %s", {k: f"{v:.1f}" for k, v in scores.items()})
 
     parts = []
-    budget = max_chars
+    # Reserve budget for plain text — critical for mixed pages where hardware 
+    # is cleanly readable in plain text but garbled in table extraction.
+    plain_text_reserve = min(4000, max_chars // 4) if plumber_text and len(plumber_text) > 200 else 0
+    table_budget = max_chars - plain_text_reserve
 
-    # Priority 1: Best structured tables
+    # Priority 1: Best structured tables (capped to leave room for plain text)
     table_sources = [
         ("pymupdf4llm", pymupdf_md),
         ("pdfplumber_tables", plumber_tables),
@@ -547,22 +576,16 @@ def _merge_backends(
     table_sources.sort(key=lambda x: scores.get(x[0], 0), reverse=True)
 
     for name, content in table_sources:
-        if content and len(content) > 50 and budget > 0:
-            chunk = content[:budget]
+        if content and len(content) > 50 and table_budget > 0:
+            chunk = content[:table_budget]
             parts.append(f"[Source: {name}]\n{chunk}")
-            budget -= len(chunk) + 50
-            # If best source has very good score, don't add duplicates
-            if scores.get(name, 0) > 50:
-                break
+            table_budget -= len(chunk) + 50
 
-    # Priority 2: Include plain text if we have budget and it adds value
-    if plumber_text and budget > 500:
-        # Only add plain text if it has content not already in tables
-        text_score = scores.get("pdfplumber_text", 0)
-        if text_score > 10 or not parts:
-            chunk = plumber_text[:budget]
-            parts.append(f"[Source: plain_text]\n{chunk}")
-            budget -= len(chunk)
+    # Priority 2: ALWAYS include plain text (critical for hardware on mixed pages)
+    if plumber_text and len(plumber_text) > 100:
+        budget_for_text = max(plain_text_reserve, 500)
+        chunk = plumber_text[:budget_for_text]
+        parts.append(f"[Source: plain_text]\n{chunk}")
 
     return "\n\n".join(parts).strip()[:max_chars]
 
