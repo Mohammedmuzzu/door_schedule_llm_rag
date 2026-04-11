@@ -220,8 +220,18 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
 
 
 # ═══════════════════════════════════════════════════════════════════
-#  Unified LLM call
+#  Unified LLM call & Normalization
 # ═══════════════════════════════════════════════════════════════════
+
+def clean_hw_id(raw_id: str) -> str:
+    """Strip 'HW.', 'HW-', 'SET', 'GROUP', etc. to leave clean alphanumeric."""
+    if not raw_id or str(raw_id).lower() in ("none", "null", "undefined", "n/a"):
+        return ""
+    s = str(raw_id).upper().strip()
+    s = re.sub(r'^(HW[\.\-\s]*|HARDWARE[\.\-\s]*|SET[\.\-\s]*|GROUP[\.\-\s]*)', '', s)
+    s = s.strip('. -')
+    return s
+
 def _llm_chat(system: str, user: str, force_json: bool = True) -> str:
     """
     Call the configured LLM provider.
@@ -502,7 +512,7 @@ def extract_doors_llm(system: str, user: str) -> List[dict]:
                 frame_height=r.get("frame_height"),
                 door_width=width,
                 door_height=r.get("door_height"),
-                hardware_set=r.get("hardware_set"),
+                hardware_set=clean_hw_id(r.get("hardware_set")),
                 fire_rating=r.get("fire_rating"),
                 head_jamb_sill_detail=r.get("head_jamb_sill_detail"),
                 keyed_notes=r.get("keyed_notes"),
@@ -551,7 +561,7 @@ def extract_hardware_llm(system: str, user: str) -> List[dict]:
         if not isinstance(r, dict):
             continue
 
-        hw_id = str(r.get("hardware_set_id") or "").strip()
+        hw_id = clean_hw_id(r.get("hardware_set_id"))
         desc = str(r.get("description") or "").strip()
         if not hw_id and not desc:
             continue
