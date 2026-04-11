@@ -584,7 +584,11 @@ def _merge_backends(
     # Priority 2: ALWAYS include plain text (critical for hardware on mixed pages)
     if plumber_text and len(plumber_text) > 100:
         budget_for_text = max(plain_text_reserve, 500)
-        chunk = plumber_text[:budget_for_text]
+        # Hardware sets usually live at the BOTTOM of mixed pages. If we must truncate, secure the tail.
+        if len(plumber_text) > budget_for_text:
+            chunk = plumber_text[-budget_for_text:]
+        else:
+            chunk = plumber_text
         parts.append(f"[Source: plain_text]\n{chunk}")
 
     return "\n\n".join(parts).strip()[:max_chars]
