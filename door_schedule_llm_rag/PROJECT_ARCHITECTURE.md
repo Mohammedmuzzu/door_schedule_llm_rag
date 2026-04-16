@@ -67,3 +67,16 @@ Before passing standard Pandas DataFrames into the UX component, the pipeline ag
 st.dataframe(df_doors.astype(str), use_container_width=True)
 ```
 This entirely solved the frontend crashing issue while preserving the high-quality source dict outputs for Excel and CSV downloads.
+
+---
+
+## 5. Architectural NLP Anomaly Logging (Project - 9)
+During automated audits, key multi-format weaknesses in OCR parsing were identified and patched at the prompt layer.
+
+### A. The Two-Column Hardware Trap
+* **The Bug:** Certain Division 8 hardware sets (e.g., Project 9) render sets side-by-side. Text scrapers compress these columns horizontally into a single line: `Set: 1.0 Set: 23.0`. The LLM ignored the right-side values 100% of the time, dropping massive amounts of data.
+* **The Fix:** Explicit prompt guidelines injected into `SYSTEM_HARDWARE` instructing the agent to split interleaved columns mathematically and extract horizontally decoupled arrays.
+
+### B. Borderless Table Swaps (Door No. vs Room Name)
+* **The Bug:** When vertical borders are absent, row text condenses sequentially into `[Room Name] [Door Number]` or vice versa (`MAIN ENTRY 100`). LLMs default to Left-to-Right binding, mapping the textual room name to the `door_number` property and vice versa.
+* **The Fix:** Mandatory deterministic overriding inside `SYSTEM_DOOR` teaching the model that isolated generic digits adjoining complex words in an unbordered text block permanently map to `door_number` regardless of semantic sequential order.

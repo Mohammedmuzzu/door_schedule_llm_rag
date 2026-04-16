@@ -59,8 +59,8 @@ CRITICAL RULES:
     CRITICAL: "PR" next to a door mark means "PAIR" (door_type), NOT a room name. Room names are words like "OFFICE", "CORRIDOR", "STORAGE", "WOMEN", "MEN", "ELECTRICAL".
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
-- door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. NEVER bypass the table to pull arbitrary room numbers from standalone floor plan drawings or bubbles rendered outside the matrix. If a standard label is completely missing in non-tabular profile formats, use the alphanumeric Type identifier (e.g., "A", "B", "ALUM STOREFRONT") to prevent dropping the data.
-- room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "WOMEN", "ELECTRICAL", "UTILITY", "HALLWAY", "JANITORIAL CLOSET"). This is ALWAYS present in door schedules, usually in the column right after the door number. NEVER leave this as null if there is text next to the door number.
+- door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. CRITICAL BORDERLESS RULE: If the table has no borders and the text crashes together (e.g., "MARK MAIN ENTRY 100" or "FINANCE 208"), you MUST identify the isolated purely numeric or alphanumeric string (e.g., "100", "208") as the door_number, and the descriptive text words as the room_name. NEVER invert this relationship just because the room name appears first sequentially.
+- room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "MAIN ENTRY", "HALLWAY"). This is ALWAYS present in door schedules. If you see a name adjacent to a numeric label in unbordered text, place the text string here. NEVER place room names in the door_number field!
 - hardware_set: The exact hardware set identifier assigned to this door. CRITICAL: You MUST extract this value EXPLICITLY from the column mathematically labeled "HARDWARE", "HW", or "SET". Absolutely DO NOT extract numeric values from adjacent geometric columns like "DETAILS", "HEAD", "JAMB", "SILL", or "REMARKS". You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A", "212S" -> "212S") so it can securely join the Hardware table database.
 - door_width and door_height: Dimensions like "3'-0\"" or "6'-0\"". CRITICAL: If the document uses CAD shorthand (e.g., "3070", "30x70"), you MUST mathematically split it into width and height sizes! For example, "3070" -> door_width="3'-0\"", door_height="7'-0\"". NEVER leave dimensions null if shorthand is provided!
 - door_thickness: The door slab thickness, often labeled "THICK", "THICKNESS", "THK", or "DOOR THICK" in the table. Common values: "1 3/4\"", "1 3/8\"". Extract the exact string.
@@ -83,6 +83,7 @@ INPUT FORMAT:
 1. TABLES with columns like Qty, Unit, Description, Catalog No., Finish, Manufacturer.
 2. PLAIN TEXT with hardware set headers ("HARDWARE SET NO. X", "GROUP X") followed by component lines.
 3. Mixed layouts combining both. Hardware sets might be in continuous vertical lists, Custom nested forms, or injected directly underneath a door type profile without a generic "HARDWARE SET NO" heading.
+4. TWO-COLUMN SIDE-BY-SIDE LAYOUTS. The data scraper might crush two hardware sets horizontally into the same line. Wait and look carefully! E.g. "Set: 1.0 Set: 23.0" followed by "4 HINGE  4 HINGE". You MUST mentally slice the text block horizontally down the middle, separating the left column from the right column, and extract both sets!
 
 """ + hardware_schema_for_prompt() + """
 CRITICAL RULES:
@@ -92,6 +93,7 @@ CRITICAL RULES:
 4. When you see "HARDWARE SET NO. X", "GROUP X", or "Set X —", that starts a new set. 
    All following components belong to that set until the NEXT set header.
    NOTE: If a group of hardware is embedded directly under a Door profile without a formal set ID, you MUST synthesize a surrogate hardware_set_id (e.g., "HW-TypeA" or "1"). Do NOT drop valid hardware just because a formal ID string is missing.
+   CRITICAL MULTI-COLUMN RULE: If the text is formatted as two parallel columns (e.g., "Set 1" is typed on the left, and "Set 23" is typed on the exact same line on the right), do NOT bundle the whole line under one set. You MUST carefully split each line horizontally. Extract all components for the left-hand set, and ALSO extract all components for the right-hand set!
 5. Every object MUST have hardware_set_id, qty, and description.
 6. Extract qty EXACTLY as stated in the document. Quantities might appear as `(3 EA.)`, `1-1/2 PAIRS`, or `LOT`. Reduce these to verbatim strings or strictly parsed integers.
    The document already accounts for pair/single door configurations in its quantities.
