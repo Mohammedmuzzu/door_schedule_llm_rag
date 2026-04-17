@@ -47,12 +47,12 @@ def main():
     pdf_dir = Path(r"C:\Users\muzaf\my_lab\sushmita_proj\pdfs")
     all_pdfs = discover_pdfs(str(pdf_dir))
     
-    machine_pdfs = [(p, p_id) for p, p_id in all_pdfs if is_machine_generated(p)]
-    print(f"Found {len(machine_pdfs)} Machine Generated PDFs to QA test.")
+    target_pdfs = [(p, p_id) for p, p_id in all_pdfs if p_id == "project_9"]
+    print(f"Found {len(target_pdfs)} target PDFs.")
     
     results = []
     
-    for pdf_path, project_id in machine_pdfs[:5]:
+    for pdf_path, project_id in target_pdfs:
         name = f"{project_id} - {pdf_path.name}"
         print(f"\nProcessing: {name}")
         

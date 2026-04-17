@@ -138,6 +138,7 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             {"role": "user", "content": user_content},
         ],
         "temperature": LLM_TEMPERATURE,
+        "max_tokens": 12000,
     }
 
     for attempt in range(MAX_RETRIES + 1):
