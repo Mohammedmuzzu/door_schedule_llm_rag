@@ -1437,3 +1437,165 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 15:58:12
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:12:10
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (44x6) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                      |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------------|
+| GROUP#1)                     |                              | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                        |
+|                              |                              | HINGE:                    |                                |                                |                        |
+|                      ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:16:13
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (38×31) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100B 104 | LOBBY CHECK-IN | VESTIBULE OFFICE | 7' - 0" 3' - 0" | 7' - 10" 7' - 10" | 1 3/4" 1 3/4" | 2 2 | ALUMINUM FRAMED ENTRANCE ALUMINUM FRAMED ENTRANCE | ALUMINUM ALUMINUM |  | 15 15 | 14 7 | - - | X |  |  |  |  |  |  | 4 |  | X | X X |  | X X |  |  |  |  | NO LATCH OR LOCK |
+| 105 | OPEN GYM | FAMILY TOILET | 3' - 0" | 7' - 10" | 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  | X |  |  |  |  |  | 4 |  |  | X |  | X |  |  |  |  |  |
+| 111 | OPEN GYM | TANK | 3' - 0" | 5' - 4" | 1 3/4" | 5 | SOLID CORE WOOD FLUSH WITH PLASTIC LAMINATE | HOLLO...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A611 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:22:17
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (2×2) ===
+| EEXXTTEERRIIOORR DDOOOORR SSCCHHEEDDUULLEE LLOOCCAATTIIOONN OOPPEENNIINNGG SSIIZ | GATHER ARCHITECTURE |
+|  | Copyright 2024, GATHER ARCHITECTURE, LLC TEXAS REGISTRATION NUMBER: 24427 RED AR |
+
+=== TABLE (61×32) ===
+| EEXXTTEERRIIOORR DDOOOORR SSCCHHEEDDUULLEE |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| MMAARRKK | LLOOCCAATTIIOONN |  | CCOONNFFIIGGUURRAATTIIOONN | OOPPEENNIINNGG SSIIZZEE |  | SSIIDDEELLIIGGHHTT SSIIZZEE |  | FFRRAAMMEE |  |  |  |  |  |  | LLEEAAFF |  |  |  |  |  | HHAARRDDWWAARREE |  |  |  |  |  |  |  |  | FFIIRREE RRAATTIINNGG | CCOOMMMMEENNTTSS |
+|  | FFRROOMM | TTOO |  | WWIIDDTTHH | HHEEIIGGHHTT | WWIIDDTTHH | HHEEIIGGHHTT | CCOONNSSTTRRUUCCTTIIOONN | PPRROOFFIILLEE |...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A0.30 Door and Hardware Schedule (Addendum 5).pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:26:14
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (50×20) ===
+| Data |  |  | Panel |  |  |  |  |  | Frame |  |  | Glazing | Details on A0.35 |  |  | General |  |  |  |
+| Mark | № | Room Name | Size |  |  |  |  |  |  | Type |  |  | Sill | Head | Jamb | Fire Rating |  | HDWR | Remarks |
+| LEVEL 01 |  |  | Width | Height | THK | Matl | Type | Finish | Matl |  | Finish |  |  |  |  |  |  |  |  |
+| 100A | 100 | LOBBY | 6'-0" | 7'-0" | 1 3/4" | ALUM | C | ALUM | ALUM | 003 | ALUM | GL2 | 6/A0.35 | 9/A0.35 | 7/A0.35 |  |  | WC714A | ACCESS CONTROL |
+| 100B | 100 | LOBBY | 6'-0" | 7'-0" | 1 3/4" | ALUM | C | ALUM | ALUM | 003 | ALUM | GL1 | 1/A0.35 | 3/A0.35 | 2/A0.35 |  |  | C710AC | ACCESS CONTROL |
+| 101 | 101 | PUBLIC RESTROOM | 3'-0" | 7'-0" | 1 3/4" | WD | A | PL-02 | ALUM | 001 | ALUM | -- | 1/A0.35 | 3...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A5.1 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:27:24
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (83×37) ===
+|  |  |  |  |  |  |  |  | BATT INSULATION, TYP |  | MA | RK | TYPE | WIDTH | HEIG | DOOR HT | TH | I | CK | MATERIAL | FINISH | TYPE | FRAME MATERIAL | ASSEMBLY DETAILS M FINISH LABEL HDWR. SILL JAMB HEAD REMARKS | ARK 1 | TYPE SECTIONAL |  | DES | CRIPTION |  |  |  | FIN | ISH R | EMARKS | DATE: 0 | 7/31/2025 |
+|  |  | M | ASONRY |  |  |  |  | SEE WALL TYPES T/ | SL | AB 1 | 01 | A | 6' - 0" | 6' - | 8" | 0' | - | 2" | AL/GL | ANOD | C | AL | ANOD |  | OVERHEAD | MFR'S STAND 1/2 HP SCREW | ARD OP DRIVE | ERATION HAR DOOR OPEN | DW ER, W | ARE EATHERST | RIPPING | P | T |  | JOB NO: DRAWN: | GARLANDTX5050 STAFF |
+|  |  |  |  |  |  |  |  | 6" BOX FRAMED HEADER, SEE STRUCTRUAL FASTNER -ADD SEALANT AT |  | 1 1 1 1 | 02 03 04 05 | A A D C | 6' ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:27:47
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (40x7) ===
+| 0               | 1                           | 2                           | 3                           | 4                           | 5                           | 6                   |
+|:----------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:--------------------|
+|                 | GROUP#1)                    | CROUP BORDO                 | GROUP 5SA                   | CROUP#                      | CROUP#                      |                     |
+|                 |                             |                             | DQ x ALUM                   |                             |                             |          ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:32:21
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:35:17
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (79×35) ===
+|  |  |  |  |  | 4 |  |  |  |  |  |  | 3 |  |  |  |  | 2 |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |
+|  | DO | OR TYPES |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2100 Travis St Suite 501 | reet, |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Houston, Texa 713.224.0456 | s 77002 |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 713.224.0457 | fax |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | www.powersb | rown.com ...
+[TRUNCATED]
+```
+---

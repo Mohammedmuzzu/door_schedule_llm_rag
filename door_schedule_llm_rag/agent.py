@@ -109,82 +109,83 @@ def extract_page_with_llm(
         doors = []
         hardware = []
 
-    # ── Extract Doors (if page has door content) ──
-    if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED):
-        door_chunks = query_door_instructions(text) if use_rag else []
-        door_prompt = build_door_prompt(
-            door_chunks, text,
-            max_chars=MAX_PAGE_CHARS,
-            is_continuation=is_continuation,
-            prev_level_area=ctx.last_level_area,
-        )
-        doors = extract_doors_llm(door_prompt["system"], door_prompt["user"], base64_image=base64_image)
-
-        # Retry if empty and page looks like it has door data
-        if not doors and retry_with_hint and len(text) > 200:
-            hint = (
-                "\n\nNOTE: The previous extraction returned no results. "
-                "This may be a borderless table or unusual layout. "
-                "Look harder for door numbers (3-4 digit numbers, possibly with letter suffix) "
-                "and extract every door row you can identify."
-            )
-            door_prompt2 = build_door_prompt(
-                door_chunks, text + hint,
+        # ── Extract Doors (if page has door content) ──
+        if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED):
+            door_chunks = query_door_instructions(text) if use_rag else []
+            door_prompt = build_door_prompt(
+                door_chunks, text,
                 max_chars=MAX_PAGE_CHARS,
                 is_continuation=is_continuation,
                 prev_level_area=ctx.last_level_area,
             )
-            doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
+            doors = extract_doors_llm(door_prompt["system"], door_prompt["user"], base64_image=base64_image)
 
-        ctx.update_from_doors(doors)
-
-    # ── Extract Hardware (if page has hardware content) ──
-    if page_type in (PageType.HARDWARE_SET, PageType.MIXED):
-        hw_chunks = query_hardware_instructions(text) if use_rag else []
-        hw_prompt = build_hardware_prompt(
-            hw_chunks, text,
-            max_chars=MAX_PAGE_CHARS,
-            is_continuation=is_continuation,
-            prev_set_id=ctx.last_hardware_set_id,
-        )
-        hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"], base64_image=base64_image)
-
-        # ── Corrective Agentic Loop / Heuristic Counters ──
-        # Count explicit markers in the text
-        expected_sets = len(set(re.findall(r'(?i)(?:set[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|group[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|hardware set no\.)', text)))
-        extracted_set_ids = set()
-        for h in hardware:
-            hs = h.get("hardware_set_id")
-            if hs and hs != "?":
-                extracted_set_ids.add(hs)
-                
-        is_missing_sets = len(extracted_set_ids) < expected_sets - 1  # Allowing for slight mismatch in regex
-
-        # Retry if empty, suspiciously small, or heuristic count fails
-        if (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
-            if is_missing_sets:
-                logger.warning(f"Heuristic Trigger: Extracted {len(extracted_set_ids)} hw sets, expected ~{expected_sets}. Triggering corrective retry.")
+            # Retry if empty and page looks like it has door data
+            if not doors and retry_with_hint and len(text) > 200:
                 hint = (
-                    f"\n\nCRITICAL CORRECTIVE ACTION: The previous extraction missed data. "
-                    f"You extracted {len(extracted_set_ids)} unique sets, but there are structural markers indicating up to {expected_sets} sets in this block. "
-                    "If there is a TWO-COLUMN LAYOUT (side-by-side sets on the same line), "
-                    "you MUST split them horizontally and extract the right side as well! Do not drop data."
+                    "\n\nNOTE: The previous extraction returned no results. "
+                    "This may be a borderless table or unusual layout. "
+                    "Look harder for door numbers (3-4 digit numbers, possibly with letter suffix) "
+                    "and extract every door row you can identify."
                 )
-            else:
-                hint = (
-                    "\n\nNOTE: The previous extraction was incomplete. "
-                    "You MUST process the entire document. Look for all hardware set headers and component lines deep in the text."
+                door_prompt2 = build_door_prompt(
+                    door_chunks, text + hint,
+                    max_chars=MAX_PAGE_CHARS,
+                    is_continuation=is_continuation,
+                    prev_level_area=ctx.last_level_area,
                 )
-                
-            hw_prompt2 = build_hardware_prompt(
-                hw_chunks, text + hint,
+                doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
+
+            ctx.update_from_doors(doors)
+
+        # ── Extract Hardware (if page has hardware content) ──
+        if page_type in (PageType.HARDWARE_SET, PageType.MIXED):
+            hw_chunks = query_hardware_instructions(text) if use_rag else []
+            hw_prompt = build_hardware_prompt(
+                hw_chunks, text,
                 max_chars=MAX_PAGE_CHARS,
                 is_continuation=is_continuation,
                 prev_set_id=ctx.last_hardware_set_id,
             )
-            hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
+            hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"], base64_image=base64_image)
 
-        ctx.update_from_hardware(hardware)
+            # ── Corrective Agentic Loop / Heuristic Counters ──
+            # Count explicit markers in the text
+            expected_sets = len(set(re.findall(r'(?i)(?:set[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|group[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|hardware set no\.)', text)))
+            extracted_set_ids = set()
+            for h in hardware:
+                hs = h.get("hardware_set_id")
+                if hs and hs != "?":
+                    extracted_set_ids.add(hs)
+                    
+            is_missing_sets = len(extracted_set_ids) < expected_sets - 1  # Allowing for slight mismatch in regex
+
+            # Retry if empty, suspiciously small, or heuristic count fails
+            if (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
+                if is_missing_sets:
+                    logger.warning(f"Heuristic Trigger: Extracted {len(extracted_set_ids)} hw sets, expected ~{expected_sets}. Triggering corrective retry.")
+                    hint = (
+                        f"\n\nCRITICAL CORRECTIVE ACTION: The previous extraction missed data. "
+                        f"You extracted {len(extracted_set_ids)} unique sets, but there are structural markers indicating up to {expected_sets} sets in this block. "
+                        "If there is a TWO-COLUMN LAYOUT (side-by-side sets on the same line), "
+                        "you MUST split them horizontally and extract the right side as well! Do not drop data."
+                    )
+                else:
+                    hint = (
+                        "\n\nNOTE: The previous extraction was incomplete. "
+                        "You MUST process the entire document. Look for all hardware set headers and component lines deep in the text."
+                    )
+                    
+                hw_prompt2 = build_hardware_prompt(
+                    hw_chunks, text + hint,
+                    max_chars=MAX_PAGE_CHARS,
+                    is_continuation=is_continuation,
+                    prev_set_id=ctx.last_hardware_set_id,
+                )
+                hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
+
+            ctx.update_from_hardware(hardware)
+            
         all_doors.extend(doors)
         all_hardware.extend(hardware)
 
