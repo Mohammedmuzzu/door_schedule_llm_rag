@@ -660,7 +660,7 @@ def extract_structured_page(
     pymupdf_md = ""
     # Avoid GNN markdown table rendering on massive dense schedules (A0 size prints).
     # pymupdf4llm's neural engine massively hallucinates staggered columns in complex drawings.
-    if raw_text_len < 10000:
+    if raw_text_len < 4000:
         pymupdf_md = _extract_pymupdf4llm(pdf_path, page_idx)
         if pymupdf_md:
             backends_used.append("pymupdf4llm")

@@ -134,7 +134,7 @@ def extract_page_with_llm(
                 is_continuation=is_continuation,
                 prev_level_area=ctx.last_level_area,
             )
-            doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image)
+            doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
 
         ctx.update_from_doors(doors)
 
@@ -182,7 +182,7 @@ def extract_page_with_llm(
                 is_continuation=is_continuation,
                 prev_set_id=ctx.last_hardware_set_id,
             )
-            hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"], base64_image=base64_image)
+            hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
 
         ctx.update_from_hardware(hardware)
         all_doors.extend(doors)
