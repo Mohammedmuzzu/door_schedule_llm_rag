@@ -112,7 +112,7 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
 # ═══════════════════════════════════════════════════════════════════
 #  OpenAI Backend
 # ═══════════════════════════════════════════════════════════════════
-def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None) -> str:
+def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> str:
     """Call OpenAI API (GPT-4o-mini, GPT-4o, etc.)."""
     if not OPENAI_API_KEY:
         logger.error("OpenAI API key missing!")
@@ -132,7 +132,7 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
 
     # Smart escalation: If the table string is dense (>5,000 chars), 
     # we force gpt-4o for pure text semantic mapping even if there's no image.
-    active_model = "gpt-4o" if (base64_image or len(user) > 5000) else OPENAI_MODEL
+    active_model = force_model if force_model else ("gpt-4o" if (base64_image or len(user) > 5000) else OPENAI_MODEL)
     payload = {
         "model": active_model,
         "messages": [
@@ -254,7 +254,7 @@ def clean_hw_id(raw_id: str) -> str:
     s = s.strip('. -')
     return s
 
-def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None) -> str:
+def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> str:
     """
     Call the configured LLM provider.
     Uses runtime llm_config overrides (from Streamlit UI) if set.
@@ -265,8 +265,8 @@ def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Opt
     if provider == "openai":
         model = "gpt-4o" if base64_image else llm_config.openai_model
         
-        logger.info("Using OpenAI (%s)", model)
-        ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image)
+        logger.info("Using OpenAI (%s)", model if not force_model else force_model)
+        ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image, force_model=force_model)
         if ans:
             return ans
         logger.warning("OpenAI failed, falling back to Ollama")
@@ -503,12 +503,12 @@ def _extract_json_array(raw: str) -> List[dict]:
         return []
 
 
-def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None) -> List[dict]:
+def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
     """
     Call LLM for door extraction and return validated door rows.
     Applies deterministic pair detection.
     """
-    content = _llm_chat(system, user, base64_image=base64_image)
+    content = _llm_chat(system, user, base64_image=base64_image, force_model=force_model)
     if not content:
         return []
 
@@ -594,12 +594,12 @@ def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None
     return out
 
 
-def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = None) -> List[dict]:
+def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
     """
     Call LLM for hardware extraction and return validated component rows.
     Quantities are preserved AS-IS from the document.
     """
-    content = _llm_chat(system, user, base64_image=base64_image)
+    content = _llm_chat(system, user, base64_image=base64_image, force_model=force_model)
     if not content:
         return []
 

@@ -43,7 +43,7 @@ CRITICAL RULES:
 13. Level/Area is usually a section header ABOVE a group of doors, not in the table row itself.
 14. Do NOT nest objects for standard fields. Every element inside "rows" must be a FLAT JSON object (except for `extra_fields` which is a dict).
 15. Any column or key-value pair that doesn't fit standard fields must go into `extra_fields`.
-16. Your response MUST start with { and end with }. No other text allowed.
+16. Your response MUST be a pure JSON object enclosed completely in a markdown block (e.g. ```json\n{...}\n```). DO NOT provide any conversational explanations before or after the JSON block.
 17. BLOCK FORMATS: If doors are defined as vertical Key-Value profiles (e.g., "DOOR TYPE: A, FRAME TYPE: B") instead of a table, treat each vertical cluster as a separate door row.
 18. COLUMN MAPPING GUIDE: Door schedule tables often have MULTI-ROW headers that get garbled during extraction. You MUST analyze the ACTUAL DATA VALUES in each column to determine which schema field they belong to. Use this mapping:
     - Column with values like "101", "101A", "D2" → door_number
@@ -88,7 +88,7 @@ INPUT FORMAT:
 """ + hardware_schema_for_prompt() + """
 CRITICAL RULES:
 1. Output ONLY a valid JSON object: {"rows": [...]} where each element is a hardware component.
-2. Do NOT output markdown, tables, explanations, or code blocks. ONLY JSON.
+2. Your response MUST be a pure JSON object enclosed completely in a markdown block (e.g. ```json\n{...}\n```). DO NOT provide any conversational explanations before or after the JSON block.
 3. ONLY extract from actual hardware sets/lists. DO NOT hallucinate components from generic notes. CRITICAL: Absolutely DO NOT extract the Architectural Title Block (e.g., text containing "PROJECT NO", "DRAWN BY", "CHECKED BY", "SHEET", Architecture Firm Names, or Street Addresses) as generic sets. Title blocks are NOT schedules. Discard them entirely.
 4. When you see "HARDWARE SET NO. X", "GROUP X", or "Set X —", that starts a new set. 
    All following components belong to that set until the NEXT set header.
