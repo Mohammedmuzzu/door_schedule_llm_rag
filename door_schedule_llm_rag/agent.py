@@ -8,6 +8,7 @@ Key improvements over original:
 4. Validates extraction quality
 """
 import logging
+import re
 from typing import List, Tuple, Optional
 
 from config import MAX_PAGE_CHARS
@@ -56,6 +57,7 @@ def extract_page_with_llm(
     retry_with_hint: bool = True,
     is_continuation: bool = False,
     context: Optional[ExtractionContext] = None,
+    base64_image: Optional[str] = None,
 ) -> Tuple[List[dict], List[dict]]:
     """
     Extract door rows and/or hardware component rows from one page.
@@ -72,13 +74,40 @@ def extract_page_with_llm(
     Returns:
         (door_rows, hardware_rows)
     """
-    text = (page_text or "").strip()[:MAX_PAGE_CHARS]
-    if not text or len(text) < 30:
+    raw_text = (page_text or "").strip()
+    if not raw_text or len(raw_text) < 30:
         return [], []
 
+    # Semantic Chunking for smaller models
+    # Split text into chunks of roughly MAX_PAGE_CHARS cleanly on newlines
+    chunks = []
+    current_chunk = []
+    current_len = 0
+    
+    for line in raw_text.split('\n'):
+        # If adding this line exceeds max (and we already have some lines), cut here
+        if current_len + len(line) > MAX_PAGE_CHARS and current_chunk:
+            chunks.append('\n'.join(current_chunk))
+            current_chunk = [line]
+            current_len = len(line)
+        else:
+            current_chunk.append(line)
+            current_len += len(line) + 1 # +1 for newline
+
+    if current_chunk:
+        chunks.append('\n'.join(current_chunk))
+
+    # Fallback if no chunks could be formed
+    if not chunks:
+        chunks = [raw_text[:MAX_PAGE_CHARS]]
+
     ctx = context or ExtractionContext()
-    doors = []
-    hardware = []
+    all_doors = []
+    all_hardware = []
+
+    for chunk_idx, text in enumerate(chunks):
+        doors = []
+        hardware = []
 
     # ── Extract Doors (if page has door content) ──
     if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED):
@@ -89,7 +118,7 @@ def extract_page_with_llm(
             is_continuation=is_continuation,
             prev_level_area=ctx.last_level_area,
         )
-        doors = extract_doors_llm(door_prompt["system"], door_prompt["user"])
+        doors = extract_doors_llm(door_prompt["system"], door_prompt["user"], base64_image=base64_image)
 
         # Retry if empty and page looks like it has door data
         if not doors and retry_with_hint and len(text) > 200:
@@ -105,7 +134,7 @@ def extract_page_with_llm(
                 is_continuation=is_continuation,
                 prev_level_area=ctx.last_level_area,
             )
-            doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"])
+            doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image)
 
         ctx.update_from_doors(doors)
 
@@ -118,30 +147,52 @@ def extract_page_with_llm(
             is_continuation=is_continuation,
             prev_set_id=ctx.last_hardware_set_id,
         )
-        hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"])
+        hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"], base64_image=base64_image)
 
-        # Retry if empty or suspiciously small (e.g., LLM gave up early on a huge document)
-        if (not hardware or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
-            hint = (
-                "\n\nNOTE: The previous extraction was incomplete. "
-                "You MUST process the entire document. Look for all hardware set headers (SET NO, GROUP, HARDWARE SET, HW.1, HW.2, etc.) "
-                "and component lines (qty + description like HINGE, CLOSER, LOCK) located deep in the text."
-            )
+        # ── Corrective Agentic Loop / Heuristic Counters ──
+        # Count explicit markers in the text
+        expected_sets = len(set(re.findall(r'(?i)(?:set[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|group[ \t]*[:\-\#.]?[ \t]*[\d\w.-]+|hardware set no\.)', text)))
+        extracted_set_ids = set()
+        for h in hardware:
+            hs = h.get("hardware_set_id")
+            if hs and hs != "?":
+                extracted_set_ids.add(hs)
+                
+        is_missing_sets = len(extracted_set_ids) < expected_sets - 1  # Allowing for slight mismatch in regex
+
+        # Retry if empty, suspiciously small, or heuristic count fails
+        if (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
+            if is_missing_sets:
+                logger.warning(f"Heuristic Trigger: Extracted {len(extracted_set_ids)} hw sets, expected ~{expected_sets}. Triggering corrective retry.")
+                hint = (
+                    f"\n\nCRITICAL CORRECTIVE ACTION: The previous extraction missed data. "
+                    f"You extracted {len(extracted_set_ids)} unique sets, but there are structural markers indicating up to {expected_sets} sets in this block. "
+                    "If there is a TWO-COLUMN LAYOUT (side-by-side sets on the same line), "
+                    "you MUST split them horizontally and extract the right side as well! Do not drop data."
+                )
+            else:
+                hint = (
+                    "\n\nNOTE: The previous extraction was incomplete. "
+                    "You MUST process the entire document. Look for all hardware set headers and component lines deep in the text."
+                )
+                
             hw_prompt2 = build_hardware_prompt(
                 hw_chunks, text + hint,
                 max_chars=MAX_PAGE_CHARS,
                 is_continuation=is_continuation,
                 prev_set_id=ctx.last_hardware_set_id,
             )
-            hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"])
+            hardware = extract_hardware_llm(hw_prompt2["system"], hw_prompt2["user"], base64_image=base64_image)
 
         ctx.update_from_hardware(hardware)
+        all_doors.extend(doors)
+        all_hardware.extend(hardware)
 
     logger.info(
-        "Page %d [%s%s]: %d doors, %d hardware components",
+        "Page %d [%s%s]: %d doors, %d hardware components (across %d chunks)",
         page_idx + 1, page_type,
         " (cont)" if is_continuation else "",
-        len(doors), len(hardware),
+        len(all_doors), len(all_hardware), len(chunks)
     )
 
-    return doors, hardware
+    return all_doors, all_hardware

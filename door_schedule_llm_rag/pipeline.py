@@ -178,7 +178,7 @@ def run_pipeline(
         for page_idx in range(n_pages):
             # Extract structured page content with classification
             t0 = time.time()
-            text, page_type, is_continuation = extract_structured_page(
+            text, page_type, is_continuation, base64_img = extract_structured_page(
                 pdf_path, page_idx,
                 max_chars=MAX_PAGE_CHARS,
                 prev_page_type=prev_page_type,
@@ -203,6 +203,7 @@ def run_pipeline(
                 retry_with_hint=True,
                 is_continuation=is_continuation,
                 context=ctx,
+                base64_image=base64_img,
             )
             logger.info("Page %d LLM Extraction (%s) took %.1fs", page_idx + 1, page_type, time.time() - t1)
 

@@ -153,8 +153,8 @@ def build_door_prompt(
         f"{page_text[:max_chars]}\n"
         "=== END TEXT ===\n\n"
         "TASK: Extract all door schedule rows from the text above.\n"
-        "CRITICAL: You MUST respond with ONLY a valid JSON object in the exact format: {\"rows\": [...]}. "
-        "Do NOT output markdown code blocks. Do NOT output any conversational text. ONLY JSON."
+        "Please format your response as a valid JSON object containing a 'rows' array.\n"
+        "You may wrap your response in a markdown ```json ... ``` code block."
     )
     return {"system": system, "user": user}
 
@@ -179,7 +179,7 @@ def build_hardware_prompt(
         f"{page_text[:max_chars]}\n"
         "=== END TEXT ===\n\n"
         "TASK: Extract all hardware set components from the text above.\n"
-        "CRITICAL: You MUST respond with ONLY a valid JSON object in the exact format: {\"rows\": [...]}. "
-        "Do NOT output markdown code blocks. Do NOT output any conversational text. ONLY JSON."
+        "Please format your response as a valid JSON object containing a 'rows' array.\n"
+        "You may wrap your response in a markdown ```json ... ``` code block."
     )
     return {"system": system, "user": user}

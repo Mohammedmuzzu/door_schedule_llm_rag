@@ -64,7 +64,7 @@ llm_config = LLMConfig()
 # ═══════════════════════════════════════════════════════════════════
 #  Groq Backend
 # ═══════════════════════════════════════════════════════════════════
-def _groq_chat(system: str, user: str, force_json: bool = True) -> str:
+def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None) -> str:
     """Call Groq API using requests directly so we don't need the SDK."""
     if not GROQ_API_KEY:
         logger.error("Groq API key missing!")
@@ -75,16 +75,21 @@ def _groq_chat(system: str, user: str, force_json: bool = True) -> str:
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json"
     }
+    user_content = user
+    if base64_image:
+        user_content = [
+            {"type": "text", "text": user},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
+        ]
+
     payload = {
         "model": GROQ_MODEL,
         "messages": [
             {"role": "system", "content": system},
-            {"role": "user", "content": user},
+            {"role": "user", "content": user_content},
         ],
         "temperature": LLM_TEMPERATURE,
     }
-    if force_json:
-        payload["response_format"] = {"type": "json_object"}
         
     for attempt in range(MAX_RETRIES + 1):
         try:
@@ -94,8 +99,8 @@ def _groq_chat(system: str, user: str, force_json: bool = True) -> str:
                 time.sleep(5)
                 continue
             r.raise_for_status()
-            content = r.json()["choices"][0]["message"].get("content", "")
-            if content.strip():
+            content = r.json()["choices"][0]["message"].get("content")
+            if content and content.strip():
                 return content
         except Exception as e:
             logger.warning("[Groq] Call failed: %s", e)
@@ -107,7 +112,7 @@ def _groq_chat(system: str, user: str, force_json: bool = True) -> str:
 # ═══════════════════════════════════════════════════════════════════
 #  OpenAI Backend
 # ═══════════════════════════════════════════════════════════════════
-def _openai_chat(system: str, user: str, force_json: bool = True) -> str:
+def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None) -> str:
     """Call OpenAI API (GPT-4o-mini, GPT-4o, etc.)."""
     if not OPENAI_API_KEY:
         logger.error("OpenAI API key missing!")
@@ -118,29 +123,39 @@ def _openai_chat(system: str, user: str, force_json: bool = True) -> str:
         "Authorization": f"Bearer {OPENAI_API_KEY}",
         "Content-Type": "application/json"
     }
+    user_content = user
+    if base64_image:
+        user_content = [
+            {"type": "text", "text": user},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
+        ]
+
+    active_model = "gpt-4o" if base64_image else OPENAI_MODEL
     payload = {
-        "model": OPENAI_MODEL,
+        "model": active_model,
         "messages": [
             {"role": "system", "content": system},
-            {"role": "user", "content": user},
+            {"role": "user", "content": user_content},
         ],
         "temperature": LLM_TEMPERATURE,
     }
-    if force_json:
-        payload["response_format"] = {"type": "json_object"}
 
     for attempt in range(MAX_RETRIES + 1):
         try:
-            r = requests.post(url, headers=headers, json=payload, timeout=120)
+            # Increased timeout for intensive high-res image reasoning
+            r = requests.post(url, headers=headers, json=payload, timeout=300)
             if r.status_code == 429:
                 wait = min(2 ** attempt * 5, 60)
                 logger.warning("[OpenAI] Rate limit hit. Waiting %ds...", wait)
                 time.sleep(wait)
                 continue
             r.raise_for_status()
-            content = r.json()["choices"][0]["message"].get("content", "")
-            if content.strip():
+            choice = r.json()["choices"][0]
+            content = choice["message"].get("content")
+            if content and content.strip():
                 return content
+            logger.warning("[OpenAI] Empty content detected. Finish reason: %s, Refusal: %s", 
+                           choice.get("finish_reason"), choice["message"].get("refusal"))
         except Exception as e:
             logger.warning("[OpenAI] Call failed (attempt %d): %s", attempt + 1, e)
             if attempt < MAX_RETRIES:
@@ -175,7 +190,7 @@ def _build_model_chain() -> List[str]:
     return chain
 
 
-def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json: bool = True) -> str:
+def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json: bool = True, base64_image: Optional[str] = None) -> str:
     """Call Ollama chat API with automatic model fallback."""
     url = f"{OLLAMA_BASE_URL.rstrip('/')}/api/chat"
     models_to_try = [model] if model else _build_model_chain()
@@ -185,11 +200,15 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
         if "qwen3" in model_name.lower():
             effective_system = "/no_think\n" + system
 
+        msg = {"role": "user", "content": user}
+        if base64_image:
+            msg["images"] = [base64_image]
+
         payload = {
             "model": model_name,
             "messages": [
                 {"role": "system", "content": effective_system},
-                {"role": "user", "content": user},
+                msg,
             ],
             "stream": False,
             "options": {"temperature": LLM_TEMPERATURE, "num_predict": 4096},
@@ -201,8 +220,8 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
             try:
                 r = requests.post(url, json=payload, timeout=OLLAMA_TIMEOUT)
                 r.raise_for_status()
-                content = (r.json().get("message") or {}).get("content") or ""
-                if content.strip():
+                content = (r.json().get("message") or {}).get("content")
+                if content and content.strip():
                     return content
                 logger.warning("[%s] Empty response (attempt %d)", model_name, attempt + 1)
             except requests.exceptions.Timeout:
@@ -232,7 +251,7 @@ def clean_hw_id(raw_id: str) -> str:
     s = s.strip('. -')
     return s
 
-def _llm_chat(system: str, user: str, force_json: bool = True) -> str:
+def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None) -> str:
     """
     Call the configured LLM provider.
     Uses runtime llm_config overrides (from Streamlit UI) if set.
@@ -241,9 +260,10 @@ def _llm_chat(system: str, user: str, force_json: bool = True) -> str:
     provider = llm_config.provider
 
     if provider == "openai":
-        model = llm_config.openai_model
+        model = "gpt-4o" if base64_image else llm_config.openai_model
+        
         logger.info("Using OpenAI (%s)", model)
-        ans = _openai_chat(system, user, force_json=force_json)
+        ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image)
         if ans:
             return ans
         logger.warning("OpenAI failed, falling back to Ollama")
@@ -251,13 +271,39 @@ def _llm_chat(system: str, user: str, force_json: bool = True) -> str:
     elif provider == "groq":
         model = llm_config.groq_model
         logger.info("Using Groq (%s)", model)
-        ans = _groq_chat(system, user, force_json=force_json)
+        ans = _groq_chat(system, user, force_json=force_json, base64_image=base64_image)
         if ans:
             return ans
         logger.warning("Groq failed, falling back to Ollama")
 
     logger.info("Using Ollama (%s)", llm_config.ollama_model)
-    return _ollama_chat(system, user, force_json=force_json)
+    return _ollama_chat(system, user, force_json=force_json, base64_image=base64_image)
+
+
+def _clean_json(s: str) -> str:
+    """
+    Attempt to repair common JSON issues from LLM output:
+    - Trailing commas
+    - Single quotes instead of double
+    - Unquoted keys
+    - Missing closing brackets
+    """
+    if not s: return ""
+    s = s.strip()
+    s = s.strip('`')
+    
+    # Remove trailing commas before } or ]
+    s = re.sub(r",\s*([}\]])", r"\1", s)
+
+    # Ensure closing bracket
+    open_brackets = s.count("[") - s.count("]")
+    if open_brackets > 0:
+        s += "]" * open_brackets
+    open_braces = s.count("{") - s.count("}")
+    if open_braces > 0:
+        s += "}" * open_braces
+
+    return s
 
 
 def _repair_json(raw: str) -> str:
@@ -454,12 +500,12 @@ def _extract_json_array(raw: str) -> List[dict]:
         return []
 
 
-def extract_doors_llm(system: str, user: str) -> List[dict]:
+def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None) -> List[dict]:
     """
     Call LLM for door extraction and return validated door rows.
     Applies deterministic pair detection.
     """
-    content = _llm_chat(system, user)
+    content = _llm_chat(system, user, base64_image=base64_image)
     if not content:
         return []
 
@@ -545,12 +591,12 @@ def extract_doors_llm(system: str, user: str) -> List[dict]:
     return out
 
 
-def extract_hardware_llm(system: str, user: str) -> List[dict]:
+def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = None) -> List[dict]:
     """
     Call LLM for hardware extraction and return validated component rows.
     Quantities are preserved AS-IS from the document.
     """
-    content = _llm_chat(system, user)
+    content = _llm_chat(system, user, base64_image=base64_image)
     if not content:
         return []
 
