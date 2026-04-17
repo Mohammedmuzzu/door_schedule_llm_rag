@@ -1165,3 +1165,76 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-17 10:56:33
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (44x6) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                      |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------------|
+| GROUP#1)                     |                              | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                        |
+|                              |                              | HINGE:                    |                                |                                |                        |
+|                      ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 11:08:02
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (40x7) ===
+| 0               | 1                           | 2                           | 3                           | 4                           | 5                           | 6                   |
+|:----------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:--------------------|
+|                 | GROUP#1)                    | CROUP BORDO                 | GROUP 5SA                   | CROUP#                      | CROUP#                      |                     |
+|                 |                             |                             | DQ x ALUM                   |                             |                             |          ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 1)
+- **Timestamp:** 2026-04-17 11:44:55
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (79×35) ===
+|  |  |  |  |  | 4 |  |  |  |  |  |  | 3 |  |  |  |  | 2 |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |
+|  | DO | OR TYPES |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2100 Travis St Suite 501 | reet, |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Houston, Texa 713.224.0456 | s 77002 |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 713.224.0457 | fax |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | www.powersb | rown.com ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 2)
+- **Timestamp:** 2026-04-17 11:45:31
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (71×18) ===
+|  |  | Set: 1.0 |  |  |  |  |  |  | Set: 23.0 |  |  |  |  |  |  | 71 | 3.224.0457 fax |
+|  |  | Description: Sg | l - Non Ra | ted - Office - | Interior |  |  |  | Description: Sg | l - Rated - | Conf - Interio | r |  |  |  | ww | w.powersbrown.com |
+|  |  | 4 Hinge, F | ull Mortise | TA2714 4-1/ | 2" x 4-1/2" | (NRP) | US26D | MK | 4 Hinge, F | ull Mortise | TA2714 4-1/ | 2" x 4-1/2" (N | RP) US26D MK |  |  |  |  |
+|  |  | 1 Entry Lo | ck TSR3 | 8807RL | 626 YA |  |  |  | 1 Passage | Latch | TSR3 8801R | L 626 | P YA | ROJE | CT TITLE |  |  |
+|  | D | 1 Door Sto | p 446 | US26D | RO |  |  |  | 1 Conceal | ed Closer | 91N 689 | RF |  |  | FR | ACHT TI |  |
+|  |  | 3 Silencer | as req | uired. | RO |  |  |  | 1 Door Sto | p 446 | US26D | RO...
+[TRUNCATED]
+```
+---
