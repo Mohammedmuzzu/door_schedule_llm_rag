@@ -653,11 +653,18 @@ def extract_structured_page(
         logger.warning(f"Failed to render Vision RAG image for page {page_idx+1}: {e}")
 
     # ── Step 1: Try native text extraction (fast, no OCR) ──
-    pymupdf_md = _extract_pymupdf4llm(pdf_path, page_idx)
-    if pymupdf_md:
-        backends_used.append("pymupdf4llm")
-
+    # First get plain text length to determine complexity
     plumber_tables, plumber_text = _extract_pdfplumber(pdf_path, page_idx)
+    raw_text_len = len(plumber_text or "")
+    
+    pymupdf_md = ""
+    # Avoid GNN markdown table rendering on massive dense schedules (A0 size prints).
+    # pymupdf4llm's neural engine massively hallucinates staggered columns in complex drawings.
+    if raw_text_len < 10000:
+        pymupdf_md = _extract_pymupdf4llm(pdf_path, page_idx)
+        if pymupdf_md:
+            backends_used.append("pymupdf4llm")
+            
     if plumber_tables:
         backends_used.append("pdfplumber_tables")
     if plumber_text:
