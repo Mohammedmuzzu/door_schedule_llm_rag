@@ -47,8 +47,8 @@ def main():
     pdf_dir = Path(r"C:\Users\muzaf\my_lab\sushmita_proj\pdfs")
     all_pdfs = discover_pdfs(str(pdf_dir))
     
-    target_pdfs = [(p, p_id) for p, p_id in all_pdfs if p_id == "project_9"]
-    print(f"Found {len(target_pdfs)} target PDFs.")
+    target_pdfs = all_pdfs
+    print(f"Found {len(target_pdfs)} total PDFs to QA test.")
     
     results = []
     
