@@ -680,8 +680,9 @@ def extract_structured_page(
         # this downscaling crushes text into 2-pixel blurs.
         # When gpt-4o tries to map the text prompt against a blurred image, it fails and returns []
         # Since we have full machine text, we drop the image entirely to force pure semantic extraction!
-        if native_text_len > 8000:
-            logger.info("Page %d: Text volume is massively dense (>8000 chars). Dropping image payload to prevent Vision-downscale blurring.", page_idx + 1)
+        # Note: native_text_len sums 3 separate text backends, so 20,000 roughly equals ~7000 chars of actual density.
+        if native_text_len > 20000:
+            logger.info("Page %d: Text volume is massively dense (>20000 backend chars). Dropping image payload to prevent Vision blurs.", page_idx + 1)
             base64_img = None
     else:
         # PDF appears flattened/scanned → run img2table WITH OCR

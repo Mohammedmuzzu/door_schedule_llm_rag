@@ -130,9 +130,9 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
         ]
 
-    # Smart escalation: If the table string is massively dense (>10,000 chars), 
+    # Smart escalation: If the table string is dense (>5,000 chars), 
     # we force gpt-4o for pure text semantic mapping even if there's no image.
-    active_model = "gpt-4o" if (base64_image or len(user_text) > 10000) else OPENAI_MODEL
+    active_model = "gpt-4o" if (base64_image or len(user) > 5000) else OPENAI_MODEL
     payload = {
         "model": active_model,
         "messages": [
