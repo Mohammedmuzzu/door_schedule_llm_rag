@@ -673,6 +673,16 @@ def extract_structured_page(
         # Bypass img2table entirely to prevent visual table detectors from ruining the text formatting.
         logger.info("Page %d: Machine-generated PDF detected (%d chars). Relying purely on vector extraction.",
                     page_idx + 1, native_text_len)
+        
+        # OPENAI VISION BUG-FIX:
+        # OpenAI automatically downscales large images to 768x2000px.
+        # On massive A0 architectural prints with 50+ rows (like Project 9), 
+        # this downscaling crushes text into 2-pixel blurs.
+        # When gpt-4o tries to map the text prompt against a blurred image, it fails and returns []
+        # Since we have full machine text, we drop the image entirely to force pure semantic extraction!
+        if native_text_len > 2000:
+            logger.info("Page %d: Text volume is very high. Dropping image payload to prevent Vision-downscale blurring.", page_idx + 1)
+            base64_img = None
     else:
         # PDF appears flattened/scanned → run img2table WITH OCR
         logger.info("Page %d: No native text found. Using optical img2table fallback.",

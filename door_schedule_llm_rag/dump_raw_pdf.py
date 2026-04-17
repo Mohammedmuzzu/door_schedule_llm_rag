@@ -2,7 +2,7 @@ import pdfplumber
 from pathlib import Path
 
 def dump_text():
-    pdf_path = Path(r"C:\Users\muzaf\my_lab\sushmita_proj\pdfs\project 1_less10doors.pdf")
+    pdf_path = Path(r"C:\Users\muzaf\my_lab\sushmita_proj\pdfs\Project -9_lessthan10doors\Project -9\Door Schedule and Hardware Set.pdf")
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[0]
         text = page.extract_text()

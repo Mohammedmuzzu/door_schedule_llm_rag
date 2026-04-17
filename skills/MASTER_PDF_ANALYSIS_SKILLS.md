@@ -1108,3 +1108,60 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 1)
+- **Timestamp:** 2026-04-17 10:19:13
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (79×35) ===
+|  |  |  |  |  | 4 |  |  |  |  |  |  | 3 |  |  |  |  | 2 |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |
+|  | DO | OR TYPES |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2100 Travis St Suite 501 | reet, |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Houston, Texa 713.224.0456 | s 77002 |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 713.224.0457 | fax |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | www.powersb | rown.com ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 1)
+- **Timestamp:** 2026-04-17 10:34:06
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (79×35) ===
+|  |  |  |  |  | 4 |  |  |  |  |  |  | 3 |  |  |  |  | 2 |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |
+|  | DO | OR TYPES |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2100 Travis St Suite 501 | reet, |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Houston, Texa 713.224.0456 | s 77002 |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 713.224.0457 | fax |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | www.powersb | rown.com ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule and Hardware Set.pdf (Page 1)
+- **Timestamp:** 2026-04-17 10:38:38
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (79×35) ===
+|  |  |  |  |  | 4 |  |  |  |  |  |  | 3 |  |  |  |  | 2 |  |  |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |
+|  | DO | OR TYPES |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2100 Travis St Suite 501 | reet, |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | Houston, Texa 713.224.0456 | s 77002 |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 713.224.0457 | fax |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | www.powersb | rown.com ...
+[TRUNCATED]
+```
+---
