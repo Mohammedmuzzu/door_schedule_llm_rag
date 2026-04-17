@@ -1054,3 +1054,57 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 02:36:58
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 03:32:00
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 03:35:09
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---

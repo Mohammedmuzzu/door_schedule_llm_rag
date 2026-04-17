@@ -47,15 +47,22 @@ def embed(texts: List[str]) -> List[List[float]]:
     return model.encode(texts, show_progress_bar=False).tolist()
 
 
+_chroma_client = None
+
 def get_client():
+    global _chroma_client
     if not _RAG_AVAILABLE:
         return None
+    if _chroma_client is not None:
+        return _chroma_client
+        
     path = os.path.join(RAG_DATA_DIR, "chroma")
     Path(path).mkdir(parents=True, exist_ok=True)
-    return chromadb.PersistentClient(
+    _chroma_client = chromadb.PersistentClient(
         path=path,
         settings=Settings(anonymized_telemetry=False),
     )
+    return _chroma_client
 
 
 def seed_door_instructions() -> int:
@@ -67,6 +74,7 @@ def seed_door_instructions() -> int:
     collection = client.get_or_create_collection(
         name=CHROMA_COLLECTION_DOOR,
         metadata={"description": "Door schedule extraction rules and examples"},
+        embedding_function=None, # Prevents chromadb from auto-loading its own transformers model
     )
 
     path = INSTRUCTIONS_DIR / "door_schedule_rules.md"
@@ -96,6 +104,7 @@ def seed_hardware_instructions() -> int:
     collection = client.get_or_create_collection(
         name=CHROMA_COLLECTION_HARDWARE,
         metadata={"description": "Hardware schedule extraction rules and examples"},
+        embedding_function=None, # Prevents chromadb from auto-loading its own transformers model
     )
 
     path = INSTRUCTIONS_DIR / "hardware_schedule_rules.md"
@@ -123,7 +132,7 @@ def query_door_instructions(page_text: str, top_k: Optional[int] = None) -> List
         return []
 
     try:
-        collection = client.get_collection(name=CHROMA_COLLECTION_DOOR)
+        collection = client.get_collection(name=CHROMA_COLLECTION_DOOR, embedding_function=None)
     except Exception:
         return []
 
@@ -150,7 +159,7 @@ def query_hardware_instructions(page_text: str, top_k: Optional[int] = None) -> 
         return []
 
     try:
-        collection = client.get_collection(name=CHROMA_COLLECTION_HARDWARE)
+        collection = client.get_collection(name=CHROMA_COLLECTION_HARDWARE, embedding_function=None)
     except Exception:
         return []
 

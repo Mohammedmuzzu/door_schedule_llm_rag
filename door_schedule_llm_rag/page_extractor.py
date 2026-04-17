@@ -11,6 +11,7 @@ maximum context with minimum noise.
 """
 import logging
 import re
+import base64
 from pathlib import Path
 from typing import List, Optional, Tuple, Dict
 
@@ -621,7 +622,7 @@ def extract_structured_page(
     page_idx: int,
     max_chars: int = 14000,
     prev_page_type: Optional[str] = None,
-) -> Tuple[str, str, bool]:
+) -> Tuple[str, str, bool, Optional[str]]:
     """
     Extract page content using ALL available backends, merge best results.
 
@@ -637,6 +638,19 @@ def extract_structured_page(
     """
     pdf_path = Path(pdf_path)
     backends_used = []
+    base64_img = None
+
+    # ── Step 0: Render Page Image for Vision RAG ──
+    try:
+        import pymupdf
+        doc = pymupdf.open(str(pdf_path))
+        page = doc[page_idx]
+        pix = page.get_pixmap(dpi=150)
+        img_bytes = pix.tobytes("jpeg")
+        base64_img = base64.b64encode(img_bytes).decode("utf-8")
+        doc.close()
+    except Exception as e:
+        logger.warning(f"Failed to render Vision RAG image for page {page_idx+1}: {e}")
 
     # ── Step 1: Try native text extraction (fast, no OCR) ──
     pymupdf_md = _extract_pymupdf4llm(pdf_path, page_idx)
@@ -669,7 +683,7 @@ def extract_structured_page(
         backends_used.append("img2table")
 
     if not backends_used:
-        return "", PageType.OTHER, False
+        return "", PageType.OTHER, False, base64_img
 
     logger.info("Page %d backends: %s", page_idx + 1, ", ".join(backends_used))
 
@@ -684,7 +698,7 @@ def extract_structured_page(
         content = plumber_text[:max_chars] if plumber_text else pymupdf_md[:max_chars]
 
     if not content or len(content.strip()) < 30:
-        return "", PageType.OTHER, False
+        return "", PageType.OTHER, False, base64_img
 
     # ── Step 3b: CID font corruption fallback ──
     # pdfplumber can't decode CID-mapped fonts and produces "(cid:XX)" garbage.
@@ -714,7 +728,7 @@ def extract_structured_page(
     page_type = classify_page(content)
     is_continuation = detect_continuation(content, prev_page_type)
 
-    return content, page_type, is_continuation
+    return content, page_type, is_continuation, base64_img
 
 
 def get_page_count(pdf_path: Path) -> int:
