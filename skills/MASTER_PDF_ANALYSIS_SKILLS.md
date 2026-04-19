@@ -1599,3 +1599,181 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-17 16:52:29
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (44x6) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                      |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------------|
+| GROUP#1)                     |                              | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                        |
+|                              |                              | HINGE:                    |                                |                                |                        |
+|                      ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 17:08:11
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (40x7) ===
+| 0               | 1                           | 2                           | 3                           | 4                           | 5                           | 6                   |
+|:----------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:----------------------------|:--------------------|
+|                 | GROUP#1)                    | CROUP BORDO                 | GROUP 5SA                   | CROUP#                      | CROUP#                      |                     |
+|                 |                             |                             | DQ x ALUM                   |                             |                             |          ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-17 17:12:21
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (37×30) ===
+| DOOR SCHEDULE PANEL INFORMATION LOCK FUNCTION HINGES ACCESSORIES DETAILS (REFER  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| 100A VE | STIBULE | EXTERIOR | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | 5 | X |  |  |  |  |  | X |  |  | X | X |  | X |  | X | X |  |  |
+| 100B LO | BBY | VESTIBULE | 7' - 0" 7' - 1 | 0" 1 3/4" | 2 | ALUMINUM FRAMED ENTRANCE | ALUMINUM |  | 15 | 14 | - |  |  |  |  |  |  |  |  |  | X | X |  | X |  |  |  |  | NO LATCH OR LOCK |
+| 101B LO | BBY | PROJECTION/STORAGE | 3' - 0" 7' - 1 | 0" 1 3/4" | 1 | SOLID CORE WOOD FLUSH | HOLLOW METAL |  | 2 | 1 | - |  |  |  | X | X |  |  | 4 |  |  |  |  | X |  |  |  |  |  |
+| 102 LO | BBY | BOTT...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-17 17:44:14
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-17 17:57:17
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-19 21:42:28
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-19 21:46:01
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A8.0 - Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-19 22:00:00
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (41x8) ===
+| 0               | 1               | 2                            | 3                            | 4                           | 5                            | 6                            | 7                   |
+|:----------------|:----------------|:-----------------------------|:-----------------------------|:----------------------------|:-----------------------------|:-----------------------------|:--------------------|
+|                 |                 | GROUP#1)                     | CROUP BORDO                  | GROUP 5SA                   | CROUP#                       | CROUP#                       |                     |
+|                 |                 |                              |                              | DQ x ALUM    ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-19 23:08:14
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: project4_lessthan10door.pdf (Page 1)
+- **Timestamp:** 2026-04-19 23:09:40
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (48x7) ===
+| 0                            | 1                            | 2                         | 3                              | 4                              | 5                | 6     |
+|:-----------------------------|:-----------------------------|:--------------------------|:-------------------------------|:-------------------------------|:-----------------|:------|
+| GROUP#1)                     | GROUP #ORDOR                 | GROUP#5A                  | GROUP#9                        | GROUP#9                        |                  |       |
+|                              |                              | HINGE:                    |                                |                                |                  |       |
+|              ...
+[TRUNCATED]
+```
+---

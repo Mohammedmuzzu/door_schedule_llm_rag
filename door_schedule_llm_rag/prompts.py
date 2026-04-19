@@ -57,6 +57,10 @@ CRITICAL RULES:
     - Column with single digits "1", "2", "3" near the end of the table → hardware_set
     - Column with "45 MIN", "1 HR", "20 MIN", "----" → fire_rating
     CRITICAL: "PR" next to a door mark means "PAIR" (door_type), NOT a room name. Room names are words like "OFFICE", "CORRIDOR", "STORAGE", "WOMEN", "MEN", "ELECTRICAL".
+    18. COLUMN MAPPING: "ELEVATION" -> `elevation` | "PT" or "PAINT" under finish column -> `door_finish` or `frame_finish` depending on context. Wait, no you must ALWAYS use Standard Fields if possible.
+19. CRITICAL FRAGMENTED TABLE RULE: If you encounter an excessively fragmented table with 20-35 arbitrary vertical pipe borders (e.g., `| 100A VE | STIBULE | EXTERIOR | 7' - 0" ...`), you MUST NOT SKIP IT. You must visually merge the horizontal fragments across the pipes to reconstruct the physical row! Do NOT drop these doors.
+20. CRITICAL ANTI-REFUSAL RULE: NEVER reply with "I'm unable to process the image directly". You are provided with both the raw text and the reference image. If the image is dense or difficult, rely ENTIRELY on the provided raw OCR text in the prompt to extract the JSON. You must ALWAYS return a JSON response.
+21. MISSING SCHEMA RULE: If a specific dimension, material, or finish property (e.g., `elevation`, `door_finish`, `frame_finish`, `door_thickness`) is physically ABSENT from the architectural drawing, do NOT omit the JSON key! You MUST include the key and set its value exactly to "N/A" (e.g. `"elevation": "N/A"`). This ensures strict relational database integrity.
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
 - door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. CRITICAL BORDERLESS RULE: If the table has no borders and the text crashes together (e.g., "MARK MAIN ENTRY 100" or "FINANCE 208"), you MUST identify the isolated purely numeric or alphanumeric string (e.g., "100", "208") as the door_number, and the descriptive text words as the room_name. NEVER invert this relationship just because the room name appears first sequentially.
@@ -83,7 +87,7 @@ INPUT FORMAT:
 1. TABLES with columns like Qty, Unit, Description, Catalog No., Finish, Manufacturer.
 2. PLAIN TEXT with hardware set headers ("HARDWARE SET NO. X", "GROUP X") followed by component lines.
 3. Mixed layouts combining both. Hardware sets might be in continuous vertical lists, Custom nested forms, or injected directly underneath a door type profile without a generic "HARDWARE SET NO" heading.
-4. TWO-COLUMN SIDE-BY-SIDE LAYOUTS. The data scraper might crush two hardware sets horizontally into the same line. Wait and look carefully! E.g. "Set: 1.0 Set: 23.0" followed by "4 HINGE  4 HINGE". You MUST mentally slice the text block horizontally down the middle, separating the left column from the right column, and extract both sets!
+4. MULTI-COLUMN SIDE-BY-SIDE LAYOUTS. The data scraper might crush multiple hardware sets horizontally into the same line (e.g., 2, 3, 4, or 5 sets side-by-side in a table header). Wait and look carefully! E.g. "| GROUP#1)  | GROUP#2  | GROUP#3 |" followed by their components spread across columns. You MUST mentally slice the text block horizontally, separating all parallel columns, and extract ALL sets!
 
 """ + hardware_schema_for_prompt() + """
 CRITICAL RULES:
@@ -93,7 +97,7 @@ CRITICAL RULES:
 4. When you see "HARDWARE SET NO. X", "GROUP X", or "Set X —", that starts a new set. 
    All following components belong to that set until the NEXT set header.
    NOTE: If a group of hardware is embedded directly under a Door profile without a formal set ID, you MUST synthesize a surrogate hardware_set_id (e.g., "HW-TypeA" or "1"). Do NOT drop valid hardware just because a formal ID string is missing.
-   CRITICAL MULTI-COLUMN RULE: If the text is formatted as two parallel columns (e.g., "Set 1" is typed on the left, and "Set 23" is typed on the exact same line on the right), do NOT bundle the whole line under one set. You MUST carefully split each line horizontally. Extract all components for the left-hand set, and ALSO extract all components for the right-hand set!
+   CRITICAL MULTI-COLUMN RULE: If the text is formatted as multiple parallel columns (e.g., "Set 1" in col 1, "Set 2" in col 2, "Set 3" in col 3), do NOT bundle the whole row under one set. You MUST carefully split each line horizontally. Extract all components for EVERY column distinctly!
 5. Every object MUST have hardware_set_id, qty, and description.
 6. Extract qty EXACTLY as stated in the document. Quantities might appear as `(3 EA.)`, `1-1/2 PAIRS`, or `LOT`. Reduce these to verbatim strings or strictly parsed integers.
    The document already accounts for pair/single door configurations in its quantities.
@@ -106,6 +110,8 @@ CRITICAL RULES:
 13. Do NOT do any arithmetic on quantities — extract them verbatim.
 14. Any attribute that doesn't fit standard fields must go into `extra_fields`.
 15. Your response MUST start with { and end with }. No other text allowed.
+16. CRITICAL ANTI-REFUSAL RULE: NEVER reply with "I'm unable to process the image directly". You are provided with both the raw text and the reference image. If the image is dense or difficult, rely ENTIRELY on the provided raw OCR text to extract the JSON. You must ALWAYS return a JSON response.
+17. MISSING SCHEMA RULE: If a standard property (e.g. finish_code, manufacturer_code, catalog_number) is completely absent, specify its value exactly as "N/A" rather than omitting the JSON key.
 
 MANDATORY FIELD EXTRACTION — You MUST extract these fields:
 - hardware_set_id: The set identifier. CRITICAL: You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A", "Group C" -> "C", "Set 0.1" -> "0.1") so it can securely join the Door table database. MANDATORY CONTEXT TRACKING: Hardware Sets are strictly demarcated by section headers (e.g., SET 4.0, SET 5.0). You MUST carefully read these block headers and update the hardware_set_id for all components beneath it. NEVER blindly clone previous set IDs across distinct blocks. If the hardware set header is completely lacking an alphanumeric ID and is only identified by a functional description (e.g., "BUILDING ENTRY", "ALUM STOREFRONT"), you MUST synthesize a format-safe surrogate ID prefixed with "HW-" (e.g., "HW-BUILDING_ENTRY"). Do NOT attempt to map descriptive hardware sets to integer numbers unless explicitly listed in the text. PRECEDENCE RULE: If the header contains multiple numbers (e.g., "HARDWARE GROUP NO. 01 (103)"), you MUST prioritize the primary sequential identifier ("01" -> "1") and IGNORE numbers in parentheses.
