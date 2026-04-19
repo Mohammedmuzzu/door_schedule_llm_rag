@@ -123,10 +123,10 @@ def extract_page_with_llm(
             # Retry if empty and page looks like it has door data
             if not doors and retry_with_hint and len(text) > 200:
                 hint = (
-                    "\n\nNOTE: The previous extraction returned no results. "
-                    "This may be a borderless table or unusual layout. "
-                    "Look harder for door numbers (3-4 digit numbers, possibly with letter suffix) "
-                    "and extract every door row you can identify."
+                    "\n\nCRITICAL CORRECTIVE ACTION: This is likely a BORDERLESS profile list "
+                    "(e.g. 'DRY STORAGE 105 3-0 8-10 Alum'). You MUST visually identify the isolated physical door "
+                    "numbers (like 105, 106, 208) even if there are no table borders, and extract every row. "
+                    "In inline text, the room name often comes before the door number; parse it properly."
                 )
                 door_prompt2 = build_door_prompt(
                     door_chunks, text + hint,
@@ -167,8 +167,8 @@ def extract_page_with_llm(
                     hint = (
                         f"\n\nCRITICAL CORRECTIVE ACTION: The previous extraction missed data. "
                         f"You extracted {len(extracted_set_ids)} unique sets, but there are structural markers indicating up to {expected_sets} sets in this block. "
-                        "If there is a TWO-COLUMN LAYOUT (side-by-side sets on the same line), "
-                        "you MUST split them horizontally and extract the right side as well! Do not drop data."
+                        "If there is a MULTI-COLUMN LAYOUT (side-by-side sets on the same line, e.g. GROUP#1  GROUP#2  GROUP#3), "
+                        "you MUST mentally split them horizontally! Extract ALL parallel sets distinctly. Do not drop data."
                     )
                 else:
                     hint = (

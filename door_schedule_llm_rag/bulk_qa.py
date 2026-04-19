@@ -96,7 +96,7 @@ def main():
                 "schema_score": schema_score,
                 "recall": execution_recall,
                 "missing_cols": ", ".join(missing_cols),
-                "status": "✅" if not missing_cols and door_count > 0 else "⚠️"
+                "status": "✅" if not missing_cols and (door_count > 0 or len(hw_set_ids) > 0) else "⚠️"
             })
             print(f"  ✅ Done. Extracted: {door_count} Doors, {len(hw_set_ids)} HW Sets (Recall: {execution_recall})")
             

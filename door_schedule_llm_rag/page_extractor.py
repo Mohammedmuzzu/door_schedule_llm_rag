@@ -45,6 +45,7 @@ except ImportError:
 
 _IMG2TABLE_OK = False
 _img_ocr = None
+_raw_paddle_ocr = None  # Raw paddleocr engine for direct text extraction
 try:
     from img2table.document import PDF as Img2TablePDF
     _IMG2TABLE_OK = True
@@ -53,6 +54,11 @@ try:
         _img_ocr = PaddleOCR(lang="en")
     except Exception as e:
         logger.warning("OCR disabled because PaddleOCR failed to initialize: %s", e)
+    try:
+        from paddleocr import PaddleOCR as RawPaddleOCR
+        _raw_paddle_ocr = RawPaddleOCR(use_angle_cls=True, lang='en', show_log=False)
+    except Exception as e:
+        logger.warning("Raw PaddleOCR unavailable for direct fallback: %s", e)
 except ImportError:
     logger.info("img2table not available")
 
@@ -336,29 +342,83 @@ def _extract_img2table(pdf_path: Path, page_idx: int, use_ocr: bool = False) -> 
         ocr_engine = _img_ocr if use_ocr else None
         tables = pdf_doc.extract_tables(
             ocr=ocr_engine,
-            implicit_rows=True,
-            borderless_tables=True,
+            implicit_rows=False,
+            borderless_tables=False,
         )
 
-        if not tables or page_idx not in tables:
-            return ""
-
-        page_tables = tables[page_idx]
-        if not page_tables:
-            return ""
-
         parts = []
-        for t_idx, extracted_table in enumerate(page_tables):
+        if tables and page_idx in tables:
+            page_tables = tables[page_idx]
+            if page_tables:
+                for t_idx, extracted_table in enumerate(page_tables):
+                    try:
+                        # img2table returns ExtractedTable objects
+                        df = extracted_table.df
+                        if df is not None and not df.empty and len(df) >= 2:
+                            n_r, n_c = df.shape
+                            if 1 < n_c <= 20:  # Quality filter: MUST be > 1 column
+                                md = df.to_markdown(index=False)
+                                parts.append(f"=== IMG2TABLE ({n_r}x{n_c}) ===\n{md}")
+                    except Exception:
+                        pass
+        
+        # ── NATIVE OPTICAL TEXT FALLBACK ──
+        # If OpenCV failed to find any rigid borders (e.g. sparse hardware sets),
+        # extract pure unstructured text directly using raw PaddleOCR bounding boxes
+        # sorted by Y-axis (top-to-bottom) then X-axis (left-to-right).
+        if not parts and use_ocr and _raw_paddle_ocr is not None:
+            logger.info("img2table found 0 structured tables. Deploying pure PaddleOCR text extraction...")
             try:
-                # img2table returns ExtractedTable objects
-                df = extracted_table.df
-                if df is not None and not df.empty and len(df) >= 2:
-                    n_r, n_c = df.shape
-                    if 1 < n_c <= 20:  # Quality filter: MUST be > 1 column
-                        md = df.to_markdown(index=False)
-                        parts.append(f"=== IMG2TABLE ({n_r}x{n_c}) ===\n{md}")
-            except Exception:
-                pass
+                import pymupdf
+                import numpy as np
+                import cv2
+                
+                doc = pymupdf.open(str(pdf_path))
+                page = doc[page_idx]
+                pix = page.get_pixmap(dpi=150)
+                img_bytes = pix.tobytes("png")
+                
+                nparr = np.frombuffer(img_bytes, np.uint8)
+                img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+                
+                res = _raw_paddle_ocr.ocr(img, cls=True)
+                if res and isinstance(res, list) and res[0]:
+                    flattened = []
+                    for bbox in res[0]:
+                        coords = bbox[0]
+                        txt, conf = bbox[1]
+                        if conf < 0.3:  # Filter low-confidence garbage
+                            continue
+                        y_center = (coords[0][1] + coords[2][1]) / 2
+                        x_center = (coords[0][0] + coords[1][0]) / 2
+                        flattened.append((y_center, x_center, txt))
+                    
+                    if flattened:
+                        # Sort by Y (row grouping with 15px tolerance), then X (left-to-right)
+                        flattened.sort(key=lambda item: (round(item[0] / 15), item[1]))
+                        
+                        current_y_group = -1
+                        lines = []
+                        current_line = []
+                        for y, x, txt in flattened:
+                            y_group = round(y / 15)
+                            if y_group != current_y_group and current_line:
+                                lines.append("    ".join(current_line))
+                                current_line = []
+                                current_y_group = y_group
+                            elif current_y_group == -1:
+                                current_y_group = y_group
+                            current_line.append(txt)
+                            
+                        if current_line:
+                            lines.append("    ".join(current_line))
+                            
+                        fallback_text = "\n".join(lines)
+                        parts.append(f"=== PURE OPTICAL TEXT SEQUENCE ===\n{fallback_text}")
+                        logger.info("PaddleOCR fallback produced %d lines, %d chars", len(lines), len(fallback_text))
+                        
+            except Exception as e:
+                logger.error("Optical text sequence fallback failed: %s", e)
 
         return "\n\n".join(parts)
     except Exception as e:
