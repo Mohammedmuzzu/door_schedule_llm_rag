@@ -82,7 +82,7 @@ def classify_page(text: str) -> str:
     # 1. Fast Gatekeeper (Heuristic)
     # If the page has absolutely no architectural schedule terminology, skip it Instantly (0s).
     # This prevents sending 800 pages of plumbing/electrical diagrams to the LLM.
-    if not any(kw in upper for kw in ("DOOR", "HARDWARE", "HDWR", "FRAME", "OPENING")):
+    if not any(kw in upper for kw in ("DOOR", "HARDWARE", "HDWR", "HDWE", "HW", "FRAME", "OPENING", "SCHED")):
         return PageType.OTHER
 
     # 2. The Smart LLM Arbiter
@@ -128,16 +128,10 @@ def classify_page(text: str) -> str:
         # hardware component signatures that the LLM might have missed.
         # This catches mixed-content PDFs where hardware is in the middle of the document.
         if page_type == PageType.DOOR_SCHEDULE:
-            hw_component_keywords = ("BUTT HINGE", "SURFACE CLOSER", "FLOOR STOP", 
-                                     "WALL STOP", "LOCKSET", "DEADBOLT", "KICK PLATE",
-                                     "THRESHOLD", "DOOR STOP")
-            hw_manufacturer_keywords = ("MCKINNEY", "YALE", "NORTON", "ROCKWOOD", 
-                                        "SARGENT", "IVES", "PEMKO", "TRIMCO", "LCN",
-                                        "SCHLAGE", "BEST", "HAGER", "STANLEY")
-            has_hw_components = sum(1 for kw in hw_component_keywords if kw in upper) >= 2
-            has_hw_manufacturers = any(mfr in upper for mfr in hw_manufacturer_keywords)
-            if has_hw_components and has_hw_manufacturers:
-                logger.info("Deterministic upgrade: DOOR → MIXED (found hardware components + manufacturers in full text)")
+            has_hw_components = len(re.findall(r"(?:BUTT HINGE|SURFACE CLOSER|FLOOR STOP|WALL STOP|LOCKSET|DEADBOLT|KICK PLATE|THRESHOLD|DOOR STOP)", upper)) >= 2
+            has_hw_sets = len(re.findall(r"(?:SET|GROUP|HW|HDWE|HARDWARE)\s*(?:NO\.?|#)?\s*[\w\d]+", upper)) >= 2
+            if has_hw_components or has_hw_sets:
+                logger.info("Deterministic upgrade: DOOR → MIXED (found hardware sets or components in full text)")
                 page_type = PageType.MIXED
         
         return page_type
@@ -731,8 +725,67 @@ def extract_structured_page(
         backends_used.append("pdfplumber_text")
 
     # ── Step 2: Decide if we need OCR/Image Table Parsing ──
-    native_text_len = len(pymupdf_md or "") + len(plumber_text or "") + len(plumber_tables or "")
-    is_machine_generated = native_text_len > 100  # Meaningful text found
+    combined_native = (pymupdf_md or "") + (plumber_text or "") + (plumber_tables or "")
+    native_text_len = len(combined_native)
+    
+    # Heuristic: Detect Optical Illusion Font Encoding Corruption
+    def _is_text_gibberish(text: str) -> bool:
+        if not text or len(text) < 100:
+            return False
+        if text.count("cid:") > 20 or text.count("(cid:") > 20:
+            return True
+        import string
+        valid_chars = sum(1 for c in text if c in string.ascii_letters + string.digits)
+        density = valid_chars / len(text)
+        vowels = sum(1 for c in text.lower() if c in 'aeiou')
+        vowel_density = vowels / max(1, valid_chars)
+        if density < 0.35 or vowel_density < 0.05:
+            return True
+        return False
+
+    is_corrupt = _is_text_gibberish(combined_native)
+    if is_corrupt:
+        logger.warning("Page %d: Optical Illusion Font Corruption detected (Gibberish). Forcing OCR bypass.", page_idx + 1)
+
+    # ── NEW: "Title Block Only" Detection ──
+    # Some A0 PDFs have the actual schedule rendered as flattened vector art,
+    # but the title block stamp at the edge IS machine-readable (300-1500 chars).
+    # The old threshold (100 chars) incorrectly classified these as "machine generated",
+    # preventing the OCR fallback from ever running.
+    # Fix: If native text is short AND lacks any door-number patterns, it's just a title block.
+    def _is_title_block_only(text: str, raw_text: str) -> bool:
+        """Detect if the extracted text is just a title block border stamp with no schedule data.
+        
+        Uses raw_text (plumber_text) as the primary signal because pdfplumber tables
+        often extract title block borders as fake tables, inflating char counts.
+        """
+        # Check raw text content (the actual paragraph text, not table extraction)
+        raw_len = len(raw_text or "")
+        if raw_len > 2000:
+            return False  # Substantial raw text content exists
+        
+        # Even if combined text is large, if raw text is tiny it's probably just border garbage
+        check_text = raw_text if raw_len > 50 else text
+        if len(check_text) > 3000:
+            return False
+            
+        # Check for door number patterns (101, 101A, D2, etc.)
+        door_nums = re.findall(r'\b\d{3,4}[A-Za-z]?\b', check_text)
+        # Filter out years
+        real_doors = [n for n in door_nums if not (1900 <= int(re.match(r'\d+', n).group()) <= 2099)]
+        if len(real_doors) >= 2:
+            return False  # Has door numbers, not just a title block
+        # Check for table structure keywords
+        table_kw = sum(1 for kw in ("WIDTH", "HEIGHT", "FRAME", "HINGE", "CLOSER", "LOCK", "SCHEDULE") if kw in check_text.upper())
+        if table_kw >= 2:
+            return False  # Has structural table keywords
+        return True  # Looks like just a title block
+
+    is_title_block = _is_title_block_only(combined_native, plumber_text) and not is_corrupt
+    if is_title_block:
+        logger.info("Page %d: Title-block-only text detected (%d chars, no schedule data). Will try OCR.", page_idx + 1, native_text_len)
+
+    is_machine_generated = native_text_len > 100 and not is_corrupt and not is_title_block
 
     img2table_md = ""
     if is_machine_generated:
@@ -752,8 +805,8 @@ def extract_structured_page(
             logger.info("Page %d: Text volume is massively dense (>20000 backend chars). Dropping image payload to prevent Vision blurs.", page_idx + 1)
             base64_img = None
     else:
-        # PDF appears flattened/scanned → run img2table WITH OCR
-        logger.info("Page %d: No native text found. Using optical img2table fallback.",
+        # PDF appears flattened/scanned OR title-block-only → run img2table WITH OCR
+        logger.info("Page %d: No native text found (or title-block-only). Using optical img2table fallback.",
                     page_idx + 1)
         img2table_md = _extract_img2table(pdf_path, page_idx, use_ocr=True)
 
@@ -797,13 +850,40 @@ def extract_structured_page(
         except Exception as e:
             logger.debug("fitz CID fallback failed: %s", e)
 
-    # ── Step 4: Fix CAD text corruption ──
+    # ── Step 4: Fix CAD text corruption BEFORE classification ──
+    # CRITICAL: These must run BEFORE classify_page() so reversed/PUA text
+    # doesn't confuse the LLM classifier into returning OTHER.
     content = _decode_pua_text(content)       # Decrypt PUA-encoded fonts
     content = _destutter_text(content)         # Collapse doubled bold characters
     content = _fix_reversed_text(content)      # Fix mirrored/reversed headers
 
     # Classify page
     page_type = classify_page(content)
+
+    # ── Deterministic Classification Backstop ──
+    # If the LLM classified as OTHER, but the text clearly has door schedule content,
+    # force override to MIXED. This catches cases where the text structure confuses
+    # the LLM classifier (e.g., malformed pdfplumber table grids).
+    if page_type == PageType.OTHER:
+        upper = content.upper()
+        has_schedule_kw = any(kw in upper for kw in (
+            "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "DOOR MARK", 
+            "HARDWARE SET", "HW SET", "HDWR SET", "FRAME TYPE",
+            "FIRE RATING", "DOOR TYPE",
+        ))
+        door_nums = re.findall(r'\b\d{3,4}[A-Za-z]?\b', content)
+        real_doors = [n for n in door_nums if not (1900 <= int(re.match(r'\d+', n).group()) <= 2099)]
+        has_dimensions = bool(re.search(r"\d+['\u2019]\s*-?\s*\d+\"", content))  # 3'-0" pattern
+        has_hw_components = any(kw in upper for kw in ("HINGE", "CLOSER", "LOCKSET", "DEADBOLT", "THRESHOLD", "DOOR STOP", "KICK PLATE"))
+        
+        # Aggressive backstop: multiple signals override the LLM
+        if (has_schedule_kw and (len(real_doors) >= 2 or has_dimensions)) or \
+           (len(real_doors) >= 5 and has_dimensions) or \
+           (len(real_doors) >= 3 and has_hw_components):
+            logger.warning("Page %d: LLM misclassified as OTHER but text has %d door-like numbers, dimensions=%s, hw=%s. Forcing MIXED.", 
+                          page_idx + 1, len(real_doors), has_dimensions, has_hw_components)
+            page_type = PageType.MIXED
+
     is_continuation = detect_continuation(content, prev_page_type)
 
     return content, page_type, is_continuation, base64_img

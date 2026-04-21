@@ -51,8 +51,8 @@ CHROMA_COLLECTION_HARDWARE = "hardware_schedule_instructions"
 RAG_TOP_K = int(os.environ.get("RAG_TOP_K", "3"))
 
 # ── Extraction Settings ──
-_env_max_chars = int(os.environ.get("MAX_PAGE_CHARS", "16000"))
-MAX_PAGE_CHARS = max(16000, _env_max_chars)
+_env_max_chars = int(os.environ.get("MAX_PAGE_CHARS", "35000"))
+MAX_PAGE_CHARS = max(35000, _env_max_chars)
 # Temperature for LLM calls (low = deterministic)
 LLM_TEMPERATURE = float(os.environ.get("LLM_TEMPERATURE", "0.05"))
 # Confidence threshold below which we retry extraction

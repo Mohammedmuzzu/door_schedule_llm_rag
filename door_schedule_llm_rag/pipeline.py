@@ -44,7 +44,7 @@ def log_anomaly_to_skills(pdf_name: str, page_idx: int, anomaly_type: str, raw_t
     Dynamically logs zero-extraction anomalies into the Master Skills documentation block 
     so the system is self-documenting regarding new architectural edge cases.
     """
-    skills_path = Path("c:/Users/muzaf/my_lab/sushmita_proj/skills/MASTER_PDF_ANALYSIS_SKILLS.md")
+    skills_path = Path(__file__).resolve().parent / "docs" / "EDGE_CASE_LOG.md"
     if not skills_path.exists():
         logger.warning("Agent Skills md missing! Unable to log anomaly.")
         return

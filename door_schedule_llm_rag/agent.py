@@ -139,7 +139,15 @@ def extract_page_with_llm(
             ctx.update_from_doors(doors)
 
         # ── Extract Hardware (if page has hardware content) ──
-        if page_type in (PageType.HARDWARE_SET, PageType.MIXED):
+        # Fallback: if classified as DOOR_SCHEDULE but text clearly has hardware sets, force extraction.
+        force_hardware = False
+        if page_type == PageType.DOOR_SCHEDULE:
+            has_hw_sets = len(re.findall(r"(?:SET|GROUP|HW|HDWE|HARDWARE)\s*(?:NO\.?|#)?\s*[\w\d]+", text.upper())) >= 2
+            has_components = len(re.findall(r"(?:HINGE|CLOSER|LOCK|DEADBOLT|STRIKE|THRESHOLD|WEATHERSTRIP)", text.upper())) >= 2
+            if has_hw_sets and has_components:
+                force_hardware = True
+                
+        if page_type in (PageType.HARDWARE_SET, PageType.MIXED) or force_hardware:
             hw_chunks = query_hardware_instructions(text) if use_rag else []
             hw_prompt = build_hardware_prompt(
                 hw_chunks, text,
