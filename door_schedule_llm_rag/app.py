@@ -14,8 +14,25 @@ from config import (
 from llm_extract import llm_config
 from pipeline import run_pipeline
 
-# Configure page
+# Configure page (MUST be the first Streamlit command)
 st.set_page_config(page_title="Door Schedule Extractor", layout="wide", page_icon="🚪")
+
+# ── Auto-seed RAG store on first launch ──
+# This ensures ChromaDB is populated from instructions/*.md even on fresh
+# deployments (e.g., Streamlit Cloud) where rag_data/ doesn't exist yet.
+@st.cache_resource
+def _auto_seed_rag():
+    """Seed RAG store once per server lifecycle."""
+    try:
+        from rag_store import seed_door_instructions, seed_hardware_instructions
+        n_door = seed_door_instructions()
+        n_hw = seed_hardware_instructions()
+        return f"RAG seeded: {n_door} door chunks, {n_hw} hardware chunks"
+    except Exception as e:
+        return f"RAG seeding skipped: {e}"
+
+_rag_status = _auto_seed_rag()
+
 st.title("🚪 Door & Hardware Schedule Extractor")
 
 # Hide Streamlit UI Chrome (Menu, Footer, Header)
