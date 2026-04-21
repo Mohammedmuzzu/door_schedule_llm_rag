@@ -1777,3 +1777,404 @@ Based on the provided metadata and text snippet, here's the analysis:
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: A5.20-DOOR-SCHEDULE,-DETAILS-_-WINDOW-DETAILS-Rev.0.pdf (Page 1)
+- **Timestamp:** 2026-04-20 00:48:02
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== PURE OPTICAL TEXT SEQUENCE ===
+DETAILS
+FRAME FINISH
+)escriptio
+JC02
+8-0    MANUR    MANU!    88    MANUF    MANUE    MANUE
+03/17/2025 ISSUE FOR PRICING
+' - 1 3/4'    02/A5.20
+OARDWARESHE
+AXALUM
+BLE ASTRAGALS, FARSWAR    TORY FINI
+oow  
+DOOR SCHED. NOTES20    DOOR ABBREVIATIONS    DOOR SCHEDULEo4
+LUDIC
+RED
+16' - 9 1/2
+ARCHITECTS
+FIBER GLASS DOOR FRAME
+TYPICAL PERFORATED SCREEN    1/4" = 1'-015    DOOR FRAMES    DOOR TYPES    /4"=1-003
+5.5)6 (6.1    PROJECT TEAM
+RMWAL ASSEMBLY
+STRMU RONAL BEAMINGS
+RE:WALL SESENBS
+AYHEDSPLASTER
+ KEY PLAN
+PLAN DIAGRAM @ METAL PANEL SCREEN WALL 1/16"=1-0"    HM DOOR SILL DTL    HM DR HEAD DTL    HM DR JAMB DTL
+5.3    5.5)
+(6.1)
+NSULATION    Project Name
+AVALON @ CYPRESS
+WEST
+EL SUPPORT
+ALUMINMO SUPPORT
+Drawing Name
+ DOOR SCHEDULE,
+TYPES ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-20 01:24:52
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (97×32) ===
+|  |  |  | DOOR TYPES |  |  |  |  |  |  |  |  |  |  | DOO | R SCH | EDULE |  |  |  |  |  |  |  |  |  | GENE | RAL | NOTES |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  | DOOR |  |  |  | FRA | ME |  |  |  |  |  |  |  |  | DOOR | TYPE | S - T | YPICAL N | OTES |  |  |
+|  |  |  |  |  | DO | OR |  |  |  |  |  |  |  |  | FRAME |  | FI | RE | ACCESS | HARDWARE |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  | NUM | BER |  |  |  |  |  |  |  |  | TYPE | R | A | TING | CONTROL | SET |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  | REV |  | R | OOM NAME | TYPE | WID | TH | HEIGHT |  | MATERIAL | GLAZING |  | MATERIAL |  |  |  |  |  |  | Comments | 1. C | ONTRACTOR | TO USE THE | ARCHITE | CTS DOOR TYPE | PLAN |  |  |
+|  |  |  |  |  |  |  |  |  |  |  ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-20 02:11:13
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (2×1) ===
+| DOOR AND FRAME SCHEDULE |
+| GENERAL NOTES |
+
+=== TABLE (3×17) ===
+| DOOR AND FRAME SCHEDULE - LEVEL 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| NUMBER | PANEL |  |  |  |  |  |  | FRAME |  | FIRE RATING | HARDWARE SET | DETAILS |  |  |  | COMMENTS |
+|  | NO. OF PANELS | WIDTH | HEIGHT | THICKNESS | MATERIAL | GLASS | TYPE | MATERIAL | TYPE |  |  | HEAD | JAMB LEFT | JAMB RIGHT | SILL |  |
+
+=== TABLE (3×17) ===
+| DOOR AND FRAME SCHEDULE - LEVEL 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| NUMBER | PANEL |  |  |  |  |  |  | FRAME |  | FIRE RATING | HARDWARE SET | DETAILS |  |  |  | COMMENTS |
+|  | NO. OF PANELS | WIDTH | HEIGHT | THICKNESS | MATERIAL | GLASS | TYPE | MATERIAL | TYPE |  |  | HEAD | JAMB LEFT | JAMB RIGHT | SI...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door & Hardware schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-20 03:01:54
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== IMG2TABLE (3x4) ===
+| 0            | 1            | 2      | 3                      |
+|:-------------|:-------------|:-------|:-----------------------|
+|              |              |        | DOOR HARDWARE SCHEDULE |
+| (HAD & JMBS) |              | NUMBER | DOOR HARDWARE SCHEDULE |
+| (HAD & JMBS) | (HAD & JMBS) | NUMBER | DOOR HARDWARE SCHEDULE |
+
+=== IMG2TABLE (16x2) ===
+| 0       | 1             |
+|:--------|:--------------|
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+| ANODZED | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|         | DOOR SCHEDULE |
+|       ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door & Hardware schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-20 03:06:58
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== PURE OPTICAL TEXT SEQUENCE ===
+4 Jamb @ Cased Opening    8 Header @ Cased Opening
+012    000
+08.01
+3 Jamb @ HM Door
+7 Header @ HM Door
+0
+2 Jamb @ Wood Door
+       6 Header @ Wood Door
+5 Header @ Storefront Door
+08.01
+Gen
+neral
+Sheet    ROEEAU
+rawing Title    Project Title
+A.510.1    & Details    05.30.2004
+Michael Hsu
+ Nando's - Montrose
+Door Schedule, Types    Office Of Architecture
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-20 03:31:32
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (50×14) ===
+|  |  |  |  | DOOR SCHEDULE | DOOR TYPE |  |  |  |  | ,001 |  |  |  |
+|  |  |  |  |  |  |  |  | T |  | E |  |  |  |
+|  |  |  |  |  |  |  |  | U |  | TI | 65 |  |  |
+|  |  |  |  |  |  |  |  | O |  | U | 0 | 2 |  |
+|  |  |  |  |  |  | Y |  |  |  | S | 5 | Q |  |
+|  |  |  |  |  |  |  |  | T |  | , 1 | 7 | 4 |  |
+|  |  |  |  |  |  | N |  | IF |  | 2 | X | 2. |  |
+|  |  |  |  |  |  | O |  |  | C | 1 | T | 2: |  |
+|  |  |  |  |  |  | LO |  | ROI | NP | YWH | ,ELLIV | NITEL |  |
+|  |  |  |  |  |  | C |  | R |  | E | S | L |  |
+|  |  |  |  |  |  |  |  | E |  | T | I | U |  |
+|  |  |  |  |  |  | E |  |  |  | A | W | B |  |
+|  |  |  |  |  |  | H |  | TN |  | TS | EL |  |  |
+|  |  |  |  |  |  | T |  | I |  | 0 064 |  |  |  |
+|  |  |  |  |  |  |  |  | ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Hardware Specs.pdf (Page 2)
+- **Timestamp:** 2026-04-20 03:56:38
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (11×2) ===
+| Manufacturer L | ist |
+| Code | Name |
+| CKN | K.N. Cro |
+| FL | Falcon |
+| GL | Glynn J |
+| HA | Hager |
+| LO | Schlage |
+| NO | Norton |
+| PE | Pemko |
+| SC | Schlage |
+| TR | Trimco |
+
+[Source: plain_text]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Manufacturer List
+Code Name
+CKN K.N. Crowder
+FL Falcon Lock
+GL Glynn Johnson
+HA Hager
+LO Schlage Electronics
+NO Norton
+PE Pemko
+SC Schlage
+TR Trimco
+FOREST PARK MISSOURI CITY | Kenny Whistler Architect | Page 2
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Hardware Specs.pdf (Page 3)
+- **Timestamp:** 2026-04-20 03:56:43
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (9×2) ===
+| Option List |  |
+| Code | Description |
+| 12"-Ext. Rod | 12" Ext. Rod |
+| 24" TOP ROD | 24" ROD LEN |
+| 48" | 48" Wide Do |
+| CD | Cylinder Dog |
+| JD | Less FSIC Cyl |
+| NRP | NON REMOV |
+| Tapcon Screws | Tapcon Scre |
+
+[Source: plain_text]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Option List
+Code Description
+12"-Ext. Rod 12" Ext. Rod
+24" TOP ROD 24" ROD LENGTH
+48" 48" Wide Door
+CD Cylinder Dogging
+JD Less FSIC Cylinder
+NRP NON REMOVABLE PIN
+Tapcon Screws Tapcon Screws (#TC316175) 1 3/4"
+FOREST PARK MISSOURI CITY | Kenny Whistler Architect | Page 3
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Hardware Specs.pdf (Page 4)
+- **Timestamp:** 2026-04-20 03:56:46
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (11×2) ===
+| Finish List |  |
+| Code | Description |
+| 313AN | Anodized Du |
+| 606 | Satin Brass, C |
+| 613 | Oxidized Sati |
+| 643E | Aged Bronze |
+| 690 | Statuary Bro |
+| DBA | Dark Bronze |
+| GREY | Grey |
+| SP313 | Sprayed Dark |
+| US10B | Dull Bronze, |
+
+[Source: plain_text]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Finish List
+Code Description
+313AN Anodized Duranodic
+606 Satin Brass, Clear Coated
+613 Oxidized Satin Bronze, Oil Rubbed
+643E Aged Bronze
+690 Statuary Bronze, Painted
+DBA Dark Bronze Anodized Aluminum
+GREY Grey
+SP313 Sprayed Dark Bronze
+US10B Dull Bronze, Oxidized and Oil Rubbed
+FOREST PARK MISSOURI CITY | Kenny Whistler Architect | Page 4
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door & Hardware schedule.pdf (Page 1)
+- **Timestamp:** 2026-04-21 17:03:52
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== PURE OPTICAL TEXT SEQUENCE ===
+4 Jamb @ Cased Opening    8 Header @ Cased Opening
+012    000
+08.01
+3 Jamb @ HM Door
+7 Header @ HM Door
+0
+2 Jamb @ Wood Door
+       6 Header @ Wood Door
+5 Header @ Storefront Door
+08.01
+Gen
+neral
+Sheet    ROEEAU
+rawing Title    Project Title
+A.510.1    & Details    05.30.2004
+Michael Hsu
+ Nando's - Montrose
+Door Schedule, Types    Office Of Architecture
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Hardware Specs.pdf (Page 2)
+- **Timestamp:** 2026-04-21 17:54:52
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (11×2) ===
+| Manufacturer L | ist |
+| Code | Name |
+| CKN | K.N. Cro |
+| FL | Falcon |
+| GL | Glynn J |
+| HA | Hager |
+| LO | Schlage |
+| NO | Norton |
+| PE | Pemko |
+| SC | Schlage |
+| TR | Trimco |
+
+[Source: plain_text]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Manufacturer List
+Code Name
+CKN K.N. Crowder
+FL Falcon Lock
+GL Glynn Johnson
+HA Hager
+LO Schlage Electronics
+NO Norton
+PE Pemko
+SC Schlage
+TR Trimco
+FOREST PARK MISSOURI CITY | Kenny Whistler Architect | Page 2
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Hardware Specs.pdf (Page 4)
+- **Timestamp:** 2026-04-21 17:55:07
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (11×2) ===
+| Finish List |  |
+| Code | Description |
+| 313AN | Anodized Du |
+| 606 | Satin Brass, C |
+| 613 | Oxidized Sati |
+| 643E | Aged Bronze |
+| 690 | Statuary Bro |
+| DBA | Dark Bronze |
+| GREY | Grey |
+| SP313 | Sprayed Dark |
+| US10B | Dull Bronze, |
+
+[Source: plain_text]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Finish List
+Code Description
+313AN Anodized Duranodic
+606 Satin Brass, Clear Coated
+613 Oxidized Satin Bronze, Oil Rubbed
+643E Aged Bronze
+690 Statuary Bronze, Painted
+DBA Dark Bronze Anodized Aluminum
+GREY Grey
+SP313 Sprayed Dark Bronze
+US10B Dull Bronze, Oxidized and Oil Rubbed
+FOREST PARK MISSOURI CITY | Kenny Whistler Architect | Page 4
+```
+---

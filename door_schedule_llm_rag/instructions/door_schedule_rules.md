@@ -12,11 +12,11 @@ Extract structured door schedule rows from PDF text. PDFs vary in layout: border
    - HM, ALUM, WD → frame type
    - 45 MIN, 1 HR → fire rating
    - Alphabetic short codes (A, B, A5, C-1) → door type
-4. **Borderless tables:** Each line or block of text may be one row. Split on logical row boundaries (one door per line when lines contain a door number + dimensions).
+4. **Borderless & Key-Value tables:** Each line or block of text may be one row. Split on logical row boundaries. If you see floating text blocks instead of a table (e.g. "MARK: 101 \n DOOR TYPE: A \n HW SET: 1"), treat each vertical grouping as an exact data row!
 5. **Multiple door numbers:** If a cell contains "100A 100B", output SEPARATE rows for each.
-6. **Level/Area:** Look for section headers ABOVE groups of doors like "LEVEL 1", "Area A". Apply to all doors in that group.
-7. **Pair detection:** A door is a pair if its opening width >= 5'-0" (60 inches) OR the door type contains PR/PAIR/DBL/DOUBLE.
-8. **Leave optional fields null** if not found. Never invent values.
+6. **Level/Area:** Look for section headers ABOVE groups of doors like "LEVEL 1", "Area A", "EXTERIOR DOORS". Apply to all subsequent doors in that group.
+7. **Pair detection:** A door is a pair if its opening width >= 5'-0" (60 inches) OR the door type contains PR/PAIR/DBL/DOUBLE. If detected, override door_leaves to 2.
+8. **Null defaults & Unknown Fields:** Leave standard fields null if you aren't sure. IF there are key-value pairs or extra columns that do not fit the formal schema (e.g., "Wall Throat", "Jamb Detail"), put them into the `extra_fields` JSON property.
 
 ## Common Column Headers (Variants)
 - Door number: Door Number, Mark, Tag, No., Opening #, Door No.

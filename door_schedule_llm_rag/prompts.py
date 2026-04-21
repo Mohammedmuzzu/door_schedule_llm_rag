@@ -32,7 +32,7 @@ CRITICAL RULES:
 2. Absolutely DO NOT include document metadata (Project, Date, Notes) as top-level JSON keys.
 3. Every object in "rows" MUST have "door_number". Skip header/title rows.
 4. ONLY extract from actual schedules or tabular/profile lists. DO NOT extract from floor plan callouts or standalone notes. CRITICAL: Absolutely DO NOT extract the Architectural Title Block (e.g., text containing "PROJECT NO", "DRAWN BY", "CHECKED BY", "SHEET", Architecture Firm Names, or Street Addresses) as data rows. Title blocks are NOT schedules. Discard them entirely.
-5. If there is NO visible structured door schedule, output {"rows": []}.
+5. AGGRESSIVE EXTRACTION RULE: If there is ANY tabular data containing numbers (e.g. 101, 102) and dimensions (e.g. 3'-0"), you MUST extract it as door rows! Do NOT return an empty list just because the layout is messy or borders are missing. Extract best-effort data and use "N/A" for missing fields.
 6. Preserve EXACT strings from the document (e.g., "3'-0\\"", "6'-0\\"", "HM", "WD").
 7. Do NOT invent or guess values. If a field is not present, set it to null.
 8. Do NOT skip ANY door rows — extract them ALL, even from messy/borderless tables or vertical key-value profiles.
@@ -44,7 +44,7 @@ CRITICAL RULES:
 14. Do NOT nest objects for standard fields. Every element inside "rows" must be a FLAT JSON object (except for `extra_fields` which is a dict).
 15. Any column or key-value pair that doesn't fit standard fields must go into `extra_fields`.
 16. Your response MUST be a pure JSON object enclosed completely in a markdown block (e.g. ```json\n{...}\n```). DO NOT provide any conversational explanations before or after the JSON block.
-17. BLOCK FORMATS: If doors are defined as vertical Key-Value profiles (e.g., "DOOR TYPE: A, FRAME TYPE: B") instead of a table, treat each vertical cluster as a separate door row.
+17. BORDERLESS & KEY-VALUE FORMATS: Schedules often appear as unbordered text blocks or vertical Key-Value profiles instead of clean tables (e.g., "DOOR TYPE: A \n FRAME TYPE: B"). You MUST treat each distinct vertical cluster or unbordered text row as a separate door row. Even if table lines are completely invisible, extract the data aggressively!
 18. COLUMN MAPPING GUIDE: Door schedule tables often have MULTI-ROW headers that get garbled during extraction. You MUST analyze the ACTUAL DATA VALUES in each column to determine which schema field they belong to. Use this mapping:
     - Column with values like "101", "101A", "D2" → door_number
     - Column with "PR", "SGL", "PAIR" → door_type (NOT room_name!)
@@ -105,7 +105,7 @@ CRITICAL RULES:
 8. Do NOT skip components. Extract hinges, locks, closers, stops, seals, thresholds, coordinators, etc.
 9. If the hardware_set_name/function is given (e.g., "SGL Office Lock", "PR Exterior"), include it.
 10. Skip lines that are clearly NOT hardware: notes like "Provided by owner", wall types, drawing references.
-11. If the page has NO hardware data, output {"rows": []}.
+11. AGGRESSIVE EXTRACTION RULE: If there is ANY text hinting at hardware sets (e.g., SET, HW, GROUP, HINGES, CLOSER), you MUST extract it! Do NOT return an empty list just because the layout is dense. Extract best-effort data and synthesize a hardware_set_id if one is not clearly labeled.
 12. Do NOT nest objects for standard fields. Every element inside "rows" must be a FLAT JSON object (except for `extra_fields` which is a dict).
 13. Do NOT do any arithmetic on quantities — extract them verbatim.
 14. Any attribute that doesn't fit standard fields must go into `extra_fields`.

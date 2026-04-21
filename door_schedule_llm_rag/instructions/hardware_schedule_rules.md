@@ -8,13 +8,13 @@ Extract hardware set headers and component rows from Division 8 PDFs. Text may b
 Extract quantities EXACTLY as stated. Do NOT double, multiply, or modify them in any way.
 
 ## Instructions
-1. **Set headers:** When you see "HARDWARE SET NO. 1", "GROUP 2", "Set: 3", "HARDWARE GROUP NO. 103 – SGL Office Lock", that starts a new hardware set. Assign hardware_set_id for ALL following components until the next set header.
-2. **Set name:** Extract the functional name after the set number, e.g., "SGL Office Lock", "PR Exterior Storeroom Lock/CLSR". Include it in hardware_set_name.
-3. **Component lines:** Each usually starts with a quantity (number), then optionally a unit (EA, PAIR, SET), then a description. E.g., "2 EA HINGE", "1 CLOSER", "3 EA 1-1/2 PAIR BUTT HINGE".
-4. **Required fields:** hardware_set_id, qty, description. Unit defaults to "EA".
-5. **Optional fields:** catalog_number, finish_code, manufacturer_code — extract when present.
-6. **Skip non-hardware lines:** Notes like "Provided by owner", "See detail 5/A", wall descriptions, drawing references.
-7. **Output valid JSON only.** No markdown, no text.
+1. **Set headers:** When you see "HARDWARE SET NO. 1", "GROUP 2", "Set: 3", or implicit headers like "Door 140A ->", that starts a new hardware set. Assign `hardware_set_id` for ALL following components until the next set header. If there is NO header but just a list of items below a door number, map the Door Number as the `hardware_set_id`.
+2. **Set name:** Extract the functional name after the set number, e.g., "SGL Office Lock". Include it in `hardware_set_name`.
+3. **Component lines:** Each usually starts with a quantity, optionally a unit (EA, PAIR, SET), then description. If the quantity is literally completely missing, default to 1.
+4. **Required fields:** hardware_set_id, qty, description.
+5. **Optional fields and Extra Attributes:** catalog_number, finish_code, manufacturer_code. Any other data must go into `extra_fields`.
+6. **Skip non-hardware lines:** Notes like "Provided by owner", wall descriptions.
+7. **Output valid JSON only.** No markdown wrapping or conversational text.
 
 ## Common Component Types
 - HINGE / BUTT HINGE / ANCHOR HINGE / NRP HINGE

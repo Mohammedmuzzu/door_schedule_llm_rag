@@ -25,6 +25,11 @@ pdfs/
 extracted_data/
 evaluation_output/
 evaluation_output_v2/
+**/qa_out/
+scratch/
+
+# RAG vector store (rebuilt at runtime)
+**/rag_data/
 
 # IDE
 .vscode/
