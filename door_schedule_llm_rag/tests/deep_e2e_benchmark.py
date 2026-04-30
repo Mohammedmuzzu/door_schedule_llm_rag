@@ -9,6 +9,7 @@ Output:
     ├── deep_e2e_report.csv                        (full summary)
     └── deep_e2e_report.xlsx                       (formatted report)
 """
+import hashlib
 import os, sys, io, re, time, logging, traceback
 import pandas as pd
 from pathlib import Path
@@ -31,6 +32,15 @@ log = logging.getLogger("deep_e2e")
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 from pipeline import run_pipeline, discover_pdfs
+
+
+def make_pdf_run_id(idx: int, pdf_path: Path, project_id: str) -> str:
+    """Stable, unique output folder for one PDF benchmark run."""
+    rel = str(pdf_path).lower().replace("\\", "/")
+    digest = hashlib.sha1(rel.encode("utf-8")).hexdigest()[:8]
+    clean_file = re.sub(r"[^a-z0-9_]", "", re.sub(r"[\s_.\-]+", "_", pdf_path.stem.lower()))
+    clean_file = clean_file[:60] or "pdf"
+    return f"{idx:03d}_{project_id}_{clean_file}_{digest}"
 
 # ═══════════════════════════════════════════════════════════════
 #  HEURISTIC ANALYSIS: Extract ground-truth signals from PDF
@@ -134,6 +144,7 @@ def main():
     
     for idx, (pdf_path, project_id) in enumerate(all_pdfs, 1):
         name = f"{project_id} / {pdf_path.name}"
+        run_id = make_pdf_run_id(idx, pdf_path, project_id)
         print(f"\n[{idx}/{total}] {name}")
 
         # Step 1: Ground truth analysis
@@ -142,7 +153,7 @@ def main():
         # Step 2: Run extraction
         t0 = time.time()
         try:
-            proj_out = str(OUT_DIR / project_id)
+            proj_out = str(OUT_DIR / run_id)
             df_d, df_h = run_pipeline(
                 pdf_files=[pdf_path],
                 output_dir=proj_out,
@@ -228,6 +239,8 @@ def main():
 
             result = {
                 "project_id": project_id,
+                "run_id": run_id,
+                "output_dir": proj_out,
                 "file": pdf_path.name,
                 "pdf_path": str(pdf_path),
                 "pages": gt["pages"],
@@ -267,6 +280,8 @@ def main():
             log.error("FAILED: %s — %s", name, e)
             results.append({
                 "project_id": project_id,
+                "run_id": run_id,
+                "output_dir": str(OUT_DIR / run_id),
                 "file": pdf_path.name,
                 "pdf_path": str(pdf_path),
                 "pages": gt["pages"],
@@ -303,7 +318,7 @@ def main():
     with pd.ExcelWriter(xlsx_path, engine="openpyxl") as writer:
         # Main summary
         summary_cols = [
-            "project_id", "file", "pages", "is_scanned", "has_tables",
+            "run_id", "project_id", "file", "pages", "is_scanned", "has_tables",
             "gt_candidate_doors", "gt_candidate_hw_sets",
             "extracted_doors", "extracted_hw_sets", "extracted_hw_components",
             "door_schema_score", "hw_schema_score",
@@ -314,14 +329,14 @@ def main():
 
         # Door numbers detail
         detail_cols = [
-            "project_id", "file", "extracted_doors", "extracted_door_nums",
+            "run_id", "project_id", "file", "extracted_doors", "extracted_door_nums",
         ]
         existing_detail = [c for c in detail_cols if c in df_report.columns]
         df_report[existing_detail].to_excel(writer, sheet_name="Door Numbers", index=False)
 
         # HW sets detail  
         hw_detail_cols = [
-            "project_id", "file", "extracted_hw_sets", "extracted_hw_set_ids",
+            "run_id", "project_id", "file", "extracted_hw_sets", "extracted_hw_set_ids",
             "gt_candidate_hw_sets", "gt_hw_set_ids",
         ]
         existing_hw = [c for c in hw_detail_cols if c in df_report.columns]
@@ -330,7 +345,7 @@ def main():
         # Schema fill rates
         fill_cols = [c for c in df_report.columns if c.endswith("_fill%")]
         if fill_cols:
-            df_report[["project_id", "file"] + fill_cols].to_excel(
+            df_report[["run_id", "project_id", "file"] + fill_cols].to_excel(
                 writer, sheet_name="Schema Fill Rates", index=False
             )
 

@@ -13,25 +13,28 @@ from config import (
 )
 from llm_extract import llm_config
 from pipeline import run_pipeline
+from app_admin import render_master_data_manager
+from app_estimation import render_estimation_dashboard
 
 # Configure page (MUST be the first Streamlit command)
 st.set_page_config(page_title="Door Schedule Extractor", layout="wide", page_icon="🚪")
 
 # ── Auto-seed RAG store on first launch ──
-# This ensures ChromaDB is populated from instructions/*.md even on fresh
-# deployments (e.g., Streamlit Cloud) where rag_data/ doesn't exist yet.
+# `ensure_seeded()` is idempotent: it only re-seeds when collections are
+# missing. On Streamlit Cloud containers (which wipe `rag_data/` between
+# deploys) this re-runs on first page hit; on long-running servers it's a
+# no-op after the first call.
 @st.cache_resource
 def _auto_seed_rag():
-    """Seed RAG store once per server lifecycle."""
+    """Seed RAG store once per server lifecycle and return a status dict."""
     try:
-        from rag_store import seed_door_instructions, seed_hardware_instructions
-        n_door = seed_door_instructions()
-        n_hw = seed_hardware_instructions()
-        return f"RAG seeded: {n_door} door chunks, {n_hw} hardware chunks"
+        from rag_store import ensure_seeded, status as rag_status
+        ensure_seeded()
+        return rag_status()
     except Exception as e:
-        return f"RAG seeding skipped: {e}"
+        return {"available": 0, "error": str(e)}
 
-_rag_status = _auto_seed_rag()
+_rag_status_dict = _auto_seed_rag()
 
 st.title("🚪 Door & Hardware Schedule Extractor")
 
@@ -178,6 +181,56 @@ with st.sidebar:
     use_rag = st.checkbox("Enable RAG Retrieval", value=True)
 
     st.divider()
+    st.subheader("🩺 System Health")
+    # Collect live status (re-computed each rerun — cheap)
+    _rag_now = {"available": 0}
+    try:
+        from rag_store import status as _rag_status_live
+        _rag_now = _rag_status_live()
+    except Exception:
+        pass
+    try:
+        from mineru_backend import is_available as _mineru_is_available
+        _mineru_on = _mineru_is_available()
+    except Exception:
+        _mineru_on = False
+    try:
+        import verification  # noqa: F401
+        _verify_on = True
+    except Exception:
+        _verify_on = False
+
+    rag_emoji = "✅" if _rag_now.get("available") else "⚠️"
+    st.markdown(f"{rag_emoji} **RAG** — {'online' if _rag_now.get('available') else 'disabled'}")
+    if _rag_now.get("available"):
+        st.caption(
+            f"instructions: door={_rag_now.get('instructions_door', 0)}, "
+            f"hw={_rag_now.get('instructions_hardware', 0)} | "
+            f"examples: door={_rag_now.get('examples_door', 0)}, "
+            f"hw={_rag_now.get('examples_hardware', 0)} | "
+            f"anomalies={_rag_now.get('anomalies', 0)}"
+        )
+
+    st.markdown(f"{'✅' if _verify_on else '❌'} **Self-verification** — "
+                f"{'active (evidence-routed rescue)' if _verify_on else 'offline'}")
+
+    st.markdown(f"{'✅' if _mineru_on else '➖'} **MinerU fallback** — "
+                f"{'installed' if _mineru_on else 'not installed (optional)'}")
+
+    # Latest run pointer
+    try:
+        from run_store import list_recent_runs
+        _recent = list_recent_runs(limit=1)
+        if _recent:
+            r = _recent[0]
+            st.caption(
+                f"last run: {r['pdf']} → {r['doors']}d/{r['hw']}hw "
+                f"({r.get('elapsed_s', '?')}s, {r.get('started', '')})"
+            )
+    except Exception:
+        pass
+
+    st.divider()
     st.markdown("""
     **Output Details**:
     The pipeline processes PDFs to extract:
@@ -187,7 +240,14 @@ with st.sidebar:
     Results are exported as Excel + CSV.
     """)
 
-tab1, tab2 = st.tabs(["📄 Single File Upload", "📁 Bulk Directory Process"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    "📄 Single File Upload",
+    "📁 Bulk Directory Process",
+    "📊 Recent Runs",
+    "🧮 Project Estimation",
+    "⚙️ Master Data Manager",
+    "⚖️ QA Benchmark"
+])
 
 with tab1:
     st.subheader("Process a Single PDF")
@@ -315,3 +375,66 @@ with tab2:
                         file_name="bulk_extraction_results.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
+
+
+with tab3:
+    st.subheader("📊 Recent Runs")
+    st.caption(
+        "Every PDF extraction writes a durable JSONL log to `rag_data/runs/`. "
+        "Use this tab to audit what the system did on any historical run — "
+        "per-page confidence, evidence, and whether the self-verification "
+        "layer fired a rescue."
+    )
+    try:
+        from run_store import list_recent_runs
+        runs = list_recent_runs(limit=30)
+    except Exception as e:
+        st.error(f"Run store unavailable: {e}")
+        runs = []
+
+    if not runs:
+        st.info("No runs yet. Process a PDF from the other tabs to see logs here.")
+    else:
+        df_runs = pd.DataFrame(runs)
+        col_order = ["started", "pdf", "provider", "model", "doors", "hw",
+                     "elapsed_s", "status", "path"]
+        df_runs = df_runs[[c for c in col_order if c in df_runs.columns]]
+        st.dataframe(df_runs.astype(str), use_container_width=True, hide_index=True)
+
+        selected = st.selectbox(
+            "Open run log (JSONL)",
+            options=[r["path"] for r in runs],
+            format_func=lambda p: Path(p).name,
+        )
+        if selected and Path(selected).exists():
+            import json as _json
+
+            events = []
+            with open(selected, "r", encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        events.append(_json.loads(line))
+                    except Exception:
+                        continue
+            st.markdown(f"**Events in** `{Path(selected).name}` ({len(events)})")
+            st.json(events)
+            st.download_button(
+                "⬇️ Download run log",
+                data=Path(selected).read_bytes(),
+                file_name=Path(selected).name,
+                mime="application/x-ndjson",
+            )
+
+with tab4:
+    render_estimation_dashboard()
+
+with tab5:
+    render_master_data_manager()
+
+with tab6:
+    from app_qa_dashboard import render_qa_dashboard
+    render_qa_dashboard()
+

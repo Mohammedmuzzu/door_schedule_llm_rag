@@ -12,6 +12,7 @@ maximum context with minimum noise.
 import logging
 import re
 import base64
+import statistics
 from pathlib import Path
 from typing import List, Optional, Tuple, Dict
 
@@ -42,6 +43,16 @@ except ImportError:
         _PYMUPDF4LLM_OK = True
     except ImportError:
         logger.info("pymupdf4llm not available")
+
+# Optional MinerU adapter. Graceful no-op when not installed.
+try:
+    from mineru_backend import is_available as _mineru_available, run_mineru_on_page
+except Exception:  # pragma: no cover — defensive; module should always import
+    def _mineru_available() -> bool:
+        return False
+
+    def run_mineru_on_page(_pdf_path, _page_idx, timeout_s: int = 120) -> str:  # type: ignore
+        return ""
 
 _IMG2TABLE_OK = False
 _img_ocr = None
@@ -260,19 +271,161 @@ def _is_quality_table(table: list) -> bool:
     return True
 
 
-def _extract_pdfplumber(pdf_path: Path, page_idx: int) -> Tuple[str, str]:
+def _extract_word_rows(page) -> str:
+    """Reconstruct row-like text from fragmented word boxes on native PDFs."""
+    try:
+        words = page.extract_words(use_text_flow=True, keep_blank_chars=False) or []
+    except Exception:
+        return ""
+
+    if len(words) < 20:
+        return ""
+
+    heights = [
+        (word["bottom"] - word["top"])
+        for word in words
+        if (word.get("bottom", 0) - word.get("top", 0)) > 0
+    ]
+    median_height = statistics.median(heights) if heights else 6.0
+    y_tolerance = max(3.0, min(8.0, median_height * 0.8))
+    x_gap = max(12.0, min(30.0, median_height * 2.4))
+
+    rows: List[List[dict]] = []
+    current_row: List[dict] = []
+    current_key = None
+    for word in sorted(words, key=lambda item: (round(item["top"] / y_tolerance), item["x0"])):
+        row_key = round(word["top"] / y_tolerance)
+        if current_key is None or row_key == current_key:
+            current_row.append(word)
+            current_key = row_key if current_key is None else current_key
+        else:
+            rows.append(current_row)
+            current_row = [word]
+            current_key = row_key
+    if current_row:
+        rows.append(current_row)
+
+    lines = []
+    for row in rows:
+        ordered = sorted(row, key=lambda item: item["x0"])
+        parts = []
+        prev_x1 = None
+        for word in ordered:
+            text = str(word.get("text", "")).strip()
+            if not text:
+                continue
+            if prev_x1 is not None and (word["x0"] - prev_x1) > x_gap:
+                parts.append(" | ")
+            parts.append(text)
+            prev_x1 = word["x1"]
+        line = " ".join(parts).strip()
+        if line:
+            lines.append(line)
+
+    return "\n".join(lines)
+
+
+def _collect_schedule_signals(text: str) -> Dict[str, int]:
+    """Extract lightweight structural signals that distinguish schedules from title blocks."""
+    if not text:
+        return {
+            "real_doors": 0,
+            "dimensions": 0,
+            "row_lines": 0,
+            "table_headers": 0,
+            "hw_keywords": 0,
+            "title_block_markers": 0,
+        }
+
+    upper = text.upper()
+    door_nums = re.findall(r"\b\d{2,4}[A-Za-z]?\b", text)
+    real_doors = [
+        num for num in door_nums
+        if not (1900 <= int(re.match(r"\d+", num).group()) <= 2099)
+    ]
+    dimensions = len(re.findall(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"", text))
+    row_lines = sum(
+        1
+        for line in text.splitlines()
+        if re.search(r"\b\d{2,4}[A-Za-z]?\b", line)
+        and (
+            re.search(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"", line)
+            or any(
+                kw in line.upper()
+                for kw in ("EXISTING", "NEW", "HM", "WD", "AL", "FRAME", "LOCK", "HINGE", "GL-")
+            )
+        )
+    )
+    table_headers = sum(
+        1
+        for kw in (
+            "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "ROOM NAME", "WIDTH",
+            "HEIGHT", "FRAME", "HARDWARE", "HDWR", "FIRE RATING", "COMMENTS",
+        )
+        if kw in upper
+    )
+    hw_keywords = sum(
+        1
+        for kw in ("HINGE", "CLOSER", "LOCK", "DEADBOLT", "THRESHOLD", "DOOR STOP", "KICK PLATE")
+        if kw in upper
+    )
+    title_block_markers = sum(
+        1
+        for kw in (
+            "PROJECT LOCATION", "OWNER", "REVISIONS", "DRAWN BY", "CHECKED BY",
+            "SHEET", "PHONE:", "WWW.", "ARCHITECTS", "SUITE", "STREET", "CITY",
+            "ZIP", "FIRST ISSUED ON",
+        )
+        if kw in upper
+    )
+    return {
+        "real_doors": len(real_doors),
+        "dimensions": dimensions,
+        "row_lines": row_lines,
+        "table_headers": table_headers,
+        "hw_keywords": hw_keywords,
+        "title_block_markers": title_block_markers,
+    }
+
+
+def _looks_fragmented_table(text: str) -> bool:
+    """Detect markdown tables that are split into many tiny columns/cells."""
+    if not text:
+        return False
+
+    table_lines = [line for line in text.splitlines() if line.lstrip().startswith("|")]
+    if not table_lines:
+        return False
+
+    avg_pipes = sum(line.count("|") for line in table_lines[:20]) / max(1, min(len(table_lines), 20))
+    narrow_cells = len(re.findall(r"\|\s*[A-Z0-9\"'./-]{1,3}\s*(?=\|)", text))
+    broken_headers = sum(
+        1 for pat in (
+            r"\bDOO\s*\|\s*R\b",
+            r"\bSCH\s*\|\s*EDULE\b",
+            r"\bNUM\s*\|\s*BER\b",
+            r"\bFI\s*\|\s*RE\b",
+            r"\bHAR\s*\|\s*DWARE\b",
+        )
+        if re.search(pat, text, re.IGNORECASE)
+    )
+    return broken_headers >= 1 or (avg_pipes >= 18 and narrow_cells >= 25)
+
+
+def _extract_pdfplumber(pdf_path: Path, page_idx: int) -> Tuple[str, str, str]:
     """
     Extract via pdfplumber with multiple strategies.
-    Returns (tables_markdown, plain_text).
+    Returns (tables_markdown, plain_text, row_reconstruction_text).
     """
     if not _PDFPLUMBER_OK:
-        return "", ""
+        return "", "", ""
     try:
         with pdfplumber.open(str(pdf_path)) as pdf:
             if page_idx >= len(pdf.pages):
-                return "", ""
+                return "", "", ""
             page = pdf.pages[page_idx]
             plain_text = (page.extract_text() or "").strip()
+            row_text = _extract_word_rows(page)
 
             strategies = [
                 {},
@@ -308,11 +461,11 @@ def _extract_pdfplumber(pdf_path: Path, page_idx: int) -> Tuple[str, str]:
                     pass
 
             tables_md = "\n\n".join(best_parts)
-            return tables_md, plain_text
+            return tables_md, plain_text, row_text
 
     except Exception as e:
         logger.debug("pdfplumber failed p%d: %s", page_idx, e)
-        return "", ""
+        return "", "", ""
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -446,6 +599,16 @@ def _score_content(text: str) -> float:
 
     # Markdown table pipes (structured data)
     score += text.count("|") * 0.1
+
+    signals = _collect_schedule_signals(text)
+    score += signals["real_doors"] * 2.0
+    score += signals["dimensions"] * 1.5
+    score += signals["row_lines"] * 4.0
+    score += signals["table_headers"] * 1.5
+    score += signals["hw_keywords"] * 3.0
+
+    if _looks_fragmented_table(text):
+        score *= 0.45
 
     # Penalty for CID font garbage
     cid_count = len(re.findall(r"\(cid:\d+\)", text))
@@ -593,6 +756,7 @@ def _merge_backends(
     pymupdf_md: str,
     plumber_tables: str,
     plumber_text: str,
+    plumber_rows: str,
     img2table_md: str,
     max_chars: int = 14000,
 ) -> str:
@@ -606,6 +770,7 @@ def _merge_backends(
         "pymupdf4llm": _score_content(pymupdf_md),
         "pdfplumber_tables": _score_content(plumber_tables),
         "pdfplumber_text": _score_content(plumber_text),
+        "pdfplumber_rows": _score_content(plumber_rows) + 12.0,
         "img2table": _score_content(img2table_md) * 0.5,  # Base penalty for optical hallucinations
     }
 
@@ -613,18 +778,26 @@ def _merge_backends(
     if max(scores["pymupdf4llm"], scores["pdfplumber_tables"]) > 30:
         scores["img2table"] = 0.0
 
+    fragmented_native = _looks_fragmented_table(plumber_tables)
+    if fragmented_native:
+        scores["pdfplumber_tables"] *= 0.4
+        scores["pdfplumber_rows"] += 20.0
+
     logger.debug("Backend scores: %s", {k: f"{v:.1f}" for k, v in scores.items()})
 
     parts = []
     # Reserve budget for plain text — critical for mixed pages where hardware 
     # is cleanly readable in plain text but garbled in table extraction.
-    plain_text_reserve = min(4000, max_chars // 4) if plumber_text and len(plumber_text) > 200 else 0
+    plain_text_reserve = min(5000, max_chars // 3) if plumber_text and len(plumber_text) > 200 else 0
+    if fragmented_native and plain_text_reserve:
+        plain_text_reserve = min(max_chars // 2, plain_text_reserve + 1500)
     table_budget = max_chars - plain_text_reserve
 
     # Priority 1: Best structured tables (capped to leave room for plain text)
     table_sources = [
         ("pymupdf4llm", pymupdf_md),
         ("pdfplumber_tables", plumber_tables),
+        ("pdfplumber_rows", plumber_rows),
         ("img2table", img2table_md),
     ]
     # Sort by score descending
@@ -639,9 +812,14 @@ def _merge_backends(
     # Priority 2: ALWAYS include plain text (critical for hardware on mixed pages)
     if plumber_text and len(plumber_text) > 100:
         budget_for_text = max(plain_text_reserve, 500)
-        # Hardware sets usually live at the BOTTOM of mixed pages. If we must truncate, secure the tail.
+        # Keep both the head and tail so we preserve schedule rows and late-page hardware sets.
         if len(plumber_text) > budget_for_text:
-            chunk = plumber_text[-budget_for_text:]
+            if budget_for_text >= 1600:
+                head = min(1800, budget_for_text // 2)
+                tail = max(400, budget_for_text - head - 32)
+                chunk = plumber_text[:head] + "\n\n[...text trimmed...]\n\n" + plumber_text[-tail:]
+            else:
+                chunk = plumber_text[:budget_for_text]
         else:
             chunk = plumber_text
         parts.append(f"[Source: plain_text]\n{chunk}")
@@ -708,8 +886,27 @@ def extract_structured_page(
 
     # ── Step 1: Try native text extraction (fast, no OCR) ──
     # First get plain text length to determine complexity
-    plumber_tables, plumber_text = _extract_pdfplumber(pdf_path, page_idx)
+    plumber_tables, plumber_text, plumber_rows = _extract_pdfplumber(pdf_path, page_idx)
     raw_text_len = len(plumber_text or "")
+    
+    # ── NEW: Raw fitz text fallback ──
+    # Some PDFs (e.g. P17/A0.03) have text that pdfplumber can't extract at all
+    # (returns 0 chars) but fitz.get_text() works perfectly. Always fetch it.
+    fitz_raw_text = ""
+    try:
+        import pymupdf
+        doc = pymupdf.open(str(pdf_path))
+        fitz_raw_text = doc[page_idx].get_text() or ""
+        doc.close()
+    except Exception:
+        pass
+    
+    # If pdfplumber returned nothing but fitz has content, use fitz as the text source
+    if raw_text_len < 50 and len(fitz_raw_text) > 200:
+        logger.info("Page %d: pdfplumber returned %d chars but fitz has %d chars. Using fitz as text fallback.",
+                    page_idx + 1, raw_text_len, len(fitz_raw_text))
+        plumber_text = fitz_raw_text
+        raw_text_len = len(plumber_text)
     
     pymupdf_md = ""
     # Avoid GNN markdown table rendering on massive dense schedules (A0 size prints).
@@ -723,9 +920,11 @@ def extract_structured_page(
         backends_used.append("pdfplumber_tables")
     if plumber_text:
         backends_used.append("pdfplumber_text")
+    if plumber_rows:
+        backends_used.append("pdfplumber_rows")
 
     # ── Step 2: Decide if we need OCR/Image Table Parsing ──
-    combined_native = (pymupdf_md or "") + (plumber_text or "") + (plumber_tables or "")
+    combined_native = (pymupdf_md or "") + (plumber_text or "") + (plumber_tables or "") + (plumber_rows or "")
     native_text_len = len(combined_native)
     
     # Heuristic: Detect Optical Illusion Font Encoding Corruption
@@ -753,39 +952,56 @@ def extract_structured_page(
     # The old threshold (100 chars) incorrectly classified these as "machine generated",
     # preventing the OCR fallback from ever running.
     # Fix: If native text is short AND lacks any door-number patterns, it's just a title block.
-    def _is_title_block_only(text: str, raw_text: str) -> bool:
+    def _is_title_block_only(text: str, raw_text: str, row_text: str, fitz_text: str) -> bool:
         """Detect if the extracted text is just a title block border stamp with no schedule data.
         
         Uses raw_text (plumber_text) as the primary signal because pdfplumber tables
         often extract title block borders as fake tables, inflating char counts.
         """
+        signal_text = "\n".join(part for part in (row_text, raw_text, fitz_text) if part)
+        signals = _collect_schedule_signals(signal_text)
+
+        if signals["dimensions"] >= 2 or signals["row_lines"] >= 2:
+            return False
+
         # Check raw text content (the actual paragraph text, not table extraction)
         raw_len = len(raw_text or "")
         if raw_len > 2000:
             return False  # Substantial raw text content exists
         
         # Even if combined text is large, if raw text is tiny it's probably just border garbage
-        check_text = raw_text if raw_len > 50 else text
+        check_text = raw_text if raw_len > 50 else (row_text or fitz_text or text)
         if len(check_text) > 3000:
             return False
-            
-        # Check for door number patterns (101, 101A, D2, etc.)
-        door_nums = re.findall(r'\b\d{3,4}[A-Za-z]?\b', check_text)
-        # Filter out years
-        real_doors = [n for n in door_nums if not (1900 <= int(re.match(r'\d+', n).group()) <= 2099)]
-        if len(real_doors) >= 2:
-            return False  # Has door numbers, not just a title block
-        # Check for table structure keywords
-        table_kw = sum(1 for kw in ("WIDTH", "HEIGHT", "FRAME", "HINGE", "CLOSER", "LOCK", "SCHEDULE") if kw in check_text.upper())
-        if table_kw >= 2:
-            return False  # Has structural table keywords
-        return True  # Looks like just a title block
 
-    is_title_block = _is_title_block_only(combined_native, plumber_text) and not is_corrupt
+        has_schedule_title = any(kw in check_text.upper() for kw in ("DOOR", "WINDOW", "HARDWARE", "SCHEDULE"))
+        only_title_block = (
+            signals["title_block_markers"] >= 2 and
+            signals["row_lines"] == 0 and
+            signals["real_doors"] == 0 and
+            (raw_len < 1200 or len(fitz_text or "") < 1200)
+        )
+        return only_title_block or (has_schedule_title and raw_len < 800 and signals["table_headers"] <= 3)
+
+    is_title_block = _is_title_block_only(combined_native, plumber_text, plumber_rows, fitz_raw_text) and not is_corrupt
     if is_title_block:
         logger.info("Page %d: Title-block-only text detected (%d chars, no schedule data). Will try OCR.", page_idx + 1, native_text_len)
 
-    is_machine_generated = native_text_len > 100 and not is_corrupt and not is_title_block
+    schedule_signals = _collect_schedule_signals("\n".join(part for part in (plumber_rows, plumber_text, fitz_raw_text) if part))
+    has_schedule_rows = (
+        schedule_signals["dimensions"] >= 2
+        or schedule_signals["row_lines"] >= 2
+        or (schedule_signals["real_doors"] >= 4 and schedule_signals["table_headers"] >= 4)
+    )
+    
+    # NEW: Detect if the text is long but COMPLETELY lacks schedule data (meaning the schedules are images)
+    missing_critical_data = schedule_signals["dimensions"] == 0 and schedule_signals["hw_keywords"] == 0
+    
+    is_machine_generated = (native_text_len > 1500 or has_schedule_rows) and not is_corrupt and not is_title_block
+    
+    if is_machine_generated and missing_critical_data and native_text_len < 8000:
+        logger.info("Page %d: Text is long (%d chars) but lacks ANY dimensions or HW keywords. Forcing OCR.", page_idx + 1, native_text_len)
+        is_machine_generated = False
 
     img2table_md = ""
     if is_machine_generated:
@@ -809,6 +1025,51 @@ def extract_structured_page(
         logger.info("Page %d: No native text found (or title-block-only). Using optical img2table fallback.",
                     page_idx + 1)
         img2table_md = _extract_img2table(pdf_path, page_idx, use_ocr=True)
+        
+        # ── Vision LLM Fallback for title-block-only PDFs ──
+        # If OCR found nothing useful (or only weak title block remnants),
+        # use the Vision LLM directly to describe the page content.
+        # This catches P14/P17 pages where the schedule is visible but the text layer is flattened.
+        ocr_signals = _collect_schedule_signals(img2table_md)
+        weak_optical_result = (
+            not img2table_md
+            or (
+                ocr_signals["row_lines"] < 2
+                and ocr_signals["dimensions"] < 2
+                and ocr_signals["table_headers"] < 4
+            )
+        )
+        if base64_img and weak_optical_result:
+            logger.info("Page %d: OCR fallback is weak. Trying Vision LLM extraction on page image.", page_idx + 1)
+            try:
+                vision_prompt = (
+                    "This is an architectural PDF page. Extract ALL text content you can see, "
+                    "especially any door schedule tables, hardware schedules, or specification data. "
+                    "Output the content as structured text, preserving table rows and columns. "
+                    "If you see a door schedule table, list each door with its number, dimensions, "
+                    "frame type, hardware set, and any other visible fields. "
+                    "If you see hardware sets, list each set with its components, quantities, and manufacturers."
+                )
+                from llm_extract import _llm_chat
+                vision_result = _llm_chat(
+                    vision_prompt,
+                    "[Attached page image for visual extraction]",
+                    force_json=False,
+                    base64_image=base64_img,
+                )
+                if vision_result and len(vision_result.strip()) > 100:
+                    vision_block = f"=== VISION LLM EXTRACTION ===\n{vision_result}"
+                    img2table_md = f"{img2table_md}\n\n{vision_block}".strip() if img2table_md else vision_block
+                    logger.info("Page %d: Vision LLM extracted %d chars from page image.", page_idx + 1, len(vision_result))
+            except Exception as e:
+                logger.warning("Page %d: Vision LLM fallback failed: %s", page_idx + 1, e)
+
+        if is_title_block and img2table_md:
+            logger.info("Page %d: Suppressing native title-block text in favor of optical extraction.", page_idx + 1)
+            plumber_tables = ""
+            plumber_text = ""
+            plumber_rows = ""
+            backends_used = [name for name in backends_used if not name.startswith("pdfplumber")]
 
     if img2table_md:
         backends_used.append("img2table")
@@ -820,13 +1081,53 @@ def extract_structured_page(
 
     # ── Step 3: Merge all backends ──
     content = _merge_backends(
-        pymupdf_md, plumber_tables, plumber_text, img2table_md,
+        pymupdf_md, plumber_tables, plumber_text, plumber_rows, img2table_md,
         max_chars=max_chars,
     )
 
+    # ── Optional MinerU fallback (additive) ──
+    # When evidence on the already-merged content is weak but the page is
+    # clearly *trying* to be a schedule (has any door-number or hardware
+    # keyword density), we consult MinerU if it is installed. MinerU's
+    # pipeline backend is particularly strong on fragmented-table cases where
+    # pdfplumber explodes a row into 25+ pipes. Guarded so the vast majority
+    # of pages skip it (and users without mineru pay zero cost).
+    try:
+        from page_evidence import collect as _ev_collect, confidence_score as _ev_score
+        content_ev = _ev_collect(content or "")
+        weak = (
+            _ev_score(content_ev) < 0.25
+            and (content_ev.real_door_numbers >= 3 or content_ev.hw_components >= 3)
+        )
+        if weak and _mineru_available():
+            logger.info(
+                "Page %d: low confidence (%.2f) — consulting MinerU backend.",
+                page_idx + 1, _ev_score(content_ev),
+            )
+            mineru_md = run_mineru_on_page(pdf_path, page_idx, timeout_s=90)
+            if mineru_md and len(mineru_md) > 100:
+                # Merge MinerU output on top; trim to max_chars budget.
+                combined = (mineru_md + "\n\n" + (content or "")).strip()
+                content = combined[:max_chars]
+                backends_used.append("mineru")
+                logger.info(
+                    "Page %d: MinerU added %d chars of structured markdown.",
+                    page_idx + 1, len(mineru_md),
+                )
+    except Exception as e:
+        logger.debug("MinerU consultation skipped: %s", e)
+
     if not content or len(content.strip()) < 30:
-        # Last resort: use any text available
+        # Last resort: use any text available (including fitz raw text)
         content = plumber_text[:max_chars] if plumber_text else pymupdf_md[:max_chars]
+    
+    if not content or len(content.strip()) < 30:
+        # Final fallback: raw fitz text
+        if fitz_raw_text and len(fitz_raw_text.strip()) > 30:
+            content = fitz_raw_text[:max_chars]
+            if "fitz_raw" not in backends_used:
+                backends_used.append("fitz_raw")
+            logger.info("Page %d: Using raw fitz text as final fallback (%d chars).", page_idx + 1, len(content))
 
     if not content or len(content.strip()) < 30:
         return "", PageType.OTHER, False, base64_img
@@ -838,17 +1139,29 @@ def extract_structured_page(
     if cid_ratio > 0.05:  # >5% of content is CID references
         logger.warning("Page %d: CID-encoded text detected (%.0f%%). Falling back to raw fitz extraction.",
                         page_idx + 1, cid_ratio * 100)
-        try:
-            doc = pymupdf.open(str(pdf_path))
-            fitz_text = doc[page_idx].get_text()
-            doc.close()
-            if fitz_text and len(fitz_text.strip()) > 30:
-                content = fitz_text[:max_chars]
-                if "pdfplumber_text" in backends_used and "fitz_fallback" not in backends_used:
-                    backends_used.append("fitz_fallback")
-                logger.info("Page %d: fitz fallback recovered %d chars of clean text.", page_idx + 1, len(content))
-        except Exception as e:
-            logger.debug("fitz CID fallback failed: %s", e)
+        vision_marker = "=== VISION LLM EXTRACTION ==="
+        if vision_marker in content:
+            vision_text = content.split(vision_marker, 1)[1].strip()
+            if len(vision_text) > 100:
+                content = vision_text[:max_chars]
+                if "vision_llm" not in backends_used:
+                    backends_used.append("vision_llm")
+                logger.info(
+                    "Page %d: preserving Vision LLM text over CID-corrupt native text (%d chars).",
+                    page_idx + 1, len(content),
+                )
+        else:
+            try:
+                doc = pymupdf.open(str(pdf_path))
+                fitz_text = doc[page_idx].get_text()
+                doc.close()
+                if fitz_text and len(fitz_text.strip()) > 30:
+                    content = fitz_text[:max_chars]
+                    if "pdfplumber_text" in backends_used and "fitz_fallback" not in backends_used:
+                        backends_used.append("fitz_fallback")
+                    logger.info("Page %d: fitz fallback recovered %d chars of clean text.", page_idx + 1, len(content))
+            except Exception as e:
+                logger.debug("fitz CID fallback failed: %s", e)
 
     # ── Step 4: Fix CAD text corruption BEFORE classification ──
     # CRITICAL: These must run BEFORE classify_page() so reversed/PUA text

@@ -44,11 +44,19 @@ OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
 OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "120"))
 OLLAMA_FALLBACK_MODELS = os.environ.get("OLLAMA_FALLBACK_MODELS", "")
 
-# ── RAG ──
+# ── RAG (ChromaDB — auto-rebuilds on boot from instructions/*.md) ──
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
 CHROMA_COLLECTION_DOOR = "door_schedule_instructions"
 CHROMA_COLLECTION_HARDWARE = "hardware_schedule_instructions"
 RAG_TOP_K = int(os.environ.get("RAG_TOP_K", "3"))
+
+# ── Supabase Storage (S3-compatible) ──
+# Get these from: Supabase Dashboard → Settings → Storage → S3 Connection
+AWS_ACCESS_KEY_ID = get_env("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = get_env("AWS_SECRET_ACCESS_KEY", "")
+AWS_REGION = get_env("AWS_REGION", "us-east-1")
+S3_BUCKET_NAME = get_env("S3_BUCKET_NAME", "")
+S3_ENDPOINT_URL = get_env("S3_ENDPOINT_URL", "")  # e.g. https://<project-ref>.supabase.co/storage/v1/s3
 
 # ── Extraction Settings ──
 _env_max_chars = int(os.environ.get("MAX_PAGE_CHARS", "35000"))

@@ -28,6 +28,41 @@ logger = logging.getLogger("llm")
 
 MAX_RETRIES = 2
 
+# When True, the pipeline falls back to Ollama (local) on OpenAI/Groq failure.
+# On hosts where Ollama is slow, wrong-model-pulled, or simply not running,
+# this fallback wastes minutes per call with 3× 180s timeouts. Default is
+# disabled; override by setting LLM_OLLAMA_FALLBACK=1 in the environment.
+import os as _os  # local alias to avoid touching top-of-file import set
+ENABLE_OLLAMA_FALLBACK = _os.environ.get("LLM_OLLAMA_FALLBACK", "0") == "1"
+
+# Rate-limit backoff (OpenAI): these retries run *in addition* to MAX_RETRIES.
+# Rationale: we'd rather wait ~2 minutes for the rate limit to clear than
+# fall through to a broken Ollama which could burn 10+ minutes.
+OPENAI_RATELIMIT_RETRIES = 6
+OPENAI_RATELIMIT_MAX_WAIT = 60  # seconds per attempt
+_OLLAMA_HEALTHY: Optional[bool] = None  # lazy-cached health check
+
+
+def _ollama_is_healthy() -> bool:
+    """Cheap health probe so we don't waste minutes on a dead Ollama."""
+    global _OLLAMA_HEALTHY
+    if _OLLAMA_HEALTHY is not None:
+        return _OLLAMA_HEALTHY
+    try:
+        r = requests.get(
+            f"{OLLAMA_BASE_URL.rstrip('/')}/api/tags",
+            timeout=2,
+        )
+        _OLLAMA_HEALTHY = r.status_code == 200 and bool(r.json().get("models"))
+    except Exception:
+        _OLLAMA_HEALTHY = False
+    if not _OLLAMA_HEALTHY:
+        logger.info(
+            "Ollama probe failed — fallback disabled for this process "
+            "(set LLM_OLLAMA_FALLBACK=1 and ensure `ollama serve` is running to enable)."
+        )
+    return _OLLAMA_HEALTHY
+
 
 # ═══════════════════════════════════════════════════════════════════
 #  Runtime LLM Configuration (overridable from Streamlit UI)
@@ -130,9 +165,19 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
         ]
 
-    # Smart escalation: If the table string is dense (>5,000 chars), 
-    # we force gpt-4o for pure text semantic mapping even if there's no image.
-    active_model = force_model if force_model else ("gpt-4o" if (base64_image or len(user) > 5000) else OPENAI_MODEL)
+    # Model routing:
+    #   * `force_model` always wins (used by verification rescue).
+    #   * Vision prompts (base64_image present) require gpt-4o since
+    #     gpt-4o-mini's vision is weaker on dense table images.
+    #   * Everything else uses the configured OPENAI_MODEL (typically
+    #     gpt-4o-mini) — gpt-4o-mini is cheaper, much higher RPM/TPM,
+    #     and close to parity on structured JSON extraction. The old
+    #     ">5000 chars → gpt-4o" auto-escalation caused the whole
+    #     benchmark to hit the stricter gpt-4o throttle on every call.
+    active_model = (
+        force_model if force_model
+        else ("gpt-4o" if base64_image else OPENAI_MODEL)
+    )
     payload = {
         "model": active_model,
         "messages": [
@@ -143,13 +188,31 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
         "max_tokens": 12000,
     }
 
-    for attempt in range(MAX_RETRIES + 1):
+    # Two independent retry budgets:
+    #   * `attempt`: logical failures (network errors, empty responses)
+    #   * `ratelimit_attempt`: HTTP 429s — these are transient throttles,
+    #     not failures, so we happily wait much longer. Previously both
+    #     counters shared a single loop, causing the pipeline to give up
+    #     on the 3rd 429 (~35s total) instead of waiting through the
+    #     minute-level OpenAI rate window.
+    attempt = 0
+    ratelimit_attempt = 0
+    while True:
         try:
-            # Increased timeout for intensive high-res image reasoning
             r = requests.post(url, headers=headers, json=payload, timeout=300)
             if r.status_code == 429:
-                wait = min(2 ** attempt * 5, 60)
-                logger.warning("[OpenAI] Rate limit hit. Waiting %ds...", wait)
+                if ratelimit_attempt >= OPENAI_RATELIMIT_RETRIES:
+                    logger.warning(
+                        "[OpenAI] Rate limit retries exhausted after %d attempts. Giving up.",
+                        ratelimit_attempt,
+                    )
+                    return ""
+                wait = min(2 ** ratelimit_attempt * 5, OPENAI_RATELIMIT_MAX_WAIT)
+                ratelimit_attempt += 1
+                logger.warning(
+                    "[OpenAI] Rate limit hit. Waiting %ds (attempt %d/%d)...",
+                    wait, ratelimit_attempt, OPENAI_RATELIMIT_RETRIES,
+                )
                 time.sleep(wait)
                 continue
             r.raise_for_status()
@@ -157,13 +220,19 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             content = choice["message"].get("content")
             if content and content.strip():
                 return content
-            logger.warning("[OpenAI] Empty content detected. Finish reason: %s, Refusal: %s", 
+            logger.warning("[OpenAI] Empty content detected. Finish reason: %s, Refusal: %s",
                            choice.get("finish_reason"), choice["message"].get("refusal"))
+            # fall through to attempt counter so we don't loop forever on empties
+            attempt += 1
+            if attempt > MAX_RETRIES:
+                return ""
+            time.sleep(2)
         except Exception as e:
             logger.warning("[OpenAI] Call failed (attempt %d): %s", attempt + 1, e)
-            if attempt < MAX_RETRIES:
-                time.sleep(2)
-    return ""
+            attempt += 1
+            if attempt > MAX_RETRIES:
+                return ""
+            time.sleep(2)
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -269,7 +338,7 @@ def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Opt
         ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image, force_model=force_model)
         if ans:
             return ans
-        logger.warning("OpenAI failed, falling back to Ollama")
+        logger.warning("OpenAI failed.")
 
     elif provider == "groq":
         model = llm_config.groq_model
@@ -277,10 +346,17 @@ def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Opt
         ans = _groq_chat(system, user, force_json=force_json, base64_image=base64_image)
         if ans:
             return ans
-        logger.warning("Groq failed, falling back to Ollama")
+        logger.warning("Groq failed.")
 
-    logger.info("Using Ollama (%s)", llm_config.ollama_model)
-    return _ollama_chat(system, user, force_json=force_json, base64_image=base64_image)
+    # Local Ollama fallback. Gated behind a probe and an env flag because
+    # a misconfigured Ollama can burn 9+ minutes per call on 180s × 3 retries.
+    if provider == "ollama" or (ENABLE_OLLAMA_FALLBACK and _ollama_is_healthy()):
+        logger.info("Using Ollama (%s)", llm_config.ollama_model)
+        return _ollama_chat(system, user, force_json=force_json, base64_image=base64_image)
+
+    if provider != "ollama":
+        logger.warning("Ollama fallback skipped (unhealthy or LLM_OLLAMA_FALLBACK unset).")
+    return ""
 
 
 def _clean_json(s: str) -> str:

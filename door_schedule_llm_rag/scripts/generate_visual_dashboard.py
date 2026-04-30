@@ -11,11 +11,8 @@ Usage:
 Output:
     qa_out/visual_dashboard/apple_to_apple.html
 """
-import os
 import sys
-import json
 import base64
-import re
 import logging
 from pathlib import Path
 from datetime import datetime
@@ -31,7 +28,6 @@ log = logging.getLogger("dashboard")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 QA_DIR = BASE_DIR / "qa_out" / "deep_e2e"
-PDFS_DIR = BASE_DIR.parent / "pdfs"
 DASH_DIR = BASE_DIR / "qa_out" / "visual_dashboard"
 EDGE_LOG = BASE_DIR / "docs" / "EDGE_CASE_LOG.md"
 
@@ -65,29 +61,6 @@ def get_page_count(pdf_path: Path) -> int:
         return n
     except:
         return 0
-
-
-# ══════════════════════════════════════════════════════════════════
-#  PDF Discovery (match project dirs to source PDFs)
-# ══════════════════════════════════════════════════════════════════
-
-def find_source_pdf(project_id: str) -> Path:
-    """Find the original source PDF for a given project_id."""
-    # First: check if there's a subdirectory match
-    for d in PDFS_DIR.iterdir():
-        if d.is_dir():
-            clean = re.sub(r"[^a-z0-9_]", "", re.sub(r"[\s_-]+", "_", d.name.lower()))
-            if clean == project_id or project_id in clean:
-                for pdf in d.rglob("*.pdf"):
-                    return pdf
-    
-    # Second: check top-level PDFs
-    for f in PDFS_DIR.glob("*.pdf"):
-        clean = re.sub(r"[^a-z0-9_]", "", re.sub(r"[\s_-]+", "_", f.stem.lower()))
-        if clean == project_id or project_id in clean:
-            return f
-    
-    return None
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -194,16 +167,22 @@ def build_dashboard():
         log.error("QA output directory not found: %s. Run the benchmark first!", QA_DIR)
         return
 
-    projects = sorted([
-        d for d in QA_DIR.iterdir()
-        if d.is_dir() and (d / "extraction_results_llm.xlsx").exists()
-    ])
-
-    if not projects:
-        log.error("No extraction results found in %s. Run the benchmark first!", QA_DIR)
+    report_path = QA_DIR / "deep_e2e_report.csv"
+    if not report_path.exists():
+        log.error("Benchmark report not found: %s. Run the benchmark first!", report_path)
         return
 
-    log.info("Found %d tested projects. Building dashboard...", len(projects))
+    report_df = pd.read_csv(report_path)
+    if "run_id" not in report_df.columns:
+        log.error(
+            "Benchmark report is from the old non-unique format. "
+            "Re-run tests/deep_e2e_benchmark.py before generating this dashboard."
+        )
+        return
+
+    projects = report_df.to_dict("records")
+
+    log.info("Found %d tested PDF runs. Building dashboard...", len(projects))
 
     total_doors = 0
     total_hw = 0
@@ -212,17 +191,19 @@ def build_dashboard():
 
     project_cards_html = ""
 
-    for proj_idx, proj_dir in enumerate(projects):
-        project_id = proj_dir.name
-        excel_path = proj_dir / "extraction_results_llm.xlsx"
-
-        # Find source PDF
-        pdf_path = find_source_pdf(project_id)
+    for proj_idx, row in enumerate(projects):
+        run_id = str(row.get("run_id") or "")
+        project_id = str(row.get("project_id") or run_id)
+        excel_path = Path(str(row.get("output_dir") or (QA_DIR / run_id))) / "extraction_results_llm.xlsx"
+        pdf_path = Path(str(row.get("pdf_path") or ""))
         if not pdf_path or not pdf_path.exists():
-            log.warning("No source PDF found for project: %s", project_id)
+            log.warning("No source PDF found for run: %s", run_id)
+            continue
+        if not excel_path.exists():
+            log.warning("No extraction workbook found for run: %s", run_id)
             continue
 
-        log.info("[%d/%d] Processing: %s (%s)", proj_idx + 1, len(projects), project_id, pdf_path.name)
+        log.info("[%d/%d] Processing: %s (%s)", proj_idx + 1, len(projects), run_id, pdf_path.name)
 
         # Load extraction results
         try:
@@ -241,6 +222,7 @@ def build_dashboard():
         total_hw += n_hw
 
         # Determine status badge
+        status = str(row.get("status") or "")
         if n_doors == 0 and n_hw == 0:
             badge = '<span class="badge badge-err">ZERO EXTRACT</span>'
             edge_cases_found += 1
@@ -317,10 +299,10 @@ def build_dashboard():
                 project_cards_html += f"""
                 <div class="project-card" id="project_{proj_idx}">
                     <div class="project-header">
-                        <h2>📦 {project_id}</h2>
+                        <h2>📦 {run_id}</h2>
                         {badge}
                     </div>
-                    <p style="color:var(--muted);">{pdf_path.name} — {n_pages} pages</p>
+                    <p style="color:var(--muted);">{project_id} · {pdf_path.name} — {n_pages} pages · {status}</p>
                     <div class="split" style="margin-top:15px;">
                         <div class="col">
                             <img src="data:image/jpeg;base64,{b64_img}" alt="Page 1" style="max-height:400px;">
@@ -336,11 +318,11 @@ def build_dashboard():
         project_cards_html += f"""
         <div class="project-card" id="project_{proj_idx}">
             <div class="project-header">
-                <h2>📦 {project_id}</h2>
+                <h2>📦 {run_id}</h2>
                 <div>
                     {badge}
                     <span style="color:var(--muted); font-size:13px; margin-left:15px;">
-                        {n_doors} doors · {n_hw} HW items · {n_pages} pages
+                        {project_id} · {n_doors} doors · {n_hw} HW items · {n_pages} pages · {status}
                     </span>
                 </div>
             </div>
@@ -352,7 +334,7 @@ def build_dashboard():
     # Build stats bar
     stats_html = f"""
     <div class="stats-bar">
-        <div class="stat"><div class="num">{len(projects)}</div><div class="label">Projects</div></div>
+        <div class="stat"><div class="num">{len(projects)}</div><div class="label">PDF Runs</div></div>
         <div class="stat"><div class="num">{total_doors}</div><div class="label">Total Doors</div></div>
         <div class="stat"><div class="num">{total_hw}</div><div class="label">HW Components</div></div>
         <div class="stat"><div class="num">{total_pages_rendered}</div><div class="label">Pages Audited</div></div>
@@ -374,7 +356,7 @@ def build_dashboard():
 
     log.info("=" * 60)
     log.info("Dashboard generated successfully!")
-    log.info("  Projects:    %d", len(projects))
+    log.info("  PDF Runs:    %d", len(projects))
     log.info("  Total Doors: %d", total_doors)
     log.info("  Total HW:    %d", total_hw)
     log.info("  Pages:       %d", total_pages_rendered)
