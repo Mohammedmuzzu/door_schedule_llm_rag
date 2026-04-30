@@ -26,8 +26,59 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from config import PDF_FOLDER, OUTPUT_DIR, MAX_PAGE_CHARS
+import agent as _agent_module  # access LAST_VERIFY_REPORT after each page
 from agent import extract_page_with_llm, ExtractionContext
 from page_extractor import extract_structured_page, get_page_count, PageType
+from page_evidence import collect as collect_evidence
+from llm_extract import llm_config
+from db_utils import save_estimations_to_db
+
+try:
+    from cloud_storage import upload_file_to_s3
+except Exception:
+    upload_file_to_s3 = None
+
+# RAG + run-store (soft imports so a missing optional dep never kills the pipeline)
+try:
+    from rag_store import (
+        ensure_seeded as _rag_ensure_seeded,
+        record_door_example,
+        record_hardware_example,
+        record_anomaly,
+        status as _rag_status,
+        is_available as _rag_available,
+    )
+except Exception as _rag_e:  # pragma: no cover
+    logging.getLogger("pipeline").warning("rag_store unavailable: %s", _rag_e)
+
+    def _rag_ensure_seeded(force: bool = False):
+        return {}
+
+    def record_door_example(*_args, **_kwargs):
+        return False
+
+    def record_hardware_example(*_args, **_kwargs):
+        return False
+
+    def record_anomaly(*_args, **_kwargs):
+        return False
+
+    def _rag_status():
+        return {"available": 0}
+
+    def _rag_available():
+        return False
+
+try:
+    from run_store import RunLogger
+except Exception:  # pragma: no cover
+    RunLogger = None  # type: ignore[assignment]
+
+try:
+    from mineru_backend import is_available as _mineru_available
+except Exception:  # pragma: no cover
+    def _mineru_available() -> bool:  # type: ignore[misc]
+        return False
 
 logging.basicConfig(
     level=logging.INFO,
@@ -153,6 +204,28 @@ def run_pipeline(
         logger.warning("No PDFs found in %s", pdf_folder)
         return pd.DataFrame(), pd.DataFrame()
 
+    # ── Boot-time: make sure RAG is seeded so the agent and verification
+    # layer actually have context on the first page. This is the fix for the
+    # previous silent "RAG returns []" bug.
+    try:
+        status = _rag_ensure_seeded()
+        if status.get("available"):
+            logger.info(
+                "RAG ready: instructions[door=%d, hw=%d], examples[door=%d, hw=%d], anomalies=%d",
+                status.get("instructions_door", 0),
+                status.get("instructions_hardware", 0),
+                status.get("examples_door", 0),
+                status.get("examples_hardware", 0),
+                status.get("anomalies", 0),
+            )
+        else:
+            logger.warning(
+                "RAG is NOT available — pipeline will run without retrieval context. "
+                "This is OK but reduces long-term self-improvement."
+            )
+    except Exception as e:
+        logger.warning("RAG seeding skipped: %s", e)
+
     all_doors = []
     all_components = []
     project_stats = {}
@@ -174,6 +247,28 @@ def run_pipeline(
         # Per-PDF extraction context for multi-page continuity
         ctx = ExtractionContext()
         prev_page_type = None
+
+        # Per-PDF durable run log. Each PDF gets its own JSONL file so
+        # Streamlit can stream it back or users can grep historical runs.
+        run_logger = None
+        if RunLogger is not None:
+            try:
+                active_model = (
+                    llm_config.openai_model if llm_config.provider == "openai"
+                    else llm_config.groq_model if llm_config.provider == "groq"
+                    else llm_config.ollama_model
+                )
+                run_logger = RunLogger(
+                    pdf_name=fname,
+                    provider=llm_config.provider,
+                    model=active_model,
+                    use_rag=bool(use_rag),
+                    mineru_available=_mineru_available(),
+                )
+                run_logger.start()
+            except Exception as e:
+                logger.debug("RunLogger init failed: %s", e)
+                run_logger = None
 
         for page_idx in range(n_pages):
             # Extract structured page content with classification
@@ -207,14 +302,72 @@ def run_pipeline(
             )
             logger.info("Page %d LLM Extraction (%s) took %.1fs", page_idx + 1, page_type, time.time() - t1)
 
-            # Automatic Anomaly Logging Hook
+            # ── Evidence snapshot for durable logging + learning ──
+            evidence = collect_evidence(text)
+            verify_report = getattr(_agent_module, "LAST_VERIFY_REPORT", None)
+
+            # ── Automatic Anomaly Logging Hook ──
+            anomaly_reason: Optional[str] = None
             if page_type == PageType.DOOR_SCHEDULE and not doors:
+                anomaly_reason = "DOOR_ZERO_EXTRACT"
                 logger.warning("Anomaly: Classified DOOR_SCHEDULE but 0 doors extracted for %s! Auto-logging.", fname)
                 log_anomaly_to_skills(fname, page_idx, "DOOR", text)
-                
             if page_type == PageType.HARDWARE_SET and not hardware:
+                anomaly_reason = "HW_ZERO_EXTRACT"
                 logger.warning("Anomaly: Classified HARDWARE_SET but 0 hardware items extracted for %s! Auto-logging.", fname)
                 log_anomaly_to_skills(fname, page_idx, "HARDWARE", text)
+
+            # Persist anomaly into RAG so similar future pages retrieve it as context.
+            if anomaly_reason:
+                try:
+                    record_anomaly(
+                        page_text=text,
+                        reason=anomaly_reason,
+                        source_file=fname,
+                        page=page_idx + 1,
+                        evidence=evidence.as_dict(),
+                        verify_report=verify_report,
+                    )
+                except Exception as e:
+                    logger.debug("record_anomaly failed: %s", e)
+
+            # ── Learn from successful extractions ──
+            # Each time we get a meaningful result, save a compact few-shot
+            # example. Future pages with similar signals will retrieve it
+            # via the RAG query in `agent.extract_page_with_llm`.
+            try:
+                if doors:
+                    record_door_example(
+                        page_text=text,
+                        doors=doors,
+                        source_file=fname,
+                        page=page_idx + 1,
+                    )
+                if hardware:
+                    record_hardware_example(
+                        page_text=text,
+                        hardware=hardware,
+                        source_file=fname,
+                        page=page_idx + 1,
+                    )
+            except Exception as e:
+                logger.debug("record_example failed: %s", e)
+
+            # ── Per-page durable event ──
+            if run_logger is not None:
+                try:
+                    run_logger.event(
+                        "page_extracted",
+                        page=page_idx + 1,
+                        page_type=page_type,
+                        doors=len(doors),
+                        hardware=len(hardware),
+                        evidence=evidence.as_dict(),
+                        verify_report=verify_report,
+                        anomaly=anomaly_reason,
+                    )
+                except Exception as e:
+                    logger.debug("run_logger.event failed: %s", e)
 
             # Tag and collect doors
             for d in doors:
@@ -231,8 +384,19 @@ def run_pipeline(
                 all_components.append(h)
 
             prev_page_type = page_type
-            
+
         logger.info("Finished processing %s in %.1fs", fname, time.time() - pdf_start_time)
+
+        # ── Close durable run log ──
+        if run_logger is not None:
+            try:
+                run_logger.finish(
+                    doors=sum(1 for d in all_doors if d.get("source_file") == fname),
+                    hardware=sum(1 for h in all_components if h.get("source_file") == fname),
+                    status="OK",
+                )
+            except Exception as e:
+                logger.debug("run_logger.finish failed: %s", e)
 
         # Update project stats
         key = project_id
@@ -263,15 +427,80 @@ def run_pipeline(
     df_doors = _flatten(all_doors)
     df_components = _flatten(all_components)
 
-    # Deduplicate doors by (project_id, door_number) — keep first occurrence
+    # ── Cross-reference: back-fill missing hardware_set on doors ──
+    # If a project has hardware components but door rows are missing the
+    # hardware_set column, try to infer it from the hardware side.
+    if not df_doors.empty and not df_components.empty and "hardware_set" in df_doors.columns:
+        orphan_mask = df_doors["hardware_set"].isna() | (df_doors["hardware_set"].astype(str).str.strip() == "")
+        if orphan_mask.any():
+            logger.info("Cross-reference: %d doors missing hardware_set, attempting back-fill.", orphan_mask.sum())
+            
+            for pid in df_doors.loc[orphan_mask, "project_id"].unique():
+                proj_hw = df_components[df_components["project_id"] == pid]
+                if proj_hw.empty:
+                    continue
+                
+                hw_set_ids = proj_hw["hardware_set_id"].dropna().unique()
+                
+                # Strategy 1: If the project has exactly 1 hardware set,
+                # assign all orphan doors to it.
+                if len(hw_set_ids) == 1:
+                    mask = orphan_mask & (df_doors["project_id"] == pid)
+                    df_doors.loc[mask, "hardware_set"] = str(hw_set_ids[0])
+                    logger.info("Cross-ref: assigned %d orphan doors in %s to sole HW set '%s'.",
+                                mask.sum(), pid, hw_set_ids[0])
+                    continue
+                
+                # Strategy 2: If hardware set names contain room/door references,
+                # attempt fuzzy matching by door_number or room_name.
+                if "hardware_set_name" in proj_hw.columns:
+                    proj_orphans = df_doors.loc[orphan_mask & (df_doors["project_id"] == pid)]
+                    for idx, door_row in proj_orphans.iterrows():
+                        dn = str(door_row.get("door_number", "")).strip().upper()
+                        rn = str(door_row.get("room_name", "")).strip().upper()
+                        
+                        for _, hw_row in proj_hw.drop_duplicates("hardware_set_id").iterrows():
+                            hw_name = str(hw_row.get("hardware_set_name", "")).strip().upper()
+                            hw_id = hw_row.get("hardware_set_id")
+                            
+                            if hw_name and (
+                                (dn and dn in hw_name) or
+                                (rn and len(rn) > 3 and rn in hw_name)
+                            ):
+                                df_doors.at[idx, "hardware_set"] = str(hw_id)
+                                break
+            
+            filled = orphan_mask.sum() - (df_doors["hardware_set"].isna() | (df_doors["hardware_set"].astype(str).str.strip() == "")).sum()
+            if filled > 0:
+                logger.info("Cross-reference back-filled %d hardware_set values.", filled)
+
+    # ── Ghost Door Filter: Remove doors with NO physical attributes ──
+    # Hardware pages often list door numbers under hardware sets. The LLM might extract these 
+    # as door rows, but they lack all physical dimensions/materials.
+    if not df_doors.empty:
+        phys_cols = ["door_width", "door_height", "door_thickness", "door_material", "door_type", "frame_material", "fire_rating"]
+        existing = [c for c in phys_cols if c in df_doors.columns]
+        if existing:
+            before_ghosts = len(df_doors)
+            valid_mask = df_doors[existing].notna().any(axis=1) | (df_doors["door_number"].astype(str).str.strip() == "")
+            df_doors = df_doors[valid_mask].reset_index(drop=True)
+            ghosts = before_ghosts - len(df_doors)
+            if ghosts > 0:
+                logger.info("Filtered %d 'ghost doors' (likely scraped from hardware lists)", ghosts)
+
+    # Deduplicate doors by (project_id, door_number) — keep row with most fields populated
     if not df_doors.empty and "project_id" in df_doors.columns and "door_number" in df_doors.columns:
         before = len(df_doors)
+        # Score each row by how many non-null fields it has
+        df_doors["_completeness"] = df_doors.notna().sum(axis=1)
+        df_doors = df_doors.sort_values("_completeness", ascending=False)
         df_doors = df_doors.drop_duplicates(
             subset=["project_id", "door_number"], keep="first"
         ).reset_index(drop=True)
+        df_doors = df_doors.drop(columns=["_completeness"])
         dupes = before - len(df_doors)
         if dupes:
-            logger.info("Removed %d duplicate door rows", dupes)
+            logger.info("Removed %d duplicate door rows (kept most complete)", dupes)
 
     # ── Columns for output ──
     door_cols = [
@@ -350,6 +579,13 @@ def run_pipeline(
         if "hardware_set_clean" in df_doors_out.columns:
             df_doors_out = df_doors_out.drop(columns=["hardware_set_clean"])
 
+        # Save to database
+        try:
+            save_estimations_to_db(milestone1, df_doors_out)
+            logger.info("Saved Milestone 1 data to centralized database.")
+        except Exception as e:
+            logger.error("Failed to save to database: %s", e)
+
     # ═══════════════════════════════════════════════════════════════
     #  WRITE OUTPUT
     # ═══════════════════════════════════════════════════════════════
@@ -386,6 +622,19 @@ def run_pipeline(
         df_comp_out.to_csv(Path(output_dir) / "hardware_components_llm.csv", index=False)
     if not milestone1.empty:
         milestone1.to_csv(Path(output_dir) / "milestone1_aggregate.csv", index=False)
+
+    # ── Upload to S3 if configured ──
+    if upload_file_to_s3:
+        excel_name = excel_path.name
+        upload_file_to_s3(str(excel_path), f"exports/{excel_name}")
+        
+        if not df_doors_out.empty:
+            upload_file_to_s3(str(Path(output_dir) / "door_schedule_llm.csv"), "exports/door_schedule_llm.csv")
+        if not df_comp_out.empty:
+            upload_file_to_s3(str(Path(output_dir) / "hardware_components_llm.csv"), "exports/hardware_components_llm.csv")
+        if not milestone1.empty:
+            upload_file_to_s3(str(Path(output_dir) / "milestone1_aggregate.csv"), "exports/milestone1_aggregate.csv")
+        logger.info("Uploaded output files to S3.")
 
     logger.info(
         "Pipeline complete: %d doors, %d hardware components, %d projects",

@@ -5,7 +5,7 @@ Run once (or after updating instructions) before running the pipeline.
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from rag_store import seed_door_instructions, seed_hardware_instructions
 

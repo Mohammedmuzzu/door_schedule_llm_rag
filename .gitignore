@@ -37,3 +37,6 @@ scratch/
 .DS_Store
 
 skills/.skills/
+
+# Streamlit secrets
+.streamlit/secrets.toml
