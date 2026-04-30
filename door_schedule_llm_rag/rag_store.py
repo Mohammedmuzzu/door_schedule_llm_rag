@@ -11,6 +11,13 @@ from typing import List, Optional
 logger = logging.getLogger("rag")
 
 try:
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+try:
     import chromadb
     from chromadb.config import Settings
     from sentence_transformers import SentenceTransformer
