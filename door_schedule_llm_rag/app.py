@@ -69,12 +69,48 @@ class StreamlitLogHandler(logging.Handler):
 #  Available model options per provider
 # ═══════════════════════════════════════════════════════════════════
 PROVIDER_MODELS = {
-    "openai": [
-        "gpt-4o", "gpt-4o-mini", "gpt-4.5-preview", "o1", "o1-mini"
-    ],
+    "openai": [], # populated dynamically
     "groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768"],
     "ollama": [],  # populated dynamically
 }
+
+@st.cache_data(ttl=3600)
+def _get_openai_models():
+    """Fetch installed OpenAI models for the dropdown using the API key."""
+    default_models = ["gpt-4o", "gpt-4o-mini", "gpt-4.5-preview", "o1", "o1-mini"]
+    from config import OPENAI_API_KEY
+    if not OPENAI_API_KEY:
+        return default_models
+        
+    try:
+        import requests
+        r = requests.get(
+            "https://api.openai.com/v1/models",
+            headers={"Authorization": f"Bearer {OPENAI_API_KEY}"},
+            timeout=5
+        )
+        r.raise_for_status()
+        
+        # Filter and sort models
+        models = [m.get("id") for m in r.json().get("data", []) if m.get("id")]
+        valid_models = []
+        for m in models:
+            # We only care about flagship gpt and o1/o3 series models for chatting
+            if (m.startswith("gpt-") or m.startswith("o1") or m.startswith("o3")) and "audio" not in m and "realtime" not in m and "vision" not in m:
+                valid_models.append(m)
+                
+        def sort_key(m):
+            if m == "gpt-4o": return -10
+            if m == "gpt-4o-mini": return -9
+            if m == "o1": return -8
+            if m == "gpt-4.5-preview": return -7
+            if m == "o1-mini": return -6
+            return 0
+            
+        valid_models.sort(key=sort_key)
+        return valid_models if valid_models else default_models
+    except Exception:
+        return default_models
 
 
 def _get_ollama_models():
@@ -136,6 +172,8 @@ with st.sidebar:
     # Model selector (dynamic based on provider)
     if selected_provider == "ollama":
         model_options = _get_ollama_models()
+    elif selected_provider == "openai":
+        model_options = _get_openai_models()
     else:
         model_options = PROVIDER_MODELS.get(selected_provider, [])
 
