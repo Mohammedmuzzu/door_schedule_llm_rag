@@ -69,7 +69,11 @@ class StreamlitLogHandler(logging.Handler):
 #  Available model options per provider
 # ═══════════════════════════════════════════════════════════════════
 PROVIDER_MODELS = {
-    "openai": ["gpt-4o-mini", "gpt-4o", "gpt-4.5-preview", "o1", "o1-mini", "gpt-5", "gpt-5-turbo"],
+    "openai": [
+        "gpt-5.5", "gpt-5.5-instant", "gpt-5.4", "gpt-rosalind", 
+        "gpt-4o-mini", "gpt-4o", "gpt-4.5-preview", "o1", "o1-mini", 
+        "gpt-5", "gpt-5-turbo"
+    ],
     "groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768"],
     "ollama": [],  # populated dynamically
 }
@@ -160,6 +164,10 @@ with st.sidebar:
 
     # Speed/accuracy hints
     speed_hints = {
+        "gpt-5.5": "👑 Flagship model (Most capable for complex tasks)",
+        "gpt-5.5-instant": "⚡ Fast, default 5.5 model",
+        "gpt-5.4": "💻 Optimized for tool use and large contexts",
+        "gpt-rosalind": "🔬 Advanced scientific & deep reasoning model",
         "gpt-4o-mini": "⚡ Fast, cheap (~$0.01/PDF), great accuracy",
         "gpt-4o": "🎯 Best accuracy, moderate cost (~$0.05/PDF)",
         "gpt-4.5-preview": "🧪 Experimental next-gen model",
