@@ -147,6 +147,33 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
 # ═══════════════════════════════════════════════════════════════════
 #  OpenAI Backend
 # ═══════════════════════════════════════════════════════════════════
+def _resolve_openai_model(base64_image: Optional[str], force_model: Optional[str]) -> str:
+    """Resolve the best OpenAI model based on user selection, vision needs, and rescue escalations."""
+    current_model = llm_config.openai_model
+    
+    # 1. If agent explicitly requested gpt-4o (heuristic rescue/escalation)
+    if force_model == "gpt-4o":
+        if current_model == "gpt-4o-mini":
+            return "gpt-4o"
+        elif current_model == "gpt-5.5-instant":
+            return "gpt-5.5"
+        elif current_model == "o1-mini":
+            return "o1"
+        else:
+            return current_model  # Trust the user's flagship model choice
+            
+    # 2. If forced some other specific model
+    if force_model:
+        return force_model
+        
+    # 3. Vision requirement (mini struggles with complex blueprints)
+    if base64_image and current_model == "gpt-4o-mini":
+        return "gpt-4o"
+        
+    # 4. Default: User's UI selection
+    return current_model
+
+
 def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> str:
     """Call OpenAI API (GPT-4o-mini, GPT-4o, etc.)."""
     if not OPENAI_API_KEY:
@@ -165,19 +192,8 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
         ]
 
-    # Model routing:
-    #   * `force_model` always wins (used by verification rescue).
-    #   * Vision prompts (base64_image present) require gpt-4o since
-    #     gpt-4o-mini's vision is weaker on dense table images.
-    #   * Everything else uses the configured OPENAI_MODEL (typically
-    #     gpt-4o-mini) — gpt-4o-mini is cheaper, much higher RPM/TPM,
-    #     and close to parity on structured JSON extraction. The old
-    #     ">5000 chars → gpt-4o" auto-escalation caused the whole
-    #     benchmark to hit the stricter gpt-4o throttle on every call.
-    active_model = (
-        force_model if force_model
-        else ("gpt-4o" if base64_image else OPENAI_MODEL)
-    )
+    # Model routing is handled upstream by _resolve_openai_model
+    active_model = force_model if force_model else llm_config.openai_model
     payload = {
         "model": active_model,
         "messages": [
@@ -332,10 +348,9 @@ def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Opt
     provider = llm_config.provider
 
     if provider == "openai":
-        model = "gpt-4o" if base64_image else llm_config.openai_model
-        
-        logger.info("Using OpenAI (%s)", model if not force_model else force_model)
-        ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image, force_model=force_model)
+        active_model = _resolve_openai_model(base64_image, force_model)
+        logger.info("Using OpenAI (%s)", active_model)
+        ans = _openai_chat(system, user, force_json=force_json, base64_image=base64_image, force_model=active_model)
         if ans:
             return ans
         logger.warning("OpenAI failed.")
