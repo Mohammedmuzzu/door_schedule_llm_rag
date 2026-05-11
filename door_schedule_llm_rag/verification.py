@@ -129,6 +129,13 @@ def needs_door_rescue(
     if expected >= 20 and unique < expected * 0.3 and (expected - unique) >= 10:
         return True
 
+    # Small schedule shortfall: for small schedules (<15 expected), even missing
+    # a single door matters. For larger ones, require a 20% gap.
+    if 3 <= expected < 15 and unique > 0 and unique < expected:
+        return True
+    if expected >= 15 and unique > 0 and unique < expected * 0.8 and (expected - unique) >= 2:
+        return True
+
     return False
 
 

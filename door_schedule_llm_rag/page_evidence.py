@@ -204,10 +204,8 @@ def _real_doors(text: str) -> Tuple[int, List[str]]:
         if not m:
             continue
         val = int(m.group())
-        # exclude years (1900-2099) and very small numbers to avoid false positives
+        # exclude years (1900-2099)
         if 1900 <= val <= 2099:
-            continue
-        if val < 10:
             continue
         if token not in seen:
             seen.append(token)

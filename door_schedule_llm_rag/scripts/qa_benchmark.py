@@ -32,22 +32,21 @@ def render_pdf_to_base64_images(pdf_path):
     return base64_images
 
 def ask_llm_judge(base64_images, doors_json, hardware_json):
-    # Fallback to a placeholder if no key
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        print("Error: GEMINI_API_KEY not found in .env")
+        print("Error: OPENAI_API_KEY not found in .env")
         return {
             "accuracy_score": 0.0,
-            "hallucinations": ["GEMINI_API_KEY is missing in .env file. Please add it to use Gemini for QA."],
+            "hallucinations": ["OPENAI_API_KEY is missing. Please add it to .env."],
             "missed_items": [],
             "math_errors": []
         }
         
-    client = genai.Client(api_key=api_key)
+    client = OpenAI(api_key=api_key)
     
     prompt = (
-        "You are Gemini 3.1 Pro acting as a highly analytical QA Auditor for architectural construction schedules.\n"
-        "I am providing you with the rendered images of a PDF document containing Door Schedules and Hardware Schedules, "
+        "You are an expert QA Auditor for architectural construction schedules. "
+        "I am providing you with rendered images of a PDF document containing Door Schedules and Hardware Schedules, "
         "as well as the JSON output of an automated extraction pipeline.\n\n"
         "Your task is to carefully cross-compare the JSON data against the visual tables in the images.\n"
         "Focus on:\n"
@@ -56,7 +55,7 @@ def ask_llm_judge(base64_images, doors_json, hardware_json):
         "3. Hardware Set Accuracy: Ensure the hardware sets mapped to doors match the images.\n\n"
         f"=== DOORS JSON ===\n{doors_json}\n\n"
         f"=== HARDWARE JSON ===\n{hardware_json}\n\n"
-        "Return ONLY a valid JSON object with the following structure:\n"
+        "Return strictly valid JSON matching this schema:\n"
         "{\n"
         "  \"accuracy_score\": 95.0,\n"
         "  \"hallucinations\": [\"list of specific hallucinations\"],\n"
@@ -65,27 +64,33 @@ def ask_llm_judge(base64_images, doors_json, hardware_json):
         "}"
     )
     
-    contents = [prompt]
+    messages = [
+        {
+            "role": "user",
+            "content": [{"type": "text", "text": prompt}]
+        }
+    ]
+    
     for b64 in base64_images:
-        contents.append(
-            types.Part.from_bytes(
-                data=base64.b64decode(b64),
-                mime_type="image/png"
-            )
-        )
+        messages[0]["content"].append({
+            "type": "image_url",
+            "image_url": {
+                "url": f"data:image/png;base64,{b64}",
+                "detail": "high"
+            }
+        })
         
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-pro",
-            contents=contents,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                temperature=0.0
-            )
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            temperature=0.0,
+            response_format={"type": "json_object"}
         )
-        return json.loads(response.text)
+        content = response.choices[0].message.content
+        return json.loads(content)
     except Exception as e:
-        print(f"Error calling Gemini QA Judge: {e}")
+        print(f"Error calling OpenAI QA Judge: {e}")
         return {
             "accuracy_score": 0.0,
             "hallucinations": [str(e)],
@@ -111,7 +116,10 @@ def run_qa_benchmark(target_dir="pdfs", max_pdfs=5):
         
         # 1. Run pipeline extraction
         try:
-            df_doors, df_comp = run_pipeline(pdf_path, provider="openai", model="gpt-4o-mini")
+            from llm_extract import llm_config
+            llm_config.set("openai", "gpt-4o-mini")
+            
+            df_doors, df_comp = run_pipeline(pdf_files=[pdf_path], use_rag=True)
             
             doors_json = df_doors.to_json(orient="records") if not df_doors.empty else "[]"
             hardware_json = df_comp.to_json(orient="records") if not df_comp.empty else "[]"

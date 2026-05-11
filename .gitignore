@@ -40,3 +40,4 @@ skills/.skills/
 
 # Streamlit secrets
 .streamlit/secrets.toml
+door_schedule_llm_rag/.streamlit/secrets.tomldoor_schedule_llm_rag/.streamlit/secrets.toml

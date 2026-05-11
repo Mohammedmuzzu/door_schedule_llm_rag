@@ -289,7 +289,10 @@ def extract_page_with_llm(
     if (
         len(all_doors) == 0
         and len(all_hardware) > 0
-        and re.search(r"(?i)\bDOOR\b.*\bSCHEDULE\b|\bWINDOW\b.*\bSCHEDULE\b", raw_text)
+        and (
+            re.search(r"(?i)\bDOOR\b.*\bSCHEDULE\b|\bWINDOW\b.*\bSCHEDULE\b", raw_text)
+            or page_type == PageType.MIXED  # Scanned PDFs classified as MIXED with 0 doors need rescue
+        )
     ):
         logger.warning(
             "Full-page door rescue: schedule text and %d hardware rows but 0 door rows.",
