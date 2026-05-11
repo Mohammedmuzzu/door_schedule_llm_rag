@@ -35,16 +35,33 @@ from config import (
     EMBEDDING_MODEL,
 )
 
-# Lazy-loaded embedding model
-_embedding_model = None
+try:
+    import streamlit as st
+except ImportError:
+    st = None
 
+_embedding_model = None
 
 def get_embedding_model():
     global _embedding_model
-    if _embedding_model is None and _RAG_AVAILABLE:
-        logger.info("Loading embedding model: %s", EMBEDDING_MODEL)
-        _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
-    return _embedding_model
+    if not _RAG_AVAILABLE:
+        return None
+        
+    if st is not None:
+        # Use Streamlit caching if available
+        @st.cache_resource
+        def _load_model():
+            logger.info("Loading embedding model with st.cache_resource: %s", EMBEDDING_MODEL)
+            from sentence_transformers import SentenceTransformer
+            return SentenceTransformer(EMBEDDING_MODEL)
+        return _load_model()
+    else:
+        # Fallback to global if not running under Streamlit
+        if _embedding_model is None:
+            logger.info("Loading embedding model: %s", EMBEDDING_MODEL)
+            from sentence_transformers import SentenceTransformer
+            _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
+        return _embedding_model
 
 
 def embed(texts: List[str]) -> List[List[float]]:
@@ -183,3 +200,41 @@ def query_hardware_instructions(page_text: str, top_k: Optional[int] = None) -> 
     if result and result.get("documents"):
         return result["documents"][0]
     return []
+
+def is_available() -> bool:
+    return _RAG_AVAILABLE
+
+def ensure_seeded(force: bool = False) -> dict:
+    if not _RAG_AVAILABLE:
+        return {"available": 0}
+    d_count = seed_door_instructions()
+    h_count = seed_hardware_instructions()
+    return {
+        "available": 1,
+        "instructions_door": d_count,
+        "instructions_hardware": h_count,
+        "examples_door": 0,
+        "examples_hardware": 0,
+        "anomalies": 0
+    }
+
+def record_door_example(*args, **kwargs):
+    pass
+
+def record_hardware_example(*args, **kwargs):
+    pass
+
+def record_anomaly(*args, **kwargs):
+    pass
+
+def status() -> dict:
+    if not _RAG_AVAILABLE:
+        return {"available": 0}
+    return {
+        "available": 1,
+        "instructions_door": 0,
+        "instructions_hardware": 0,
+        "examples_door": 0,
+        "examples_hardware": 0,
+        "anomalies": 0
+    }

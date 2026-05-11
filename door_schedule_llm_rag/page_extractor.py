@@ -55,23 +55,56 @@ except Exception:  # pragma: no cover — defensive; module should always import
         return ""
 
 _IMG2TABLE_OK = False
-_img_ocr = None
-_raw_paddle_ocr = None  # Raw paddleocr engine for direct text extraction
 try:
     from img2table.document import PDF as Img2TablePDF
     _IMG2TABLE_OK = True
-    try:
-        from img2table.ocr import PaddleOCR
-        _img_ocr = PaddleOCR(lang="en")
-    except Exception as e:
-        logger.warning("OCR disabled because PaddleOCR failed to initialize: %s", e)
-    try:
-        from paddleocr import PaddleOCR as RawPaddleOCR
-        _raw_paddle_ocr = RawPaddleOCR(use_angle_cls=True, lang='en', show_log=False)
-    except Exception as e:
-        logger.warning("Raw PaddleOCR unavailable for direct fallback: %s", e)
 except ImportError:
     logger.info("img2table not available")
+
+try:
+    import streamlit as st
+except ImportError:
+    st = None
+
+def get_img_ocr():
+    if not _IMG2TABLE_OK:
+        return None
+    if st is not None:
+        @st.cache_resource
+        def _load_img_ocr():
+            try:
+                from img2table.ocr import PaddleOCR
+                return PaddleOCR(lang="en")
+            except Exception as e:
+                logger.warning("img2table PaddleOCR failed to initialize: %s", e)
+                return None
+        return _load_img_ocr()
+    else:
+        try:
+            from img2table.ocr import PaddleOCR
+            return PaddleOCR(lang="en")
+        except Exception:
+            return None
+
+def get_raw_paddle_ocr():
+    if not _IMG2TABLE_OK:
+        return None
+    if st is not None:
+        @st.cache_resource
+        def _load_raw_paddle_ocr():
+            try:
+                from paddleocr import PaddleOCR as RawPaddleOCR
+                return RawPaddleOCR(use_angle_cls=True, lang='en', show_log=False)
+            except Exception as e:
+                logger.warning("Raw PaddleOCR failed to initialize: %s", e)
+                return None
+        return _load_raw_paddle_ocr()
+    else:
+        try:
+            from paddleocr import PaddleOCR as RawPaddleOCR
+            return RawPaddleOCR(use_angle_cls=True, lang='en', show_log=False)
+        except Exception:
+            return None
 
 # ─── Page Type Classification ────────────────────────────────────
 class PageType:
@@ -486,7 +519,7 @@ def _extract_img2table(pdf_path: Path, page_idx: int, use_ocr: bool = False) -> 
     try:
         pdf_doc = Img2TablePDF(str(pdf_path), pages=[page_idx])
         
-        ocr_engine = _img_ocr if use_ocr else None
+        ocr_engine = get_img_ocr() if use_ocr else None
         tables = pdf_doc.extract_tables(
             ocr=ocr_engine,
             implicit_rows=False,
@@ -513,7 +546,8 @@ def _extract_img2table(pdf_path: Path, page_idx: int, use_ocr: bool = False) -> 
         # If OpenCV failed to find any rigid borders (e.g. sparse hardware sets),
         # extract pure unstructured text directly using raw PaddleOCR bounding boxes
         # sorted by Y-axis (top-to-bottom) then X-axis (left-to-right).
-        if not parts and use_ocr and _raw_paddle_ocr is not None:
+        raw_ocr = get_raw_paddle_ocr()
+        if not parts and use_ocr and raw_ocr is not None:
             logger.info("img2table found 0 structured tables. Deploying pure PaddleOCR text extraction...")
             try:
                 import pymupdf
@@ -528,7 +562,7 @@ def _extract_img2table(pdf_path: Path, page_idx: int, use_ocr: bool = False) -> 
                 nparr = np.frombuffer(img_bytes, np.uint8)
                 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
                 
-                res = _raw_paddle_ocr.ocr(img, cls=True)
+                res = raw_ocr.ocr(img, cls=True)
                 if res and isinstance(res, list) and res[0]:
                     flattened = []
                     for bbox in res[0]:

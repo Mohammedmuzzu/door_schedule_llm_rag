@@ -296,9 +296,9 @@ with tab1:
         st.success(f"✅ Extraction Complete in {total_time:.1f} seconds using `{selected_model}`!")
 
         st.subheader("🚪 Doors")
-        st.dataframe(df_doors.astype(str), use_container_width=True)
+        st.dataframe(df_doors.astype(str), width="stretch")
         st.subheader("⚙️ Hardware")
-        st.dataframe(df_hw.astype(str), use_container_width=True)
+        st.dataframe(df_hw.astype(str), width="stretch")
 
         # Read Excel into memory BEFORE cleaning up temp dir
         excel_path = Path(temp_dir) / "extraction_results_llm.xlsx"
@@ -362,9 +362,9 @@ with tab2:
             st.success(f"✅ Bulk Extraction Complete! Results saved to `{out_dir}`")
 
             st.subheader("🚪 Doors")
-            st.dataframe(df_doors.astype(str), use_container_width=True)
+            st.dataframe(df_doors.astype(str), width="stretch")
             st.subheader("⚙️ Hardware")
-            st.dataframe(df_hw.astype(str), use_container_width=True)
+            st.dataframe(df_hw.astype(str), width="stretch")
 
             excel_path = Path(out_dir) / "extraction_results_llm.xlsx"
             if excel_path.exists():
@@ -399,7 +399,7 @@ with tab3:
         col_order = ["started", "pdf", "provider", "model", "doors", "hw",
                      "elapsed_s", "status", "path"]
         df_runs = df_runs[[c for c in col_order if c in df_runs.columns]]
-        st.dataframe(df_runs.astype(str), use_container_width=True, hide_index=True)
+        st.dataframe(df_runs.astype(str), width="stretch", hide_index=True)
 
         selected = st.selectbox(
             "Open run log (JSONL)",

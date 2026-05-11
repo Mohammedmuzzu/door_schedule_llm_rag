@@ -64,7 +64,7 @@ During deployment, a massive issue blocked Streamlit rendering (React Error `#18
 **The Fix:** 
 Before passing standard Pandas DataFrames into the UX component, the pipeline aggressively transforms all elements to strings locally:
 ```python
-st.dataframe(df_doors.astype(str), use_container_width=True)
+st.dataframe(df_doors.astype(str), width="stretch")
 ```
 This entirely solved the frontend crashing issue while preserving the high-quality source dict outputs for Excel and CSV downloads.
 
