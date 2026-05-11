@@ -170,7 +170,7 @@ def render_estimation_dashboard():
         "Unit Price ($)": st.column_config.NumberColumn(help="Override default price")
     }
     
-    edited_df = st.data_editor(df_est, column_config=column_config, width="stretch", hide_index=True)
+    edited_df = st.data_editor(df_est, column_config=column_config, use_container_width=True, hide_index=True)
     
     if st.button("💾 Save Grid Overrides"):
         for _, row in edited_df.iterrows():

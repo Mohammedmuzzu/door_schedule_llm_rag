@@ -52,7 +52,7 @@ def render_qa_dashboard():
         
         st.dataframe(
             df.style.map(color_score, subset=['Accuracy_Score']),
-            width="stretch"
+            use_container_width=True
         )
         
         with open("qa_report.csv", "rb") as f:

@@ -23,7 +23,7 @@ def render_master_data_manager():
         } for m in existing])
         
         # Make the grid editable
-        edited_df = st.data_editor(df, num_rows="dynamic", width="stretch", key="master_data_editor")
+        edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True, key="master_data_editor")
         
         if st.button("💾 Save Grid Changes"):
             # A more robust sync could be written, but for now we update matching IDs
