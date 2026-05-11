@@ -69,7 +69,7 @@ class StreamlitLogHandler(logging.Handler):
 #  Available model options per provider
 # ═══════════════════════════════════════════════════════════════════
 PROVIDER_MODELS = {
-    "openai": ["gpt-4o-mini", "gpt-4o", "gpt-4.1-mini", "gpt-4.1-nano"],
+    "openai": ["gpt-4o-mini", "gpt-4o", "gpt-4.5-preview", "o1", "o1-mini", "gpt-5", "gpt-5-turbo"],
     "groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768"],
     "ollama": [],  # populated dynamically
 }
@@ -162,8 +162,11 @@ with st.sidebar:
     speed_hints = {
         "gpt-4o-mini": "⚡ Fast, cheap (~$0.01/PDF), great accuracy",
         "gpt-4o": "🎯 Best accuracy, moderate cost (~$0.05/PDF)",
-        "gpt-4.1-mini": "⚡ Latest mini model, fast and cheap",
-        "gpt-4.1-nano": "💨 Fastest, cheapest, good for simple PDFs",
+        "gpt-4.5-preview": "🧪 Experimental next-gen model",
+        "o1": "🧠 Advanced reasoning model (slower, extremely accurate)",
+        "o1-mini": "🧠 Fast reasoning model",
+        "gpt-5": "🚀 Next-generation frontier model",
+        "gpt-5-turbo": "🚀 Fast next-generation frontier model",
         "llama-3.3-70b-versatile": "⚡ Fast cloud 70B, free tier available",
         "llama-3.1-8b-instant": "💨 Ultra-fast 8B, free tier",
         "qwen3-coder:30b": "🖥️ MoE 30B local — smart but slow on 12GB VRAM",
