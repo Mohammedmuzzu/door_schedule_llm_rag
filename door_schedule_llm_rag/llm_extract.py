@@ -200,9 +200,14 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             {"role": "system", "content": system},
             {"role": "user", "content": user_content},
         ],
-        "temperature": LLM_TEMPERATURE,
-        "max_tokens": 12000,
     }
+    
+    # Newer reasoning models (o1, o3, gpt-5+) deprecated max_tokens and do not support temperature overrides
+    if active_model.startswith(("o1", "o3", "gpt-5")):
+        payload["max_completion_tokens"] = 12000
+    else:
+        payload["max_tokens"] = 12000
+        payload["temperature"] = LLM_TEMPERATURE
 
     # Two independent retry budgets:
     #   * `attempt`: logical failures (network errors, empty responses)
