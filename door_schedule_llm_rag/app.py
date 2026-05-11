@@ -70,9 +70,7 @@ class StreamlitLogHandler(logging.Handler):
 # ═══════════════════════════════════════════════════════════════════
 PROVIDER_MODELS = {
     "openai": [
-        "gpt-5.5", "gpt-5.5-instant", "gpt-5.4", "gpt-rosalind", 
-        "gpt-4o-mini", "gpt-4o", "gpt-4.5-preview", "o1", "o1-mini", 
-        "gpt-5", "gpt-5-turbo"
+        "gpt-4o", "gpt-4o-mini", "gpt-4.5-preview", "o1", "o1-mini"
     ],
     "groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768"],
     "ollama": [],  # populated dynamically
