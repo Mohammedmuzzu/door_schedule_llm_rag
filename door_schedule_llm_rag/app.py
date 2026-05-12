@@ -36,7 +36,22 @@ def _auto_seed_rag():
 
 _rag_status_dict = _auto_seed_rag()
 
+@st.cache_resource
+def _init_database():
+    """Create database tables once per server lifecycle."""
+    try:
+        from db import init_db
+        init_db()
+        return None
+    except Exception as e:
+        return str(e)
+
+_db_init_error = _init_database()
+
 st.title("🚪 Door & Hardware Schedule Extractor")
+
+if _db_init_error:
+    st.error(f"Database initialization failed: {_db_init_error}")
 
 # Hide Streamlit UI Chrome (Menu, Footer, Header)
 hide_st_style = """
