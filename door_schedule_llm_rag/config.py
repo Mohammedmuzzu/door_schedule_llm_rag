@@ -60,7 +60,8 @@ S3_ENDPOINT_URL = get_env("S3_ENDPOINT_URL", "")  # e.g. https://<project-ref>.s
 
 # ── Extraction Settings ──
 _env_max_chars = int(os.environ.get("MAX_PAGE_CHARS", "35000"))
-MAX_PAGE_CHARS = max(35000, _env_max_chars)
+# Floor avoids tiny prompts; cap honors MAX_PAGE_CHARS from env (e.g. Docker Space sets 16000).
+MAX_PAGE_CHARS = max(4000, _env_max_chars)
 # Temperature for LLM calls (low = deterministic)
 LLM_TEMPERATURE = float(os.environ.get("LLM_TEMPERATURE", "0.05"))
 # Confidence threshold below which we retry extraction

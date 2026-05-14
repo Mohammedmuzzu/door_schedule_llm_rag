@@ -341,38 +341,40 @@ with tab1:
         llm_logger.addHandler(handler)
 
         start_t = time.time()
-        with st.spinner("Extracting... this may take a few minutes depending on the LLM provider."):
-            df_doors, df_hw = run_pipeline(
-                pdf_folder=temp_dir,
-                output_dir=temp_dir,
-                use_rag=use_rag,
-                pdf_files=[temp_path],
-            )
-
-        pipeline_logger.removeHandler(handler)
-        agent_logger.removeHandler(handler)
-        extractor_logger.removeHandler(handler)
-        llm_logger.removeHandler(handler)
-
-        total_time = time.time() - start_t
-        st.success(f"✅ Extraction Complete in {total_time:.1f} seconds using `{selected_model}`!")
-
-        st.subheader("🚪 Doors")
-        st.dataframe(df_doors.astype(str), use_container_width=True)
-        st.subheader("⚙️ Hardware")
-        st.dataframe(df_hw.astype(str), use_container_width=True)
-
-        # Read Excel into memory BEFORE cleaning up temp dir
-        excel_path = Path(temp_dir) / "extraction_results_llm.xlsx"
         excel_bytes = None
-        if excel_path.exists():
-            excel_bytes = excel_path.read_bytes()
-
-        # Clean up temp dir (ignore errors from Windows file locks)
         try:
-            shutil.rmtree(temp_dir, ignore_errors=True)
-        except Exception:
-            pass
+            with st.spinner("Extracting... this may take a few minutes depending on the LLM provider."):
+                df_doors, df_hw = run_pipeline(
+                    pdf_folder=temp_dir,
+                    output_dir=temp_dir,
+                    use_rag=use_rag,
+                    pdf_files=[temp_path],
+                )
+
+            total_time = time.time() - start_t
+            st.success(f"✅ Extraction Complete in {total_time:.1f} seconds using `{selected_model}`!")
+
+            st.subheader("🚪 Doors")
+            st.dataframe(df_doors.astype(str), use_container_width=True)
+            st.subheader("⚙️ Hardware")
+            st.dataframe(df_hw.astype(str), use_container_width=True)
+
+            excel_path = Path(temp_dir) / "extraction_results_llm.xlsx"
+            if excel_path.exists():
+                excel_bytes = excel_path.read_bytes()
+        except Exception as e:
+            logging.getLogger("pipeline").exception("Single-file extraction failed")
+            st.error(f"Extraction failed: {e}")
+            st.info("Check the deployment logs for the full traceback.")
+        finally:
+            pipeline_logger.removeHandler(handler)
+            agent_logger.removeHandler(handler)
+            extractor_logger.removeHandler(handler)
+            llm_logger.removeHandler(handler)
+            try:
+                shutil.rmtree(temp_dir, ignore_errors=True)
+            except Exception:
+                pass
 
         if excel_bytes:
             st.download_button(
@@ -409,34 +411,42 @@ with tab2:
             extractor_logger.addHandler(handler)
             llm_logger.addHandler(handler)
 
-            with st.spinner("Extracting... this will take some time."):
-                df_doors, df_hw = run_pipeline(
-                    pdf_folder=dir_path,
-                    output_dir=out_dir,
-                    use_rag=use_rag,
-                )
-
-            pipeline_logger.removeHandler(handler)
-            agent_logger.removeHandler(handler)
-            extractor_logger.removeHandler(handler)
-            llm_logger.removeHandler(handler)
-
-            st.success(f"✅ Bulk Extraction Complete! Results saved to `{out_dir}`")
-
-            st.subheader("🚪 Doors")
-            st.dataframe(df_doors.astype(str), use_container_width=True)
-            st.subheader("⚙️ Hardware")
-            st.dataframe(df_hw.astype(str), use_container_width=True)
-
-            excel_path = Path(out_dir) / "extraction_results_llm.xlsx"
-            if excel_path.exists():
-                with open(excel_path, "rb") as f:
-                    st.download_button(
-                        label="⬇️ Download Full Excel Export",
-                        data=f,
-                        file_name="bulk_extraction_results.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            excel_bytes = None
+            try:
+                with st.spinner("Extracting... this will take some time."):
+                    df_doors, df_hw = run_pipeline(
+                        pdf_folder=dir_path,
+                        output_dir=out_dir,
+                        use_rag=use_rag,
                     )
+
+                st.success(f"✅ Bulk Extraction Complete! Results saved to `{out_dir}`")
+
+                st.subheader("🚪 Doors")
+                st.dataframe(df_doors.astype(str), use_container_width=True)
+                st.subheader("⚙️ Hardware")
+                st.dataframe(df_hw.astype(str), use_container_width=True)
+
+                excel_path = Path(out_dir) / "extraction_results_llm.xlsx"
+                if excel_path.exists():
+                    excel_bytes = excel_path.read_bytes()
+            except Exception as e:
+                logging.getLogger("pipeline").exception("Bulk extraction failed")
+                st.error(f"Bulk extraction failed: {e}")
+                st.info("Check the deployment logs for the full traceback.")
+            finally:
+                pipeline_logger.removeHandler(handler)
+                agent_logger.removeHandler(handler)
+                extractor_logger.removeHandler(handler)
+                llm_logger.removeHandler(handler)
+
+            if excel_bytes:
+                st.download_button(
+                    label="⬇️ Download Full Excel Export",
+                    data=excel_bytes,
+                    file_name="bulk_extraction_results.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
 
 
 with tab3:
