@@ -75,8 +75,9 @@ class HardwareComponentRow(BaseModel):
     """One hardware component line under a hardware set in Division 8."""
     hardware_set_id: str = Field(description="Hardware set number/ID, e.g. 103, 1, 711C")
     hardware_set_name: Optional[str] = Field(default=None, description="Functional name, e.g. SGL Office Lock")
-    qty: int = Field(description="Quantity per set (as-stated, includes pair adjustments)")
-    unit: str = Field(default="EA", description="EA, PAIR, or SET")
+    qty: Optional[int] = Field(default=None, description="Quantity per set when confidently parseable as an integer")
+    qty_raw: Optional[str] = Field(default=None, description="Verbatim quantity string as stated in the document")
+    unit: Optional[str] = Field(default="EA", description="EA, PAIR, or SET")
     description: str = Field(description="Component description, e.g. HINGE, CLOSER")
     catalog_number: Optional[str] = Field(default=None, description="Catalog/model code")
     finish_code: Optional[str] = Field(default=None, description="Finish code, e.g. 626, 630")
@@ -97,11 +98,17 @@ class HardwareComponentRow(BaseModel):
     @classmethod
     def clean_qty(cls, v):
         if v is None:
-            return 1
+            return None
         try:
-            return max(1, int(float(str(v).strip())))
+            text = str(v).strip()
+            if text.upper() in ("", "N/A", "NA", "NONE", "NULL", "LOT", "AS REQ", "AS REQUIRED", "VARIES"):
+                return None
+            match = re.search(r"\d+", text)
+            if not match:
+                return None
+            return max(1, int(match.group()))
         except (ValueError, TypeError):
-            return 1
+            return None
 
     @field_validator("unit", mode="before")
     @classmethod
@@ -115,6 +122,8 @@ class HardwareComponentRow(BaseModel):
             return "PAIR"
         if v in ("SET", "SETS"):
             return "SET"
+        if v in ("", "N/A", "NA", "NONE", "NULL"):
+            return None
         return "EA"
 
 
@@ -196,7 +205,8 @@ def hardware_schema_for_prompt() -> str:
 Each hardware component must have:
 - hardware_set_id (REQUIRED): the set number, e.g. "1", "103", "711C"
 - hardware_set_name (optional): functional name, e.g. "SGL Office Lock", "PR Exterior"
-- qty (REQUIRED): integer quantity AS STATED in the document (do NOT double for pairs)
+- qty (optional): integer quantity when the document gives a confidently parseable number (do NOT double for pairs)
+- qty_raw (optional): verbatim quantity string when the source uses non-integer forms like "LOT" or "1-1/2 PAIRS"
 - unit: "EA" | "PAIR" | "SET"
 - description (REQUIRED): component name, e.g. "HINGE", "CLOSER", "LOCK"
 - catalog_number (optional): model/catalog code

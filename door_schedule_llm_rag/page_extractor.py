@@ -375,18 +375,18 @@ def _collect_schedule_signals(text: str) -> Dict[str, int]:
         }
 
     upper = text.upper()
-    door_nums = re.findall(r"\b\d{2,4}[A-Za-z]?\b", text)
+    door_nums = re.findall(r"(?<![A-Za-z0-9])\[?[A-Za-z]{0,3}\d{2,4}[A-Za-z]?\]?(?![A-Za-z0-9])", text)
     real_doors = [
-        num for num in door_nums
-        if not (1900 <= int(re.match(r"\d+", num).group()) <= 2099)
+        num.strip("[]") for num in door_nums
+        if re.search(r"\d+", num) and not (1900 <= int(re.search(r"\d+", num).group()) <= 2099)
     ]
-    dimensions = len(re.findall(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"", text))
+    dimensions = len(re.findall(r"\d+\s*['\u2019]\s*-?\s*\d+(?:\s+\d+/\d+)?\s*(?:\"|\u201d)?", text))
     row_lines = sum(
         1
         for line in text.splitlines()
-        if re.search(r"\b\d{2,4}[A-Za-z]?\b", line)
+        if re.search(r"(?<![A-Za-z0-9])\[?[A-Za-z]{0,3}\d{2,4}[A-Za-z]?\]?(?![A-Za-z0-9])", line)
         and (
-            re.search(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"", line)
+            re.search(r"\d+\s*['\u2019]\s*-?\s*\d+(?:\s+\d+/\d+)?\s*(?:\"|\u201d)?", line)
             or any(
                 kw in line.upper()
                 for kw in ("EXISTING", "NEW", "HM", "WD", "AL", "FRAME", "LOCK", "HINGE", "GL-")
@@ -397,13 +397,14 @@ def _collect_schedule_signals(text: str) -> Dict[str, int]:
         1
         for kw in (
             "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "ROOM NAME", "WIDTH",
-            "HEIGHT", "FRAME", "HARDWARE", "HDWR", "FIRE RATING", "COMMENTS",
+            "HEIGHT", "FRAME", "HARDWARE", "HDWR", "HDWE", "HDW", "FIRE RATING", "COMMENTS",
+            "DOOR TYPE", "ROOM NAME", "RM NAME", "DR #", "OPENING SCHEDULE",
         )
         if kw in upper
     )
     hw_keywords = sum(
         1
-        for kw in ("HINGE", "CLOSER", "LOCK", "DEADBOLT", "THRESHOLD", "DOOR STOP", "KICK PLATE")
+    for kw in ("HINGE", "BUTT", "PIVOT", "CLOSER", "LOCK", "LATCH", "DEADBOLT", "THRESHOLD", "WEATHERSTRIP", "DOOR STOP", "KICK PLATE", "EXIT DEVICE", "FLUSH BOLT")
         if kw in upper
     )
     title_block_markers = sum(
@@ -1301,6 +1302,17 @@ def extract_structured_page(
             )
         except Exception as e:
             logger.debug("Page %d: crop detection skipped: %s", page_idx + 1, e)
+
+    if page_type == PageType.OTHER and crop_candidates:
+        best_crop_conf = max(float(crop.get("confidence") or 0.0) for crop in crop_candidates)
+        if best_crop_conf >= 0.28:
+            logger.warning(
+                "Page %d: classified OTHER but %d schedule crop candidates exist (best=%.2f). Forcing MIXED for crop rescue.",
+                page_idx + 1,
+                len(crop_candidates),
+                best_crop_conf,
+            )
+            page_type = PageType.MIXED
 
     result = (content, page_type, is_continuation, base64_img)
     return (*result, crop_candidates) if include_crops else result

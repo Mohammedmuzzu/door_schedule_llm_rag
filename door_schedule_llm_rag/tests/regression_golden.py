@@ -10,10 +10,13 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
+
+import pandas as pd
 
 
 APP_DIR = Path(__file__).resolve().parent.parent
@@ -67,16 +70,46 @@ def run_case(case: dict, output_root: Path, timeout: int) -> dict:
     return result
 
 
+def _forbidden_hardware_matches(result: dict, patterns: list[str]) -> list[str]:
+    if not patterns:
+        return []
+    output_dir = Path(str(result.get("output_dir") or ""))
+    csv_path = output_dir / "hardware_components_llm.csv"
+    if not csv_path.exists():
+        return []
+    try:
+        hardware = pd.read_csv(csv_path).fillna("")
+    except Exception:
+        return []
+    haystack_cols = [
+        col for col in ("hardware_set_id", "description", "catalog_number", "manufacturer_code", "notes")
+        if col in hardware.columns
+    ]
+    matches: list[str] = []
+    compiled = [re.compile(pattern, re.IGNORECASE) for pattern in patterns]
+    for _, row in hardware.iterrows():
+        text = " ".join(str(row.get(col, "")) for col in haystack_cols)
+        if any(pattern.search(text) for pattern in compiled):
+            matches.append(text[:180])
+    return matches
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--baseline", default=str(DEFAULT_BASELINE))
     parser.add_argument("--output-root", default=str(APP_DIR / "qa_out" / f"golden_regression_{datetime.now().strftime('%Y%m%d_%H%M%S')}"))
     parser.add_argument("--timeout", type=int, default=900)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--case-id", action="append", default=None, help="Run only the named golden case id; may be repeated.")
     args = parser.parse_args()
 
     baseline = json.loads(Path(args.baseline).read_text(encoding="utf-8"))
-    cases = baseline["cases"][: args.limit] if args.limit else baseline["cases"]
+    cases = baseline["cases"]
+    if args.case_id:
+        wanted = set(args.case_id)
+        cases = [case for case in cases if case.get("id") in wanted]
+    if args.limit:
+        cases = cases[: args.limit]
     output_root = Path(args.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
 
@@ -92,10 +125,16 @@ def main() -> int:
         result["min_doors"] = case.get("min_doors", 0)
         result["min_hardware"] = case.get("min_hardware", 0)
         result["purpose"] = case.get("purpose", "")
+        result["forbidden_hardware_matches"] = _forbidden_hardware_matches(
+            result,
+            case.get("forbidden_hardware_regex", []),
+        )
         ok = (
             result.get("status") == "ok"
             and int(result.get("doors", 0)) >= int(case.get("min_doors", 0))
             and int(result.get("hardware", 0)) >= int(case.get("min_hardware", 0))
+            and int(result.get("crop_hw_added", 0)) >= int(case.get("min_crop_hw_added", 0))
+            and not result["forbidden_hardware_matches"]
         )
         result["passed"] = ok
         rows.append(result)

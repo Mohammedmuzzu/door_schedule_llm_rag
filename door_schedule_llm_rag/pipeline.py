@@ -29,8 +29,8 @@ from config import PDF_FOLDER, OUTPUT_DIR, MAX_PAGE_CHARS
 import agent as _agent_module  # access LAST_VERIFY_REPORT after each page
 from agent import extract_page_with_llm, ExtractionContext
 from page_extractor import extract_structured_page, get_page_count, PageType
-from page_evidence import collect as collect_evidence
-from llm_extract import llm_config
+from page_evidence import collect as collect_evidence, confidence_score
+from llm_extract import llm_config, is_probable_hardware_component
 from db_utils import save_estimations_to_db
 
 try:
@@ -182,6 +182,35 @@ def classify_pdf_file(pdf_path: Path) -> str:
     return "both"  # Default: process as both (let page classifier decide)
 
 
+def _source_methods_from_text(text: str) -> str:
+    methods = []
+    for match in re.findall(r"\[Source:\s*([^\]]+)\]", text or ""):
+        method = match.strip()
+        if method and method not in methods:
+            methods.append(method)
+    if "VISION LLM EXTRACTION" in (text or "") and "vision_llm" not in methods:
+        methods.append("vision_llm")
+    if not methods:
+        methods.append("unknown")
+    return ";".join(methods)
+
+
+def _verification_flags(verify_report: Optional[dict], anomaly_reason: Optional[str]) -> str:
+    flags = []
+    if anomaly_reason:
+        flags.append(anomaly_reason)
+    if verify_report:
+        for key, label in (
+            ("door_rescue", "door_rescue"),
+            ("hw_rescue", "hardware_rescue"),
+            ("crop_rescue", "crop_rescue"),
+            ("crop_rescue_attempted", "crop_rescue_attempted"),
+        ):
+            if verify_report.get(key):
+                flags.append(label)
+    return ";".join(dict.fromkeys(flags))
+
+
 def run_pipeline(
     pdf_folder: str = None,
     output_dir: str = None,
@@ -302,9 +331,16 @@ def run_pipeline(
                 continue
 
             # Skip pages that are clearly not relevant
-            if page_type == PageType.OTHER and not is_continuation:
+            if page_type == PageType.OTHER and not is_continuation and not crop_candidates:
                 logger.debug("Skipping page %d (classified as OTHER)", page_idx + 1)
                 continue
+            if page_type == PageType.OTHER and crop_candidates:
+                logger.warning(
+                    "Page %d classified OTHER but has %d crop candidates; processing as MIXED.",
+                    page_idx + 1,
+                    len(crop_candidates),
+                )
+                page_type = PageType.MIXED
 
             # Extract doors and/or hardware
             t1 = time.time()
@@ -323,6 +359,8 @@ def run_pipeline(
 
             # ── Evidence snapshot for durable logging + learning ──
             evidence = collect_evidence(text)
+            page_confidence = round(confidence_score(evidence), 3)
+            source_methods = _source_methods_from_text(text)
             verify_report = getattr(_agent_module, "LAST_VERIFY_REPORT", None)
             if verify_report and verify_report.get("crop_rescue"):
                 LAST_CROP_METRICS["crop_rescue_pages"] += 1
@@ -400,6 +438,12 @@ def run_pipeline(
                 d["project_id"] = project_id
                 d["source_file"] = fname
                 d["page"] = page_idx + 1
+                d["page_type"] = page_type
+                d["source_method"] = source_methods
+                d["source_confidence"] = page_confidence
+                d["source_location"] = f"{fname}#page={page_idx + 1}"
+                d["evidence_expected_door_rows"] = evidence.expected_door_rows()
+                d["verification_flags"] = _verification_flags(verify_report, anomaly_reason)
                 all_doors.append(d)
 
             # Tag and collect hardware
@@ -407,6 +451,12 @@ def run_pipeline(
                 h["project_id"] = project_id
                 h["source_file"] = fname
                 h["page"] = page_idx + 1
+                h["page_type"] = page_type
+                h["source_method"] = source_methods
+                h["source_confidence"] = page_confidence
+                h["source_location"] = f"{fname}#page={page_idx + 1}"
+                h["evidence_expected_hw_sets"] = evidence.expected_hw_sets()
+                h["verification_flags"] = _verification_flags(verify_report, anomaly_reason)
                 all_components.append(h)
 
             prev_page_type = page_type
@@ -453,6 +503,18 @@ def run_pipeline(
     df_doors = _flatten(all_doors)
     df_components = _flatten(all_components)
 
+    if not df_components.empty and "description" in df_components.columns:
+        before_hw_noise = len(df_components)
+        df_components = df_components[
+            df_components.apply(lambda row: is_probable_hardware_component(row.to_dict()), axis=1)
+        ].reset_index(drop=True)
+        filtered_hw_noise = before_hw_noise - len(df_components)
+        if filtered_hw_noise:
+            logger.info(
+                "Filtered %d hardware rows that looked like headers, title blocks, notes, or door-schedule noise.",
+                filtered_hw_noise,
+            )
+
     def _clean_join_id(value) -> str:
         if pd.isna(value):
             return ""
@@ -464,8 +526,9 @@ def run_pipeline(
         return re.sub(r"^(?:HW|HDWR|HARDWARE|SET|GROUP)[\s.#:-]*", "", s).strip()
 
     # Validate door hardware_set values against extracted hardware-set IDs.
-    # This prevents LLM guesses from creating impossible joins like G10 or stray
-    # detail numbers when no matching hardware set exists in the hardware table.
+    # Preserve the source value for QA/provenance, but mark whether it can join
+    # to component rows. Earlier code erased unmatched values; that hid real
+    # source data and made bad joins harder to review.
     valid_hw_ids = set()
     if not df_components.empty and "hardware_set_id" in df_components.columns:
         valid_hw_ids = {
@@ -474,16 +537,21 @@ def run_pipeline(
             if _clean_join_id(v)
         }
     if valid_hw_ids and not df_doors.empty and "hardware_set" in df_doors.columns:
-        before_invalid = df_doors["hardware_set"].notna().sum()
-        df_doors["hardware_set"] = df_doors["hardware_set"].apply(
-            lambda v: _clean_join_id(v) if _clean_join_id(v) in valid_hw_ids else None
+        df_doors["hardware_set_clean"] = df_doors["hardware_set"].apply(_clean_join_id)
+        df_doors["hardware_set_join_status"] = df_doors["hardware_set_clean"].apply(
+            lambda v: "matched" if v and v in valid_hw_ids else "unmatched" if v else "missing"
         )
-        invalid = before_invalid - df_doors["hardware_set"].notna().sum()
+        invalid = int((df_doors["hardware_set_join_status"] == "unmatched").sum())
         if invalid > 0:
             logger.info(
-                "Cleared %d door hardware_set values that did not match extracted hardware set IDs.",
+                "Marked %d door hardware_set values as unmatched against extracted hardware set IDs.",
                 invalid,
             )
+    elif not df_doors.empty and "hardware_set" in df_doors.columns:
+        df_doors["hardware_set_clean"] = df_doors["hardware_set"].apply(_clean_join_id)
+        df_doors["hardware_set_join_status"] = df_doors["hardware_set_clean"].apply(
+            lambda v: "not_checked_no_hardware_components" if v else "missing"
+        )
 
     # ── Cross-reference: back-fill missing hardware_set on doors ──
     # If a project has hardware components but door rows are missing the
@@ -516,6 +584,15 @@ def run_pipeline(
             filled = orphan_mask.sum() - (df_doors["hardware_set"].isna() | (df_doors["hardware_set"].astype(str).str.strip() == "")).sum()
             if filled > 0:
                 logger.info("Cross-reference back-filled %d hardware_set values.", filled)
+                valid_hw_ids = {
+                    _clean_join_id(v)
+                    for v in df_components["hardware_set_id"].dropna().tolist()
+                    if _clean_join_id(v)
+                }
+                df_doors["hardware_set_clean"] = df_doors["hardware_set"].apply(_clean_join_id)
+                df_doors["hardware_set_join_status"] = df_doors["hardware_set_clean"].apply(
+                    lambda v: "matched" if v and v in valid_hw_ids else "unmatched" if v else "missing"
+                )
 
     # ── Ghost Door Filter: Remove doors with NO physical attributes ──
     # Hardware pages often list door numbers under hardware sets. The LLM might extract these 
@@ -547,9 +624,11 @@ def run_pipeline(
 
     # ── Columns for output ──
     door_cols = [
-        "project_id", "source_file", "page", "door_number", "elevation", "level_area",
+        "project_id", "source_file", "page", "page_type", "source_method", "source_confidence",
+        "source_location", "verification_flags", "evidence_expected_door_rows",
+        "door_number", "elevation", "level_area",
         "room_name", "door_type", "door_thickness", "door_material", "door_finish", "frame_type", "frame_material", "frame_finish", "frame_width", "frame_height",
-        "door_width", "door_height", "hardware_set", "fire_rating",
+        "door_width", "door_height", "hardware_set", "hardware_set_clean", "hardware_set_join_status", "fire_rating",
         "head_jamb_sill_detail", "keyed_notes", "remarks",
         "door_slab_material", "vision_panel", "glazing_type", "finish",
         "is_pair", "door_leaves",
@@ -557,8 +636,9 @@ def run_pipeline(
     df_doors_out = _reorder_columns(df_doors, door_cols)
 
     comp_cols = [
-        "project_id", "source_file", "page", "hardware_set_id",
-        "hardware_set_name", "qty", "unit", "description",
+        "project_id", "source_file", "page", "page_type", "source_method", "source_confidence",
+        "source_location", "verification_flags", "evidence_expected_hw_sets", "hardware_set_id",
+        "hardware_set_name", "qty", "qty_raw", "unit", "description",
         "catalog_number", "finish_code", "manufacturer_code", "notes",
     ]
     df_comp_out = _reorder_columns(df_components, comp_cols)
@@ -573,15 +653,14 @@ def run_pipeline(
         def _clean_hw(val):
             if pd.isna(val) or val == "":
                 return ""
-            s = str(val).strip().upper()
-            if s.endswith(".0"):
-                s = s[:-2]
-            return s
+            return _clean_join_id(val)
 
         df_doors_out["hardware_set_clean"] = df_doors_out["hardware_set"].apply(_clean_hw)
 
-        # Only aggregate doors with valid hardware sets
+        # Only aggregate doors with joinable hardware sets when component IDs exist.
         valid = df_doors_out[df_doors_out["hardware_set_clean"] != ""]
+        if "hardware_set_join_status" in valid.columns and not df_comp_out.empty:
+            valid = valid[valid["hardware_set_join_status"] == "matched"]
 
         if not valid.empty:
             door_agg = valid.groupby(["project_id", "hardware_set_clean"]).agg(
@@ -613,14 +692,10 @@ def run_pipeline(
 
         # PRD CRITICAL: qty is AS-STATED in Division 8 (already pair-adjusted)
         # total_qty = qty_per_set × total_doors (NOT door_leaves!)
-        milestone1["qty_per_set"] = milestone1["qty"].fillna(0).astype(int)
+        milestone1["qty_per_set"] = pd.to_numeric(milestone1["qty"], errors="coerce").fillna(0).astype(int)
         milestone1["total_qty_project"] = (
             milestone1["qty_per_set"] * milestone1["total_doors"]
         )
-
-        # Drop helper column
-        if "hardware_set_clean" in df_doors_out.columns:
-            df_doors_out = df_doors_out.drop(columns=["hardware_set_clean"])
 
         # Save to database
         try:

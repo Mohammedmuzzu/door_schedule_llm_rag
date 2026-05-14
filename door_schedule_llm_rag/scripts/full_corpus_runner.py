@@ -32,15 +32,23 @@ sys.path.append(str(APP_DIR))
 
 
 def _configure_safe_env(output_root: Path) -> None:
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv(APP_DIR / ".env", override=False)
+    except Exception:
+        pass
+
     os.environ.setdefault("DEPLOYMENT_ENV", "production")
     os.environ.setdefault("LLM_PROVIDER", "openai")
     os.environ.setdefault("OPENAI_MODEL", "gpt-4o-mini")
     os.environ.setdefault("MAX_PAGE_CHARS", "35000")
     os.environ.setdefault("RAG_DATA_DIR", str(output_root / "rag_data"))
-    os.environ["S3_BUCKET_NAME"] = ""
-    os.environ["AWS_ACCESS_KEY_ID"] = ""
-    os.environ["AWS_SECRET_ACCESS_KEY"] = ""
-    os.environ["S3_ENDPOINT_URL"] = ""
+    if os.environ.get("FULL_CORPUS_DISABLE_S3", "1") != "0":
+        os.environ["S3_BUCKET_NAME"] = ""
+        os.environ["AWS_ACCESS_KEY_ID"] = ""
+        os.environ["AWS_SECRET_ACCESS_KEY"] = ""
+        os.environ["S3_ENDPOINT_URL"] = ""
     os.environ.setdefault("DATABASE_URL", f"sqlite:///{(output_root / 'qa_full_corpus.db').as_posix()}")
 
 
@@ -178,7 +186,13 @@ def run_one_pdf_worker(pdf_path: Path, output_dir: Path, output_root: Path) -> N
     from db import init_db
 
     pipeline.upload_file_to_s3 = None
-    llm_config.set("openai", os.environ.get("OPENAI_MODEL", "gpt-4o-mini"))
+    provider = os.environ.get("LLM_PROVIDER", "openai").lower()
+    model = (
+        os.environ.get("OPENAI_MODEL", "gpt-4o-mini") if provider == "openai"
+        else os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile") if provider == "groq"
+        else os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
+    )
+    llm_config.set(provider, model)
     init_db()
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -212,7 +226,7 @@ def _summarize_result(run_id: str, pdf_path: Path, output_dir: Path, started: fl
         if "door_height" in doors.columns:
             missing_height = int(doors["door_height"].isna().sum())
         if "hardware_set" in doors.columns:
-            missing_hw_set = int(doors["hardware_set"].isna().sum())
+            missing_hw_set = int((doors["hardware_set"].fillna("").astype(str).str.strip() == "").sum())
 
     crop_metrics = crop_metrics or {}
     return {
@@ -240,11 +254,19 @@ def _summarize_result(run_id: str, pdf_path: Path, output_dir: Path, started: fl
     }
 
 
-def run_corpus(target_dir: Path, output_root: Path, limit: int | None = None, resume: bool = True) -> Path:
+def run_corpus(
+    target_dir: Path,
+    output_root: Path,
+    limit: int | None = None,
+    resume: bool = True,
+    max_runtime_minutes: float | None = None,
+) -> Path:
     _configure_safe_env(output_root)
     if not os.environ.get("OPENAI_API_KEY"):
         raise RuntimeError("OPENAI_API_KEY must be present in the process environment.")
 
+    run_started = time.time()
+    max_runtime_s = (max_runtime_minutes * 60.0) if max_runtime_minutes else None
     inventory = build_inventory(target_dir, output_root)
     if limit is not None:
         inventory = inventory[:limit]
@@ -254,6 +276,13 @@ def run_corpus(target_dir: Path, output_root: Path, limit: int | None = None, re
     print(f"Starting corpus run: {len(inventory)} PDFs, resume={resume}, already_done={len(done)}", flush=True)
 
     for pos, item in enumerate(inventory, 1):
+        if max_runtime_s is not None and (time.time() - run_started) >= max_runtime_s:
+            print(
+                f"Stopping gracefully after {round((time.time() - run_started) / 60.0, 1)} minutes "
+                f"(--max-runtime-minutes={max_runtime_minutes}).",
+                flush=True,
+            )
+            break
         run_id = item["run_id"]
         pdf_path = Path(item["pdf_path"])
         output_dir = output_root / "runs" / run_id
@@ -320,6 +349,12 @@ def main() -> int:
     parser.add_argument("--output-root", default=str(APP_DIR / "qa_out" / f"full_corpus_{datetime.now().strftime('%Y%m%d_%H%M%S')}"))
     parser.add_argument("--inventory-only", action="store_true")
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument(
+        "--max-runtime-minutes",
+        type=float,
+        default=None,
+        help="Stop gracefully before launching another PDF after this many minutes.",
+    )
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--worker-pdf", default=None)
     parser.add_argument("--worker-output", default=None)
@@ -342,7 +377,13 @@ def main() -> int:
         build_inventory(target_dir, output_root)
         return 0
 
-    run_corpus(target_dir, output_root, limit=args.limit, resume=not args.no_resume)
+    run_corpus(
+        target_dir,
+        output_root,
+        limit=args.limit,
+        resume=not args.no_resume,
+        max_runtime_minutes=args.max_runtime_minutes,
+    )
     return 0
 
 

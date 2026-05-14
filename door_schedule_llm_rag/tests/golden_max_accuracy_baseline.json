@@ -3,45 +3,54 @@
   "cases": [
     {
       "id": "ok_a610_doors_hw",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\A610 - Door Schedule.pdf",
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\A610 - Door Schedule.pdf",
       "min_doors": 20,
       "min_hardware": 70,
       "purpose": "Previously OK mixed door/hardware extraction must not regress."
     },
     {
       "id": "ok_project17_improved_dense",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\Project - 17\\Door Schedule.pdf",
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\Project - 17\\Door Schedule.pdf",
       "min_doors": 100,
       "min_hardware": 0,
       "purpose": "Fragmented dense door schedule improved by deterministic fallback."
     },
     {
       "id": "ok_new_project5_dmarks",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\New Project-5\\Doors and Hardware.pdf",
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\New Project-5\\Doors and Hardware.pdf",
       "min_doors": 15,
       "min_hardware": 0,
       "purpose": "D101-style marks and small schedule table should extract."
     },
     {
       "id": "ok_new_project26_flattened",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\New Project-26\\Door Schedule.pdf",
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\New Project-26\\Door Schedule.pdf",
       "min_doors": 8,
       "min_hardware": 10,
       "purpose": "Flattened pipe-delimited schedule should retain physical door rows."
     },
     {
       "id": "ok_hardware_only",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\Project - 11\\Hardware Schedule.pdf",
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\Project - 11\\Hardware Schedule.pdf",
       "min_doors": 0,
       "min_hardware": 30,
       "purpose": "Hardware-only PDF should remain a hardware success."
     },
     {
       "id": "probe_tiny_schedule_corner",
-      "pdf_path": "C:\\Users\\muzaf\\my_lab\\door project pdfs\\pdfs\\New Project-2\\Door and Hardware.pdf",
-      "min_doors": 1,
-      "min_hardware": 0,
-      "purpose": "High-risk tiny schedule corner should improve with crop rescue."
+      "pdf_path": "C:\\Users\\muzaf\\my_lab\\sushmita_proj\\pdfs\\New Project-2\\Door and Hardware.pdf",
+      "min_doors": 8,
+      "min_hardware": 12,
+      "min_crop_hw_added": 8,
+      "forbidden_hardware_regex": [
+        "\\bE\\d+\\b",
+        "LG 65-INCH TV",
+        "TRASH CAN",
+        "HAND SANITIZER",
+        "REFRIGERATOR",
+        "GRAB BAR"
+      ],
+      "purpose": "High-risk tiny schedule corner should extract door rows and door-hardware rows through crop rescue without equipment contamination."
     }
   ]
 }

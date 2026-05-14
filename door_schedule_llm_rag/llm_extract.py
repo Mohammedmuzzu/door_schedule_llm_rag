@@ -42,6 +42,189 @@ OPENAI_RATELIMIT_RETRIES = 6
 OPENAI_RATELIMIT_MAX_WAIT = 60  # seconds per attempt
 _OLLAMA_HEALTHY: Optional[bool] = None  # lazy-cached health check
 
+_NULL_LIKE = {
+    "",
+    "-",
+    "--",
+    "---",
+    "----",
+    "—",
+    "N/A",
+    "NA",
+    "NONE",
+    "NULL",
+    "UNKNOWN",
+    "NOT SHOWN",
+    "NOT PROVIDED",
+    "TBD",
+    "?",
+}
+
+_HW_COMPONENT_TERMS = re.compile(
+    r"\b(?:HINGE|BUTT|PIVOT|CLOSER|LOCK|LOCKSET|LATCH|LATCHSET|MORTISE|CYLINDER|"
+    r"DEADBOLT|DEADLOCK|STRIKE|THRESHOLD|WEATHER\s*STRIP|WEATHERSTRIP|SEAL|GASKET|"
+    r"KICK\s*PLATE|KICKPLATE|PUSH\s*PLATE|PULL\s*PLATE|STOP|SILENCER|PANIC|EXIT\s*DEVICE|"
+    r"COORDINATOR|FLUSH\s*BOLT|SURFACE\s*BOLT|BOLT|OVERHEAD\s*STOP|POWER\s*TRANSFER|"
+    r"ELECTRIC\s*STRIKE|ASTRAGAL|HOLDER|VIEWER|OPERATOR|CLOSING\s*DEVICE)\b",
+    re.IGNORECASE,
+)
+_HW_NOISE_TERMS = re.compile(
+    r"\b(?:DOOR\s+SCHEDULE|WINDOW\s+SCHEDULE|HARDWARE\s+SCHEDULE|SEE\s+HARDWARE|"
+    r"REFER\s+TO\s+HARDWARE|PROJECT\s+NO|DRAWN\s+BY|CHECKED\s+BY|SHEET\s+NO|"
+    r"REVISION|GENERAL\s+NOTES?|TITLE\s+BLOCK|ARCHITECT|ENGINEER|SCALE|DATE|"
+    r"ROOM\s+NAME|DOOR\s+NO|DOOR\s+NUMBER|FRAME\s+TYPE|FIRE\s+RATING|FINISH\s+TAG|"
+    r"EQUIPMENT\s*/\s*FIXTURE|LEGEND)\b",
+    re.IGNORECASE,
+)
+_EQUIPMENT_NOISE_TERMS = re.compile(
+    r"\b(?:TV|TELEVISION|ORGANIZER|TRASH\s+CAN|GLOVE\s+BOX|SHARPS|HEIGHT\s+MEASURER|"
+    r"GRAB\s+BARS?|HAND\s+SANITIZER|SOAP\s+DISPENSER|PAPER\s+TOWEL|TOILET\s+PAPER|"
+    r"CORK\s+BOARD|UTILITY\s+PLASTIC\s+CART|OTOSCOPE|SPECULA|MIRROR|ADA\s+SIGNAGE|"
+    r"HIGH\s+TABLE|WATER\s+DISPENSER|REFRIGERATOR|FREEZER|UNDER\s+CABINET|CHAIR|"
+    r"EQUIPMENT|FIXTURE|FURNITURE|APPLIANCE)\b",
+    re.IGNORECASE,
+)
+_HW_HEADER_ONLY = {
+    "DESCRIPTION",
+    "COMPONENT",
+    "ITEM",
+    "QTY",
+    "QUANTITY",
+    "UNIT",
+    "FINISH",
+    "MFR",
+    "MANUFACTURER",
+    "CATALOG",
+    "CATALOG NUMBER",
+    "HARDWARE",
+    "HARDWARE SET",
+    "HARDWARE GROUP",
+    "SEE HARDWARE SCHED",
+    "SEE HARDWARE SCHEDULE",
+}
+
+
+def _blank_if_unknown(value):
+    """Normalize low-confidence placeholder strings to None."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        clean = value.strip()
+        return None if clean.upper() in _NULL_LIKE else clean
+    return value
+
+
+def _clean_extra_fields(extra):
+    if not isinstance(extra, dict):
+        return {}
+    return {k: _blank_if_unknown(v) for k, v in extra.items() if _blank_if_unknown(v) is not None}
+
+
+def is_probable_hardware_component(row: dict) -> bool:
+    """Return False for obvious title/header/note rows hallucinated as hardware."""
+    desc = str(_blank_if_unknown(row.get("description")) or "").strip()
+    hw_id = str(_blank_if_unknown(row.get("hardware_set_id")) or "").strip()
+    catalog = str(_blank_if_unknown(row.get("catalog_number")) or "").strip()
+    manufacturer = str(_blank_if_unknown(row.get("manufacturer_code")) or "").strip()
+    qty = _blank_if_unknown(row.get("qty"))
+    qty_raw = _blank_if_unknown(row.get("qty_raw"))
+    desc_upper = re.sub(r"\s+", " ", desc.upper()).strip(" .:-")
+    hw_upper = re.sub(r"\s+", " ", hw_id.upper()).strip(" .:-")
+    combined_upper = " ".join(
+        str(_blank_if_unknown(row.get(field)) or "").upper()
+        for field in ("description", "catalog_number", "manufacturer_code", "notes")
+    )
+    if not desc_upper:
+        return False
+    if desc_upper in _HW_HEADER_ONLY:
+        return False
+    has_component_word = bool(_HW_COMPONENT_TERMS.search(desc_upper))
+    if _EQUIPMENT_NOISE_TERMS.search(combined_upper):
+        return False
+    if re.fullmatch(r"E\d+[A-Z]?", hw_upper) and not has_component_word:
+        return False
+    if hw_upper in {"", "?", "HARDWARE", "HARDWARE SCHEDULE", "SCHEDULE"} and not catalog and not manufacturer:
+        if not has_component_word:
+            return False
+    if _HW_NOISE_TERMS.search(desc_upper):
+        return False
+    if _HW_NOISE_TERMS.search(combined_upper):
+        return False
+    if desc_upper.startswith(("SEE ", "REFER ", "NOTE:", "NOTES:", "GENERAL NOTE")):
+        return False
+
+    has_part_evidence = bool(catalog or manufacturer or qty or qty_raw)
+    # Vendor-specific rows sometimes omit a generic noun but include catalog,
+    # manufacturer, or quantity evidence. Keep those, but reject naked labels.
+    if not has_component_word and not has_part_evidence:
+        return False
+    return True
+
+
+def _estimate_tokens(*parts: object) -> int:
+    """Cheap cross-provider token estimate. Good enough for budget routing."""
+    chars = sum(len(str(part or "")) for part in parts)
+    return max(1, chars // 4)
+
+
+def _model_context_limit(model: str) -> int:
+    override = _os.environ.get("LLM_CONTEXT_TOKENS")
+    if override:
+        try:
+            return max(4096, int(override))
+        except ValueError:
+            pass
+
+    name = (model or "").lower()
+    if name.startswith(("gpt-4o", "gpt-4.1", "gpt-5", "o1", "o3")):
+        return 128000
+    if "llama-3.3" in name or "70b" in name:
+        return 128000
+    if "qwen3-vl" in name or "qwen3" in name:
+        return 32768
+    if "qwen2.5" in name:
+        return 32768
+    if "llama3.1" in name:
+        return 128000
+    return 8192
+
+
+def _max_output_cap(model: str) -> int:
+    override = _os.environ.get("LLM_MAX_OUTPUT_TOKENS")
+    if override:
+        try:
+            return max(512, int(override))
+        except ValueError:
+            pass
+    name = (model or "").lower()
+    if name.startswith(("gpt-4o", "gpt-4.1", "gpt-5", "o1", "o3")):
+        return 12000
+    if "qwen3-vl" in name:
+        return 4096
+    if "qwen" in name or "llama" in name or "mistral" in name:
+        return 6144
+    return 4096
+
+
+def _output_token_budget(model: str, system: str, user: str, base64_image: Optional[str] = None) -> int:
+    prompt_tokens = _estimate_tokens(system, user) + (1200 if base64_image else 0)
+    ctx = _model_context_limit(model)
+    cap = _max_output_cap(model)
+    # Keep a reserve so providers do not reject dense architectural pages.
+    available = max(512, ctx - prompt_tokens - 768)
+    return max(512, min(cap, available))
+
+
+def _ollama_num_ctx(model: str, system: str, user: str, base64_image: Optional[str], output_tokens: int) -> int:
+    override = _os.environ.get("OLLAMA_NUM_CTX")
+    if override:
+        try:
+            return max(4096, int(override))
+        except ValueError:
+            pass
+    needed = _estimate_tokens(system, user) + output_tokens + (1600 if base64_image else 0) + 512
+    return max(4096, min(_model_context_limit(model), needed))
+
 
 def _ollama_is_healthy() -> bool:
     """Cheap health probe so we don't waste minutes on a dead Ollama."""
@@ -117,13 +300,15 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
             {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}
         ]
 
+    active_model = llm_config.groq_model or GROQ_MODEL
     payload = {
-        "model": GROQ_MODEL,
+        "model": active_model,
         "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": user_content},
         ],
         "temperature": LLM_TEMPERATURE,
+        "max_tokens": _output_token_budget(active_model, system, user, base64_image),
     }
         
     for attempt in range(MAX_RETRIES + 1):
@@ -153,8 +338,11 @@ def _resolve_openai_model(base64_image: Optional[str], force_model: Optional[str
     
     # 1. If agent explicitly requested gpt-4o (heuristic rescue/escalation)
     if force_model == "gpt-4o":
+        rescue_model = _os.environ.get("OPENAI_RESCUE_MODEL", "gpt-4o")
         if current_model == "gpt-4o-mini":
-            return "gpt-4o"
+            return rescue_model
+        elif current_model.endswith("-mini") or ".mini" in current_model:
+            return rescue_model
         elif current_model == "gpt-5.5-instant":
             return "gpt-5.5"
         elif current_model == "o1-mini":
@@ -202,11 +390,13 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
         ],
     }
     
+    output_tokens = _output_token_budget(active_model, system, user, base64_image)
+
     # Newer reasoning models (o1, o3, gpt-5+) deprecated max_tokens and do not support temperature overrides
     if active_model.startswith(("o1", "o3", "gpt-5")):
-        payload["max_completion_tokens"] = 12000
+        payload["max_completion_tokens"] = output_tokens
     else:
-        payload["max_tokens"] = 12000
+        payload["max_tokens"] = output_tokens
         payload["temperature"] = LLM_TEMPERATURE
 
     # Two independent retry budgets:
@@ -269,7 +459,20 @@ def _get_available_models() -> List[str]:
         return []
 
 
-def _build_model_chain() -> List[str]:
+def _is_ollama_vision_model(model_name: str) -> bool:
+    name = (model_name or "").lower()
+    return any(token in name for token in ("vl", "vision", "llava", "bakllava", "moondream", "minicpm-v", "gemma4"))
+
+
+def _ollama_vision_chain(available: List[str]) -> List[str]:
+    configured = _os.environ.get("OLLAMA_VISION_MODELS", "qwen3-vl:8b,gemma4:latest,gemma4:e4b,llava:latest")
+    preferred = [m.strip() for m in configured.split(",") if m.strip()]
+    chain = [m for m in preferred if m in available]
+    chain.extend(m for m in available if _is_ollama_vision_model(m) and m not in chain)
+    return chain
+
+
+def _build_model_chain(base64_image: Optional[str] = None) -> List[str]:
     chain = [OLLAMA_MODEL]
     if OLLAMA_FALLBACK_MODELS:
         for m in OLLAMA_FALLBACK_MODELS.split(","):
@@ -277,6 +480,10 @@ def _build_model_chain() -> List[str]:
             if m and m not in chain:
                 chain.append(m)
     available = _get_available_models()
+    if base64_image:
+        vision_chain = _ollama_vision_chain(available)
+        if vision_chain:
+            chain = vision_chain + [m for m in chain if m not in vision_chain]
     for m in available:
         if m not in chain:
             chain.append(m)
@@ -286,16 +493,23 @@ def _build_model_chain() -> List[str]:
 def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json: bool = True, base64_image: Optional[str] = None) -> str:
     """Call Ollama chat API with automatic model fallback."""
     url = f"{OLLAMA_BASE_URL.rstrip('/')}/api/chat"
-    models_to_try = [model] if model else _build_model_chain()
+    models_to_try = [model] if model else _build_model_chain(base64_image=base64_image)
 
     for model_name in models_to_try:
+        image_payload = base64_image
+        if image_payload and not _is_ollama_vision_model(model_name):
+            logger.info("[%s] is not a vision model; retrying as text-only if reached.", model_name)
+            image_payload = None
+
         effective_system = system
         if "qwen3" in model_name.lower():
             effective_system = "/no_think\n" + system
 
         msg = {"role": "user", "content": user}
-        if base64_image:
-            msg["images"] = [base64_image]
+        if image_payload:
+            msg["images"] = [image_payload]
+
+        output_tokens = _output_token_budget(model_name, effective_system, user, image_payload)
 
         payload = {
             "model": model_name,
@@ -304,7 +518,11 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
                 msg,
             ],
             "stream": False,
-            "options": {"temperature": LLM_TEMPERATURE, "num_predict": 4096},
+            "options": {
+                "temperature": LLM_TEMPERATURE,
+                "num_predict": output_tokens,
+                "num_ctx": _ollama_num_ctx(model_name, effective_system, user, image_payload, output_tokens),
+            },
         }
         if force_json:
             payload["format"] = "json"
@@ -466,8 +684,12 @@ _FIELD_MAP = {
     # Hardware fields
     "hardware_set_id": "hardware_set_id", "set": "hardware_set_id",
     "set_id": "hardware_set_id", "set id": "hardware_set_id",
+    "set no": "hardware_set_id", "set no.": "hardware_set_id",
+    "group": "hardware_set_id", "group no": "hardware_set_id", "group no.": "hardware_set_id",
+    "hw": "hardware_set_id", "hdwr": "hardware_set_id", "hdwe": "hardware_set_id",
     "hardware_set_name": "hardware_set_name", "function": "hardware_set_name",
     "qty": "qty", "quantity": "qty",
+    "qty_raw": "qty_raw", "quantity_raw": "qty_raw", "quantity raw": "qty_raw",
     "unit": "unit",
     "description": "description", "desc": "description", "component": "description",
     "catalog_number": "catalog_number", "catalog number": "catalog_number",
@@ -619,6 +841,7 @@ def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None
     for r in rows:
         if not isinstance(r, dict):
             continue
+        r = {k: _blank_if_unknown(v) for k, v in r.items()}
         door_number = str(r.get("door_number") or "").strip()
         if not door_number:
             continue
@@ -650,36 +873,37 @@ def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None
                             r[key] = extra.pop(key)
                         else:
                             extra.pop(key)  # Discard duplicate
+                r["extra_fields"] = _clean_extra_fields(extra)
 
 
             row = DoorScheduleRow(
                 door_number=door_number,
-                level_area=r.get("level_area"),
-                room_name=r.get("room_name"),
-                door_type=r.get("door_type"),
-                frame_type=r.get("frame_type"),
-                frame_width=r.get("frame_width"),
-                frame_height=r.get("frame_height"),
-                door_width=width,
-                door_height=r.get("door_height"),
-                hardware_set=clean_hw_id(r.get("hardware_set")),
-                fire_rating=r.get("fire_rating"),
-                head_jamb_sill_detail=r.get("head_jamb_sill_detail"),
-                keyed_notes=r.get("keyed_notes"),
-                remarks=r.get("remarks"),
-                door_slab_material=r.get("door_slab_material"),
-                vision_panel=r.get("vision_panel"),
-                glazing_type=r.get("glazing_type"),
-                finish=r.get("finish"),
-                door_thickness=r.get("door_thickness"),
-                door_material=r.get("door_material"),
-                door_finish=r.get("door_finish"),
-                frame_material=r.get("frame_material"),
-                frame_finish=r.get("frame_finish"),
-                elevation=r.get("elevation"),
+                level_area=_blank_if_unknown(r.get("level_area")),
+                room_name=_blank_if_unknown(r.get("room_name")),
+                door_type=_blank_if_unknown(r.get("door_type")),
+                frame_type=_blank_if_unknown(r.get("frame_type")),
+                frame_width=_blank_if_unknown(r.get("frame_width")),
+                frame_height=_blank_if_unknown(r.get("frame_height")),
+                door_width=_blank_if_unknown(width),
+                door_height=_blank_if_unknown(r.get("door_height")),
+                hardware_set=clean_hw_id(_blank_if_unknown(r.get("hardware_set"))) or None,
+                fire_rating=_blank_if_unknown(r.get("fire_rating")),
+                head_jamb_sill_detail=_blank_if_unknown(r.get("head_jamb_sill_detail")),
+                keyed_notes=_blank_if_unknown(r.get("keyed_notes")),
+                remarks=_blank_if_unknown(r.get("remarks")),
+                door_slab_material=_blank_if_unknown(r.get("door_slab_material")),
+                vision_panel=_blank_if_unknown(r.get("vision_panel")),
+                glazing_type=_blank_if_unknown(r.get("glazing_type")),
+                finish=_blank_if_unknown(r.get("finish")),
+                door_thickness=_blank_if_unknown(r.get("door_thickness")),
+                door_material=_blank_if_unknown(r.get("door_material")),
+                door_finish=_blank_if_unknown(r.get("door_finish")),
+                frame_material=_blank_if_unknown(r.get("frame_material")),
+                frame_finish=_blank_if_unknown(r.get("frame_finish")),
+                elevation=_blank_if_unknown(r.get("elevation")),
                 is_pair=is_pair,
                 door_leaves=2 if is_pair else 1,
-                extra_fields=r.get("extra_fields", {}),
+                extra_fields=_clean_extra_fields(r.get("extra_fields", {})),
             )
             out.append(row.model_dump())
         except Exception as e:
@@ -711,6 +935,7 @@ def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = N
         if not isinstance(r, dict):
             continue
 
+        r = {k: _blank_if_unknown(v) for k, v in r.items()}
         hw_id = clean_hw_id(r.get("hardware_set_id"))
         desc = str(r.get("description") or "").strip()
         if not hw_id and not desc:
@@ -720,29 +945,42 @@ def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = N
         if desc.upper() in ("DESCRIPTION", "COMPONENT", "ITEM"):
             continue
 
+        qty_raw = _blank_if_unknown(r.get("qty_raw")) or _blank_if_unknown(r.get("qty"))
+        candidate_for_filter = {
+            **r,
+            "hardware_set_id": hw_id,
+            "description": desc,
+            "qty_raw": qty_raw,
+        }
+        if not is_probable_hardware_component(candidate_for_filter):
+            logger.debug("Filtered non-component hardware row: set=%r desc=%r", hw_id, desc)
+            continue
+
         try:
             row = HardwareComponentRow(
                 hardware_set_id=hw_id or "?",
-                hardware_set_name=r.get("hardware_set_name"),
+                hardware_set_name=_blank_if_unknown(r.get("hardware_set_name")),
                 qty=r.get("qty"),
-                unit=r.get("unit"),
-                description=desc or "—",
-                catalog_number=r.get("catalog_number"),
-                finish_code=r.get("finish_code"),
-                manufacturer_code=r.get("manufacturer_code"),
-                notes=r.get("notes"),
-                extra_fields=r.get("extra_fields", {}),
+                qty_raw=str(qty_raw).strip() if qty_raw is not None else None,
+                unit=_blank_if_unknown(r.get("unit")),
+                description=desc or "-",
+                catalog_number=_blank_if_unknown(r.get("catalog_number")),
+                finish_code=_blank_if_unknown(r.get("finish_code")),
+                manufacturer_code=_blank_if_unknown(r.get("manufacturer_code")),
+                notes=_blank_if_unknown(r.get("notes")),
+                extra_fields=_clean_extra_fields(r.get("extra_fields", {})),
             )
             out.append(row.model_dump())
         except Exception as e:
             logger.debug("Validation warning for hardware: %s", e)
             out.append({
                 "hardware_set_id": hw_id or "?",
-                "qty": max(1, int(float(r.get("qty") or 1))),
-                "unit": "EA",
-                "description": desc or "—",
+                "qty": HardwareComponentRow.clean_qty(r.get("qty")),
+                "qty_raw": str(qty_raw).strip() if qty_raw is not None else None,
+                "unit": _blank_if_unknown(r.get("unit")),
+                "description": desc or "-",
                 **{k: v for k, v in r.items()
-                   if k not in ("hardware_set_id", "qty", "unit", "description")},
+                   if k not in ("hardware_set_id", "qty", "qty_raw", "unit", "description")},
             })
 
     return out

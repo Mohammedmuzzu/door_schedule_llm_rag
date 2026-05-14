@@ -31,25 +31,27 @@ from typing import Dict, List, Optional, Tuple
 # ═══════════════════════════════════════════════════════════════════
 # Regex primitives (compiled once)
 # ═══════════════════════════════════════════════════════════════════
-_RE_DOOR_NUM = re.compile(r"\b\d{2,4}[A-Za-z]?\b")
-_RE_DIMENSION = re.compile(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"")
+_RE_DOOR_NUM = re.compile(r"(?<![A-Za-z0-9])\[?[A-Za-z]{0,3}\d{2,4}[A-Za-z]?\]?(?![A-Za-z0-9])")
+_RE_DIMENSION = re.compile(r"\d+\s*['\u2019]\s*-?\s*\d+(?:\s+\d+/\d+)?\s*(?:\"|\u201d)?")
 _RE_CAD_SHORTHAND = re.compile(r"\b\d{3,4}\s*[xX]\s*\d{3,4}\b")
 _RE_SET_HEADER = re.compile(
-    r"(?:^|\n)\s*(?:HARDWARE\s+SET|HARDWARE\s+GROUP|HDWE\s+SET|HDWR\s+SET|HW\s+SET|"
-    r"SET\s*NO\.?|GROUP\s*NO\.?|HW\s*[#\-]?\s*\d+|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)"
+    r"(?:^|\n)\s*(?:HARDWARE\s+SETS?|HARDWARE\s+GROUP|HDWE\s+SET|HDWR\s+SET|HDW\s+SET|HW\s+SET|"
+    r"SET\s*NO\.?|GROUP\s*NO\.?|HARDWARE\s+NO\.?|HW\s*[#\-]?\s*[\w.-]+|SET\s*[#\-]?\s*[\w.-]+|GROUP\s*[#\-]?\s*[\w.-]+)"
     r"\s*[\.:\-]?\s*[\w\d\-]*",
     re.IGNORECASE,
 )
 _RE_HW_COMPONENT = re.compile(
-    r"\b(?:HINGE|CLOSER|LOCKSET|DEADLOCK|DEADBOLT|STRIKE|THRESHOLD|WEATHERSTRIP|"
+    r"\b(?:HINGE|BUTT|PIVOT|CLOSER|LOCKSET|LATCHSET|MORTISE|CYLINDER|DEADLOCK|DEADBOLT|STRIKE|THRESHOLD|WEATHER\s*STRIP|WEATHERSTRIP|"
     r"KICK\s*PLATE|DOOR\s*STOP|FLOOR\s*STOP|WALL\s*STOP|SMOKE\s*SEAL|GASKET|"
     r"SILENCER|PANIC|EXIT\s*DEVICE|COORDINATOR|FLUSH\s*BOLT|SURFACE\s*BOLT|"
-    r"OVERHEAD\s*STOP|POWER\s*TRANSFER|ELECTRIC\s*STRIKE)\b",
+    r"OVERHEAD\s*STOP|POWER\s*TRANSFER|ELECTRIC\s*STRIKE|PUSH\s*PLATE|PULL\s*PLATE|"
+    r"DOOR\s*HOLDER|ASTRAGAL|AUTO(?:MATIC)?\s*OPERATOR|VIEWER)\b",
     re.IGNORECASE,
 )
 _RE_SCHEDULE_HEADER = re.compile(
-    r"\b(?:DOOR\s+SCHEDULE|HARDWARE\s+SCHEDULE|DOOR\s+NO\.?|DOOR\s+NUMBER|"
-    r"DOOR\s+MARK|FRAME\s+TYPE|FIRE\s+RATING|HDWR\s+SET|HARDWARE\s+SET)\b",
+    r"\b(?:DOOR\s+SCHEDULE|OPENING\s+SCHEDULE|HARDWARE\s+SCHEDULE|DOOR\s+NO\.?|DOOR\s+NUMBER|"
+    r"DOOR\s+MARK|DOOR\s+TYPE|RM\s+NAME|DR\s*#|FRAME\s+TYPE|FRAME\s+MATERIAL|FIRE\s+RATING|"
+    r"HDWR\s+SET|HDWE\s+SET|HDW\s+SET|HARDWARE\s+SET|HARDWARE\s+GROUP)\b",
     re.IGNORECASE,
 )
 _RE_TITLE_BLOCK = re.compile(
@@ -202,7 +204,8 @@ class PageEvidence:
 def _real_doors(text: str) -> Tuple[int, List[str]]:
     seen: List[str] = []
     for token in _RE_DOOR_NUM.findall(text):
-        m = re.match(r"\d+", token)
+        token = token.strip("[]")
+        m = re.search(r"\d+", token)
         if not m:
             continue
         val = int(m.group())

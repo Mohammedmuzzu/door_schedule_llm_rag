@@ -106,12 +106,30 @@ def _has_physical_door_attrs(row: dict) -> bool:
     )
 
 
+def _crop_count(crop_candidates: list[dict], *types: str) -> int:
+    allowed = set(types)
+    return sum(1 for crop in crop_candidates if crop.get("crop_type") in allowed)
+
+
 def _needs_crop_door_rescue(doors: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
     if not crop_candidates:
         return False
+    door_crop_count = _crop_count(crop_candidates, "door", "mixed")
     if needs_door_rescue(doors, evidence, page_type):
         return True
-    if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED) and not doors:
+    if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED) and not doors and door_crop_count:
+        return True
+    unique = len({_door_key(d) for d in doors if _door_key(d)})
+    # Scanned/cropped sheets often have no parseable dimension tokens in OCR,
+    # so expected_door_rows() is intentionally conservative. If there are
+    # multiple schedule crops plus many door-mark-like tokens, a one-row result
+    # is still a severe undershoot and deserves crop-level vision.
+    if (
+        page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED)
+        and door_crop_count >= 2
+        and unique < 3
+        and (evidence.real_door_numbers >= 5 or evidence.schedule_headers >= 2)
+    ):
         return True
     if doors and not any(_has_physical_door_attrs(d) for d in doors) and any(
         crop.get("crop_type") in ("door", "mixed") for crop in crop_candidates
@@ -123,10 +141,20 @@ def _needs_crop_door_rescue(doors: List[dict], evidence: PageEvidence, page_type
 def _needs_crop_hardware_rescue(hardware: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
     if not crop_candidates:
         return False
+    hardware_crop_count = _crop_count(crop_candidates, "hardware", "mixed")
     if needs_hardware_rescue(hardware, evidence, page_type):
         return True
-    if page_type in (PageType.HARDWARE_SET, PageType.MIXED) and not hardware and any(
-        crop.get("crop_type") in ("hardware", "mixed") for crop in crop_candidates
+    if hardware_crop_count == 0:
+        return False
+    if page_type in (PageType.HARDWARE_SET, PageType.MIXED) and not hardware:
+        return True
+    if not hardware and (evidence.hw_components >= 2 or evidence.hw_set_headers >= 1):
+        return True
+    if (
+        page_type in (PageType.HARDWARE_SET, PageType.MIXED)
+        and hardware_crop_count >= 2
+        and len(hardware) < 2
+        and evidence.hw_components >= 4
     ):
         return True
     return False

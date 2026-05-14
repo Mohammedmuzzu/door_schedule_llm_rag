@@ -96,6 +96,44 @@ def _score_row(row: pd.Series) -> tuple[str, list[str]]:
     return severity, issues
 
 
+def _failure_taxonomy(row: pd.Series, issues: list[str]) -> list[str]:
+    """Map QA symptoms to the production failure taxonomy used for review."""
+    taxonomy: list[str] = []
+    issue_set = set(issues)
+    name = str(row.get("pdf_name", "")).lower()
+
+    if "pipeline_error" in issue_set:
+        taxonomy.append("table detection failure")
+    if "zero_extract" in issue_set or "no_doors" in issue_set:
+        taxonomy.append("table detection failure")
+        if int(row.get("crop_count", 0) or 0) > 0:
+            taxonomy.append("wrong page classification")
+        else:
+            taxonomy.append("OCR failure")
+    if "no_hardware" in issue_set and "hardware" in name:
+        taxonomy.append("bad hardware-set join")
+        taxonomy.append("bad schema mapping")
+    if "duplicate_doors" in issue_set:
+        taxonomy.append("duplicate record")
+    if "missing_width_gt_50pct" in issue_set or "missing_height_gt_50pct" in issue_set:
+        taxonomy.append("unit / dimension normalization issue")
+        taxonomy.append("bad schema mapping")
+    if "missing_hw_set_gt_80pct" in issue_set:
+        taxonomy.append("bad hardware-set join")
+    if int(row.get("crop_rescue_attempt_pages", 0) or 0) > 0 and int(row.get("crop_door_added", 0) or 0) + int(row.get("crop_hw_added", 0) or 0) == 0:
+        taxonomy.append("low-confidence skip")
+    if int(row.get("crop_count", 0) or 0) > 0 and int(row.get("doors", 0) or 0) == 0 and int(row.get("hardware", 0) or 0) == 0:
+        taxonomy.append("OCR failure")
+        taxonomy.append("rotated text failure")
+    if int(row.get("duplicate_doors", 0) or 0) == 0 and int(row.get("doors", 0) or 0) > 0 and ("missing_width_gt_50pct" in issue_set or "missing_height_gt_50pct" in issue_set):
+        taxonomy.append("merged-cell failure")
+        taxonomy.append("row segmentation failure")
+    if int(row.get("hardware", 0) or 0) > 0 and int(row.get("doors", 0) or 0) == 0 and "hardware" not in name:
+        taxonomy.append("wrong page classification")
+
+    return list(dict.fromkeys(taxonomy))
+
+
 def build_artifacts(run_root: Path, max_pages_per_pdf: int = 20) -> None:
     report_path = run_root / "deep_e2e_report.csv"
     if not report_path.exists():
@@ -117,9 +155,11 @@ def build_artifacts(run_root: Path, max_pages_per_pdf: int = 20) -> None:
 
     for _, row in report.iterrows():
         severity, issues = _score_row(row)
+        taxonomy = _failure_taxonomy(row, issues)
         triage_row = row.to_dict()
         triage_row["severity"] = severity
         triage_row["issues"] = ";".join(issues)
+        triage_row["failure_taxonomy"] = ";".join(taxonomy)
         triage_rows.append(triage_row)
 
         pdf_path = Path(str(row["pdf_path"]))
@@ -170,6 +210,7 @@ def build_artifacts(run_root: Path, max_pages_per_pdf: int = 20) -> None:
               <h2>{html.escape(str(row['pdf_name']))}</h2>
               <p><b>Run:</b> {html.escape(str(row['run_id']))}</p>
               <p><b>Status:</b> {html.escape(str(row['status']))} | <b>Severity:</b> {severity} | <b>Issues:</b> {html.escape('; '.join(issues) or 'none')}</p>
+              <p><b>Failure Taxonomy:</b> {html.escape('; '.join(taxonomy) or 'none')}</p>
               <p><b>Counts:</b> {row['doors']} doors, {row['hardware']} hardware rows, {row['pages']} pages, {row['elapsed_s']}s</p>
               <p><b>Crop Rescue:</b> attempted on {row.get('crop_rescue_attempt_pages', 0)} pages, added rows on {row.get('crop_rescue_pages', 0)} pages, +{row.get('crop_door_added', 0)} doors, +{row.get('crop_hw_added', 0)} hardware rows ({row.get('crop_count', 0)} crops detected)</p>
               <p><b>PDF:</b> {html.escape(str(row['pdf_path']))}</p>
@@ -194,6 +235,14 @@ def build_artifacts(run_root: Path, max_pages_per_pdf: int = 20) -> None:
         "crop_hw_added": int(triage["crop_hw_added"].sum()) if "crop_hw_added" in triage.columns else 0,
         "pages_rendered": total_rendered,
     }
+    if "failure_taxonomy" in triage.columns and not triage.empty:
+        taxonomy_counts: dict[str, int] = {}
+        for value in triage["failure_taxonomy"].fillna(""):
+            for item in str(value).split(";"):
+                item = item.strip()
+                if item:
+                    taxonomy_counts[item] = taxonomy_counts.get(item, 0) + 1
+        summary["failure_taxonomy_counts"] = taxonomy_counts
     (run_root / "triage_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
     html_doc = f"""<!doctype html>
