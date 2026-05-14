@@ -173,8 +173,12 @@ def classify_page(text: str) -> str:
         # This catches mixed-content PDFs where hardware is in the middle of the document.
         if page_type == PageType.DOOR_SCHEDULE:
             has_hw_components = len(re.findall(r"(?:BUTT HINGE|SURFACE CLOSER|FLOOR STOP|WALL STOP|LOCKSET|DEADBOLT|KICK PLATE|THRESHOLD|DOOR STOP)", upper)) >= 2
-            has_hw_sets = len(re.findall(r"(?:SET|GROUP|HW|HDWE|HARDWARE)\s*(?:NO\.?|#)?\s*[\w\d]+", upper)) >= 2
-            if has_hw_components or has_hw_sets:
+            has_hw_sets = len(re.findall(
+                r"(?m)^\s*(?:HARDWARE\s+SET|HARDWARE\s+GROUP|HDWE\s+SET|HDWR\s+SET|HW\s+SET|"
+                r"SET\s*NO\.?|GROUP\s*NO\.?|HW\s*[#\-]?\s*\d+|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)",
+                upper,
+            )) >= 1
+            if has_hw_components and has_hw_sets:
                 logger.info("Deterministic upgrade: DOOR → MIXED (found hardware sets or components in full text)")
                 page_type = PageType.MIXED
         
@@ -888,7 +892,8 @@ def extract_structured_page(
     page_idx: int,
     max_chars: int = 14000,
     prev_page_type: Optional[str] = None,
-) -> Tuple[str, str, bool, Optional[str]]:
+    include_crops: bool = False,
+):
     """
     Extract page content using ALL available backends, merge best results.
 
@@ -900,7 +905,8 @@ def extract_structured_page(
          fall back to img2table + PaddleOCR (slow path)
 
     Returns:
-        (content_text, page_type, is_continuation)
+        (content_text, page_type, is_continuation, base64_img)
+        If include_crops=True, a fifth value crop_candidates is appended.
     """
     pdf_path = Path(pdf_path)
     backends_used = []
@@ -1109,7 +1115,28 @@ def extract_structured_page(
         backends_used.append("img2table")
 
     if not backends_used:
-        return "", PageType.OTHER, False, base64_img
+        if include_crops:
+            try:
+                from vision_crops import detect_schedule_crops
+
+                crop_candidates = detect_schedule_crops(
+                    pdf_path,
+                    page_idx,
+                    page_text=combined_native or fitz_raw_text or "",
+                    page_type=PageType.MIXED,
+                    max_candidates=5,
+                )
+                if crop_candidates:
+                    content = (
+                        "VISION_CROP_RESCUE: Native/OCR text extraction did not recover usable "
+                        "schedule text, but the page image has crop candidates. Use the attached "
+                        "high-resolution crops as ground truth."
+                    )
+                    return content, PageType.MIXED, False, base64_img, crop_candidates
+            except Exception as e:
+                logger.debug("Page %d: crop-only rescue setup skipped: %s", page_idx + 1, e)
+        result = ("", PageType.OTHER, False, base64_img)
+        return (*result, []) if include_crops else result
 
     logger.info("Page %d backends: %s", page_idx + 1, ", ".join(backends_used))
 
@@ -1164,7 +1191,28 @@ def extract_structured_page(
             logger.info("Page %d: Using raw fitz text as final fallback (%d chars).", page_idx + 1, len(content))
 
     if not content or len(content.strip()) < 30:
-        return "", PageType.OTHER, False, base64_img
+        if include_crops:
+            try:
+                from vision_crops import detect_schedule_crops
+
+                crop_candidates = detect_schedule_crops(
+                    pdf_path,
+                    page_idx,
+                    page_text=combined_native or fitz_raw_text or "",
+                    page_type=PageType.MIXED,
+                    max_candidates=5,
+                )
+                if crop_candidates:
+                    content = (
+                        "VISION_CROP_RESCUE: Text extraction was too weak for normal parsing. "
+                        "Use the attached high-resolution crops as ground truth for any visible "
+                        "door schedule or hardware schedule."
+                    )
+                    return content, PageType.MIXED, False, base64_img, crop_candidates
+            except Exception as e:
+                logger.debug("Page %d: weak-text crop rescue setup skipped: %s", page_idx + 1, e)
+        result = ("", PageType.OTHER, False, base64_img)
+        return (*result, []) if include_crops else result
 
     # ── Step 3b: CID font corruption fallback ──
     # pdfplumber can't decode CID-mapped fonts and produces "(cid:XX)" garbage.
@@ -1212,19 +1260,25 @@ def extract_structured_page(
     # force override to MIXED. This catches cases where the text structure confuses
     # the LLM classifier (e.g., malformed pdfplumber table grids).
     if page_type == PageType.OTHER:
+        try:
+            from page_evidence import collect as _collect_page_evidence
+            evidence = _collect_page_evidence(content)
+        except Exception:
+            evidence = None
         upper = content.upper()
         has_schedule_kw = any(kw in upper for kw in (
             "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "DOOR MARK", 
             "HARDWARE SET", "HW SET", "HDWR SET", "FRAME TYPE",
             "FIRE RATING", "DOOR TYPE",
         ))
-        door_nums = re.findall(r'\b\d{3,4}[A-Za-z]?\b', content)
+        door_nums = re.findall(r'\b\d{2,4}[A-Za-z]?\b', content)
         real_doors = [n for n in door_nums if not (1900 <= int(re.match(r'\d+', n).group()) <= 2099)]
         has_dimensions = bool(re.search(r"\d+['\u2019]\s*-?\s*\d+\"", content))  # 3'-0" pattern
         has_hw_components = any(kw in upper for kw in ("HINGE", "CLOSER", "LOCKSET", "DEADBOLT", "THRESHOLD", "DOOR STOP", "KICK PLATE"))
         
         # Aggressive backstop: multiple signals override the LLM
-        if (has_schedule_kw and (len(real_doors) >= 2 or has_dimensions)) or \
+        if (evidence is not None and (evidence.is_door_schedule or evidence.is_hardware_schedule)) or \
+           (has_schedule_kw and (len(real_doors) >= 2 or has_dimensions)) or \
            (len(real_doors) >= 5 and has_dimensions) or \
            (len(real_doors) >= 3 and has_hw_components):
             logger.warning("Page %d: LLM misclassified as OTHER but text has %d door-like numbers, dimensions=%s, hw=%s. Forcing MIXED.", 
@@ -1233,7 +1287,23 @@ def extract_structured_page(
 
     is_continuation = detect_continuation(content, prev_page_type)
 
-    return content, page_type, is_continuation, base64_img
+    crop_candidates = []
+    if include_crops:
+        try:
+            from vision_crops import detect_schedule_crops
+
+            crop_candidates = detect_schedule_crops(
+                pdf_path,
+                page_idx,
+                page_text=content,
+                page_type=page_type,
+                max_candidates=5,
+            )
+        except Exception as e:
+            logger.debug("Page %d: crop detection skipped: %s", page_idx + 1, e)
+
+    result = (content, page_type, is_continuation, base64_img)
+    return (*result, crop_candidates) if include_crops else result
 
 
 def get_page_count(pdf_path: Path) -> int:

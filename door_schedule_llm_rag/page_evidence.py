@@ -35,7 +35,9 @@ _RE_DOOR_NUM = re.compile(r"\b\d{2,4}[A-Za-z]?\b")
 _RE_DIMENSION = re.compile(r"\d+\s*['\u2019]\s*-?\s*\d+\s*\"")
 _RE_CAD_SHORTHAND = re.compile(r"\b\d{3,4}\s*[xX]\s*\d{3,4}\b")
 _RE_SET_HEADER = re.compile(
-    r"(?:^|\n)\s*(?:HARDWARE\s+SET|HARDWARE\s+GROUP|SET\s*NO\.?|GROUP\s*NO\.?|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)\s*[\.:\-]?\s*[\w\d\-]*",
+    r"(?:^|\n)\s*(?:HARDWARE\s+SET|HARDWARE\s+GROUP|HDWE\s+SET|HDWR\s+SET|HW\s+SET|"
+    r"SET\s*NO\.?|GROUP\s*NO\.?|HW\s*[#\-]?\s*\d+|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)"
+    r"\s*[\.:\-]?\s*[\w\d\-]*",
     re.IGNORECASE,
 )
 _RE_HW_COMPONENT = re.compile(

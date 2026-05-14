@@ -39,7 +39,7 @@ CRITICAL RULES:
 9. For pair detection: set is_pair=true ONLY if the width is >= 5'-0" (60 inches) OR the text "PAIR", "PR", "DBL", or "DOUBLE" appears ANYWHERE in the door row's Size, Dimension, Description, or Type cells.
 10. Set door_leaves=2 if is_pair=true, otherwise door_leaves=1.
 11. If a cell contains multiple door numbers (e.g., "100A 100B"), create SEPARATE rows for each.
-12. Hardware set is usually a short number (1, 2, 3, 103). If the hardware is defined directly under the door profile, you may use a synthesized ID (e.g., "HW-1").
+12. Hardware set is usually a short number or code (1, 2A, 103). NEVER synthesize a hardware_set for a door row. If the row has no explicit hardware set/group cell or no explicit legend mapping for that exact door mark, set hardware_set to null.
 13. Level/Area is usually a section header ABOVE a group of doors, not in the table row itself.
 14. Do NOT nest objects for standard fields. Every element inside "rows" must be a FLAT JSON object (except for `extra_fields` which is a dict).
 15. Any column or key-value pair that doesn't fit standard fields must go into `extra_fields`.
@@ -54,7 +54,7 @@ CRITICAL RULES:
     - Column with "PTD", "PREFINISHED", "PT", "PL1", "PAINT", "WOOD SIDING" → door_finish
     - Column with "HM", "ALUM", "ALUMINUM", "WD", "WOOD" appearing AFTER material/finish columns → frame_material
     - Column with letter codes "A", "B", "D", "E" or drawing refs "SEE S5 ON A621" → elevation
-    - Column with single digits "1", "2", "3" near the end of the table → hardware_set
+    - Column with single digits "1", "2", "3" near the end of the table → hardware_set ONLY when the header explicitly says Hardware/Set/Group/HDWR/HW. Single digits under DETAIL, HEAD, JAMB, SILL, ELEVATION, TYPE, REMARKS, KEYNOTE, or drawing-reference columns are NOT hardware_set.
     - HARDWARE SET COLUMN ALIASES: The hardware set column may be labeled ANY of these: "HARDWARE", "HDWE", "HW", "HW SET", "HW GROUP", "HW GRP", "HARDWARE SET", "HARDWARE GROUP", "HDW", "SET", "SET NO", "SET #", "SET NO.", "GRP", "GROUP", "HARDWARE NO.", "H/W", "HDWE SET", "HDW SET", "HW#", "HDWR", "HARDWARE GRP". You MUST scan ALL column headers for ANY of these aliases. The column value is typically a short identifier like "1", "2A", "103", "A". NEVER confuse it with detail/elevation references.
     - Column with "45 MIN", "1 HR", "20 MIN", "----" → fire_rating
     CRITICAL: "PR" next to a door mark means "PAIR" (door_type), NOT a room name. Room names are words like "OFFICE", "CORRIDOR", "STORAGE", "WOMEN", "MEN", "ELECTRICAL".
@@ -66,7 +66,7 @@ CRITICAL RULES:
 MANDATORY FIELD EXTRACTION — You MUST extract these fields for EVERY door row:
 - door_number: The exact String identifier from the primary index column of the table (usually labeled "TAG", "MARK", "DOOR NO", or "NUMBER"). Even if the table tag is a single digit (e.g., "1", "2"), you MUST extract that exact value. CRITICAL BORDERLESS RULE: If the table has no borders and the text crashes together (e.g., "MARK MAIN ENTRY 100" or "FINANCE 208"), you MUST identify the isolated purely numeric or alphanumeric string (e.g., "100", "208") as the door_number, and the descriptive text words as the room_name. NEVER invert this relationship just because the room name appears first sequentially.
 - room_name: The room/location name (e.g., "MERCHANDISE", "OFFICE", "BACK ROOM", "MAIN ENTRY", "HALLWAY"). This is ALWAYS present in door schedules. If you see a name adjacent to a numeric label in unbordered text, place the text string here. NEVER place room names in the door_number field!
-- hardware_set: The exact hardware set identifier assigned to this door. THIS IS A HIGH-PRIORITY FIELD — missing it breaks the entire pipeline! CRITICAL: Scan ALL column headers for ANY of these aliases: "HARDWARE", "HDWE", "HW", "HW SET", "HW GROUP", "HW GRP", "HARDWARE SET", "HARDWARE GROUP", "HDW", "SET", "SET NO", "SET #", "SET NO.", "GRP", "GROUP", "HARDWARE NO.", "H/W", "HDWE SET", "HDW SET", "HW#", "HDWR", "HARDWARE GRP". Absolutely DO NOT extract numeric values from adjacent geometric columns like "DETAILS", "HEAD", "JAMB", "SILL", or "REMARKS". You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A", "212S" -> "212S") so it can securely join the Hardware table database. If the hardware set is in a SEPARATE SECTION below the main door table (e.g., a key/legend at the bottom of the page mapping door marks to set numbers), you MUST cross-reference it and populate this field.
+- hardware_set: The exact hardware set identifier assigned to this door. CRITICAL: Scan ALL column headers for ANY of these aliases: "HARDWARE", "HDWE", "HW", "HW SET", "HW GROUP", "HW GRP", "HARDWARE SET", "HARDWARE GROUP", "HDW", "SET", "SET NO", "SET #", "SET NO.", "GRP", "GROUP", "HARDWARE NO.", "H/W", "HDWE SET", "HDW SET", "HW#", "HDWR", "HARDWARE GRP". Absolutely DO NOT extract numeric values from adjacent geometric columns like "DETAILS", "HEAD", "JAMB", "SILL", "ELEVATION", "TYPE", "KEYNOTE", or "REMARKS". You MUST strip away arbitrary descriptive words like "Hardware", "HW", "Set", or "Group" and output ONLY the raw alphanumeric identifier (e.g., "Group 1" -> "1", "HW Set 2A" -> "2A", "212S" -> "212S") so it can securely join the Hardware table database. If the hardware set is in a SEPARATE SECTION below the main door table (e.g., a key/legend at the bottom of the page mapping door marks to set numbers), you MUST cross-reference it and populate this field. If no explicit hardware set/group value is present for that exact row or legend mapping, output null. NEVER invent IDs like "HW-1" for door rows.
 - door_width and door_height: Dimensions like "3'-0\"" or "6'-0\"". CRITICAL: If the document uses CAD shorthand (e.g., "3070", "30x70"), you MUST mathematically split it into width and height sizes! For example, "3070" -> door_width="3'-0\"", door_height="7'-0\"". NEVER leave dimensions null if shorthand is provided!
 - door_thickness: The door slab thickness, often labeled "THICK", "THICKNESS", "THK", or "DOOR THICK" in the table. Common values: "1 3/4\"", "1 3/8\"". Extract the exact string.
 - door_material: The door leaf material, often labeled "MATERIAL", "DOOR MATERIAL", "DR MATL", or "DOOR". Common values: "WD", "HM", "ALUM", "SOLID CORE", "FRP", "SCWD", "GL". Extract the exact string from the PDF.
@@ -205,5 +205,53 @@ def build_hardware_prompt(
         "CRITICAL: If the document table contains empty or blank cells for certain rows or sets, you MUST output null or empty strings for those fields. DO NOT hallucinate or invent generic hardware components (e.g., 'Hinge', 'Closer') to fill empty sets!\n"
         "Please format your response as a valid JSON object containing a 'rows' array.\n"
         "You may wrap your response in a markdown ```json ... ``` code block."
+    )
+    return {"system": system, "user": user}
+
+
+def build_crop_door_prompt(page_text: str, crop_meta: dict | None = None, max_chars: int = 7000) -> dict:
+    """Build a strict prompt for high-resolution schedule crop rescue."""
+    meta = crop_meta or {}
+    system = SYSTEM_DOOR + """
+
+=== CROP RESCUE MODE ===
+You are looking at a HIGH-RESOLUTION CROP of one architectural sheet, not the full page.
+Extract ONLY rows visibly inside the crop image.
+Do NOT use floor plan bubbles, title blocks, notes, wall types, elevations, or legends as door rows.
+If a row is partially visible, extract only fields that are visible and set missing fields to null.
+If the crop contains no actual door schedule table/profile list, return {"rows": []}.
+"""
+    user = (
+        "A high-resolution crop image is attached. Use the crop image as ground truth.\n"
+        f"Crop metadata: {meta}\n\n"
+        "Supporting page text follows. It may be noisy or incomplete; use it only to clarify visible crop rows.\n"
+        "=== START SUPPORTING TEXT ===\n"
+        f"{page_text[:max_chars]}\n"
+        "=== END SUPPORTING TEXT ===\n\n"
+        "Return a JSON object with a rows array containing every visible door schedule row in the crop."
+    )
+    return {"system": system, "user": user}
+
+
+def build_crop_hardware_prompt(page_text: str, crop_meta: dict | None = None, max_chars: int = 7000) -> dict:
+    """Build a strict prompt for high-resolution hardware crop rescue."""
+    meta = crop_meta or {}
+    system = SYSTEM_HARDWARE + """
+
+=== CROP RESCUE MODE ===
+You are looking at a HIGH-RESOLUTION CROP of one architectural sheet, not the full page.
+Extract ONLY hardware set/component rows visibly inside the crop image.
+Do NOT extract title blocks, generic notes, wall types, or door schedule rows as hardware components.
+If a hardware set continues outside the crop, extract only visible components and preserve the visible set id/name.
+If the crop contains no actual hardware schedule/list, return {"rows": []}.
+"""
+    user = (
+        "A high-resolution crop image is attached. Use the crop image as ground truth.\n"
+        f"Crop metadata: {meta}\n\n"
+        "Supporting page text follows. It may be noisy or incomplete; use it only to clarify visible crop rows.\n"
+        "=== START SUPPORTING TEXT ===\n"
+        f"{page_text[:max_chars]}\n"
+        "=== END SUPPORTING TEXT ===\n\n"
+        "Return a JSON object with a rows array containing every visible hardware component in the crop."
     )
     return {"system": system, "user": user}

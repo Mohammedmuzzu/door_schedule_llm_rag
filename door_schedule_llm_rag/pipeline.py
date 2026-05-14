@@ -89,6 +89,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger("pipeline")
 
+LAST_CROP_METRICS = {
+    "crop_count": 0,
+    "crop_rescue_attempt_pages": 0,
+    "crop_rescue_pages": 0,
+    "crop_door_added": 0,
+    "crop_hw_added": 0,
+}
+
 
 def log_anomaly_to_skills(pdf_name: str, page_idx: int, anomaly_type: str, raw_text: str):
     """
@@ -188,6 +196,14 @@ def run_pipeline(
     pdf_folder = pdf_folder or PDF_FOLDER
     output_dir = output_dir or OUTPUT_DIR
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+    global LAST_CROP_METRICS
+    LAST_CROP_METRICS = {
+        "crop_count": 0,
+        "crop_rescue_attempt_pages": 0,
+        "crop_rescue_pages": 0,
+        "crop_door_added": 0,
+        "crop_hw_added": 0,
+    }
 
     if pdf_files:
         pdfs = []
@@ -273,12 +289,14 @@ def run_pipeline(
         for page_idx in range(n_pages):
             # Extract structured page content with classification
             t0 = time.time()
-            text, page_type, is_continuation, base64_img = extract_structured_page(
+            text, page_type, is_continuation, base64_img, crop_candidates = extract_structured_page(
                 pdf_path, page_idx,
                 max_chars=MAX_PAGE_CHARS,
                 prev_page_type=prev_page_type,
+                include_crops=True,
             )
             logger.info("Page %d Text/Structure extraction took %.1fs", page_idx + 1, time.time() - t0)
+            LAST_CROP_METRICS["crop_count"] += len(crop_candidates or [])
 
             if not text or len(text.strip()) < 30:
                 continue
@@ -299,12 +317,19 @@ def run_pipeline(
                 is_continuation=is_continuation,
                 context=ctx,
                 base64_image=base64_img,
+                crop_candidates=crop_candidates,
             )
             logger.info("Page %d LLM Extraction (%s) took %.1fs", page_idx + 1, page_type, time.time() - t1)
 
             # ── Evidence snapshot for durable logging + learning ──
             evidence = collect_evidence(text)
             verify_report = getattr(_agent_module, "LAST_VERIFY_REPORT", None)
+            if verify_report and verify_report.get("crop_rescue"):
+                LAST_CROP_METRICS["crop_rescue_pages"] += 1
+                LAST_CROP_METRICS["crop_door_added"] += int(verify_report.get("crop_door_added") or 0)
+                LAST_CROP_METRICS["crop_hw_added"] += int(verify_report.get("crop_hw_added") or 0)
+            if verify_report and verify_report.get("crop_rescue_attempted"):
+                LAST_CROP_METRICS["crop_rescue_attempt_pages"] += 1
 
             # ── Automatic Anomaly Logging Hook ──
             anomaly_reason: Optional[str] = None
@@ -364,6 +389,7 @@ def run_pipeline(
                         hardware=len(hardware),
                         evidence=evidence.as_dict(),
                         verify_report=verify_report,
+                        crop_count=len(crop_candidates or []),
                         anomaly=anomaly_reason,
                     )
                 except Exception as e:
@@ -427,6 +453,38 @@ def run_pipeline(
     df_doors = _flatten(all_doors)
     df_components = _flatten(all_components)
 
+    def _clean_join_id(value) -> str:
+        if pd.isna(value):
+            return ""
+        s = str(value).strip().upper()
+        if s in ("", "N/A", "NA", "NONE", "NULL", "?", "-", "—"):
+            return ""
+        if s.endswith(".0"):
+            s = s[:-2]
+        return re.sub(r"^(?:HW|HDWR|HARDWARE|SET|GROUP)[\s.#:-]*", "", s).strip()
+
+    # Validate door hardware_set values against extracted hardware-set IDs.
+    # This prevents LLM guesses from creating impossible joins like G10 or stray
+    # detail numbers when no matching hardware set exists in the hardware table.
+    valid_hw_ids = set()
+    if not df_components.empty and "hardware_set_id" in df_components.columns:
+        valid_hw_ids = {
+            _clean_join_id(v)
+            for v in df_components["hardware_set_id"].dropna().tolist()
+            if _clean_join_id(v)
+        }
+    if valid_hw_ids and not df_doors.empty and "hardware_set" in df_doors.columns:
+        before_invalid = df_doors["hardware_set"].notna().sum()
+        df_doors["hardware_set"] = df_doors["hardware_set"].apply(
+            lambda v: _clean_join_id(v) if _clean_join_id(v) in valid_hw_ids else None
+        )
+        invalid = before_invalid - df_doors["hardware_set"].notna().sum()
+        if invalid > 0:
+            logger.info(
+                "Cleared %d door hardware_set values that did not match extracted hardware set IDs.",
+                invalid,
+            )
+
     # ── Cross-reference: back-fill missing hardware_set on doors ──
     # If a project has hardware components but door rows are missing the
     # hardware_set column, try to infer it from the hardware side.
@@ -451,24 +509,9 @@ def run_pipeline(
                                 mask.sum(), pid, hw_set_ids[0])
                     continue
                 
-                # Strategy 2: If hardware set names contain room/door references,
-                # attempt fuzzy matching by door_number or room_name.
-                if "hardware_set_name" in proj_hw.columns:
-                    proj_orphans = df_doors.loc[orphan_mask & (df_doors["project_id"] == pid)]
-                    for idx, door_row in proj_orphans.iterrows():
-                        dn = str(door_row.get("door_number", "")).strip().upper()
-                        rn = str(door_row.get("room_name", "")).strip().upper()
-                        
-                        for _, hw_row in proj_hw.drop_duplicates("hardware_set_id").iterrows():
-                            hw_name = str(hw_row.get("hardware_set_name", "")).strip().upper()
-                            hw_id = hw_row.get("hardware_set_id")
-                            
-                            if hw_name and (
-                                (dn and dn in hw_name) or
-                                (rn and len(rn) > 3 and rn in hw_name)
-                            ):
-                                df_doors.at[idx, "hardware_set"] = str(hw_id)
-                                break
+                # Avoid fuzzy room/name matching here. It produced confident but
+                # incorrect hardware joins on tests where hardware_set_name
+                # contains room-like words or numbers unrelated to door marks.
             
             filled = orphan_mask.sum() - (df_doors["hardware_set"].isna() | (df_doors["hardware_set"].astype(str).str.strip() == "")).sum()
             if filled > 0:

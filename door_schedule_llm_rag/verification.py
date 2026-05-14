@@ -33,6 +33,8 @@ from typing import List, Optional, Tuple
 
 from page_evidence import PageEvidence, collect as collect_evidence, confidence_score
 from page_extractor import PageType
+from prompts import build_crop_door_prompt, build_crop_hardware_prompt
+from vision_crops import crop_summary
 
 logger = logging.getLogger("verification")
 
@@ -67,15 +69,15 @@ def _hw_gap(hardware: List[dict], evidence: PageEvidence) -> int:
 
 
 def _dedup_doors(existing: List[dict], new: List[dict]) -> List[dict]:
-    seen = {_door_key(d) for d in existing if _door_key(d)}
-    merged = list(existing)
+    best = {_door_key(d): d for d in existing if _door_key(d)}
+    merged_without_key = [d for d in existing if not _door_key(d)]
     for d in new:
         k = _door_key(d)
-        if not k or k in seen:
+        if not k:
             continue
-        seen.add(k)
-        merged.append(d)
-    return merged
+        if k not in best or _row_completeness(d) > _row_completeness(best[k]):
+            best[k] = d
+    return merged_without_key + list(best.values())
 
 
 def _dedup_hw(existing: List[dict], new: List[dict]) -> List[dict]:
@@ -88,6 +90,46 @@ def _dedup_hw(existing: List[dict], new: List[dict]) -> List[dict]:
         seen.add(k)
         merged.append(h)
     return merged
+
+
+def _row_completeness(row: dict) -> int:
+    return sum(1 for value in row.values() if value not in (None, "", "N/A", [], {}))
+
+
+def _has_physical_door_attrs(row: dict) -> bool:
+    return any(
+        row.get(field) not in (None, "", "N/A", [], {})
+        for field in (
+            "door_width", "door_height", "door_thickness", "door_material",
+            "door_type", "frame_material", "fire_rating",
+        )
+    )
+
+
+def _needs_crop_door_rescue(doors: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
+    if not crop_candidates:
+        return False
+    if needs_door_rescue(doors, evidence, page_type):
+        return True
+    if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED) and not doors:
+        return True
+    if doors and not any(_has_physical_door_attrs(d) for d in doors) and any(
+        crop.get("crop_type") in ("door", "mixed") for crop in crop_candidates
+    ):
+        return True
+    return False
+
+
+def _needs_crop_hardware_rescue(hardware: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
+    if not crop_candidates:
+        return False
+    if needs_hardware_rescue(hardware, evidence, page_type):
+        return True
+    if page_type in (PageType.HARDWARE_SET, PageType.MIXED) and not hardware and any(
+        crop.get("crop_type") in ("hardware", "mixed") for crop in crop_candidates
+    ):
+        return True
+    return False
 
 
 # ─── Escalation gates ─────────────────────────────────────────────
@@ -110,7 +152,7 @@ def needs_door_rescue(
     evidence: PageEvidence,
     page_type: str,
 ) -> bool:
-    if page_type not in (PageType.DOOR_SCHEDULE, PageType.MIXED):
+    if page_type not in (PageType.DOOR_SCHEDULE, PageType.MIXED) and not evidence.is_door_schedule:
         return False
     if not evidence.is_door_schedule and not doors:
         return False
@@ -144,7 +186,7 @@ def needs_hardware_rescue(
     evidence: PageEvidence,
     page_type: str,
 ) -> bool:
-    if page_type not in (PageType.HARDWARE_SET, PageType.MIXED):
+    if page_type not in (PageType.HARDWARE_SET, PageType.MIXED) and not evidence.is_hardware_schedule:
         return False
     if not evidence.is_hardware_schedule and not hardware:
         return False
@@ -207,6 +249,7 @@ def verify_and_rescue(
     rag_hw_chunks: Optional[list] = None,
     prev_level_area: Optional[str] = None,
     prev_set_id: Optional[str] = None,
+    crop_candidates: Optional[list[dict]] = None,
 ) -> Tuple[List[dict], List[dict], dict]:
     """
     Optionally re-run door / hardware extraction with a Vision LLM when the
@@ -216,6 +259,7 @@ def verify_and_rescue(
     logging or metric tracking.
     """
     evidence = collect_evidence(page_text)
+    crops = crop_candidates or []
     report = {
         "confidence": round(confidence_score(evidence), 3),
         "evidence": evidence.as_dict(),
@@ -223,6 +267,12 @@ def verify_and_rescue(
         "hw_rescue": False,
         "door_added": 0,
         "hw_added": 0,
+        "crop_count": len(crops),
+        "crop_rescue_attempted": False,
+        "crop_rescue": False,
+        "crop_door_added": 0,
+        "crop_hw_added": 0,
+        "crop_candidates": crop_summary(crops),
     }
 
     # Door rescue
@@ -259,6 +309,35 @@ def verify_and_rescue(
         except Exception as e:
             logger.warning("Door rescue failed: %s", e)
 
+    if _needs_crop_door_rescue(doors, evidence, page_type, crops):
+        report["crop_rescue_attempted"] = True
+        before_doors = len(doors)
+        for idx, crop in enumerate(crops, 1):
+            if crop.get("crop_type") not in ("door", "mixed"):
+                continue
+            try:
+                prompt = build_crop_door_prompt(
+                    page_text,
+                    crop_meta={k: crop.get(k) for k in ("source", "confidence", "bbox", "page_size", "crop_type")},
+                    max_chars=min(max_chars, 7000),
+                )
+                crop_doors = extract_doors_llm(
+                    prompt["system"],
+                    prompt["user"],
+                    base64_image=crop.get("base64_image"),
+                    force_model="gpt-4o",
+                )
+                doors = _dedup_doors(doors, crop_doors)
+                logger.info("Door crop rescue %d/%d returned %d rows.", idx, len(crops), len(crop_doors))
+            except Exception as e:
+                logger.warning("Door crop rescue failed on crop %d: %s", idx, e)
+        added = len(doors) - before_doors
+        if added > 0:
+            report["door_rescue"] = True
+            report["crop_rescue"] = True
+            report["crop_door_added"] = added
+            report["door_added"] += added
+
     # Hardware rescue
     if needs_hardware_rescue(hardware, evidence, page_type) and base64_image:
         before_hw = len(hardware)
@@ -294,5 +373,34 @@ def verify_and_rescue(
             )
         except Exception as e:
             logger.warning("Hardware rescue failed: %s", e)
+
+    if _needs_crop_hardware_rescue(hardware, evidence, page_type, crops):
+        report["crop_rescue_attempted"] = True
+        before_hw = len(hardware)
+        for idx, crop in enumerate(crops, 1):
+            if crop.get("crop_type") not in ("hardware", "mixed"):
+                continue
+            try:
+                prompt = build_crop_hardware_prompt(
+                    page_text,
+                    crop_meta={k: crop.get(k) for k in ("source", "confidence", "bbox", "page_size", "crop_type")},
+                    max_chars=min(max_chars, 7000),
+                )
+                crop_hw = extract_hardware_llm(
+                    prompt["system"],
+                    prompt["user"],
+                    base64_image=crop.get("base64_image"),
+                    force_model="gpt-4o",
+                )
+                hardware = _dedup_hw(hardware, crop_hw)
+                logger.info("Hardware crop rescue %d/%d returned %d rows.", idx, len(crops), len(crop_hw))
+            except Exception as e:
+                logger.warning("Hardware crop rescue failed on crop %d: %s", idx, e)
+        added = len(hardware) - before_hw
+        if added > 0:
+            report["hw_rescue"] = True
+            report["crop_rescue"] = True
+            report["crop_hw_added"] = added
+            report["hw_added"] += added
 
     return doors, hardware, report

@@ -15,6 +15,7 @@ from config import MAX_PAGE_CHARS
 from prompts import SYSTEM_DOOR, build_door_prompt, build_hardware_prompt
 from rag_store import query_door_instructions, query_hardware_instructions
 from llm_extract import extract_doors_llm, extract_hardware_llm
+from page_evidence import collect as collect_evidence
 from page_extractor import PageType
 from verification import verify_and_rescue
 
@@ -24,6 +25,250 @@ from verification import verify_and_rescue
 LAST_VERIFY_REPORT: Optional[dict] = None
 
 logger = logging.getLogger("agent")
+
+
+def _row_completeness(row: dict) -> int:
+    return sum(1 for value in row.values() if value not in (None, "", "N/A", [], {}))
+
+
+def _has_physical_door_attrs(row: dict) -> bool:
+    return any(
+        row.get(field) not in (None, "", "N/A", [], {})
+        for field in (
+            "door_width", "door_height", "door_thickness", "door_material",
+            "door_type", "frame_material", "fire_rating",
+        )
+    )
+
+
+def _physical_door_count(doors: List[dict]) -> int:
+    return sum(1 for door in doors if _has_physical_door_attrs(door))
+
+
+def _dedupe_doors_by_number(doors: List[dict]) -> List[dict]:
+    """Keep the richest row for each door number within a page."""
+    best: dict[str, dict] = {}
+    for door in doors:
+        key = str(door.get("door_number") or "").strip().upper()
+        if not key:
+            continue
+        if key not in best or _row_completeness(door) > _row_completeness(best[key]):
+            best[key] = door
+    return list(best.values())
+
+
+def _split_markdown_row(line: str) -> List[str]:
+    if "|" not in line:
+        return []
+    cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+    return [cell if cell else None for cell in cells]
+
+
+def _looks_like_door_mark(value: object) -> bool:
+    token = str(value or "").strip()
+    if not token or token.upper() in {"MARK", "DOOR", "NO", "NUMBER"}:
+        return False
+    if re.fullmatch(r"\d{2,4}[A-Za-z]?", token):
+        return not (1900 <= int(re.match(r"\d+", token).group()) <= 2099)
+    return bool(re.fullmatch(r"[A-Za-z]{1,3}\d{2,4}[A-Za-z]?", token))
+
+
+def _extract_door_mark_and_room(value: object) -> Tuple[Optional[str], Optional[str]]:
+    token = str(value or "").strip()
+    if _looks_like_door_mark(token):
+        return token, None
+    match = re.search(r"\b([A-Za-z]{0,3}\d{2,4}[A-Za-z]?)\b\s*$", token)
+    if not match:
+        return None, None
+    mark = match.group(1)
+    digits = int(re.search(r"\d+", mark).group())
+    if 1900 <= digits <= 2099:
+        return None, None
+    room = token[:match.start()].strip(" -:/") or None
+    return mark, room
+
+
+def _is_dimension(value: object) -> bool:
+    return bool(re.fullmatch(r"\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\"", str(value or "").strip()))
+
+
+def _split_combined_dimensions(value: object) -> Optional[Tuple[str, str]]:
+    match = re.search(
+        r"(\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\")\s*[xX]\s*"
+        r"(\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\")",
+        str(value or "").strip(),
+    )
+    if not match:
+        return None
+    return match.group(1), match.group(2)
+
+
+def _collect_pipe_cells(text: str) -> List[str]:
+    cells: List[str] = []
+    for line in text.splitlines():
+        row = _split_markdown_row(line)
+        if row:
+            cells.extend(str(cell or "").strip() for cell in row)
+    return [cell for cell in cells if cell]
+
+
+def _parse_door_cell_stream_fallback(text: str) -> List[dict]:
+    """
+    Recover door rows from flattened pipe-delimited schedules.
+
+    Some A0 sheets arrive as one long pdfplumber row where the table structure is
+    gone but the token order is preserved: mark, room, width, height, fields...
+    We only accept candidates with two dimensions within the next few cells.
+    """
+    if "DOOR SCHEDULE" not in text.upper():
+        return []
+
+    cells = _collect_pipe_cells(text)
+    doors: List[dict] = []
+    stop_words = {
+        "DOOR", "DOORS", "FRAME", "TYPE", "TYPES", "NOTES", "SCHEDULE",
+        "WIDTH", "HEIGHT", "HARDWARE", "DETAIL", "COMMENTS", "MATERIAL",
+    }
+
+    for idx, cell in enumerate(cells):
+        token = str(cell or "").strip()
+        if not _looks_like_door_mark(token):
+            continue
+        if token.upper() in stop_words:
+            continue
+
+        lookahead = cells[idx + 1: idx + 10]
+        dims = [value for value in lookahead if _is_dimension(value)]
+        if len(dims) < 2:
+            continue
+
+        first_dim_idx = next((i for i, value in enumerate(lookahead) if _is_dimension(value)), None)
+        between = lookahead[:first_dim_idx] if first_dim_idx is not None else []
+        room_name = " ".join(
+            value for value in between
+            if value and not _looks_like_door_mark(value) and value.upper() not in stop_words
+        ) or None
+
+        door_width = dims[0]
+        door_height = dims[1]
+        hardware_set = None
+        for value in lookahead:
+            if re.fullmatch(r"\d{1,2}[A-Za-z]?", str(value or "").strip()) and value != token:
+                hardware_set = str(value).strip()
+                break
+
+        doors.append({
+            "door_number": token,
+            "room_name": room_name,
+            "door_width": door_width,
+            "door_height": door_height,
+            "hardware_set": hardware_set,
+            "is_pair": bool(str(door_width).startswith(("2 @", "6'"))),
+            "door_leaves": 2 if str(door_width).startswith(("2 @", "6'")) else 1,
+        })
+
+    return _dedupe_doors_by_number(doors)
+
+
+def _parse_door_table_fallback(text: str) -> List[dict]:
+    """
+    Deterministic fallback for dense pdfplumber markdown door schedules.
+
+    It intentionally handles only rows with a clear door mark plus width/height
+    dimensions, so note blocks and hardware component lists are ignored.
+    """
+    doors: List[dict] = []
+    dim_re = re.compile(r"\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\"")
+
+    for line in text.splitlines():
+        cells = _split_markdown_row(line)
+        if len(cells) < 4:
+            continue
+
+        mark_idx = None
+        for idx, cell in enumerate(cells[:3]):
+            if _looks_like_door_mark(cell):
+                mark_idx = idx
+                break
+        if mark_idx is None:
+            continue
+
+        tail = cells[mark_idx:]
+        dims = dim_re.findall(line)
+        combined_dims = next((pair for cell in tail if (pair := _split_combined_dimensions(cell))), None)
+        if combined_dims:
+            dims = [combined_dims[0], combined_dims[1]]
+        if len(dims) < 2:
+            continue
+
+        def get(offset: int):
+            return tail[offset] if offset < len(tail) else None
+
+        door_number = str(get(0)).strip()
+        door_width = dims[0]
+        door_height = dims[1]
+        door_thickness = dims[2] if len(dims) > 2 else get(5)
+        hardware_set = None
+        for cell in tail:
+            value = str(cell or "").strip()
+            if re.fullmatch(r"\d{1,2}[A-Za-z]?", value):
+                hardware_set = value
+                break
+
+        door = {
+            "door_number": door_number,
+            "from_room": get(1),
+            "room_name": get(2),
+            "door_width": door_width,
+            "door_height": door_height,
+            "door_thickness": door_thickness,
+            "door_material": get(6),
+            "door_type": get(7),
+            "door_finish": get(8),
+            "frame_material": get(9),
+            "frame_type": get(10),
+            "frame_finish": get(11),
+            "head_jamb_sill_detail": " / ".join(str(v) for v in [get(12), get(13), get(14)] if v),
+            "fire_rating": get(15),
+            "hardware_set": hardware_set,
+            "remarks": get(17),
+            "is_pair": bool(door_width and str(door_width).strip().startswith("6'")),
+            "door_leaves": 2 if door_width and str(door_width).strip().startswith("6'") else 1,
+        }
+        doors.append({k: v for k, v in door.items() if v not in (None, "")})
+
+    if len(doors) < 3:
+        for line in text.splitlines():
+            cells = _split_markdown_row(line)
+            if len(cells) < 4:
+                continue
+            door_number, embedded_room = _extract_door_mark_and_room(cells[0])
+            if not door_number:
+                continue
+            dim_pair = next((pair for cell in cells if (pair := _split_combined_dimensions(cell))), None)
+            if not dim_pair:
+                continue
+            room_name = embedded_room or str(cells[1] or "").strip() or None
+            hardware_set = None
+            for cell in cells[3:]:
+                value = str(cell or "").strip()
+                if re.fullmatch(r"\d{1,2}[A-Za-z]?", value) and value != door_number:
+                    hardware_set = value
+                    break
+            door_width, door_height = dim_pair
+            doors.append({
+                "door_number": door_number,
+                "room_name": room_name,
+                "door_width": door_width,
+                "door_height": door_height,
+                "hardware_set": hardware_set,
+                "is_pair": bool(str(door_width).startswith(("2 @", "6'"))),
+                "door_leaves": 2 if str(door_width).startswith(("2 @", "6'")) else 1,
+            })
+
+    stream_doors = _parse_door_cell_stream_fallback(text) if len(doors) < 3 else []
+    merged = _dedupe_doors_by_number(doors + stream_doors)
+    return merged
 
 
 class ExtractionContext:
@@ -64,6 +309,7 @@ def extract_page_with_llm(
     is_continuation: bool = False,
     context: Optional[ExtractionContext] = None,
     base64_image: Optional[str] = None,
+    crop_candidates: Optional[List[dict]] = None,
 ) -> Tuple[List[dict], List[dict]]:
     """
     Extract door rows and/or hardware component rows from one page.
@@ -83,6 +329,7 @@ def extract_page_with_llm(
     raw_text = (page_text or "").strip()
     if not raw_text or len(raw_text) < 30:
         return [], []
+    evidence = collect_evidence(raw_text)
 
     # Semantic Chunking for smaller models
     # Split text into chunks of roughly MAX_PAGE_CHARS cleanly on newlines
@@ -165,12 +412,22 @@ def extract_page_with_llm(
         # Fallback: if classified as DOOR_SCHEDULE but text clearly has hardware sets, force extraction.
         force_hardware = False
         if page_type == PageType.DOOR_SCHEDULE:
-            has_hw_sets = len(re.findall(r"(?:SET|GROUP|HW|HDWE|HARDWARE)\s*(?:NO\.?|#)?\s*[\w\d]+", text.upper())) >= 2
+            has_hw_sets = len(re.findall(
+                r"(?m)^\s*(?:HARDWARE\s+SET|HARDWARE\s+GROUP|HDWE\s+SET|HDWR\s+SET|HW\s+SET|"
+                r"SET\s*NO\.?|GROUP\s*NO\.?|HW\s*[#\-]?\s*\d+|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)",
+                text.upper(),
+            )) >= 1
             has_components = len(re.findall(r"(?:HINGE|CLOSER|LOCK|DEADBOLT|STRIKE|THRESHOLD|WEATHERSTRIP)", text.upper())) >= 2
             if has_hw_sets and has_components:
                 force_hardware = True
-                
-        if page_type in (PageType.HARDWARE_SET, PageType.MIXED) or force_hardware:
+
+        should_extract_hardware = (
+            force_hardware
+            or page_type == PageType.HARDWARE_SET
+            or (page_type == PageType.MIXED and evidence.is_hardware_schedule)
+        )
+
+        if should_extract_hardware:
             hw_chunks = query_hardware_instructions(text) if use_rag else []
             hw_prompt = build_hardware_prompt(
                 hw_chunks, text,
@@ -281,6 +538,48 @@ def extract_page_with_llm(
         if all_hardware:
             ctx.update_from_hardware(all_hardware)
 
+    # ── Evidence-driven door rescue for empty door extractions ──────
+    # Some pages are misrouted, and some correctly routed dense schedules still
+    # occasionally return an empty JSON array. Structural evidence gets one
+    # final door-only pass before verification.
+    if (
+        len(all_doors) == 0
+        and evidence.is_door_schedule
+    ):
+        logger.warning(
+            "Evidence-driven door rescue: page classified as %s but evidence suggests %d door rows.",
+            page_type,
+            evidence.expected_door_rows(),
+        )
+        rescue_prompt = build_door_prompt(
+            query_door_instructions(raw_text) if use_rag else [],
+            raw_text + (
+                "\n\nEVIDENCE-DRIVEN DOOR RESCUE: The text contains door-number/dimension "
+                "row patterns. Extract every actual door schedule row and ignore title "
+                "blocks, hardware component lists, legends, and generic notes."
+            ),
+            max_chars=MAX_PAGE_CHARS,
+            is_continuation=is_continuation,
+            prev_level_area=ctx.last_level_area,
+        )
+        rescued_doors = extract_doors_llm(
+            rescue_prompt["system"], rescue_prompt["user"], base64_image=base64_image, force_model="gpt-4o"
+        )
+        if rescued_doors:
+            all_doors = _dedupe_doors_by_number(all_doors + rescued_doors)
+            if all_doors:
+                ctx.update_from_doors(all_doors)
+
+        if not all_doors:
+            parsed_doors = _parse_door_table_fallback(raw_text)
+            if parsed_doors:
+                logger.warning(
+                    "Deterministic door table fallback recovered %d rows after LLM rescue returned empty.",
+                    len(parsed_doors),
+                )
+                all_doors = _dedupe_doors_by_number(all_doors + parsed_doors)
+                ctx.update_from_doors(all_doors)
+
     # ── Full-page door rescue for door/window schedule markup pages ──
     # Some vector markup pages expose "DOOR/WINDOW SCHEDULE" text and visible
     # hardware/profile rows, but the standard door prompt returns [] because
@@ -318,6 +617,29 @@ def extract_page_with_llm(
                     all_doors.append(d)
             ctx.update_from_doors(all_doors)
 
+    all_doors = _dedupe_doors_by_number(all_doors)
+
+    physical_count = _physical_door_count(all_doors)
+    should_try_fallback = (
+        evidence.is_door_schedule
+        and (
+            len(all_doors) < max(1, evidence.expected_door_rows() // 2)
+            or physical_count < max(1, min(len(all_doors), evidence.expected_door_rows()) // 2)
+            or (3 <= evidence.expected_door_rows() <= 20 and len(all_doors) < evidence.expected_door_rows())
+        )
+    )
+    if should_try_fallback:
+        parsed_doors = _parse_door_table_fallback(raw_text)
+        parsed_physical = _physical_door_count(parsed_doors)
+        if parsed_physical > physical_count and len(parsed_doors) >= max(1, len(all_doors) // 2):
+            logger.warning(
+                "Deterministic door table fallback recovered %d physical rows; replacing %d weak LLM rows.",
+                len(parsed_doors),
+                len(all_doors),
+            )
+            all_doors = parsed_doors
+            ctx.update_from_doors(all_doors)
+
     # ── Self-verification pass ──
     # Compare the final per-page result against structural evidence. If the
     # gap is large (or extraction is empty while evidence says a schedule is
@@ -343,17 +665,21 @@ def extract_page_with_llm(
             rag_hw_chunks=query_hardware_instructions(raw_text) if use_rag else None,
             prev_level_area=ctx.last_level_area,
             prev_set_id=ctx.last_hardware_set_id,
+            crop_candidates=crop_candidates,
         )
-        if verify_report["door_rescue"] or verify_report["hw_rescue"]:
+        if verify_report["door_rescue"] or verify_report["hw_rescue"] or verify_report.get("crop_rescue"):
             logger.info(
                 "Page %d verification: confidence=%.2f, door_rescue=%s (+%d), "
-                "hw_rescue=%s (+%d)",
+                "hw_rescue=%s (+%d), crop_rescue=%s (+doors %d, +hw %d)",
                 page_idx + 1,
                 verify_report["confidence"],
                 verify_report["door_rescue"],
                 verify_report["door_added"],
                 verify_report["hw_rescue"],
                 verify_report["hw_added"],
+                verify_report.get("crop_rescue"),
+                verify_report.get("crop_door_added", 0),
+                verify_report.get("crop_hw_added", 0),
             )
         if verify_report.get("door_rescue"):
             ctx.update_from_doors(all_doors)
