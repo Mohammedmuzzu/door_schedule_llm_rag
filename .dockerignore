@@ -1,0 +1,33 @@
+.git/
+.venv/
+venv/
+env/
+computervision/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Secrets and local config
+**/.env
+**/.streamlit/secrets.toml
+secret/
+
+# User PDFs and generated outputs
+pdfs/
+**/*.pdf
+**/*.xlsx
+**/*.csv
+**/extracted_data/
+**/rag_data/
+**/app.db
+**/qa_out/
+**/qa_visual_compare/
+evaluation_output/
+evaluation_output_v2/
+scratch/
+
+# Local editor/system files
+.vscode/
+.idea/
+.DS_Store
