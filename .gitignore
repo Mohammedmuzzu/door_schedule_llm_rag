@@ -27,6 +27,9 @@ evaluation_output/
 evaluation_output_v2/
 **/qa_out/
 scratch/
+*.db
+door_schedule_llm_rag/qa_visual_compare/
+temp14.png
 
 # RAG vector store (rebuilt at runtime)
 **/rag_data/
