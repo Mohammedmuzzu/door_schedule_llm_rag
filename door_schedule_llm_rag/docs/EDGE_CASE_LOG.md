@@ -1504,3 +1504,119 @@ SP313   ...
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: P26-01100_63910465628.pdf (Page 1)
+- **Timestamp:** 2026-05-15 09:23:14
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_rows]
+Proposal
+FlipSide Specialties
+5829 W Sam Houston Pkwy N #906
+Houston, TX 77041
+P (832) 844-2521  |  IDB26-01010
+info@flipsidespecialties.com
+Date: 3/30/2026
+flipsidespecialties.com
+CBRE - Houston
+Sameer Mohammed
+Client  |  Chris Ringo  |  Estimator  |  (832) 844-2521
+sameer@flipsidespec.com
+Jobsite  |  9753 Katy Freeway
+Address  |  Houston, TX 77024-1335
+WOOD DOORS
+Standard Wilsonart Laminate
+#  |  Item  |  Unit  |  Qty / Hrs
+1  |  Type-D 3x8'10" PLAM Dutch door (Mortise & Raceway Prep)  |  1
+-
+Type-F 3x7'6" PLAM door w/45Min FR (Mortise Prep)  |  1
+2  |  -
+Type-F 3x8'10" PLAM door (Mortise Prep)
+3  |  7
+-
+4  |  Type-F 3x8'10" PLAM door (Mortise & Raceway Prep)-  |  9
+Type-F 3x9 PLAM door (Mortise Prep)
+5  |  5
+-
+6  |  Type-F 3x8'10" PLAM door w/90Min FR (Mortise ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Hardware.pdf (Page 4)
+- **Timestamp:** 2026-05-15 10:05:06
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== PURE OPTICAL TEXT SEQUENCE ===
+Pat Hallisey Park    Issued for Bid and Permit
+City of League City    02-27-2026
+PK 2001
+e.    Provide one complete bitting list of key cuts and one key system schematic
+illustrating system usage and expansion. Forward bitting list, key cuts and key
+system schematic directly to Owner, by means as directed by Owner.
+f.    Prepare key schedule by or under supervision of supplier, detailing Owner's final
+keying instructions for locks.
+6. Templates: After final approval of hardware schedule, provide templates for doors.
+ frames and other work specified to be factory or shop prepared for door hardware
+installation.
+C.  Informational Submittals:
+1. Provide Qualification Data for Supplier, Installer and Architectural Hardware Consultant.
+2. P...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: Door Hardware.pdf (Page 17)
+- **Timestamp:** 2026-05-15 10:16:54
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: img2table]
+=== PURE OPTICAL TEXT SEQUENCE ===
+Pat Hallisey Park.    Issued for Bid and Permit.
+City of League City    02-27-2026
+PK 2001
+1.  Door Closers: Adjust sweep period to comply with accessibility requirements and
+requirements of authorities having jurisdiction..
+B.  Occupancy Adjustment: Approximately three to six months after date of Substantial
+Completion, examine and readjust each item of door hardware, including adjusting operating.
+3.6 CLEANING AND PROTECTION
+A.    Clean adjacent surfaces soiled by door hardware installation..
+B. Clean operating items per manufacturer's instructions to restore proper function and finish.
+C. Provide final protection and maintain conditions that ensure door hardware is without damage
+or deterioration at time of Substantial Completion.
+3...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: proposal.pdf (Page 1)
+- **Timestamp:** 2026-05-15 11:23:04
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (31×11) ===
+|  |  |  |  |  | FlipSide Specialties 5829 W Sam Houston Pkwy N #906 Houston, TX 77041 |  |  |  |  | Proposal |
+|  |  |  |  |  | P (832) 844-2521 |  |  |  |  | IDB26-01204 |
+|  |  |  |  | i | nfo@flipsidespecialties.com |  |  |  |  | Date: 5/5/2026 |
+|  |  |  |  | f | lipsidespecialties.com |  |  |  |  |  |
+| hick-fi | l-A (N Big | Spring) |  |  |  |  |  |  |  |  |
+|  | Anc 400 | hor Constru 0 Cartwright | ction M Rd | anageme | nt Point of | Sona | Francis |  |  |  |
+| Clien Jobsit | t Miss e Nor | ouri City, T th State Hig | exas 77 hway 3 | 459 49 | Contact Estimator | sona.f Same (832) | @anchorcm.net er Mohammed 844-2521 |  |  |  |
+| Addre | ss Midl | and, TX 797 | 05 |  |  | samee | r@flipsidespec.com |  |  |  |
+| WOOD | DOOR |  |  | ...
+[TRUNCATED]
+```
+---

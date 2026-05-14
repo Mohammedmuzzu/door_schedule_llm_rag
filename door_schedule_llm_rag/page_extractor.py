@@ -912,12 +912,14 @@ def extract_structured_page(
     pdf_path = Path(pdf_path)
     backends_used = []
     base64_img = None
+    fitz_raw_text = ""
 
     # ── Step 0: Render Page Image for Vision RAG ──
     try:
         import pymupdf
         doc = pymupdf.open(str(pdf_path))
         page = doc[page_idx]
+        fitz_raw_text = page.get_text() or ""
         pix = page.get_pixmap(dpi=150)
         img_bytes = pix.tobytes("jpeg")
         base64_img = base64.b64encode(img_bytes).decode("utf-8")
@@ -927,20 +929,21 @@ def extract_structured_page(
 
     # ── Step 1: Try native text extraction (fast, no OCR) ──
     # First get plain text length to determine complexity
-    plumber_tables, plumber_text, plumber_rows = _extract_pdfplumber(pdf_path, page_idx)
+    if len((fitz_raw_text or "").strip()) < 20:
+        logger.info(
+            "Page %d: fitz found no text layer. Skipping slow pdfplumber table extraction.",
+            page_idx + 1,
+        )
+        plumber_tables, plumber_text, plumber_rows = "", "", ""
+    else:
+        plumber_tables, plumber_text, plumber_rows = _extract_pdfplumber(pdf_path, page_idx)
     raw_text_len = len(plumber_text or "")
     
     # ── NEW: Raw fitz text fallback ──
     # Some PDFs (e.g. P17/A0.03) have text that pdfplumber can't extract at all
     # (returns 0 chars) but fitz.get_text() works perfectly. Always fetch it.
-    fitz_raw_text = ""
-    try:
-        import pymupdf
-        doc = pymupdf.open(str(pdf_path))
-        fitz_raw_text = doc[page_idx].get_text() or ""
-        doc.close()
-    except Exception:
-        pass
+    # fitz_raw_text is fetched during image rendering above so image-only PDFs
+    # can skip slow pdfplumber table extraction.
     
     # If pdfplumber returned nothing but fitz has content, use fitz as the text source
     if raw_text_len < 50 and len(fitz_raw_text) > 200:
@@ -952,7 +955,7 @@ def extract_structured_page(
     pymupdf_md = ""
     # Avoid GNN markdown table rendering on massive dense schedules (A0 size prints).
     # pymupdf4llm's neural engine massively hallucinates staggered columns in complex drawings.
-    if raw_text_len < 4000:
+    if 50 <= raw_text_len < 4000:
         pymupdf_md = _extract_pymupdf4llm(pdf_path, page_idx)
         if pymupdf_md:
             backends_used.append("pymupdf4llm")
@@ -1045,6 +1048,31 @@ def extract_structured_page(
         is_machine_generated = False
 
     img2table_md = ""
+    if not is_machine_generated and include_crops and (native_text_len < 800 or is_title_block) and not has_schedule_rows:
+        try:
+            from vision_crops import detect_schedule_crops
+
+            crop_candidates = detect_schedule_crops(
+                pdf_path,
+                page_idx,
+                page_text=combined_native or fitz_raw_text or "",
+                page_type=PageType.MIXED,
+                max_candidates=5,
+            )
+            if crop_candidates:
+                logger.info(
+                    "Page %d: weak/native-empty text but %d schedule crops found. Using crop rescue before slow OCR.",
+                    page_idx + 1,
+                    len(crop_candidates),
+                )
+                content = (
+                    "VISION_CROP_RESCUE: Native text extraction was empty or title-block-only. "
+                    "Use the attached high-resolution crops as ground truth for visible door "
+                    "schedule or hardware schedule content."
+                )
+                return content, PageType.MIXED, False, base64_img, crop_candidates
+        except Exception as e:
+            logger.debug("Page %d: early crop rescue setup skipped: %s", page_idx + 1, e)
     if is_machine_generated:
         # PDF is natively machine-generated. 
         # Bypass img2table entirely to prevent visual table detectors from ruining the text formatting.

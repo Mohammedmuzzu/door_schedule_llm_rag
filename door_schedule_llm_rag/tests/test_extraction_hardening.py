@@ -5,9 +5,15 @@ import sys
 APP_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(APP_DIR))
 
-from llm_extract import _blank_if_unknown, _output_token_budget, is_probable_hardware_component  # noqa: E402
+from llm_extract import (  # noqa: E402
+    _blank_if_unknown,
+    _output_token_budget,
+    is_probable_door_mark,
+    is_probable_hardware_component,
+)
 from page_evidence import PageEvidence, collect  # noqa: E402
 from page_extractor import PageType  # noqa: E402
+from pipeline import _is_likely_quote_or_proposal_pdf  # noqa: E402
 from schema import HardwareComponentRow  # noqa: E402
 from verification import _needs_crop_door_rescue, _needs_crop_hardware_rescue  # noqa: E402
 
@@ -62,6 +68,20 @@ def test_hardware_noise_filter_rejects_schedule_references():
     )
 
 
+def test_door_mark_filter_rejects_room_names():
+    assert is_probable_door_mark("101A")
+    assert is_probable_door_mark("D1")
+    assert is_probable_door_mark("1")
+    assert not is_probable_door_mark("RESTROOM")
+    assert not is_probable_door_mark("KITCHEN")
+
+
+def test_quote_files_do_not_contribute_door_schedule_rows():
+    assert _is_likely_quote_or_proposal_pdf("P26_01275_63912302096.pdf")
+    assert _is_likely_quote_or_proposal_pdf("proposal.pdf")
+    assert not _is_likely_quote_or_proposal_pdf("Door Schedule.pdf")
+
+
 def test_crop_rescue_triggers_on_scanned_mixed_undershoot():
     evidence = PageEvidence(real_door_numbers=8, hw_components=6, text_length=1000)
     crops = [{"crop_type": "mixed"}, {"crop_type": "mixed"}]
@@ -80,5 +100,7 @@ if __name__ == "__main__":
     test_page_evidence_detects_bracketed_and_prefixed_door_marks()
     test_dynamic_token_budget_never_exceeds_model_context()
     test_hardware_noise_filter_rejects_schedule_references()
+    test_door_mark_filter_rejects_room_names()
+    test_quote_files_do_not_contribute_door_schedule_rows()
     test_crop_rescue_triggers_on_scanned_mixed_undershoot()
     print("tests_ok")

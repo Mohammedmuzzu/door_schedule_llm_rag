@@ -4,7 +4,7 @@ Safe full-corpus QA runner for door schedule PDFs.
 This script is intentionally separate from the app and older batch scripts:
 - processes one PDF per output folder so runs are resumable;
 - disables S3 uploads for local QA;
-- uses a local SQLite database unless DATABASE_URL is explicitly provided;
+- uses a local SQLite database by default, isolated under the run output;
 - writes per-PDF metrics for visual triage and dashboard generation.
 """
 
@@ -49,7 +49,12 @@ def _configure_safe_env(output_root: Path) -> None:
         os.environ["AWS_ACCESS_KEY_ID"] = ""
         os.environ["AWS_SECRET_ACCESS_KEY"] = ""
         os.environ["S3_ENDPOINT_URL"] = ""
-    os.environ.setdefault("DATABASE_URL", f"sqlite:///{(output_root / 'qa_full_corpus.db').as_posix()}")
+    local_db_url = f"sqlite:///{(output_root / 'qa_full_corpus.db').as_posix()}"
+    if os.environ.get("FULL_CORPUS_KEEP_DATABASE_URL", "").lower() in {"1", "true", "yes"}:
+        os.environ.setdefault("DATABASE_URL", local_db_url)
+    else:
+        os.environ["DATABASE_URL"] = local_db_url
+        os.environ["FORCE_DATABASE_URL"] = local_db_url
 
 
 def _safe_slug(value: str, limit: int = 80) -> str:
@@ -307,20 +312,29 @@ def run_corpus(
                 "--output-root",
                 str(output_root),
             ]
-            completed = subprocess.run(
-                command,
-                cwd=str(REPO_DIR),
-                env=os.environ.copy(),
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                timeout=int(os.environ.get("FULL_CORPUS_PDF_TIMEOUT", "1200")),
-            )
-            (output_dir / "worker.log").write_text(completed.stdout or "", encoding="utf-8")
-            if completed.returncode != 0:
-                raise RuntimeError(f"worker exit {completed.returncode}")
+            log_path = output_dir / "worker.log"
+            with log_path.open("w", encoding="utf-8", errors="replace") as log_fh:
+                proc = subprocess.Popen(
+                    command,
+                    cwd=str(REPO_DIR),
+                    env=os.environ.copy(),
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=log_fh,
+                    stderr=subprocess.STDOUT,
+                )
+                try:
+                    return_code = proc.wait(timeout=int(os.environ.get("FULL_CORPUS_PDF_TIMEOUT", "1200")))
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    try:
+                        proc.wait(timeout=10)
+                    except Exception:
+                        pass
+                    raise
+            if return_code != 0:
+                raise RuntimeError(f"worker exit {return_code}")
             if not result_path.exists():
                 raise RuntimeError("worker did not write result JSON")
             row = json.loads(result_path.read_text(encoding="utf-8"))

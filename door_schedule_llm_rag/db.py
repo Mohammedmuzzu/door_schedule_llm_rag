@@ -5,7 +5,10 @@ from config import get_env, BASE_DIR
 
 # Database URL format: postgresql://user:password@localhost/dbname
 # SQLite fallback: sqlite:///app.db
-DB_URL = get_env("DATABASE_URL", f"sqlite:///{BASE_DIR}/app.db")
+#
+# Batch QA runners can set FORCE_DATABASE_URL to bypass Streamlit secrets/.env.
+# This keeps local corpus runs from accidentally reaching production Postgres.
+DB_URL = os.environ.get("FORCE_DATABASE_URL") or get_env("DATABASE_URL", f"sqlite:///{BASE_DIR}/app.db")
 
 # In Streamlit, connection pooling might need config, but for SQLite we just avoid check_same_thread
 if DB_URL.startswith("sqlite"):

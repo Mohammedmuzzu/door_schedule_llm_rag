@@ -182,6 +182,15 @@ def classify_pdf_file(pdf_path: Path) -> str:
     return "both"  # Default: process as both (let page classifier decide)
 
 
+def _is_likely_quote_or_proposal_pdf(filename: str) -> bool:
+    name = str(filename or "").strip().lower()
+    return (
+        "proposal" in name
+        or bool(re.match(r"p\d{2}[_-]", name))
+        or bool(re.match(r"p\d{2,}[_-]", name))
+    )
+
+
 def _source_methods_from_text(text: str) -> str:
     methods = []
     for match in re.findall(r"\[Source:\s*([^\]]+)\]", text or ""):
@@ -368,6 +377,14 @@ def run_pipeline(
                 LAST_CROP_METRICS["crop_hw_added"] += int(verify_report.get("crop_hw_added") or 0)
             if verify_report and verify_report.get("crop_rescue_attempted"):
                 LAST_CROP_METRICS["crop_rescue_attempt_pages"] += 1
+
+            if doors and _is_likely_quote_or_proposal_pdf(fname):
+                logger.info(
+                    "Filtered %d door rows from likely proposal/quote PDF %s; preserving hardware rows.",
+                    len(doors),
+                    fname,
+                )
+                doors = []
 
             # ── Automatic Anomaly Logging Hook ──
             anomaly_reason: Optional[str] = None

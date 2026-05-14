@@ -102,6 +102,27 @@ _HW_HEADER_ONLY = {
     "SEE HARDWARE SCHED",
     "SEE HARDWARE SCHEDULE",
 }
+_ROOM_NAME_DOOR_MARK_NOISE = {
+    "RESTROOM",
+    "KITCHEN",
+    "OFFICE",
+    "BREAK",
+    "BREAKROOM",
+    "BREAK RM",
+    "STORAGE",
+    "CORRIDOR",
+    "HALL",
+    "LOBBY",
+    "VESTIBULE",
+    "TOILET",
+    "MECH",
+    "MECHANICAL",
+    "ELECTRICAL",
+    "JANITOR",
+    "CLOSET",
+    "EXTERIOR DOORS",
+    "INTERIOR DOORS",
+}
 
 
 def _blank_if_unknown(value):
@@ -159,6 +180,23 @@ def is_probable_hardware_component(row: dict) -> bool:
     if not has_component_word and not has_part_evidence:
         return False
     return True
+
+
+def is_probable_door_mark(value: object) -> bool:
+    """Conservative door-mark gate to avoid room names becoming door numbers."""
+    mark = str(_blank_if_unknown(value) or "").strip()
+    if not mark:
+        return False
+    normalized = re.sub(r"\s+", " ", mark.upper()).strip(" .:-")
+    if normalized in _ROOM_NAME_DOOR_MARK_NOISE:
+        return False
+    if len(normalized) > 20:
+        return False
+    if re.search(r"\d", normalized):
+        return bool(re.fullmatch(r"[A-Z]{0,4}[-_.]?\d{1,5}[A-Z0-9_.-]*|\d{1,4}[A-Z]?", normalized))
+    # Pure alphabetic marks do exist, but long words are much more often room
+    # names. Keep only compact type-like marks.
+    return bool(re.fullmatch(r"[A-Z]{1,2}", normalized))
 
 
 def _estimate_tokens(*parts: object) -> int:
@@ -844,6 +882,9 @@ def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None
         r = {k: _blank_if_unknown(v) for k, v in r.items()}
         door_number = str(r.get("door_number") or "").strip()
         if not door_number:
+            continue
+        if not is_probable_door_mark(door_number):
+            logger.debug("Filtered non-door mark row: %r", door_number)
             continue
 
         # Skip header-like entries
