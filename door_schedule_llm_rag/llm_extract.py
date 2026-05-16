@@ -6,40 +6,44 @@ import json
 import re
 import logging
 import time
-from typing import List, Optional
+import base64
+from pathlib import Path
+from typing import List, Optional, Tuple
 
 import requests
 
 from config import (
     LLM_PROVIDER,
+    LLM_CONTEXT_TOKENS,
+    LLM_MAX_OUTPUT_TOKENS,
+    LLM_MAX_RETRIES,
+    LLM_OLLAMA_FALLBACK,
     GROQ_API_KEY,
     GROQ_MODEL,
     OPENAI_API_KEY,
     OPENAI_MODEL,
+    OPENAI_ALLOW_MODEL_ESCALATION,
+    OPENAI_AUTO_ESCALATE_VISION,
+    OPENAI_DIRECT_PDF_MAX_MB,
+    OPENAI_DIRECT_PDF_MAX_OUTPUT_TOKENS,
+    OPENAI_DIRECT_PDF_MODEL,
+    OPENAI_DIRECT_PDF_TIMEOUT,
+    OPENAI_RATELIMIT_MAX_WAIT,
+    OPENAI_RATELIMIT_RETRIES,
+    OPENAI_RESCUE_MODEL,
     OLLAMA_BASE_URL,
     OLLAMA_MODEL,
+    OLLAMA_NUM_CTX,
     OLLAMA_TIMEOUT,
+    OLLAMA_VISION_MODELS,
     LLM_TEMPERATURE,
     OLLAMA_FALLBACK_MODELS,
 )
+from prompts.direct_pdf import DIRECT_PDF_PROMPT
 from schema import DoorScheduleRow, HardwareComponentRow, detect_pair_from_width
 
 logger = logging.getLogger("llm")
 
-MAX_RETRIES = 2
-
-# When True, the pipeline falls back to Ollama (local) on OpenAI/Groq failure.
-# On hosts where Ollama is slow, wrong-model-pulled, or simply not running,
-# this fallback wastes minutes per call with 3× 180s timeouts. Default is
-# disabled; override by setting LLM_OLLAMA_FALLBACK=1 in the environment.
-import os as _os  # local alias to avoid touching top-of-file import set
-ENABLE_OLLAMA_FALLBACK = _os.environ.get("LLM_OLLAMA_FALLBACK", "0") == "1"
-
-# Rate-limit backoff (OpenAI): these retries run *in addition* to MAX_RETRIES.
-# Rationale: we'd rather wait ~2 minutes for the rate limit to clear than
-# fall through to a broken Ollama which could burn 10+ minutes.
-OPENAI_RATELIMIT_RETRIES = 6
-OPENAI_RATELIMIT_MAX_WAIT = 60  # seconds per attempt
 _OLLAMA_HEALTHY: Optional[bool] = None  # lazy-cached health check
 
 _NULL_LIKE = {
@@ -206,12 +210,8 @@ def _estimate_tokens(*parts: object) -> int:
 
 
 def _model_context_limit(model: str) -> int:
-    override = _os.environ.get("LLM_CONTEXT_TOKENS")
-    if override:
-        try:
-            return max(4096, int(override))
-        except ValueError:
-            pass
+    if LLM_CONTEXT_TOKENS:
+        return max(4096, LLM_CONTEXT_TOKENS)
 
     name = (model or "").lower()
     if name.startswith(("gpt-4o", "gpt-4.1", "gpt-5", "o1", "o3")):
@@ -228,12 +228,8 @@ def _model_context_limit(model: str) -> int:
 
 
 def _max_output_cap(model: str) -> int:
-    override = _os.environ.get("LLM_MAX_OUTPUT_TOKENS")
-    if override:
-        try:
-            return max(512, int(override))
-        except ValueError:
-            pass
+    if LLM_MAX_OUTPUT_TOKENS:
+        return max(512, LLM_MAX_OUTPUT_TOKENS)
     name = (model or "").lower()
     if name.startswith(("gpt-4o", "gpt-4.1", "gpt-5", "o1", "o3")):
         return 12000
@@ -254,12 +250,8 @@ def _output_token_budget(model: str, system: str, user: str, base64_image: Optio
 
 
 def _ollama_num_ctx(model: str, system: str, user: str, base64_image: Optional[str], output_tokens: int) -> int:
-    override = _os.environ.get("OLLAMA_NUM_CTX")
-    if override:
-        try:
-            return max(4096, int(override))
-        except ValueError:
-            pass
+    if OLLAMA_NUM_CTX:
+        return max(4096, OLLAMA_NUM_CTX)
     needed = _estimate_tokens(system, user) + output_tokens + (1600 if base64_image else 0) + 512
     return max(4096, min(_model_context_limit(model), needed))
 
@@ -349,7 +341,7 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
         "max_tokens": _output_token_budget(active_model, system, user, base64_image),
     }
         
-    for attempt in range(MAX_RETRIES + 1):
+    for attempt in range(LLM_MAX_RETRIES + 1):
         try:
             r = requests.post(url, headers=headers, json=payload, timeout=60)
             if r.status_code == 429:
@@ -362,7 +354,7 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
                 return content
         except Exception as e:
             logger.warning("[Groq] Call failed: %s", e)
-            if attempt < MAX_RETRIES:
+            if attempt < LLM_MAX_RETRIES:
                 time.sleep(2)
     return ""
 
@@ -371,32 +363,22 @@ def _groq_chat(system: str, user: str, force_json: bool = True, base64_image: Op
 #  OpenAI Backend
 # ═══════════════════════════════════════════════════════════════════
 def _resolve_openai_model(base64_image: Optional[str], force_model: Optional[str]) -> str:
-    """Resolve the best OpenAI model based on user selection, vision needs, and rescue escalations."""
+    """Resolve OpenAI model while respecting the user's runtime selection."""
     current_model = llm_config.openai_model
-    
-    # 1. If agent explicitly requested gpt-4o (heuristic rescue/escalation)
-    if force_model == "gpt-4o":
-        rescue_model = _os.environ.get("OPENAI_RESCUE_MODEL", "gpt-4o")
-        if current_model == "gpt-4o-mini":
-            return rescue_model
-        elif current_model.endswith("-mini") or ".mini" in current_model:
-            return rescue_model
-        elif current_model == "gpt-5.5-instant":
-            return "gpt-5.5"
-        elif current_model == "o1-mini":
-            return "o1"
-        else:
-            return current_model  # Trust the user's flagship model choice
-            
-    # 2. If forced some other specific model
-    if force_model:
+
+    # Rescue/crop callers historically passed force_model="gpt-4o". That was
+    # useful for max-accuracy experiments but surprising in the UI: selecting
+    # gpt-4o-mini still silently used gpt-4o for image-heavy pages. Default to
+    # the selected model; opt into escalation explicitly when desired.
+    if force_model and (force_model != "gpt-4o" or OPENAI_ALLOW_MODEL_ESCALATION):
+        if force_model == "gpt-4o":
+            return OPENAI_RESCUE_MODEL
         return force_model
-        
-    # 3. Vision requirement (mini struggles with complex blueprints)
-    if base64_image and current_model == "gpt-4o-mini":
-        return "gpt-4o"
-        
-    # 4. Default: User's UI selection
+
+    if base64_image and OPENAI_AUTO_ESCALATE_VISION:
+        if current_model.endswith("-mini") or ".mini" in current_model:
+            return OPENAI_RESCUE_MODEL
+
     return current_model
 
 
@@ -473,13 +455,13 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
                            choice.get("finish_reason"), choice["message"].get("refusal"))
             # fall through to attempt counter so we don't loop forever on empties
             attempt += 1
-            if attempt > MAX_RETRIES:
+            if attempt > LLM_MAX_RETRIES:
                 return ""
             time.sleep(2)
         except Exception as e:
             logger.warning("[OpenAI] Call failed (attempt %d): %s", attempt + 1, e)
             attempt += 1
-            if attempt > MAX_RETRIES:
+            if attempt > LLM_MAX_RETRIES:
                 return ""
             time.sleep(2)
 
@@ -503,7 +485,7 @@ def _is_ollama_vision_model(model_name: str) -> bool:
 
 
 def _ollama_vision_chain(available: List[str]) -> List[str]:
-    configured = _os.environ.get("OLLAMA_VISION_MODELS", "qwen3-vl:8b,gemma4:latest,gemma4:e4b,llava:latest")
+    configured = OLLAMA_VISION_MODELS
     preferred = [m.strip() for m in configured.split(",") if m.strip()]
     chain = [m for m in preferred if m in available]
     chain.extend(m for m in available if _is_ollama_vision_model(m) and m not in chain)
@@ -565,7 +547,7 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
         if force_json:
             payload["format"] = "json"
 
-        for attempt in range(MAX_RETRIES + 1):
+        for attempt in range(LLM_MAX_RETRIES + 1):
             try:
                 r = requests.post(url, json=payload, timeout=OLLAMA_TIMEOUT)
                 r.raise_for_status()
@@ -575,7 +557,7 @@ def _ollama_chat(system: str, user: str, model: Optional[str] = None, force_json
                 logger.warning("[%s] Empty response (attempt %d)", model_name, attempt + 1)
             except requests.exceptions.Timeout:
                 logger.warning("[%s] Timeout after %ds (attempt %d)", model_name, OLLAMA_TIMEOUT, attempt + 1)
-                if attempt < MAX_RETRIES:
+                if attempt < LLM_MAX_RETRIES:
                     time.sleep(1)
             except requests.exceptions.RequestException as e:
                 logger.error("[%s] Failed: %s", model_name, e)
@@ -626,7 +608,7 @@ def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Opt
 
     # Local Ollama fallback. Gated behind a probe and an env flag because
     # a misconfigured Ollama can burn 9+ minutes per call on 180s × 3 retries.
-    if provider == "ollama" or (ENABLE_OLLAMA_FALLBACK and _ollama_is_healthy()):
+    if provider == "ollama" or (LLM_OLLAMA_FALLBACK and _ollama_is_healthy()):
         logger.info("Using Ollama (%s)", llm_config.ollama_model)
         return _ollama_chat(system, user, force_json=force_json, base64_image=base64_image)
 
@@ -864,16 +846,8 @@ def _extract_json_array(raw: str) -> List[dict]:
         return []
 
 
-def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
-    """
-    Call LLM for door extraction and return validated door rows.
-    Applies deterministic pair detection.
-    """
-    content = _llm_chat(system, user, base64_image=base64_image, force_model=force_model)
-    if not content:
-        return []
-
-    rows = _extract_json_array(content)
+def normalize_door_rows(rows: List[dict]) -> List[dict]:
+    """Validate and normalize raw LLM/PDF-witness door rows."""
     out = []
 
     for r in rows:
@@ -960,16 +934,21 @@ def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None
     return out
 
 
-def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
+def extract_doors_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
     """
-    Call LLM for hardware extraction and return validated component rows.
-    Quantities are preserved AS-IS from the document.
+    Call LLM for door extraction and return validated door rows.
+    Applies deterministic pair detection.
     """
     content = _llm_chat(system, user, base64_image=base64_image, force_model=force_model)
     if not content:
         return []
 
     rows = _extract_json_array(content)
+    return normalize_door_rows(rows)
+
+
+def normalize_hardware_rows(rows: List[dict]) -> List[dict]:
+    """Validate and normalize raw LLM/PDF-witness hardware component rows."""
     out = []
 
     for r in rows:
@@ -1025,3 +1004,194 @@ def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = N
             })
 
     return out
+
+
+def extract_hardware_llm(system: str, user: str, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> List[dict]:
+    """
+    Call LLM for hardware extraction and return validated component rows.
+    Quantities are preserved AS-IS from the document.
+    """
+    content = _llm_chat(system, user, base64_image=base64_image, force_model=force_model)
+    if not content:
+        return []
+
+    rows = _extract_json_array(content)
+    return normalize_hardware_rows(rows)
+
+
+def _strip_json_wrappers(raw: str) -> str:
+    raw = (raw or "").strip()
+    raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
+    if "```json" in raw:
+        raw = raw.split("```json", 1)[1]
+        if "```" in raw:
+            raw = raw.split("```", 1)[0]
+        return raw.strip()
+    if "```" in raw:
+        parts = raw.split("```")
+        if len(parts) >= 3:
+            return parts[1].strip()
+    return raw
+
+
+def _extract_json_object(raw: str) -> dict:
+    raw = _strip_json_wrappers(raw)
+    if not raw:
+        return {}
+    try:
+        parsed = json.loads(raw)
+        return parsed if isinstance(parsed, dict) else {}
+    except json.JSONDecodeError:
+        pass
+
+    match = re.search(r"\{[\s\S]*\}", raw)
+    if not match:
+        return {}
+    repaired = _repair_json(match.group(0))
+    try:
+        parsed = json.loads(repaired)
+        return parsed if isinstance(parsed, dict) else {}
+    except json.JSONDecodeError as e:
+        logger.debug("Direct PDF JSON object parse failed: %s", e)
+        return {}
+
+
+def _normalized_key(value: object) -> str:
+    return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
+
+
+def _find_named_rows(obj, wanted_keys: set[str], depth: int = 0) -> List[dict]:
+    if depth > 4:
+        return []
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if _normalized_key(key) in wanted_keys:
+                found = _find_rows_in_json(value)
+                if found is not None:
+                    return found
+        for value in obj.values():
+            found = _find_named_rows(value, wanted_keys, depth + 1)
+            if found:
+                return found
+    return []
+
+
+def _responses_output_text(payload: dict) -> str:
+    direct = payload.get("output_text")
+    if isinstance(direct, str):
+        return direct
+    chunks: List[str] = []
+    for item in payload.get("output", []) or []:
+        for content in item.get("content", []) or []:
+            if isinstance(content, dict):
+                text = content.get("text")
+                if isinstance(text, str):
+                    chunks.append(text)
+    return "\n".join(chunks).strip()
+
+
+def extract_pdf_direct_openai(pdf_path: Path) -> Tuple[List[dict], List[dict], dict]:
+    """
+    Send a whole PDF directly to OpenAI as an input_file witness.
+
+    This is intentionally separate from the normal text/page-image flow. It is
+    meant to provide a second extraction signal for hybrid reconciliation, not
+    replace the deterministic parser and evidence-routed page pipeline.
+    """
+    api_key = OPENAI_API_KEY
+    if not api_key:
+        return [], [], {"available": False, "error": "OPENAI_API_KEY missing"}
+
+    pdf_path = Path(pdf_path)
+    if not pdf_path.exists():
+        return [], [], {"available": False, "error": f"PDF not found: {pdf_path}"}
+
+    max_mb = OPENAI_DIRECT_PDF_MAX_MB
+    size_mb = pdf_path.stat().st_size / (1024 * 1024)
+    if size_mb > max_mb:
+        return [], [], {"available": False, "error": f"PDF is {size_mb:.1f}MB; max is {max_mb:.1f}MB"}
+
+    current_model = llm_config.openai_model or OPENAI_MODEL
+    model = OPENAI_DIRECT_PDF_MODEL or current_model
+    max_output_tokens = OPENAI_DIRECT_PDF_MAX_OUTPUT_TOKENS or _max_output_cap(model)
+    timeout = OPENAI_DIRECT_PDF_TIMEOUT
+
+    pdf_b64 = base64.b64encode(pdf_path.read_bytes()).decode("utf-8")
+    request_payload = {
+        "model": model,
+        "input": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_file",
+                        "filename": pdf_path.name,
+                        "file_data": f"data:application/pdf;base64,{pdf_b64}",
+                    },
+                    {
+                        "type": "input_text",
+                        "text": DIRECT_PDF_PROMPT,
+                    },
+                ],
+            }
+        ],
+        "max_output_tokens": max_output_tokens,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+
+    attempt = 0
+    ratelimit_attempt = 0
+    while True:
+        try:
+            response = requests.post(
+                "https://api.openai.com/v1/responses",
+                headers=headers,
+                json=request_payload,
+                timeout=timeout,
+            )
+            if response.status_code == 429:
+                if ratelimit_attempt >= OPENAI_RATELIMIT_RETRIES:
+                    return [], [], {
+                        "available": True,
+                        "model": model,
+                        "error": "OpenAI direct PDF rate limit retries exhausted",
+                    }
+                wait = min(2 ** ratelimit_attempt * 5, OPENAI_RATELIMIT_MAX_WAIT)
+                ratelimit_attempt += 1
+                logger.warning(
+                    "[OpenAI Direct PDF] Rate limit hit. Waiting %ds (attempt %d/%d)...",
+                    wait, ratelimit_attempt, OPENAI_RATELIMIT_RETRIES,
+                )
+                time.sleep(wait)
+                continue
+            response.raise_for_status()
+            data = response.json()
+            content = _responses_output_text(data)
+            parsed = _extract_json_object(content)
+            door_rows = _find_named_rows(
+                parsed,
+                {"doors", "doorrows", "doorschedule", "doorschedulerows"},
+            )
+            hardware_rows = _find_named_rows(
+                parsed,
+                {"hardware", "hardwarerows", "hardwarecomponents", "hardwarecomponentrows"},
+            )
+            doors = normalize_door_rows(door_rows)
+            hardware = normalize_hardware_rows(hardware_rows)
+            return doors, hardware, {
+                "available": True,
+                "model": model,
+                "doors": len(doors),
+                "hardware": len(hardware),
+                "response_id": data.get("id"),
+                "raw_preview": content[:2000],
+            }
+        except Exception as e:
+            logger.warning("[OpenAI Direct PDF] Call failed (attempt %d): %s", attempt + 1, e)
+            attempt += 1
+            if attempt > LLM_MAX_RETRIES:
+                return [], [], {"available": True, "model": model, "error": str(e)}
+            time.sleep(2)

@@ -221,8 +221,9 @@ def build_artifacts(run_root: Path, max_pages_per_pdf: int = 20) -> None:
         raise FileNotFoundError(report_path)
 
     report = pd.read_csv(report_path).fillna("")
-    if "completed_at" in report.columns:
-        report = report.sort_values("completed_at")
+    # deep_e2e_report.csv is append-only; retries append corrected rows after
+    # older failures. Trust file order instead of wall-clock strings, which can
+    # drift across resumed runs and make stale errors look newer.
     report = report.drop_duplicates(subset=["run_id"], keep="last").reset_index(drop=True)
     for col in (
         "doors", "hardware", "duplicate_doors", "missing_width", "missing_height",

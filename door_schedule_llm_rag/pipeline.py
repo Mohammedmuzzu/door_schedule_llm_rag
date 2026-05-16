@@ -12,6 +12,7 @@ Key improvements:
 import os
 import re
 import sys
+import json
 import logging
 from pathlib import Path
 from typing import List, Tuple, Optional
@@ -25,12 +26,18 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-from config import PDF_FOLDER, OUTPUT_DIR, MAX_PAGE_CHARS
+from config import (
+    PDF_FOLDER,
+    OUTPUT_DIR,
+    MAX_PAGE_CHARS,
+    HYBRID_DIRECT_PDF,
+    HYBRID_DIRECT_PDF_MODE,
+)
 import agent as _agent_module  # access LAST_VERIFY_REPORT after each page
 from agent import extract_page_with_llm, ExtractionContext
 from page_extractor import extract_structured_page, get_page_count, PageType
 from page_evidence import collect as collect_evidence, confidence_score
-from llm_extract import llm_config, is_probable_hardware_component
+from llm_extract import llm_config, is_probable_hardware_component, extract_pdf_direct_openai
 from db_utils import save_estimations_to_db
 
 try:
@@ -220,12 +227,309 @@ def _verification_flags(verify_report: Optional[dict], anomaly_reason: Optional[
     return ";".join(dict.fromkeys(flags))
 
 
+def _truthy(value: object) -> bool:
+    return str(value or "").strip().lower() in {"1", "true", "yes", "on", "always"}
+
+
+def _resolve_hybrid_direct_pdf_mode(
+    enabled: Optional[bool],
+    mode: Optional[str],
+) -> str:
+    if mode:
+        clean = str(mode).strip().lower()
+    elif enabled is True:
+        clean = "rescue"
+    elif enabled is False:
+        clean = "off"
+    else:
+        raw = str(HYBRID_DIRECT_PDF or "0").strip().lower()
+        clean = "always" if raw in {"1", "true", "yes", "on", "always"} else raw
+        if clean not in {"always", "rescue"}:
+            clean = (HYBRID_DIRECT_PDF_MODE or "off").strip().lower()
+    return clean if clean in {"off", "rescue", "always"} else "off"
+
+
+def _should_run_direct_pdf_witness(mode: str, pdf_doors: list[dict], pdf_hardware: list[dict]) -> bool:
+    if mode == "always":
+        return True
+    if mode != "rescue":
+        return False
+    if not pdf_doors and not pdf_hardware:
+        return True
+    if pdf_doors:
+        missing_dims = sum(
+            1 for row in pdf_doors
+            if _is_blank(row.get("door_width")) or _is_blank(row.get("door_height"))
+        )
+        if missing_dims / max(len(pdf_doors), 1) > 0.5:
+            return True
+    if pdf_hardware:
+        unique_sets = {_clean_join_id(row.get("hardware_set_id")) for row in pdf_hardware}
+        unique_sets.discard("")
+        if len(pdf_hardware) < 3 and len(unique_sets) <= 1:
+            return True
+    return False
+
+
+def _is_blank(value: object) -> bool:
+    if value is None:
+        return True
+    try:
+        if pd.isna(value):
+            return True
+    except Exception:
+        pass
+    return str(value).strip().upper() in {"", "N/A", "NA", "NONE", "NULL", "?", "-", "--", "---", "----"}
+
+
+def _clean_join_id(value) -> str:
+    if _is_blank(value):
+        return ""
+    s = str(value).strip().upper()
+    if s.endswith(".0"):
+        s = s[:-2]
+    return re.sub(r"^(?:HW|HDWR|HARDWARE|SET|GROUP)[\s.#:-]*", "", s).strip()
+
+
+def _append_semicolon(value: object, token: str) -> str:
+    parts = [p for p in str(value or "").split(";") if p]
+    if token not in parts:
+        parts.append(token)
+    return ";".join(parts)
+
+
+def _direct_pdf_source_page(row: dict):
+    extra = row.get("extra_fields")
+    if isinstance(extra, dict):
+        for key in ("source_page", "page"):
+            value = extra.pop(key, None)
+            if not _is_blank(value):
+                return value
+    return None
+
+
+def _door_key(row: dict) -> str:
+    return str(row.get("door_number") or "").strip().upper()
+
+
+def _hardware_key(row: dict) -> tuple[str, str]:
+    hw_id = _clean_join_id(row.get("hardware_set_id"))
+    catalog = str(row.get("catalog_number") or "").strip().upper()
+    desc = re.sub(r"\s+", " ", str(row.get("description") or "").strip().upper())
+    return hw_id, catalog or desc
+
+
+def _door_physical_score(row: dict) -> int:
+    return sum(
+        1 for field in (
+            "door_width", "door_height", "door_thickness", "door_material",
+            "door_type", "frame_material", "frame_type", "fire_rating",
+        )
+        if not _is_blank(row.get(field))
+    )
+
+
+_HYBRID_METADATA_FIELDS = {
+    "project_id", "source_file", "page", "page_type", "source_method",
+    "source_confidence", "source_location", "verification_flags",
+    "evidence_expected_door_rows", "evidence_expected_hw_sets",
+    "hardware_set_clean", "hardware_set_join_status", "hybrid_decision",
+}
+
+
+def _merge_missing_fields(target: dict, witness: dict) -> int:
+    filled = 0
+    for key, value in witness.items():
+        if key in _HYBRID_METADATA_FIELDS or key == "extra_fields" or _is_blank(value):
+            continue
+        if _is_blank(target.get(key)):
+            target[key] = value
+            filled += 1
+    extra = witness.get("extra_fields")
+    if isinstance(extra, dict) and extra:
+        target_extra = target.setdefault("extra_fields", {})
+        if isinstance(target_extra, dict):
+            for key, value in extra.items():
+                if key not in target_extra and not _is_blank(value):
+                    target_extra[key] = value
+    return filled
+
+
+_HYBRID_COMPARE_FIELDS = (
+    "room_name", "door_type", "door_width", "door_height", "door_thickness",
+    "door_material", "door_finish", "frame_type", "frame_material",
+    "frame_finish", "hardware_set", "fire_rating", "hardware_set_id",
+    "hardware_set_name", "qty", "qty_raw", "unit", "description",
+    "catalog_number", "finish_code", "manufacturer_code",
+)
+
+
+def _compare_value(value: object) -> str:
+    if _is_blank(value):
+        return ""
+    return re.sub(r"[^A-Z0-9]+", "", str(value).upper())
+
+
+def _record_direct_pdf_conflicts(target: dict, witness: dict) -> int:
+    conflicts = []
+    for field in _HYBRID_COMPARE_FIELDS:
+        if _is_blank(target.get(field)) or _is_blank(witness.get(field)):
+            continue
+        if _compare_value(target.get(field)) == _compare_value(witness.get(field)):
+            continue
+        conflicts.append(f"{field}: text={target.get(field)!r} direct_pdf={witness.get(field)!r}")
+    if not conflicts:
+        return 0
+    existing = [part for part in str(target.get("hybrid_conflicts") or "").split("; ") if part]
+    for conflict in conflicts:
+        if conflict not in existing:
+            existing.append(conflict)
+    target["hybrid_conflicts"] = "; ".join(existing)
+    target["verification_flags"] = _append_semicolon(target.get("verification_flags"), "direct_pdf_conflict")
+    target["hybrid_decision"] = _append_semicolon(target.get("hybrid_decision"), "direct_pdf_conflict")
+    return len(conflicts)
+
+
+def _tag_direct_door(row: dict, pdf_name: str, project_id: str, decision: str) -> dict:
+    row = dict(row)
+    source_page = _direct_pdf_source_page(row)
+    row["project_id"] = project_id
+    row["source_file"] = pdf_name
+    row["page"] = source_page
+    row["page_type"] = "DIRECT_PDF"
+    row["source_method"] = "openai_direct_pdf"
+    row["source_confidence"] = 0.72
+    row["source_location"] = f"{pdf_name}#direct-pdf"
+    row["evidence_expected_door_rows"] = None
+    row["verification_flags"] = decision
+    row["hybrid_decision"] = decision
+    return row
+
+
+def _tag_direct_hardware(row: dict, pdf_name: str, project_id: str, decision: str) -> dict:
+    row = dict(row)
+    source_page = _direct_pdf_source_page(row)
+    row["project_id"] = project_id
+    row["source_file"] = pdf_name
+    row["page"] = source_page
+    row["page_type"] = "DIRECT_PDF"
+    row["source_method"] = "openai_direct_pdf"
+    row["source_confidence"] = 0.72
+    row["source_location"] = f"{pdf_name}#direct-pdf"
+    row["evidence_expected_hw_sets"] = None
+    row["verification_flags"] = decision
+    row["hybrid_decision"] = decision
+    return row
+
+
+def _merge_direct_pdf_witness(
+    all_doors: list[dict],
+    all_components: list[dict],
+    door_start_idx: int,
+    hardware_start_idx: int,
+    direct_doors: list[dict],
+    direct_hardware: list[dict],
+    *,
+    pdf_name: str,
+    project_id: str,
+) -> dict:
+    metrics = {
+        "door_confirmed": 0,
+        "door_added": 0,
+        "door_fields_filled": 0,
+        "hardware_confirmed": 0,
+        "hardware_added": 0,
+        "hardware_fields_filled": 0,
+        "door_conflicts": 0,
+        "hardware_conflicts": 0,
+    }
+
+    door_index = {
+        _door_key(row): row
+        for row in all_doors[door_start_idx:]
+        if _door_key(row)
+    }
+    for witness in direct_doors:
+        key = _door_key(witness)
+        if not key:
+            continue
+        if key in door_index:
+            target = door_index[key]
+            metrics["door_conflicts"] += _record_direct_pdf_conflicts(target, witness)
+            filled = _merge_missing_fields(target, witness)
+            target["source_method"] = _append_semicolon(target.get("source_method"), "openai_direct_pdf")
+            target["verification_flags"] = _append_semicolon(target.get("verification_flags"), "direct_pdf_confirmed")
+            target["hybrid_decision"] = _append_semicolon(target.get("hybrid_decision"), "direct_pdf_confirmed")
+            metrics["door_confirmed"] += 1
+            metrics["door_fields_filled"] += filled
+            continue
+
+        if _door_physical_score(witness) >= 2:
+            tagged = _tag_direct_door(witness, pdf_name, project_id, "direct_pdf_added")
+            all_doors.append(tagged)
+            door_index[key] = tagged
+            metrics["door_added"] += 1
+
+    hardware_index = {
+        _hardware_key(row): row
+        for row in all_components[hardware_start_idx:]
+        if _hardware_key(row) != ("", "")
+    }
+    for witness in direct_hardware:
+        key = _hardware_key(witness)
+        if key == ("", "") or not is_probable_hardware_component(witness):
+            continue
+        if key in hardware_index:
+            target = hardware_index[key]
+            metrics["hardware_conflicts"] += _record_direct_pdf_conflicts(target, witness)
+            filled = _merge_missing_fields(target, witness)
+            target["source_method"] = _append_semicolon(target.get("source_method"), "openai_direct_pdf")
+            target["verification_flags"] = _append_semicolon(target.get("verification_flags"), "direct_pdf_confirmed")
+            target["hybrid_decision"] = _append_semicolon(target.get("hybrid_decision"), "direct_pdf_confirmed")
+            metrics["hardware_confirmed"] += 1
+            metrics["hardware_fields_filled"] += filled
+            continue
+
+        tagged = _tag_direct_hardware(witness, pdf_name, project_id, "direct_pdf_added")
+        all_components.append(tagged)
+        hardware_index[key] = tagged
+        metrics["hardware_added"] += 1
+
+    return metrics
+
+
+def _write_direct_pdf_witness(
+    output_dir: str,
+    pdf_path: Path,
+    doors: list[dict],
+    hardware: list[dict],
+    meta: dict,
+    merge_metrics: dict,
+) -> None:
+    try:
+        out_dir = Path(output_dir) / "hybrid_direct_pdf"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", pdf_path.stem).strip("._-") or "pdf"
+        payload = {
+            "pdf_path": str(pdf_path),
+            "meta": meta,
+            "merge_metrics": merge_metrics,
+            "doors": doors,
+            "hardware": hardware,
+        }
+        (out_dir / f"{safe_name}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    except Exception as e:
+        logger.debug("Failed to write direct-PDF witness output: %s", e)
+
+
 def run_pipeline(
     pdf_folder: str = None,
     output_dir: str = None,
     max_pdfs: int = None,
     use_rag: bool = True,
     pdf_files: List[Path] = None,
+    hybrid_direct_pdf: Optional[bool] = None,
+    hybrid_direct_pdf_mode: Optional[str] = None,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Run LLM+RAG extraction on targeted PDFs.
@@ -283,6 +587,9 @@ def run_pipeline(
     all_doors = []
     all_components = []
     project_stats = {}
+    hybrid_mode = _resolve_hybrid_direct_pdf_mode(hybrid_direct_pdf, hybrid_direct_pdf_mode)
+    if hybrid_mode != "off":
+        logger.info("Hybrid direct-PDF witness enabled: mode=%s", hybrid_mode)
 
     for pdf_path, project_id in pdfs:
         if not pdf_path.exists():
@@ -298,6 +605,8 @@ def run_pipeline(
             continue
 
         pdf_start_time = time.time()
+        pdf_door_start = len(all_doors)
+        pdf_hardware_start = len(all_components)
         # Per-PDF extraction context for multi-page continuity
         ctx = ExtractionContext()
         prev_page_type = None
@@ -478,6 +787,59 @@ def run_pipeline(
 
             prev_page_type = page_type
 
+        pdf_doors = all_doors[pdf_door_start:]
+        pdf_hardware = all_components[pdf_hardware_start:]
+        if _should_run_direct_pdf_witness(hybrid_mode, pdf_doors, pdf_hardware):
+            direct_started = time.time()
+            logger.info("Running direct-PDF OpenAI witness for %s", fname)
+            direct_doors, direct_hardware, direct_meta = extract_pdf_direct_openai(pdf_path)
+            merge_metrics = _merge_direct_pdf_witness(
+                all_doors,
+                all_components,
+                pdf_door_start,
+                pdf_hardware_start,
+                direct_doors,
+                direct_hardware,
+                pdf_name=fname,
+                project_id=project_id,
+            )
+            _write_direct_pdf_witness(
+                output_dir,
+                pdf_path,
+                direct_doors,
+                direct_hardware,
+                direct_meta,
+                merge_metrics,
+            )
+            logger.info(
+                "Direct-PDF witness for %s: raw=%dd/%dhw, added=%dd/%dhw, "
+                "confirmed=%dd/%dhw, filled=%d/%d fields, conflicts=%d/%d, elapsed=%.1fs%s",
+                fname,
+                len(direct_doors),
+                len(direct_hardware),
+                merge_metrics["door_added"],
+                merge_metrics["hardware_added"],
+                merge_metrics["door_confirmed"],
+                merge_metrics["hardware_confirmed"],
+                merge_metrics["door_fields_filled"],
+                merge_metrics["hardware_fields_filled"],
+                merge_metrics["door_conflicts"],
+                merge_metrics["hardware_conflicts"],
+                time.time() - direct_started,
+                f", error={direct_meta.get('error')}" if direct_meta.get("error") else "",
+            )
+            if run_logger is not None:
+                try:
+                    run_logger.event(
+                        "direct_pdf_witness",
+                        doors=len(direct_doors),
+                        hardware=len(direct_hardware),
+                        meta=direct_meta,
+                        merge_metrics=merge_metrics,
+                    )
+                except Exception as e:
+                    logger.debug("run_logger direct_pdf_witness event failed: %s", e)
+
         logger.info("Finished processing %s in %.1fs", fname, time.time() - pdf_start_time)
 
         # ── Close durable run log ──
@@ -642,7 +1004,7 @@ def run_pipeline(
     # ── Columns for output ──
     door_cols = [
         "project_id", "source_file", "page", "page_type", "source_method", "source_confidence",
-        "source_location", "verification_flags", "evidence_expected_door_rows",
+        "source_location", "verification_flags", "hybrid_decision", "hybrid_conflicts", "evidence_expected_door_rows",
         "door_number", "elevation", "level_area",
         "room_name", "door_type", "door_thickness", "door_material", "door_finish", "frame_type", "frame_material", "frame_finish", "frame_width", "frame_height",
         "door_width", "door_height", "hardware_set", "hardware_set_clean", "hardware_set_join_status", "fire_rating",
@@ -654,7 +1016,7 @@ def run_pipeline(
 
     comp_cols = [
         "project_id", "source_file", "page", "page_type", "source_method", "source_confidence",
-        "source_location", "verification_flags", "evidence_expected_hw_sets", "hardware_set_id",
+        "source_location", "verification_flags", "hybrid_decision", "hybrid_conflicts", "evidence_expected_hw_sets", "hardware_set_id",
         "hardware_set_name", "qty", "qty_raw", "unit", "description",
         "catalog_number", "finish_code", "manufacturer_code", "notes",
     ]

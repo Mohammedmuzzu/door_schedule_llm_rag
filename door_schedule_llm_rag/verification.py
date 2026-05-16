@@ -34,6 +34,7 @@ from typing import List, Optional, Tuple
 from page_evidence import PageEvidence, collect as collect_evidence, confidence_score
 from page_extractor import PageType
 from prompts import build_crop_door_prompt, build_crop_hardware_prompt
+from prompts.rescue import DOOR_SELF_VERIFICATION_HINT, HARDWARE_SELF_VERIFICATION_HINT
 from vision_crops import crop_summary
 
 logger = logging.getLogger("verification")
@@ -237,29 +238,6 @@ def needs_hardware_rescue(
     return False
 
 
-# ─── Re-extraction prompts ────────────────────────────────────────
-_DOOR_RESCUE_HINT = (
-    "\n\nSELF-VERIFICATION ALERT: Structural analysis of this page indicates "
-    "~{expected} door rows (dimensions={dims}, row-like lines={rows}, "
-    "door-number tokens={nums}), but the previous extraction produced {got}. "
-    "You are being given ANOTHER chance with the page image attached. Use the "
-    "image as ground truth: scan every row of the door schedule matrix, "
-    "extract EVERY door mark (even if the native text layer is corrupt or "
-    "missing). Output the full list — do not omit doors to keep the response "
-    "short."
-)
-
-_HW_RESCUE_HINT = (
-    "\n\nSELF-VERIFICATION ALERT: Structural analysis of this page indicates "
-    "~{expected_sets} hardware sets and ~{expected_components} components "
-    "(HINGE/CLOSER/LOCK keyword hits), but the previous extraction produced "
-    "{got_sets} sets / {got_components} components. Re-examine the page image "
-    "carefully. Identify every SET/GROUP header (numeric or descriptive) and "
-    "list EVERY component underneath it. Missing a set is worse than merging "
-    "two — so err on the side of extracting more."
-)
-
-
 # ─── Public entry point ───────────────────────────────────────────
 def verify_and_rescue(
     doors: List[dict],
@@ -306,7 +284,7 @@ def verify_and_rescue(
     # Door rescue
     if needs_door_rescue(doors, evidence, page_type) and base64_image:
         before_doors = len(doors)
-        hint = _DOOR_RESCUE_HINT.format(
+        hint = DOOR_SELF_VERIFICATION_HINT.format(
             expected=evidence.expected_door_rows(),
             dims=evidence.dimensions,
             rows=evidence.row_lines,
@@ -369,7 +347,7 @@ def verify_and_rescue(
     # Hardware rescue
     if needs_hardware_rescue(hardware, evidence, page_type) and base64_image:
         before_hw = len(hardware)
-        hint = _HW_RESCUE_HINT.format(
+        hint = HARDWARE_SELF_VERIFICATION_HINT.format(
             expected_sets=evidence.expected_hw_sets(),
             expected_components=evidence.hw_components,
             got_sets=len({

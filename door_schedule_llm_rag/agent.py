@@ -13,6 +13,14 @@ from typing import List, Tuple, Optional
 
 from config import MAX_PAGE_CHARS
 from prompts import SYSTEM_DOOR, build_door_prompt, build_hardware_prompt
+from prompts.rescue import (
+    BORDERLESS_DOOR_RETRY_HINT,
+    EVIDENCE_DRIVEN_DOOR_RESCUE_HINT,
+    FINAL_HARDWARE_ONLY_RESCUE_HINT,
+    HARDWARE_INCOMPLETE_RETRY_HINT,
+    final_door_window_rescue_user,
+    hardware_missing_sets_hint,
+)
 from rag_store import query_door_instructions, query_hardware_instructions
 from llm_extract import extract_doors_llm, extract_hardware_llm
 from page_evidence import collect as collect_evidence
@@ -392,12 +400,7 @@ def extract_page_with_llm(
 
             # Retry if empty and page looks like it has door data
             if not doors and retry_with_hint and len(text) > 200:
-                hint = (
-                    "\n\nCRITICAL CORRECTIVE ACTION: This is likely a BORDERLESS profile list "
-                    "(e.g. 'DRY STORAGE 105 3-0 8-10 Alum'). You MUST visually identify the isolated physical door "
-                    "numbers (like 105, 106, 208) even if there are no table borders, and extract every row. "
-                    "In inline text, the room name often comes before the door number; parse it properly."
-                )
+                hint = BORDERLESS_DOOR_RETRY_HINT
                 door_prompt2 = build_door_prompt(
                     door_chunks, text + hint,
                     max_chars=MAX_PAGE_CHARS,
@@ -452,17 +455,9 @@ def extract_page_with_llm(
             if (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
                 if is_missing_sets:
                     logger.warning(f"Heuristic Trigger: Extracted {len(extracted_set_ids)} hw sets, expected ~{expected_sets}. Triggering corrective retry.")
-                    hint = (
-                        f"\n\nCRITICAL CORRECTIVE ACTION: The previous extraction missed data. "
-                        f"You extracted {len(extracted_set_ids)} unique sets, but there are structural markers indicating up to {expected_sets} sets in this block. "
-                        "If there is a MULTI-COLUMN LAYOUT (side-by-side sets on the same line, e.g. GROUP#1  GROUP#2  GROUP#3), "
-                        "you MUST mentally split them horizontally! Extract ALL parallel sets distinctly. Do not drop data."
-                    )
+                    hint = hardware_missing_sets_hint(len(extracted_set_ids), expected_sets)
                 else:
-                    hint = (
-                        "\n\nNOTE: The previous extraction was incomplete. "
-                        "You MUST process the entire document. Look for all hardware set headers and component lines deep in the text."
-                    )
+                    hint = HARDWARE_INCOMPLETE_RETRY_HINT
                     
                 hw_prompt2 = build_hardware_prompt(
                     hw_chunks, text + hint,
@@ -510,12 +505,7 @@ def extract_page_with_llm(
         for rescue_idx, rescue_text in enumerate(_line_chunks(raw_text, limit=6500), 1):
             rescue_prompt = build_hardware_prompt(
                 query_hardware_instructions(rescue_text) if use_rag else [],
-                rescue_text + (
-                    "\n\nFINAL HARDWARE-ONLY RESCUE CHUNK: Ignore door schedule rows and title blocks. "
-                    "This chunk is from a dense hardware-set sheet. Extract ONLY hardware components "
-                    "grouped under each SET/GROUP header visible in this chunk. If sets are side-by-side "
-                    "in columns, split the columns mentally and preserve each set id."
-                ),
+                rescue_text + FINAL_HARDWARE_ONLY_RESCUE_HINT,
                 max_chars=8000,
                 is_continuation=is_continuation,
                 prev_set_id=ctx.last_hardware_set_id,
@@ -553,11 +543,7 @@ def extract_page_with_llm(
         )
         rescue_prompt = build_door_prompt(
             query_door_instructions(raw_text) if use_rag else [],
-            raw_text + (
-                "\n\nEVIDENCE-DRIVEN DOOR RESCUE: The text contains door-number/dimension "
-                "row patterns. Extract every actual door schedule row and ignore title "
-                "blocks, hardware component lists, legends, and generic notes."
-            ),
+            raw_text + EVIDENCE_DRIVEN_DOOR_RESCUE_HINT,
             max_chars=MAX_PAGE_CHARS,
             is_continuation=is_continuation,
             prev_level_area=ctx.last_level_area,
@@ -597,16 +583,7 @@ def extract_page_with_llm(
             "Full-page door rescue: schedule text and %d hardware rows but 0 door rows.",
             len(all_hardware),
         )
-        user = (
-            "=== START TEXT ===\n"
-            f"{raw_text[:MAX_PAGE_CHARS]}\n"
-            "=== END TEXT ===\n\n"
-            "FINAL DOOR/WINDOW SCHEDULE RESCUE: Extract door/profile rows even if the primary "
-            "mark is a short numeric profile ID (1, 2, 3) or a storefront/window/door type. "
-            "Do NOT require room names. Treat each visible schedule/profile row as a door "
-            "schedule row when it has dimensions, hardware, frame, or door/window type fields. "
-            "Return the same JSON shape as the normal door extractor."
-        )
+        user = final_door_window_rescue_user(raw_text, MAX_PAGE_CHARS)
         rescued_doors = extract_doors_llm(SYSTEM_DOOR, user, base64_image=base64_image, force_model="gpt-4o")
         if rescued_doors:
             seen_doors = {str(d.get("door_number") or "").strip().upper() for d in all_doors}

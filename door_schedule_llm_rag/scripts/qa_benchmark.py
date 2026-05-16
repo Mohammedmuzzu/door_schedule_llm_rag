@@ -17,7 +17,9 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 # We import run_pipeline from the existing codebase
+from config import OPENAI_API_KEY, OPENAI_QA_JUDGE_MODEL
 from pipeline import run_pipeline
+from prompts.qa import QA_AUDITOR_PROMPT_TEMPLATE
 
 def render_pdf_to_base64_images(pdf_path):
     doc = fitz.open(pdf_path)
@@ -32,7 +34,7 @@ def render_pdf_to_base64_images(pdf_path):
     return base64_images
 
 def ask_llm_judge(base64_images, doors_json, hardware_json):
-    api_key = os.getenv("OPENAI_API_KEY")
+    api_key = OPENAI_API_KEY or os.getenv("OPENAI_API_KEY")
     if not api_key:
         print("Error: OPENAI_API_KEY not found in .env")
         return {
@@ -44,24 +46,9 @@ def ask_llm_judge(base64_images, doors_json, hardware_json):
         
     client = OpenAI(api_key=api_key)
     
-    prompt = (
-        "You are an expert QA Auditor for architectural construction schedules. "
-        "I am providing you with rendered images of a PDF document containing Door Schedules and Hardware Schedules, "
-        "as well as the JSON output of an automated extraction pipeline.\n\n"
-        "Your task is to carefully cross-compare the JSON data against the visual tables in the images.\n"
-        "Focus on:\n"
-        "1. Hallucinations: Did the JSON invent doors or hardware components that are NOT in the images?\n"
-        "2. Missed Items: Did the JSON miss any doors or hardware components that clearly exist in the images?\n"
-        "3. Hardware Set Accuracy: Ensure the hardware sets mapped to doors match the images.\n\n"
-        f"=== DOORS JSON ===\n{doors_json}\n\n"
-        f"=== HARDWARE JSON ===\n{hardware_json}\n\n"
-        "Return strictly valid JSON matching this schema:\n"
-        "{\n"
-        "  \"accuracy_score\": 95.0,\n"
-        "  \"hallucinations\": [\"list of specific hallucinations\"],\n"
-        "  \"missed_items\": [\"list of specific missed items\"],\n"
-        "  \"math_errors\": [\"list of any math or aggregation errors\"]\n"
-        "}"
+    prompt = QA_AUDITOR_PROMPT_TEMPLATE.format(
+        doors_json=doors_json,
+        hardware_json=hardware_json,
     )
     
     messages = [
@@ -82,7 +69,7 @@ def ask_llm_judge(base64_images, doors_json, hardware_json):
         
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model=OPENAI_QA_JUDGE_MODEL,
             messages=messages,
             temperature=0.0,
             response_format={"type": "json_object"}

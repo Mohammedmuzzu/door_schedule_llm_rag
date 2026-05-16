@@ -10,6 +10,10 @@ from config import (
     LLM_PROVIDER, OPENAI_API_KEY, OPENAI_MODEL,
     GROQ_API_KEY, GROQ_MODEL, OLLAMA_MODEL,
     DEPLOYMENT_ENV,
+    MODEL_SPEED_HINTS,
+    OLLAMA_DEFAULT_MODELS,
+    OPENAI_DEFAULT_MODELS,
+    PROVIDER_MODELS,
 )
 from llm_extract import llm_config
 from pipeline import run_pipeline
@@ -83,16 +87,10 @@ class StreamlitLogHandler(logging.Handler):
 # ═══════════════════════════════════════════════════════════════════
 #  Available model options per provider
 # ═══════════════════════════════════════════════════════════════════
-PROVIDER_MODELS = {
-    "openai": [], # populated dynamically
-    "groq": ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "gemma2-9b-it", "mixtral-8x7b-32768"],
-    "ollama": [],  # populated dynamically
-}
-
 @st.cache_data(ttl=3600)
 def _get_openai_models():
     """Fetch installed OpenAI models for the dropdown using the API key."""
-    default_models = ["gpt-4o", "gpt-4o-mini", "gpt-4.5-preview", "o1", "o1-mini"]
+    default_models = OPENAI_DEFAULT_MODELS
     from config import OPENAI_API_KEY
     if not OPENAI_API_KEY:
         return default_models
@@ -136,7 +134,7 @@ def _get_ollama_models():
         r.raise_for_status()
         return [m.get("name", "") for m in r.json().get("models", []) if m.get("name")]
     except Exception:
-        return ["qwen3-coder:30b", "qwen2.5:7b", "llama3.1:8b", "mistral:7b"]
+        return OLLAMA_DEFAULT_MODELS
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -214,26 +212,7 @@ with st.sidebar:
     st.divider()
 
     # Speed/accuracy hints
-    speed_hints = {
-        "gpt-5.5": "👑 Flagship model (Most capable for complex tasks)",
-        "gpt-5.5-instant": "⚡ Fast, default 5.5 model",
-        "gpt-5.4": "💻 Optimized for tool use and large contexts",
-        "gpt-rosalind": "🔬 Advanced scientific & deep reasoning model",
-        "gpt-4o-mini": "⚡ Fast, cheap (~$0.01/PDF), great accuracy",
-        "gpt-4o": "🎯 Best accuracy, moderate cost (~$0.05/PDF)",
-        "gpt-4.5-preview": "🧪 Experimental next-gen model",
-        "o1": "🧠 Advanced reasoning model (slower, extremely accurate)",
-        "o1-mini": "🧠 Fast reasoning model",
-        "gpt-5": "🚀 Next-generation frontier model",
-        "gpt-5-turbo": "🚀 Fast next-generation frontier model",
-        "llama-3.3-70b-versatile": "⚡ Fast cloud 70B, free tier available",
-        "llama-3.1-8b-instant": "💨 Ultra-fast 8B, free tier",
-        "qwen3-coder:30b": "🖥️ MoE 30B local — smart but slow on 12GB VRAM",
-        "qwen2.5:7b": "🖥️ Good local model, fits in VRAM",
-        "llama3.1:8b": "🖥️ Solid local model, fits in VRAM",
-        "mistral:7b": "🖥️ Fast local model, fits in VRAM",
-    }
-    hint = speed_hints.get(selected_model, "")
+    hint = MODEL_SPEED_HINTS.get(selected_model, "")
     if hint:
         st.caption(hint)
 
@@ -241,6 +220,14 @@ with st.sidebar:
 
     st.subheader("📋 Extraction Options")
     use_rag = st.checkbox("Enable RAG Retrieval", value=True)
+    hybrid_direct_pdf_mode = st.selectbox(
+        "Hybrid direct-PDF witness",
+        options=["off", "rescue", "always"],
+        index=1,
+        disabled=selected_provider != "openai",
+        help="Rescue runs direct PDF only when normal extraction looks weak. Always runs it for apple-to-apple evaluation.",
+    )
+    effective_hybrid_direct_pdf_mode = hybrid_direct_pdf_mode if selected_provider == "openai" else "off"
 
     st.divider()
     st.subheader("🩺 System Health")
@@ -349,6 +336,7 @@ with tab1:
                     output_dir=temp_dir,
                     use_rag=use_rag,
                     pdf_files=[temp_path],
+                    hybrid_direct_pdf_mode=effective_hybrid_direct_pdf_mode,
                 )
 
             total_time = time.time() - start_t
@@ -418,6 +406,7 @@ with tab2:
                         pdf_folder=dir_path,
                         output_dir=out_dir,
                         use_rag=use_rag,
+                        hybrid_direct_pdf_mode=effective_hybrid_direct_pdf_mode,
                     )
 
                 st.success(f"✅ Bulk Extraction Complete! Results saved to `{out_dir}`")

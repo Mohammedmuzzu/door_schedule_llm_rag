@@ -1620,3 +1620,56 @@ or deterioration at time of Substantial Completion.
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: DOOR HARDWARE.pdf (Page 3)
+- **Timestamp:** 2026-05-15 01:07:50
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_rows]
+LOMA Architecture  |  Keating Toyota Service Shop Expansion
+LA2527  |  Manvel, Texas
+3. Door Hardware Schedule:
+a. Submit concurrent with submissions of Product Data, Samples, and Shop Drawings.
+Coordinate submission of door hardware schedule with scheduling requirements of
+other work to facilitate fabrication of other work critical in Project construction
+schedule.
+b. Submit with hardware sets in vertical format as illustrated by Sequence of Format
+for the Hardware Schedule published by DHI.
+c. Indicate complete designations of each item required for each opening, include:
+1) Door Index: door number, heading number, and Architect's hardware set
+number.
+2) Quantity, type, style, function, size, and finish of each hardware item.
+3) Name and manufacturer of each ite...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: DOOR HARDWARE.pdf (Page 4)
+- **Timestamp:** 2026-05-15 01:08:19
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_rows]
+LOMA Architecture  |  Keating Toyota Service Shop Expansion
+LA2527  |  Manvel, Texas
+1. Operations and Maintenance Data: Provide in accordance with Division 01 and include:
+a. Complete information on care, maintenance, and adjustment; data on repair and
+replacement parts, and information on preservation of finishes.
+b. Catalog pages for each product.
+c. Final approved hardware schedule edited to reflect conditions as installed.
+d. Final keying schedule
+e. Copy of warranties including appropriate reference numbers for manufacturers to
+identify project.
+E. Inspection and Testing:
+1. Submit written reports to the Owner and Authority Having Jurisdiction (AHJ) of the
+results of functional testing and inspection for:
+a. Fire door assemblies, in compliance with NFPA 80.
+...
+[TRUNCATED]
+```
+---
