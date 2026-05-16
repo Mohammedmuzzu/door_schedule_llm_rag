@@ -19,14 +19,14 @@ logger = logging.getLogger("vision_crops")
 
 # Search phrases for PyMuPDF — keep specific multi-word anchors first.
 SCHEDULE_KEYWORDS = (
-    "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "DOOR MARK", "FRAME TYPE",
+    "DOOR HARDWARE", "DOOR SCHEDULE", "DOOR NO", "DOOR NUMBER", "DOOR MARK", "FRAME TYPE",
     "FIRE RATING", "HARDWARE SET", "HARDWARE SCHEDULE", "HDWR SET", "HW SET",
     "OPENING SCHEDULE", "DOOR AND FRAME", "DOOR AND HARDWARE",
 )
 
 # Keyword → crop_type for rescue routing (door / hardware / mixed).
 _HW_ANCHORS = frozenset(
-    {"HARDWARE SET", "HARDWARE SCHEDULE", "HDWR SET", "HW SET"},
+    {"DOOR HARDWARE", "HARDWARE SET", "HARDWARE SCHEDULE", "HDWR SET", "HW SET"},
 )
 _MIXED_HINTS = frozenset({"DOOR AND HARDWARE"})
 
@@ -38,6 +38,7 @@ class CropCandidate:
     source: str
     bbox: Tuple[float, float, float, float]
     page_size: Tuple[float, float]
+    text: str
     base64_image: str
 
     def to_dict(self) -> dict:
@@ -50,7 +51,7 @@ def detect_schedule_crops(
     page_text: str = "",
     page_type: str = "",
     *,
-    max_candidates: int = 5,
+    max_candidates: int = 8,
     dpi: int = 240,
 ) -> List[dict]:
     """
@@ -92,6 +93,7 @@ def detect_schedule_crops(
             except TypeError:
                 pix = page.get_pixmap(dpi=dpi, clip=rect, alpha=False)
                 img_bytes = pix.tobytes("jpeg")
+            crop_text = _clip_text(page, rect)
 
             candidates.append(
                 CropCandidate(
@@ -100,6 +102,7 @@ def detect_schedule_crops(
                     source=source,
                     bbox=tuple(round(float(v), 2) for v in bbox),
                     page_size=page_size,
+                    text=crop_text,
                     base64_image=base64.b64encode(img_bytes).decode("utf-8"),
                 )
             )
@@ -128,8 +131,19 @@ def crop_summary(crops: Iterable[dict]) -> list[dict]:
             "source": crop.get("source"),
             "bbox": crop.get("bbox"),
             "page_size": crop.get("page_size"),
+            "text_length": len(crop.get("text") or ""),
         })
     return out
+
+
+def _clip_text(page, rect, max_chars: int = 10000) -> str:
+    try:
+        text = page.get_text("text", clip=rect) or ""
+    except TypeError:
+        text = ""
+    except Exception:
+        text = ""
+    return text[:max_chars]
 
 
 def _keyword_crop_type(keyword: str) -> str:
@@ -175,17 +189,82 @@ def _expand_rect(rect, page_rect, x_pad: float = 0.08, y_pad: float = 0.10):
     return expanded & page_rect
 
 
+def _expand_hardware_title_rect(rect, page_rect):
+    """
+    Expand lower/right hardware section labels back over their table.
+
+    On dense sheets the visible section title (for example "DOOR HARDWARE") is
+    often printed on the lower separator line, while the actual component table
+    sits above and to the left. The normal anchor expansion grows down/right,
+    which crops the title instead of the table.
+    """
+    w = page_rect.width
+    h = page_rect.height
+    if rect.x0 > w * 0.45 or rect.y0 > h * 0.45:
+        expanded = rect + (
+            -max(260, w * 0.72),
+            -max(260, h * 0.34),
+            max(120, w * 0.04),
+            max(80, h * 0.04),
+        )
+        return expanded & page_rect
+    return _expand_rect(rect, page_rect, x_pad=0.12, y_pad=0.12)
+
+
+def _hardware_section_tiles(expanded, anchor_rect, page_rect, columns: int = 4) -> list[tuple]:
+    """Split a wide lower hardware section into readable overlapping columns."""
+    w = page_rect.width
+    h = page_rect.height
+    if not (anchor_rect.x0 > w * 0.45 or anchor_rect.y0 > h * 0.45):
+        return []
+
+    y0 = max(page_rect.y0, expanded.y0 + 70)
+    y1 = min(page_rect.y1, expanded.y1 - 70)
+    if y1 <= y0:
+        y0, y1 = expanded.y0, expanded.y1
+
+    x0 = expanded.x0
+    x1 = expanded.x1
+    width = x1 - x0
+    if width <= 0:
+        return []
+
+    tile_width = width / columns
+    overlap = min(90.0, tile_width * 0.18)
+    rects = []
+    for idx in range(columns):
+        tx0 = max(page_rect.x0, x0 + idx * tile_width - (overlap if idx else 0))
+        tx1 = min(page_rect.x1, x0 + (idx + 1) * tile_width + (overlap if idx < columns - 1 else 0))
+        score = 0.985 - idx * 0.002
+        rects.append((f"text:DOOR HARDWARE column {idx + 1}/{columns}", score, (tx0, y0, tx1, y1), "hardware"))
+    return rects
+
+
 def _text_anchor_rects(page, page_rect) -> list[tuple]:
     rects = []
     for keyword in SCHEDULE_KEYWORDS:
         try:
             for found in page.search_for(keyword):
-                expanded = _expand_rect(found, page_rect)
+                ctype = _keyword_crop_type(keyword)
+                is_lower_section_label = (
+                    keyword.upper() == "DOOR HARDWARE"
+                    and (found.x0 > page_rect.width * 0.45 or found.y0 > page_rect.height * 0.45)
+                )
+                if keyword.upper() in _HW_ANCHORS:
+                    expanded = _expand_hardware_title_rect(found, page_rect)
+                else:
+                    expanded = _expand_rect(found, page_rect)
                 area_ratio = expanded.get_area() / max(page_rect.get_area(), 1)
                 if area_ratio < 0.70:
-                    score = 0.95 if "SCHEDULE" in keyword else 0.82
-                    ctype = _keyword_crop_type(keyword)
+                    if is_lower_section_label:
+                        score = 0.98
+                    elif keyword.upper() == "DOOR HARDWARE":
+                        score = 0.84
+                    else:
+                        score = 0.95 if "SCHEDULE" in keyword else 0.82
                     rects.append((f"text:{keyword}", score, tuple(expanded), ctype))
+                    if is_lower_section_label:
+                        rects.extend(_hardware_section_tiles(expanded, found, page_rect))
         except Exception:
             continue
     return rects

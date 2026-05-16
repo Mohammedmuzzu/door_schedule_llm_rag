@@ -580,6 +580,8 @@ def clean_hw_id(raw_id: str) -> str:
     s = str(raw_id).upper().strip()
     s = re.sub(r'^(HW[\.\-\s]*|HARDWARE[\.\-\s]*|SET[\.\-\s]*|GROUP[\.\-\s]*)', '', s)
     s = s.strip('. -')
+    if re.fullmatch(r"\d+\.0", s):
+        s = s[:-2]
     return s
 
 def _llm_chat(system: str, user: str, force_json: bool = True, base64_image: Optional[str] = None, force_model: Optional[str] = None) -> str:

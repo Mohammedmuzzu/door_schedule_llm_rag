@@ -39,6 +39,14 @@ def test_hardware_qty_preserves_raw_non_integer_quantities():
     assert row.qty_raw == "LOT"
     assert row.unit == "SET"
 
+    row_decimal = HardwareComponentRow(
+        hardware_set_id="1.0",
+        qty=1,
+        unit="EA",
+        description="Hinge",
+    )
+    assert row_decimal.hardware_set_id == "1"
+
 
 def test_page_evidence_detects_bracketed_and_prefixed_door_marks():
     evidence = collect(

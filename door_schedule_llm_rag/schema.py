@@ -92,6 +92,8 @@ class HardwareComponentRow(BaseModel):
             return "?"
         v = str(v).strip()
         v = re.sub(r"^(?:set|hs|hw|hdwr|group|#|no\.?)\s*", "", v, flags=re.IGNORECASE).strip()
+        if re.fullmatch(r"\d+\.0", v):
+            v = v[:-2]
         return v if v else "?"
 
     @field_validator("qty", mode="before")

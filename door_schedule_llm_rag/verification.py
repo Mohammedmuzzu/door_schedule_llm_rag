@@ -112,6 +112,18 @@ def _crop_count(crop_candidates: list[dict], *types: str) -> int:
     return sum(1 for crop in crop_candidates if crop.get("crop_type") in allowed)
 
 
+def _crop_supporting_text(page_text: str, crop: dict) -> str:
+    crop_text = str(crop.get("text") or "").strip()
+    if not crop_text:
+        return page_text
+    return (
+        "=== TEXT EXTRACTED FROM THIS CROP ===\n"
+        f"{crop_text}\n\n"
+        "=== FULL PAGE CONTEXT ===\n"
+        f"{page_text}"
+    )
+
+
 def _needs_crop_door_rescue(doors: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
     if not crop_candidates:
         return False
@@ -323,7 +335,7 @@ def verify_and_rescue(
                 continue
             try:
                 prompt = build_crop_door_prompt(
-                    page_text,
+                    _crop_supporting_text(page_text, crop),
                     crop_meta={k: crop.get(k) for k in ("source", "confidence", "bbox", "page_size", "crop_type")},
                     max_chars=min(max_chars, 7000),
                 )
@@ -388,7 +400,7 @@ def verify_and_rescue(
                 continue
             try:
                 prompt = build_crop_hardware_prompt(
-                    page_text,
+                    _crop_supporting_text(page_text, crop),
                     crop_meta={k: crop.get(k) for k in ("source", "confidence", "bbox", "page_size", "crop_type")},
                     max_chars=min(max_chars, 7000),
                 )
