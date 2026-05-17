@@ -131,6 +131,37 @@ def classify_page(text: str) -> str:
     if not any(kw in upper for kw in ("DOOR", "HARDWARE", "HDWR", "HDWE", "HW", "FRAME", "OPENING", "SCHED")):
         return PageType.OTHER
 
+    door_mark_count = len(set(re.findall(
+        r"(?<![A-Za-z0-9])\[?[A-Za-z]{0,3}\d{2,4}[A-Za-z]?\]?(?![A-Za-z0-9])",
+        text,
+    )))
+    has_hdw_set_column = any(token in upper for token in ("HDW SET", "HDWR SET", "HDWE SET", "HARDWARE SET"))
+    has_set_blocks = bool(re.search(
+        r"(?m)^\s*(?:HARDWARE\s+SETS?|SET\s*#?\s*\d+|SET\s+NO\.?|GROUP\s*#?\s*\d+)",
+        upper,
+    ))
+    has_components = len(re.findall(
+        r"\b(?:HINGE|CLOSER|LOCKSET|EXIT\s+DEVICE|CYLINDER|THRESHOLD|KICK\s+PLATE|"
+        r"SMOKE\s+SEAL|DOOR\s+BOTTOM|ASTRAGAL|WALL\s+BUMPER)\b",
+        upper,
+    )) >= 2
+
+    # Some vendor PDFs use an "Opening List" instead of a full dimensional
+    # door schedule. It is still the authoritative door-to-hardware mapping
+    # and must be routed through door extraction, not hardware-set extraction.
+    if "OPENING LIST" in upper and has_hdw_set_column and door_mark_count >= 4:
+        return PageType.DOOR_SCHEDULE
+
+    # Manufacturer / option / finish code legends are reference pages. They
+    # are useful to humans, but they are not hardware component schedules and
+    # should not spend LLM/OCR budget or hallucinate components.
+    if (
+        re.search(r"\b(?:MANUFACTURER|OPTION|FINISH)\s+LIST\b", upper)
+        and not has_set_blocks
+        and not has_components
+    ):
+        return PageType.OTHER
+
     # 2. The Smart LLM Arbiter
     # If it passed the gatekeeper, we let the LLM definitively classify the raw text.
     # This completely eliminates Regex false-positives and handles split-headers natively!
@@ -153,6 +184,10 @@ def classify_page(text: str) -> str:
             page_type = PageType.HARDWARE_SET
         else:
             page_type = PageType.OTHER
+
+        if page_type == PageType.HARDWARE_SET and "OPENING LIST" in upper and has_hdw_set_column and door_mark_count >= 4:
+            logger.info("Deterministic upgrade: HARDWARE -> DOOR_SCHEDULE (opening list with hardware-set refs)")
+            page_type = PageType.DOOR_SCHEDULE
         
         # ── Deterministic Upgrade: DOOR → MIXED ──
         # The LLM only sees a truncated text snippet. Check the FULL text for 
@@ -1019,16 +1054,35 @@ def extract_structured_page(
         logger.info("Page %d: Title-block-only text detected (%d chars, no schedule data). Will try OCR.", page_idx + 1, native_text_len)
 
     schedule_signals = _collect_schedule_signals("\n".join(part for part in (plumber_rows, plumber_text, fitz_raw_text) if part))
+    upper_native_text = "\n".join(part for part in (plumber_rows, plumber_text, fitz_raw_text) if part).upper()
+    has_opening_list_rows = (
+        "OPENING LIST" in upper_native_text
+        and any(token in upper_native_text for token in ("HDW SET", "HDWR SET", "HDWE SET", "HARDWARE SET"))
+        and schedule_signals["real_doors"] >= 4
+    )
+    is_reference_list_page = (
+        bool(re.search(r"\b(?:MANUFACTURER|OPTION|FINISH)\s+LIST\b", upper_native_text))
+        and not re.search(r"(?m)^\s*(?:HARDWARE\s+SETS?|SET\s*#?\s*\d+|SET\s+NO\.?|GROUP\s*#?\s*\d+)", upper_native_text)
+    )
     has_schedule_rows = (
         schedule_signals["dimensions"] >= 2
         or schedule_signals["row_lines"] >= 2
         or (schedule_signals["real_doors"] >= 4 and schedule_signals["table_headers"] >= 4)
+        or has_opening_list_rows
     )
     
     # NEW: Detect if the text is long but COMPLETELY lacks schedule data (meaning the schedules are images)
-    missing_critical_data = schedule_signals["dimensions"] == 0 and schedule_signals["hw_keywords"] == 0
+    missing_critical_data = (
+        schedule_signals["dimensions"] == 0
+        and schedule_signals["hw_keywords"] == 0
+        and schedule_signals["table_headers"] < 2
+        and schedule_signals["row_lines"] == 0
+        and schedule_signals["real_doors"] < 4
+    )
     
     is_machine_generated = (native_text_len > 1500 or has_schedule_rows) and not is_corrupt and not is_title_block
+    if is_reference_list_page:
+        is_machine_generated = True
     
     if is_machine_generated and missing_critical_data and native_text_len < 8000:
         logger.info("Page %d: Text is long (%d chars) but lacks ANY dimensions or HW keywords. Forcing OCR.", page_idx + 1, native_text_len)
@@ -1044,7 +1098,7 @@ def extract_structured_page(
                 page_idx,
                 page_text=combined_native or fitz_raw_text or "",
                 page_type=PageType.MIXED,
-                max_candidates=5,
+                max_candidates=7,
             )
             if crop_candidates:
                 logger.info(
@@ -1132,7 +1186,7 @@ def extract_structured_page(
                     page_idx,
                     page_text=combined_native or fitz_raw_text or "",
                     page_type=PageType.MIXED,
-                    max_candidates=5,
+                    max_candidates=7,
                 )
                 if crop_candidates:
                     content = (
@@ -1208,7 +1262,7 @@ def extract_structured_page(
                     page_idx,
                     page_text=combined_native or fitz_raw_text or "",
                     page_type=PageType.MIXED,
-                    max_candidates=5,
+                    max_candidates=7,
                 )
                 if crop_candidates:
                     content = (
@@ -1305,7 +1359,7 @@ def extract_structured_page(
                 page_idx,
                 page_text=content,
                 page_type=page_type,
-                max_candidates=5,
+                max_candidates=7,
             )
         except Exception as e:
             logger.debug("Page %d: crop detection skipped: %s", page_idx + 1, e)

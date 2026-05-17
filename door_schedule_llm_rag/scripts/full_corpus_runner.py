@@ -15,6 +15,7 @@ import csv
 import hashlib
 import json
 import os
+import random
 import re
 import subprocess
 import sys
@@ -265,6 +266,8 @@ def run_corpus(
     limit: int | None = None,
     resume: bool = True,
     max_runtime_minutes: float | None = None,
+    shuffle: bool = False,
+    seed: int | None = None,
 ) -> Path:
     _configure_safe_env(output_root)
     if not os.environ.get("OPENAI_API_KEY"):
@@ -273,6 +276,9 @@ def run_corpus(
     run_started = time.time()
     max_runtime_s = (max_runtime_minutes * 60.0) if max_runtime_minutes else None
     inventory = build_inventory(target_dir, output_root)
+    if shuffle:
+        rng = random.Random(seed)
+        rng.shuffle(inventory)
     if limit is not None:
         inventory = inventory[:limit]
 
@@ -370,6 +376,8 @@ def main() -> int:
         help="Stop gracefully before launching another PDF after this many minutes.",
     )
     parser.add_argument("--no-resume", action="store_true")
+    parser.add_argument("--shuffle", action="store_true")
+    parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--worker-pdf", default=None)
     parser.add_argument("--worker-output", default=None)
     args = parser.parse_args()
@@ -397,6 +405,8 @@ def main() -> int:
         limit=args.limit,
         resume=not args.no_resume,
         max_runtime_minutes=args.max_runtime_minutes,
+        shuffle=args.shuffle,
+        seed=args.seed,
     )
     return 0
 

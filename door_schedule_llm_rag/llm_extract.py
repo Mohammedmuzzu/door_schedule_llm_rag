@@ -88,6 +88,21 @@ _EQUIPMENT_NOISE_TERMS = re.compile(
     r"EQUIPMENT|FIXTURE|FURNITURE|APPLIANCE)\b",
     re.IGNORECASE,
 )
+_ACCESS_CONTROL_SCHEDULE_NOISE_TERMS = re.compile(
+    r"\b(?:CARD\s+READER(?:\s+ACCESS)?|ACCESS\s+CONTROL|A\.?\s*C\.?\s+(?:CONTROL|MONITOR)|"
+    r"KEY\s*CARD|DOOR\s+CONTACT|REX\s+SENSOR)\b",
+    re.IGNORECASE,
+)
+_FINISH_SCHEDULE_NOISE_TERMS = re.compile(
+    r"\b(?:ROOM\s+FINISH\s+SCHEDULE|FINISH\s+SCHEDULE|FLOOR\s+FINISH|WALL\s+FINISH|"
+    r"CEILING\s+FINISH|FINISH\s+PLAN)\b|"
+    r"^(?:CPT|CT|PNT|PT|RWB|RB|VCT|LVT|ACT|GWB)(?:\s*/\s*(?:CPT|CT|PNT|PT|RWB|RB|VCT|LVT|ACT|GWB))*$",
+    re.IGNORECASE,
+)
+_FAKE_MANUFACTURER_PLACEHOLDERS = re.compile(
+    r"^(?:ABC|XYZ|DEF|GHI|JKL|MNO|PQR|STU)(?:\s+(?:CORP|INC|LTD|LLC|CO))?$",
+    re.IGNORECASE,
+)
 _HW_HEADER_ONLY = {
     "DESCRIPTION",
     "COMPONENT",
@@ -163,8 +178,24 @@ def is_probable_hardware_component(row: dict) -> bool:
         return False
     if desc_upper in _HW_HEADER_ONLY:
         return False
+    if re.fullmatch(r"(?:DOOR\s+HARDWARE\s+)?(?:HARDWARE\s+)?(?:SET|GROUP)\s*(?:NO\.?|#)?\s*[A-Z0-9_.-]+", desc_upper):
+        return False
+    if _FAKE_MANUFACTURER_PLACEHOLDERS.fullmatch(manufacturer):
+        return False
     has_component_word = bool(_HW_COMPONENT_TERMS.search(desc_upper))
     if _EQUIPMENT_NOISE_TERMS.search(combined_upper):
+        return False
+    if _ACCESS_CONTROL_SCHEDULE_NOISE_TERMS.search(combined_upper) and not has_component_word:
+        return False
+    if _FINISH_SCHEDULE_NOISE_TERMS.search(desc_upper) and not has_component_word:
+        return False
+    if _FINISH_SCHEDULE_NOISE_TERMS.search(combined_upper) and not has_component_word:
+        return False
+    if desc_upper in _ROOM_NAME_DOOR_MARK_NOISE and not has_component_word:
+        return False
+    if re.search(r"\bSIDELIGHTS?\b", desc_upper) and not has_component_word:
+        return False
+    if is_probable_door_mark(desc_upper) and not has_component_word:
         return False
     if re.fullmatch(r"E\d+[A-Z]?", hw_upper) and not has_component_word:
         return False

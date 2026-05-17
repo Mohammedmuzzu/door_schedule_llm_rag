@@ -216,8 +216,13 @@ def build_crop_door_prompt(page_text: str, crop_meta: dict | None = None, max_ch
 
 === CROP RESCUE MODE ===
 You are looking at a HIGH-RESOLUTION CROP of one architectural sheet, not the full page.
+The crop may be rotated 90, 180, or 270 degrees. Mentally rotate/read all orientations before returning empty.
 Extract ONLY rows visibly inside the crop image.
 Do NOT use floor plan bubbles, title blocks, notes, wall types, elevations, or legends as door rows.
+For door tables, `door_number` must come from a visible "NO.", "DOOR NO.", "MARK", "OPENING", or equivalent primary row-id column.
+Do NOT use door type/elevation/profile labels such as A1, A2, AL-2C, hinge/detail callout letters, or hardware legend item letters as door_number.
+If the crop shows only door type diagrams, security function notes, push-plate details, door hardware legends, general notes, or title blocks, return {"rows": []}.
+Never invent generic room names like OFFICE, CONFERENCE ROOM, STORAGE, or LOBBY unless that exact room name is visibly present.
 If a row is partially visible, extract only fields that are visible and set missing fields to null.
 If the crop contains no actual door schedule table/profile list, return {"rows": []}.
 """
@@ -240,9 +245,15 @@ def build_crop_hardware_prompt(page_text: str, crop_meta: dict | None = None, ma
 
 === CROP RESCUE MODE ===
 You are looking at a HIGH-RESOLUTION CROP of one architectural sheet, not the full page.
+The crop may be rotated 90, 180, or 270 degrees. Mentally rotate/read all orientations before returning empty.
 Extract ONLY hardware set/component rows visibly inside the crop image.
 Do NOT extract title blocks, generic notes, wall types, or door schedule rows as hardware components.
+Do NOT use quantity values, item letters, door type labels, or door numbers as hardware_set_id.
+If a visible hardware component table/list has no explicit Set/Group/Hardware Set header, use a safe surrogate hardware_set_id like "HW-DOOR_HARDWARE"; do not invent numeric set IDs.
 If a hardware set continues outside the crop, extract only visible components and preserve the visible set id/name.
+CRITICAL SIDE-BY-SIDE CROP RULE: Hardware crops often contain multiple underlined "Set: N.0" blocks arranged side-by-side and stacked vertically.
+You MUST enumerate every visible Set header in the crop and extract components for each visible set.
+Do NOT stop after the first set block. Read each local column independently from its Set header down to the next Set header in that same column.
 If the crop contains no actual hardware schedule/list, return {"rows": []}.
 """
     user = (

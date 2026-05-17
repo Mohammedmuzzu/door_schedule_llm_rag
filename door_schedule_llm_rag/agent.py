@@ -111,6 +111,263 @@ def _split_combined_dimensions(value: object) -> Optional[Tuple[str, str]]:
     return match.group(1), match.group(2)
 
 
+def _looks_like_combined_dimensions(value: object) -> bool:
+    return _split_combined_dimensions(value) is not None
+
+
+def _normalize_door_mark_cell(value: object) -> Tuple[Optional[str], Optional[str]]:
+    """Return a door mark and optional trailing keyed note from a table cell."""
+    token = str(value or "").strip()
+    if _looks_like_door_mark(token):
+        return token, None
+    match = re.fullmatch(r"([A-Za-z]{0,3}\d{2,4}[A-Za-z]?)(?:\s+(\d{1,2}))?", token)
+    if not match:
+        return None, None
+    mark = match.group(1)
+    if not _looks_like_door_mark(mark):
+        return None, None
+    return mark, match.group(2)
+
+
+def _extract_leading_door_mark(value: object) -> Tuple[Optional[str], Optional[str]]:
+    token = str(value or "").strip()
+    match = re.match(r"^([A-Za-z]{0,3}\d{2,4}[A-Za-z]?)(?:\b|\s)(.*)$", token)
+    if not match:
+        return None, None
+    mark = match.group(1)
+    if not _looks_like_door_mark(mark):
+        return None, None
+    note = match.group(2).strip(" '\"-:;") or None
+    return mark, note
+
+
+def _find_best_door_mark_index(cells: List[Optional[str]]) -> Tuple[Optional[int], Optional[str], Optional[str]]:
+    """
+    Pick the actual door mark in rows where notes spill into the first cells.
+
+    Example from dense sheets:
+    ``DOOR SCHED. NOTES | 24 | 140A | JAN | NEW VESTIBULE | ...``
+    The first number is a note marker, while 140A is the door mark.
+    """
+    best: Tuple[int, int, str, Optional[str]] | None = None
+    for idx, cell in enumerate(cells[:6]):
+        mark, keyed_note = _normalize_door_mark_cell(cell)
+        if not mark:
+            continue
+
+        tail = cells[idx + 1: idx + 10]
+        dims = sum(1 for value in tail if _is_dimension(value))
+        next_cell = next((value for value in tail if str(value or "").strip()), None)
+        next_mark, _ = _normalize_door_mark_cell(next_cell)
+
+        score = dims * 4
+        if next_cell and not next_mark:
+            score += 4
+        if next_mark:
+            score -= 8
+        if re.search(r"[A-Za-z]", mark):
+            score += 2
+        elif re.fullmatch(r"\d{3,4}", mark):
+            score += 1
+        if idx > 0 and re.search(r"\bNOTES?\b", str(cells[idx - 1] or ""), re.IGNORECASE):
+            score -= 4
+
+        candidate = (score, -idx, mark, keyed_note)
+        if best is None or candidate > best:
+            best = candidate
+
+    if best is None:
+        return None, None, None
+    _, neg_idx, mark, keyed_note = best
+    return -neg_idx, mark, keyed_note
+
+
+def _looks_like_hardware_set_token(value: object) -> bool:
+    token = str(value or "").strip()
+    if not token:
+        return False
+    if _is_dimension(token):
+        return False
+    if re.search(r"[/'\"]", token):
+        return False
+    if re.fullmatch(r"[A-Z]?\d{1,4}[A-Za-z]{0,3}(?:-[A-Za-z0-9]+)?", token, re.IGNORECASE):
+        return True
+    if re.fullmatch(r"[A-Z]+-?\d{1,4}[A-Za-z0-9-]*", token, re.IGNORECASE):
+        return True
+    return bool(re.fullmatch(r"\d{1,2}\.\d", token))
+
+
+def _clean_fire_rating(value: object) -> Optional[str]:
+    token = str(value or "").strip()
+    if not token:
+        return None
+    return token if re.search(r"\b(?:MIN|HR|HOUR)\b", token, re.IGNORECASE) else None
+
+
+def _extract_hardware_set_from_tail(tail: List[Optional[str]]) -> Optional[str]:
+    """
+    Find the hardware set in a door row without confusing it with frame type.
+
+    In the canonical schedule layout the hardware set appears after the three
+    detail columns and the fire-rating column. In flattened rows, it is often
+    the number immediately after the last detail reference or fire rating.
+    """
+    if len(tail) > 16 and _clean_fire_rating(tail[15]) and _looks_like_hardware_set_token(tail[16]):
+        return str(tail[16]).strip()
+    if len(tail) > 15 and _looks_like_hardware_set_token(tail[15]):
+        return str(tail[15]).strip()
+    if len(tail) > 16 and _looks_like_hardware_set_token(tail[16]):
+        return str(tail[16]).strip()
+
+    for idx, cell in enumerate(tail):
+        text = str(cell or "").strip()
+        match = re.search(r"\b(?:\d+\s*(?:MIN|HR)|\d+\s*HOUR)\.?\s+([A-Z]?\d{1,2}[A-Za-z]?)\b", text, re.IGNORECASE)
+        if match:
+            return match.group(1)
+        if re.fullmatch(r"[A-Z]\d+(?:\.\d+)?/\d+", text, re.IGNORECASE):
+            for later in tail[idx + 1: idx + 5]:
+                if _looks_like_hardware_set_token(later):
+                    return str(later).strip()
+
+    candidates = [str(cell or "").strip() for cell in tail if _looks_like_hardware_set_token(cell)]
+    return candidates[-1] if candidates else None
+
+
+def _parse_compact_door_table_rows(text: str) -> List[dict]:
+    """
+    Parse compact schedules shaped like:
+    NO | TYPE | SIZE | FRAME | HDWR
+
+    These appear on smaller tenant sheets and should not be interpreted as the
+    wider from/to/material/finish/detail schedule.
+    """
+    doors: List[dict] = []
+    in_structured_source = False
+
+    for line in text.splitlines():
+        if line.startswith("[Source: "):
+            in_structured_source = line.strip() in {"[Source: pdfplumber_tables]", "[Source: pdfplumber_rows]"}
+            continue
+        if not in_structured_source:
+            continue
+
+        cells = _split_markdown_row(line)
+        if len(cells) < 5:
+            continue
+
+        parsed_tail = None
+        door_number = None
+        embedded_note = None
+        for idx, cell in enumerate(cells):
+            candidate, note = _normalize_door_mark_cell(cell)
+            if not candidate:
+                candidate, note = _extract_leading_door_mark(cell)
+            if not candidate:
+                continue
+            tail = cells[idx:]
+            if len(tail) >= 5 and _split_combined_dimensions(tail[2]):
+                parsed_tail = tail
+                door_number = candidate
+                embedded_note = note
+                break
+        if not parsed_tail or not door_number:
+            continue
+
+        dims = _split_combined_dimensions(parsed_tail[2])
+        if not dims:
+            continue
+
+        hardware_raw = str(parsed_tail[4] or "").strip()
+        hardware_set = None
+        explicit_no_hardware = False
+        hw_match = re.fullmatch(r"HW[\s#.-]*(.+)", hardware_raw, flags=re.IGNORECASE)
+        if hw_match:
+            candidate = hw_match.group(1).strip()
+            hardware_set = candidate if _looks_like_hardware_set_token(candidate) else None
+        elif hardware_raw.upper() in {"E", "EXIST", "EXISTING", "EXISTING TO REMAIN"}:
+            explicit_no_hardware = True
+        elif _looks_like_hardware_set_token(hardware_raw):
+            hardware_set = hardware_raw
+
+        door = {
+            "door_number": door_number,
+            "door_type": str(parsed_tail[1] or "").strip() or None,
+            "door_width": dims[0],
+            "door_height": dims[1],
+            "frame_type": str(parsed_tail[3] or "").strip() or None,
+            "frame_material": str(parsed_tail[3] or "").strip() or None,
+            "hardware_set": hardware_set,
+            "remarks": embedded_note or (str(parsed_tail[5] or "").strip() if len(parsed_tail) > 5 else None),
+            "_table_shape": "compact",
+            "_hardware_set_explicit_blank": explicit_no_hardware,
+            "is_pair": bool(str(dims[0]).startswith(("6'", "7'", "8'"))),
+            "door_leaves": 2 if str(dims[0]).startswith(("6'", "7'", "8'")) else 1,
+        }
+        doors.append({k: v for k, v in door.items() if v not in (None, "")})
+
+    return _dedupe_doors_by_number(doors)
+
+
+def _parse_formal_door_table_rows(text: str) -> List[dict]:
+    """Parse clean rows from the explicit pdfplumber table block."""
+    compact_doors = _parse_compact_door_table_rows(text)
+    if len(compact_doors) >= 3:
+        return compact_doors
+
+    doors: List[dict] = []
+    in_pdfplumber_tables = False
+
+    for line in text.splitlines():
+        if line.startswith("[Source: "):
+            in_pdfplumber_tables = line.strip() == "[Source: pdfplumber_tables]"
+            continue
+        if not in_pdfplumber_tables:
+            continue
+
+        cells = _split_markdown_row(line)
+        if len(cells) < 17:
+            continue
+
+        mark_idx, door_number, keyed_note = _find_best_door_mark_index(cells)
+        if mark_idx is None or not door_number:
+            continue
+
+        tail = cells[mark_idx:]
+        if len(tail) < 17 or not (_is_dimension(tail[3]) and _is_dimension(tail[4])):
+            continue
+
+        hardware_set = _extract_hardware_set_from_tail(tail) if len(tail) > 15 else None
+        details = " / ".join(str(v) for v in tail[12:15] if v)
+        remarks = tail[17] if len(tail) > 17 else None
+        door_width = tail[3]
+
+        door = {
+            "door_number": door_number,
+            "from_room": tail[1],
+            "room_name": tail[2],
+            "door_width": door_width,
+            "door_height": tail[4],
+            "door_thickness": tail[5],
+            "door_material": tail[6],
+            "door_type": tail[7],
+            "door_finish": tail[8],
+            "frame_material": tail[9],
+            "frame_type": tail[10],
+            "frame_finish": tail[11],
+            "head_jamb_sill_detail": details or None,
+            "fire_rating": _clean_fire_rating(tail[15]),
+            "hardware_set": hardware_set,
+            "remarks": remarks,
+            "keyed_notes": keyed_note,
+            "_table_shape": "formal",
+            "is_pair": bool(door_width and str(door_width).strip().startswith(("6'", "7'", "8'"))),
+            "door_leaves": 2 if door_width and str(door_width).strip().startswith(("6'", "7'", "8'")) else 1,
+        }
+        doors.append({k: v for k, v in door.items() if v not in (None, "")})
+
+    return _dedupe_doors_by_number(doors)
+
+
 def _collect_pipe_cells(text: str) -> List[str]:
     cells: List[str] = []
     for line in text.splitlines():
@@ -161,8 +418,9 @@ def _parse_door_cell_stream_fallback(text: str) -> List[dict]:
         door_height = dims[1]
         hardware_set = None
         for value in lookahead:
-            if re.fullmatch(r"\d{1,2}[A-Za-z]?", str(value or "").strip()) and value != token:
-                hardware_set = str(value).strip()
+            match = re.search(r"\b(?:HW|HDWR|HARDWARE)\s*[-#:]?\s*([A-Z0-9.-]+)\b", str(value or ""), re.IGNORECASE)
+            if match and _looks_like_hardware_set_token(match.group(1)):
+                hardware_set = match.group(1)
                 break
 
         doors.append({
@@ -178,6 +436,57 @@ def _parse_door_cell_stream_fallback(text: str) -> List[dict]:
     return _dedupe_doors_by_number(doors)
 
 
+def _is_bad_room_name(value: object) -> bool:
+    token = str(value or "").strip()
+    if not token:
+        return False
+    upper = re.sub(r"\s+", " ", token.upper()).strip(" .:-")
+    if _looks_like_combined_dimensions(token) or _is_dimension(token):
+        return True
+    return upper in {"ELECTRICAL COMPONENTS", "PARTITION GENERAL NOTES", "DOOR GENERAL NOTES"}
+
+
+def _merge_trusted_table_fields(doors: List[dict], parsed_doors: List[dict]) -> int:
+    trusted = {
+        str(row.get("door_number") or "").strip().upper(): row
+        for row in parsed_doors
+        if row.get("_table_shape") in {"compact", "formal"}
+    }
+    if not trusted:
+        return 0
+
+    changed = 0
+    for door in doors:
+        key = str(door.get("door_number") or "").strip().upper()
+        parsed = trusted.get(key)
+        if not parsed:
+            if _is_bad_room_name(door.get("room_name")):
+                door.pop("room_name", None)
+                changed += 1
+            continue
+
+        if _is_bad_room_name(door.get("room_name")):
+            door.pop("room_name", None)
+            changed += 1
+
+        for field in ("door_width", "door_height", "door_type", "frame_type", "frame_material"):
+            value = parsed.get(field)
+            if value and door.get(field) != value:
+                door[field] = value
+                changed += 1
+
+        parsed_hw = parsed.get("hardware_set")
+        current_hw = str(door.get("hardware_set") or "").strip().upper()
+        if parsed_hw and door.get("hardware_set") != parsed_hw:
+            door["hardware_set"] = parsed_hw
+            changed += 1
+        elif parsed.get("_hardware_set_explicit_blank") and current_hw in {"E", "EXIST", "EXISTING"}:
+            door.pop("hardware_set", None)
+            changed += 1
+
+    return changed
+
+
 def _parse_door_table_fallback(text: str) -> List[dict]:
     """
     Deterministic fallback for dense pdfplumber markdown door schedules.
@@ -185,6 +494,10 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
     It intentionally handles only rows with a clear door mark plus width/height
     dimensions, so note blocks and hardware component lists are ignored.
     """
+    formal_doors = _parse_formal_door_table_rows(text)
+    if len(formal_doors) >= 3:
+        return formal_doors
+
     doors: List[dict] = []
     dim_re = re.compile(r"\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\"")
 
@@ -193,12 +506,8 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
         if len(cells) < 4:
             continue
 
-        mark_idx = None
-        for idx, cell in enumerate(cells[:3]):
-            if _looks_like_door_mark(cell):
-                mark_idx = idx
-                break
-        if mark_idx is None:
+        mark_idx, normalized_mark, keyed_note = _find_best_door_mark_index(cells)
+        if mark_idx is None or not normalized_mark:
             continue
 
         tail = cells[mark_idx:]
@@ -213,15 +522,12 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
             return tail[offset] if offset < len(tail) else None
 
         door_number = str(get(0)).strip()
+        if normalized_mark:
+            door_number = normalized_mark
         door_width = dims[0]
         door_height = dims[1]
         door_thickness = dims[2] if len(dims) > 2 else get(5)
-        hardware_set = None
-        for cell in tail:
-            value = str(cell or "").strip()
-            if re.fullmatch(r"\d{1,2}[A-Za-z]?", value):
-                hardware_set = value
-                break
+        hardware_set = _extract_hardware_set_from_tail(tail) if len(tail) > 15 else None
 
         door = {
             "door_number": door_number,
@@ -240,6 +546,7 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
             "fire_rating": get(15),
             "hardware_set": hardware_set,
             "remarks": get(17),
+            "keyed_notes": keyed_note,
             "is_pair": bool(door_width and str(door_width).strip().startswith("6'")),
             "door_leaves": 2 if door_width and str(door_width).strip().startswith("6'") else 1,
         }
@@ -258,10 +565,10 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
                 continue
             room_name = embedded_room or str(cells[1] or "").strip() or None
             hardware_set = None
-            for cell in cells[3:]:
-                value = str(cell or "").strip()
-                if re.fullmatch(r"\d{1,2}[A-Za-z]?", value) and value != door_number:
-                    hardware_set = value
+            for value in cells[3:]:
+                match = re.search(r"\b(?:HW|HDWR|HARDWARE)\s*[-#:]?\s*([A-Z0-9.-]+)\b", str(value or ""), re.IGNORECASE)
+                if match and _looks_like_hardware_set_token(match.group(1)):
+                    hardware_set = match.group(1)
                     break
             door_width, door_height = dim_pair
             doors.append({
@@ -595,6 +902,11 @@ def extract_page_with_llm(
             ctx.update_from_doors(all_doors)
 
     all_doors = _dedupe_doors_by_number(all_doors)
+    if all_doors:
+        parsed_table_doors = _parse_door_table_fallback(raw_text)
+        merged_fields = _merge_trusted_table_fields(all_doors, parsed_table_doors)
+        if merged_fields:
+            logger.info("Merged %d trusted deterministic door-table fields into LLM rows.", merged_fields)
 
     physical_count = _physical_door_count(all_doors)
     should_try_fallback = (

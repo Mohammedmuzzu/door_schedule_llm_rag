@@ -291,6 +291,47 @@ def _clean_join_id(value) -> str:
     return re.sub(r"^(?:HW|HDWR|HARDWARE|SET|GROUP)[\s.#:-]*", "", s).strip()
 
 
+def _backfill_orphan_hw_sets_by_door_number(
+    df_doors: pd.DataFrame,
+    df_components: pd.DataFrame,
+    project_id: object | None = None,
+) -> int:
+    """Assign blank door hardware_set when a component set ID exactly matches the door mark."""
+    if df_doors.empty or df_components.empty:
+        return 0
+    if "door_number" not in df_doors.columns or "hardware_set" not in df_doors.columns:
+        return 0
+    if "hardware_set_id" not in df_components.columns:
+        return 0
+
+    door_mask = pd.Series(True, index=df_doors.index)
+    comp_mask = pd.Series(True, index=df_components.index)
+    if project_id is not None and "project_id" in df_doors.columns:
+        door_mask &= df_doors["project_id"] == project_id
+    if project_id is not None and "project_id" in df_components.columns:
+        comp_mask &= df_components["project_id"] == project_id
+
+    hw_lookup: dict[str, str] = {}
+    for raw in df_components.loc[comp_mask, "hardware_set_id"].dropna().tolist():
+        clean = _clean_join_id(raw)
+        if clean and clean not in hw_lookup:
+            hw_lookup[clean] = str(raw).strip()
+    if not hw_lookup:
+        return 0
+
+    orphan_mask = door_mask & (
+        df_doors["hardware_set"].isna()
+        | (df_doors["hardware_set"].astype(str).str.strip() == "")
+    )
+    filled = 0
+    for idx in df_doors.loc[orphan_mask].index:
+        key = _clean_join_id(df_doors.at[idx, "door_number"])
+        if key in hw_lookup:
+            df_doors.at[idx, "hardware_set"] = hw_lookup[key]
+            filled += 1
+    return filled
+
+
 def _append_semicolon(value: object, token: str) -> str:
     parts = [p for p in str(value or "").split(";") if p]
     if token not in parts:
@@ -944,13 +985,28 @@ def run_pipeline(
                 proj_hw = df_components[df_components["project_id"] == pid]
                 if proj_hw.empty:
                     continue
+
+                matched_by_door = _backfill_orphan_hw_sets_by_door_number(df_doors, df_components, project_id=pid)
+                if matched_by_door:
+                    logger.info(
+                        "Cross-ref: assigned %d orphan doors in %s to hardware sets with matching door numbers.",
+                        matched_by_door,
+                        pid,
+                    )
                 
                 hw_set_ids = proj_hw["hardware_set_id"].dropna().unique()
+                current_orphan_mask = (
+                    (df_doors["project_id"] == pid)
+                    & (
+                        df_doors["hardware_set"].isna()
+                        | (df_doors["hardware_set"].astype(str).str.strip() == "")
+                    )
+                )
                 
                 # Strategy 1: If the project has exactly 1 hardware set,
                 # assign all orphan doors to it.
-                if len(hw_set_ids) == 1:
-                    mask = orphan_mask & (df_doors["project_id"] == pid)
+                if len(hw_set_ids) == 1 and current_orphan_mask.any():
+                    mask = current_orphan_mask
                     df_doors.loc[mask, "hardware_set"] = str(hw_set_ids[0])
                     logger.info("Cross-ref: assigned %d orphan doors in %s to sole HW set '%s'.",
                                 mask.sum(), pid, hw_set_ids[0])
@@ -977,11 +1033,27 @@ def run_pipeline(
     # Hardware pages often list door numbers under hardware sets. The LLM might extract these 
     # as door rows, but they lack all physical dimensions/materials.
     if not df_doors.empty:
-        phys_cols = ["door_width", "door_height", "door_thickness", "door_material", "door_type", "frame_material", "fire_rating"]
-        existing = [c for c in phys_cols if c in df_doors.columns]
+        dimension_cols = [c for c in ["door_width", "door_height", "frame_width", "frame_height"] if c in df_doors.columns]
+        strong_phys_cols = [
+            c for c in ["door_thickness", "door_material", "door_finish", "frame_material", "frame_finish", "fire_rating"]
+            if c in df_doors.columns
+        ]
+        existing = dimension_cols + strong_phys_cols
         if existing:
             before_ghosts = len(df_doors)
-            valid_mask = df_doors[existing].notna().any(axis=1) | (df_doors["door_number"].astype(str).str.strip() == "")
+            has_dimensions = (
+                df_doors[dimension_cols].notna().any(axis=1)
+                if dimension_cols else pd.Series(False, index=df_doors.index)
+            )
+            has_strong_physical = (
+                df_doors[strong_phys_cols].notna().any(axis=1)
+                if strong_phys_cols else pd.Series(False, index=df_doors.index)
+            )
+            valid_mask = has_dimensions | has_strong_physical | (df_doors["door_number"].astype(str).str.strip() == "")
+            if "source_file" in df_doors.columns:
+                source_upper = df_doors["source_file"].fillna("").astype(str).str.upper()
+                hardware_only_source = source_upper.str.contains("HARDWARE") & ~source_upper.str.contains("DOOR")
+                valid_mask &= ~(hardware_only_source & ~has_dimensions)
             df_doors = df_doors[valid_mask].reset_index(drop=True)
             ghosts = before_ghosts - len(df_doors)
             if ghosts > 0:

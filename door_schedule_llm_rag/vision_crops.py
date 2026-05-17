@@ -219,7 +219,7 @@ def _hardware_section_tiles(expanded, anchor_rect, page_rect, columns: int = 4) 
         return []
 
     y0 = max(page_rect.y0, expanded.y0 + 70)
-    y1 = min(page_rect.y1, expanded.y1 - 70)
+    y1 = min(page_rect.y1, expanded.y1)
     if y1 <= y0:
         y0, y1 = expanded.y0, expanded.y1
 
@@ -237,6 +237,41 @@ def _hardware_section_tiles(expanded, anchor_rect, page_rect, columns: int = 4) 
         tx1 = min(page_rect.x1, x0 + (idx + 1) * tile_width + (overlap if idx < columns - 1 else 0))
         score = 0.985 - idx * 0.002
         rects.append((f"text:DOOR HARDWARE column {idx + 1}/{columns}", score, (tx0, y0, tx1, y1), "hardware"))
+
+    middle_upper_x0 = x0 + width * 0.32
+    middle_upper_x1 = x0 + width * 0.50
+    middle_upper_y0 = y0 + 15
+    middle_upper_y1 = y0 + (y1 - y0) * 0.46
+    rects.append((
+        "text:DOOR HARDWARE middle-upper sets",
+        0.9845,
+        (
+            max(page_rect.x0, middle_upper_x0),
+            max(page_rect.y0, middle_upper_y0),
+            min(page_rect.x1, middle_upper_x1),
+            min(page_rect.y1, middle_upper_y1),
+        ),
+        "hardware",
+    ))
+
+    upper_y0 = expanded.y0
+    upper_y1 = y0 + (y1 - y0) * 0.55
+    upper_x0 = x0 + width * 0.55
+    rects.append((
+        "text:DOOR HARDWARE upper-right sets",
+        0.9825,
+        (max(page_rect.x0, upper_x0), upper_y0, min(page_rect.x1, x1), upper_y1),
+        "hardware",
+    ))
+
+    lower_y0 = y0 + (y1 - y0) * 0.48
+    lower_x0 = x0 + width * 0.55
+    rects.append((
+        "text:DOOR HARDWARE lower-right sets",
+        0.982,
+        (max(page_rect.x0, lower_x0), lower_y0, min(page_rect.x1, x1), y1),
+        "hardware",
+    ))
     return rects
 
 
@@ -257,7 +292,7 @@ def _text_anchor_rects(page, page_rect) -> list[tuple]:
                 area_ratio = expanded.get_area() / max(page_rect.get_area(), 1)
                 if area_ratio < 0.70:
                     if is_lower_section_label:
-                        score = 0.98
+                        score = 0.974
                     elif keyword.upper() == "DOOR HARDWARE":
                         score = 0.84
                     else:
@@ -320,6 +355,13 @@ def _visual_table_rects(page, page_rect) -> list[tuple]:
 def _needs_tiles(page_text: str, page_type: str, rects: list) -> bool:
     if len(rects) >= 2:
         return False
+    if len(rects) == 1:
+        source = str(rects[0][0] or "").lower()
+        # Visual-only rotated sheets can produce one confident-looking crop
+        # around the title block while the actual schedules sit in side bands.
+        # Add broad tiles in that case so crop rescue sees the real tables too.
+        if source.startswith("visual_grid") and not (page_text or "").strip():
+            return True
     upper = f"{page_type}\n{page_text}".upper()
     if any(keyword in upper for keyword in ("DOOR SCHEDULE", "HARDWARE SET", "HARDWARE SCHEDULE")):
         return True
@@ -333,6 +375,7 @@ def _tile_rects(page_rect) -> list[tuple]:
     h = page_rect.height
     tiles = [
         ("tile_top_left", 0.38, (0, 0, w * 0.55, h * 0.45)),
+        ("tile_right_schedule_band", 0.37, (w * 0.88, 0, w, h * 0.36)),
         ("tile_top_right", 0.36, (w * 0.45, 0, w, h * 0.45)),
         ("tile_bottom_left", 0.32, (0, h * 0.45, w * 0.55, h)),
         ("tile_bottom_right", 0.30, (w * 0.45, h * 0.45, w, h)),

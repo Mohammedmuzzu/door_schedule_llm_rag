@@ -27,17 +27,49 @@ return complete data) therefore never regress.
 
 from __future__ import annotations
 
+import base64
 import logging
 import re
 from typing import List, Optional, Tuple
 
 from page_evidence import PageEvidence, collect as collect_evidence, confidence_score
-from page_extractor import PageType
+from page_extractor import PageType, get_raw_paddle_ocr
 from prompts import build_crop_door_prompt, build_crop_hardware_prompt
 from prompts.rescue import DOOR_SELF_VERIFICATION_HINT, HARDWARE_SELF_VERIFICATION_HINT
 from vision_crops import crop_summary
 
 logger = logging.getLogger("verification")
+
+_DOOR_TYPE_OR_PROFILE_LABEL_RE = re.compile(
+    r"^(?:A|B|C|E|F|G|H|I|J|K|AL|HM|WD|FR|FG)[-]?\d+[A-Z]?$",
+    re.IGNORECASE,
+)
+
+_HARDWARE_COMPONENT_TERMS = (
+    "HINGE",
+    "LOCK",
+    "LATCH",
+    "CLOSER",
+    "STOP",
+    "SEAL",
+    "SWEEP",
+    "THRESHOLD",
+    "EXIT DEVICE",
+    "PUSH",
+    "PULL",
+    "KICK PLATE",
+    "WEATHERSTRIP",
+    "GASKET",
+    "CYLINDER",
+    "STRIKE",
+    "BOLT",
+)
+
+_EXPLICIT_HW_SET_HEADER_RE = re.compile(
+    r"\b(?:HARDWARE\s+)?(?:SET|GROUP|HW\s*SET|HDW\s*SET|SET\s*NO\.?|GROUP\s*NO\.?)\b"
+    r"[\s:#.-]*(?:[A-Z]?\d|\d+[A-Z]?|[A-Z])",
+    re.IGNORECASE,
+)
 
 
 # ─── Helpers ──────────────────────────────────────────────────────
@@ -49,6 +81,61 @@ def _hw_key(row: dict) -> Tuple[str, str]:
     hw_id = str(row.get("hardware_set_id") or "").strip().upper()
     desc = str(row.get("description") or "").strip().upper()
     return hw_id, desc
+
+
+def _clean_hw_ref(value: object) -> str:
+    token = str(value or "").strip().upper()
+    if token in {"", "?", "N/A", "NA", "NONE", "NULL", "-", "--", "---", "----"}:
+        return ""
+    token = re.sub(r"^(?:HW|HDWR|HARDWARE|SET|GROUP)[\s.#:-]*", "", token).strip()
+    if token.endswith(".0"):
+        token = token[:-2]
+    return token
+
+
+def _sort_hw_refs(values: set[str] | list[str]) -> list[str]:
+    def key(value: str):
+        return (0, int(value)) if value.isdigit() else (1, value)
+
+    return sorted((v for v in values if v), key=key)
+
+
+def _missing_referenced_hw_sets(doors: List[dict], hardware: List[dict]) -> list[str]:
+    referenced = {_clean_hw_ref(d.get("hardware_set")) for d in doors}
+    present = {_clean_hw_ref(h.get("hardware_set_id")) for h in hardware}
+    return _sort_hw_refs(referenced - present - {""})
+
+
+def _missing_hw_repair_hint(missing_sets: list[str]) -> str:
+    wanted = ", ".join(missing_sets)
+    visible = ", ".join(f"Set: {set_id}" for set_id in missing_sets)
+    scope = (
+        "this single requested set"
+        if len(missing_sets) == 1
+        else "these requested sets"
+    )
+    return (
+        "TARGETED MISSING-SET REPAIR:\n"
+        f"Door rows already reference hardware set IDs that are still missing from the extracted hardware table: {wanted}.\n"
+        f"In the attached crop, extract ONLY components visibly belonging to these set headers: {visible}.\n"
+        "First locate each underlined Set header in the image. If a requested Set header is not visibly present in this crop, "
+        f"return no rows for that set. Do NOT extract neighboring sets. Focus on {scope}. For each visible requested set, read the component rows "
+        "beneath that set header down to the next Set header in the same local column. Ignore component rows physically above the requested Set header. "
+        "Use the Description line immediately below the requested Set header as hardware_set_name when present. "
+        "If several set blocks are side-by-side, keep the requested set header, its Doors/Description lines, and its component rows in the same local x-column; "
+        "never borrow component rows from a neighboring set block."
+    )
+
+
+def _hardware_repair_crop_rank(crop: dict):
+    source = str(crop.get("source") or "")
+    if "column" in source.lower():
+        bucket = 0
+    elif "upper-right" in source.lower() or "lower-right" in source.lower():
+        bucket = 1
+    else:
+        bucket = 2
+    return (bucket, -float(crop.get("confidence") or 0.0))
 
 
 def _door_gap(doors: List[dict], evidence: PageEvidence) -> int:
@@ -114,14 +201,222 @@ def _crop_count(crop_candidates: list[dict], *types: str) -> int:
 
 def _crop_supporting_text(page_text: str, crop: dict) -> str:
     crop_text = str(crop.get("text") or "").strip()
-    if not crop_text:
+    ocr_text = _crop_ocr_text(crop) if _is_crop_only_rescue_context(page_text) else ""
+    if not crop_text and not ocr_text:
         return page_text
-    return (
-        "=== TEXT EXTRACTED FROM THIS CROP ===\n"
-        f"{crop_text}\n\n"
-        "=== FULL PAGE CONTEXT ===\n"
-        f"{page_text}"
-    )
+    parts = []
+    if ocr_text:
+        parts.append(
+            "=== LOCAL OCR WORDS FROM THIS CROP (sorted top-to-bottom, left-to-right) ===\n"
+            f"{ocr_text}"
+        )
+    if crop_text:
+        parts.append(f"=== TEXT EXTRACTED FROM THIS CROP ===\n{crop_text}")
+    parts.append(f"=== FULL PAGE CONTEXT ===\n{page_text}")
+    return "\n\n".join(parts)
+
+
+def _crop_ocr_text(crop: dict, max_items: int = 220) -> str:
+    cache_key = f"_ocr_text_{max_items}"
+    if cache_key in crop:
+        return str(crop.get(cache_key) or "")
+
+    try:
+        import cv2
+        import numpy as np
+    except Exception:
+        return ""
+
+    try:
+        b64 = crop.get("base64_image")
+        if not b64:
+            return ""
+        ocr = get_raw_paddle_ocr()
+        if ocr is None:
+            return ""
+        raw = base64.b64decode(b64)
+        image = cv2.imdecode(np.frombuffer(raw, np.uint8), cv2.IMREAD_COLOR)
+        if image is None:
+            return ""
+        result = ocr.ocr(image, cls=True)
+    except Exception as exc:
+        logger.debug("Crop OCR support failed: %s", exc)
+        return ""
+
+    items: list[tuple[float, float, str, float]] = []
+    for page in result or []:
+        for box, rec in page or []:
+            try:
+                text, conf = rec
+                text = str(text or "").strip()
+                if not text or float(conf) < 0.45:
+                    continue
+                xs = [point[0] for point in box]
+                ys = [point[1] for point in box]
+                items.append((min(ys), min(xs), text, float(conf)))
+            except Exception:
+                continue
+    if not items:
+        return ""
+
+    lines = []
+    for y, x, text, conf in sorted(items)[:max_items]:
+        lines.append(f"y={int(round(y))} x={int(round(x))} conf={conf:.2f} text={text}")
+    result = "\n".join(lines)
+    crop[cache_key] = result
+    return result
+
+
+def _is_crop_only_rescue_context(page_text: str) -> bool:
+    return "VISION_CROP_RESCUE" in str(page_text or "").upper()
+
+
+def _crop_visible_text(crop: dict) -> str:
+    cached = crop.get("_visible_text")
+    if cached is not None:
+        return str(cached)
+
+    parts = []
+    crop_text = str(crop.get("text") or "").strip()
+    if crop_text:
+        parts.append(crop_text)
+    ocr_text = _crop_ocr_text(crop)
+    if ocr_text:
+        parts.append(ocr_text)
+
+    visible = "\n".join(parts).strip()
+    crop["_visible_text"] = visible
+    return visible
+
+
+def _crop_search_text(crop: dict) -> str:
+    cached = crop.get("_search_text")
+    if cached is not None:
+        return str(cached)
+
+    search_lines = []
+    for line in _crop_visible_text(crop).splitlines():
+        if " text=" in line:
+            search_lines.append(line.split(" text=", 1)[1])
+        elif not line.lstrip().startswith("y="):
+            search_lines.append(line)
+    search = re.sub(r"\s+", " ", "\n".join(search_lines).upper()).strip()
+    crop["_search_text"] = search
+    return search
+
+
+def _visible_token(search_text: str, value: object) -> bool:
+    token = str(value or "").strip().upper()
+    if not token:
+        return False
+    return re.search(rf"(?<![A-Z0-9]){re.escape(token)}(?![A-Z0-9])", search_text) is not None
+
+
+def _visible_phrase(search_text: str, value: object) -> bool:
+    phrase = re.sub(r"\s+", " ", str(value or "").upper()).strip()
+    if not phrase:
+        return False
+    return phrase in search_text
+
+
+def _crop_has_door_schedule_evidence(crop: dict, page_text: str) -> bool:
+    if not _is_crop_only_rescue_context(page_text):
+        return True
+
+    search = _crop_search_text(crop)
+    if not search:
+        # If OCR support is unavailable, let the vision model inspect the crop.
+        return True
+    if "DOOR SCHEDULE" in search or "DOOR SCHED" in search or "OPENING LIST" in search:
+        return True
+    has_row_id_header = re.search(r"\b(?:DOOR\s+NO|DOOR\s+#|NO\.|MARK|OPENING|TAG)\b", search) is not None
+    has_door_columns = re.search(r"\b(?:ROOM|WIDTH|HEIGHT|SIZE|FRAME|MATERIAL|HDW|HARDWARE)\b", search) is not None
+    return bool(has_row_id_header and has_door_columns)
+
+
+def _crop_has_hardware_schedule_evidence(crop: dict, page_text: str) -> bool:
+    if not _is_crop_only_rescue_context(page_text):
+        return True
+
+    search = _crop_search_text(crop)
+    if not search:
+        return True
+    if any(marker in search for marker in ("DOOR HARDWARE", "HARDWARE SET", "HARDWARE SCHEDULE", "HARDWARE GROUP")):
+        return True
+    if _EXPLICIT_HW_SET_HEADER_RE.search(search):
+        return True
+    component_hits = sum(1 for term in _HARDWARE_COMPONENT_TERMS if term in search)
+    return component_hits >= 2
+
+
+def _filter_crop_door_rows(rows: List[dict], crop: dict, page_text: str) -> List[dict]:
+    if not rows or not _is_crop_only_rescue_context(page_text):
+        return rows
+
+    search = _crop_search_text(crop)
+    if not search:
+        return rows
+
+    filtered: list[dict] = []
+    for row in rows:
+        door_number = _door_key(row)
+        if not door_number:
+            continue
+        if _DOOR_TYPE_OR_PROFILE_LABEL_RE.match(door_number):
+            logger.debug("Dropping crop door row with type/profile label as mark: %s", door_number)
+            continue
+
+        room_name = re.sub(r"\s+", " ", str(row.get("room_name") or "").upper()).strip()
+        door_number_visible = _visible_token(search, door_number)
+
+        # Crop-only pages are where hallucinated generic rows are most likely.
+        # If the model invents a plausible room/mark pair not present in OCR,
+        # keep it out of the merge instead of polluting otherwise-good results.
+        if not door_number_visible:
+            logger.debug("Dropping crop door row without visible mark: %s %s", door_number, room_name)
+            continue
+
+        filtered.append(row)
+    return filtered
+
+
+def _normalize_crop_hardware_rows(rows: List[dict], crop: dict, page_text: str) -> List[dict]:
+    if not rows or not _is_crop_only_rescue_context(page_text):
+        return rows
+
+    search = _crop_search_text(crop)
+    if not search:
+        return rows
+
+    has_explicit_set_header = _EXPLICIT_HW_SET_HEADER_RE.search(search) is not None
+    if has_explicit_set_header:
+        return rows
+
+    normalized: list[dict] = []
+    for row in rows:
+        hw_id = _clean_hw_ref(row.get("hardware_set_id"))
+        if not hw_id or hw_id.isdigit() or re.fullmatch(r"[A-Z]", hw_id):
+            row = dict(row)
+            row["hardware_set_id"] = "DOOR_HARDWARE"
+            row.setdefault("hardware_set_name", "DOOR HARDWARE")
+        normalized.append(row)
+    return normalized
+
+
+def _repair_crop_supporting_text(page_text: str, crop: dict) -> str:
+    parts = []
+    ocr_text = _crop_ocr_text(crop)
+    if ocr_text:
+        parts.append(
+            "=== LOCAL OCR WORDS FROM THIS CROP (sorted top-to-bottom, left-to-right) ===\n"
+            f"{ocr_text}"
+        )
+    crop_text = str(crop.get("text") or "").strip()
+    if crop_text:
+        parts.append(f"=== TEXT EXTRACTED FROM THIS CROP ===\n{crop_text}")
+    if page_text:
+        parts.append(f"=== FULL PAGE CONTEXT ===\n{page_text}")
+    return "\n\n".join(parts)
 
 
 def _needs_crop_door_rescue(doors: List[dict], evidence: PageEvidence, page_type: str, crop_candidates: list[dict]) -> bool:
@@ -333,6 +628,9 @@ def verify_and_rescue(
         for idx, crop in enumerate(crops, 1):
             if crop.get("crop_type") not in ("door", "mixed"):
                 continue
+            if not _crop_has_door_schedule_evidence(crop, page_text):
+                logger.info("Door crop rescue %d/%d skipped: no local door schedule evidence.", idx, len(crops))
+                continue
             try:
                 prompt = build_crop_door_prompt(
                     _crop_supporting_text(page_text, crop),
@@ -345,8 +643,10 @@ def verify_and_rescue(
                     base64_image=crop.get("base64_image"),
                     force_model="gpt-4o",
                 )
+                raw_count = len(crop_doors)
+                crop_doors = _filter_crop_door_rows(crop_doors, crop, page_text)
                 doors = _dedup_doors(doors, crop_doors)
-                logger.info("Door crop rescue %d/%d returned %d rows.", idx, len(crops), len(crop_doors))
+                logger.info("Door crop rescue %d/%d returned %d rows (%d after filtering).", idx, len(crops), raw_count, len(crop_doors))
             except Exception as e:
                 logger.warning("Door crop rescue failed on crop %d: %s", idx, e)
         added = len(doors) - before_doors
@@ -398,6 +698,9 @@ def verify_and_rescue(
         for idx, crop in enumerate(crops, 1):
             if crop.get("crop_type") not in ("hardware", "mixed"):
                 continue
+            if not _crop_has_hardware_schedule_evidence(crop, page_text):
+                logger.info("Hardware crop rescue %d/%d skipped: no local hardware evidence.", idx, len(crops))
+                continue
             try:
                 prompt = build_crop_hardware_prompt(
                     _crop_supporting_text(page_text, crop),
@@ -410,8 +713,10 @@ def verify_and_rescue(
                     base64_image=crop.get("base64_image"),
                     force_model="gpt-4o",
                 )
+                raw_count = len(crop_hw)
+                crop_hw = _normalize_crop_hardware_rows(crop_hw, crop, page_text)
                 hardware = _dedup_hw(hardware, crop_hw)
-                logger.info("Hardware crop rescue %d/%d returned %d rows.", idx, len(crops), len(crop_hw))
+                logger.info("Hardware crop rescue %d/%d returned %d rows (%d after filtering).", idx, len(crops), raw_count, len(crop_hw))
             except Exception as e:
                 logger.warning("Hardware crop rescue failed on crop %d: %s", idx, e)
         added = len(hardware) - before_hw
@@ -419,6 +724,56 @@ def verify_and_rescue(
             report["hw_rescue"] = True
             report["crop_rescue"] = True
             report["crop_hw_added"] = added
+            report["hw_added"] += added
+
+    missing_hw_sets = _missing_referenced_hw_sets(doors, hardware)
+    hardware_crops = [
+        crop for crop in crops
+        if crop.get("crop_type") in ("hardware", "mixed") and crop.get("base64_image")
+        and _crop_has_hardware_schedule_evidence(crop, page_text)
+    ]
+    if missing_hw_sets and hardware_crops:
+        report["crop_rescue_attempted"] = True
+        before_hw = len(hardware)
+        remaining = missing_hw_sets[:]
+        ranked_crops = sorted(hardware_crops, key=_hardware_repair_crop_rank)
+        for idx, crop in enumerate(ranked_crops, 1):
+            if not remaining:
+                break
+            for set_id in list(remaining):
+                try:
+                    prompt = build_crop_hardware_prompt(
+                        _repair_crop_supporting_text(page_text, crop),
+                        crop_meta={k: crop.get(k) for k in ("source", "confidence", "bbox", "page_size", "crop_type")},
+                        max_chars=min(max_chars, 7000),
+                    )
+                    prompt["user"] = f"{prompt['user']}\n\n{_missing_hw_repair_hint([set_id])}"
+                    repair_hw = extract_hardware_llm(
+                        prompt["system"],
+                        prompt["user"],
+                        base64_image=crop.get("base64_image"),
+                    )
+                    repair_hw = [
+                        row for row in repair_hw
+                        if _clean_hw_ref(row.get("hardware_set_id")) == set_id
+                    ]
+                    hardware = _dedup_hw(hardware, repair_hw)
+                    remaining = _missing_referenced_hw_sets(doors, hardware)
+                    logger.info(
+                        "Hardware missing-set repair crop %d/%d for set %s returned %d rows; remaining=%s.",
+                        idx, len(ranked_crops), set_id, len(repair_hw), ",".join(remaining) or "none",
+                    )
+                    if set_id not in remaining:
+                        continue
+                except Exception as e:
+                    logger.warning("Hardware missing-set repair failed on crop %d for set %s: %s", idx, set_id, e)
+
+        added = len(hardware) - before_hw
+        if added > 0:
+            report["hw_rescue"] = True
+            report["crop_rescue"] = True
+            report["hw_missing_set_repair"] = True
+            report["crop_hw_added"] = report.get("crop_hw_added", 0) + added
             report["hw_added"] += added
 
     return doors, hardware, report
