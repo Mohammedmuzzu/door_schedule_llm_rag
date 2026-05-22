@@ -24,6 +24,7 @@ from config import (
     OPENAI_MODEL,
     OPENAI_ALLOW_MODEL_ESCALATION,
     OPENAI_AUTO_ESCALATE_VISION,
+    OPENAI_CHAT_TIMEOUT,
     OPENAI_DIRECT_PDF_MAX_MB,
     OPENAI_DIRECT_PDF_MAX_OUTPUT_TOKENS,
     OPENAI_DIRECT_PDF_MODEL,
@@ -77,7 +78,9 @@ _HW_NOISE_TERMS = re.compile(
     r"REFER\s+TO\s+HARDWARE|PROJECT\s+NO|DRAWN\s+BY|CHECKED\s+BY|SHEET\s+NO|"
     r"REVISION|GENERAL\s+NOTES?|TITLE\s+BLOCK|ARCHITECT|ENGINEER|SCALE|DATE|"
     r"ROOM\s+NAME|DOOR\s+NO|DOOR\s+NUMBER|FRAME\s+TYPE|FIRE\s+RATING|FINISH\s+TAG|"
-    r"EQUIPMENT\s*/\s*FIXTURE|LEGEND)\b",
+    r"EQUIPMENT\s*/\s*FIXTURE|LEGEND|GLASS\s+PANEL|SALVAGED\s+DOOR|"
+    r"HOLLOW\s+METAL\s+DOOR\s*/\s*FRAME|DOOR\s*&\s*FRAME\s+TO\s+BE\s+PAINTED|"
+    r"PRIME\s*&\s*PAINT\s+DOOR\s*&\s*FRAME|FIELD\s+VERIFY|WINDOW\s+ALTERNATES?)\b",
     re.IGNORECASE,
 )
 _EQUIPMENT_NOISE_TERMS = re.compile(
@@ -461,7 +464,7 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
     ratelimit_attempt = 0
     while True:
         try:
-            r = requests.post(url, headers=headers, json=payload, timeout=300)
+            r = requests.post(url, headers=headers, json=payload, timeout=OPENAI_CHAT_TIMEOUT)
             if r.status_code == 429:
                 if ratelimit_attempt >= OPENAI_RATELIMIT_RETRIES:
                     logger.warning(
@@ -489,6 +492,9 @@ def _openai_chat(system: str, user: str, force_json: bool = True, base64_image: 
             if attempt > LLM_MAX_RETRIES:
                 return ""
             time.sleep(2)
+        except requests.exceptions.Timeout as e:
+            logger.warning("[OpenAI] Call timed out after %ds: %s", OPENAI_CHAT_TIMEOUT, e)
+            return ""
         except Exception as e:
             logger.warning("[OpenAI] Call failed (attempt %d): %s", attempt + 1, e)
             attempt += 1

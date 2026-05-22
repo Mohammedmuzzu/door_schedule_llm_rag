@@ -1673,3 +1673,147 @@ a. Fire door assemblies, in compliance with NFPA 80.
 [TRUNCATED]
 ```
 ---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: proposal.pdf (Page 1)
+- **Timestamp:** 2026-05-19 04:54:38
+- **Issue:** Zero `DOOR` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (31×11) ===
+|  |  |  |  |  | FlipSide Specialties 5829 W Sam Houston Pkwy N #906 Houston, TX 77041 |  |  |  |  | Proposal |
+|  |  |  |  |  | P (832) 844-2521 |  |  |  |  | IDB26-01204 |
+|  |  |  |  | i | nfo@flipsidespecialties.com |  |  |  |  | Date: 5/5/2026 |
+|  |  |  |  | f | lipsidespecialties.com |  |  |  |  |  |
+| hick-fi | l-A (N Big | Spring) |  |  |  |  |  |  |  |  |
+|  | Anc 400 | hor Constru 0 Cartwright | ction M Rd | anageme | nt Point of | Sona | Francis |  |  |  |
+| Clien Jobsit | t Miss e Nor | ouri City, T th State Hig | exas 77 hway 3 | 459 49 | Contact Estimator | sona.f Same (832) | @anchorcm.net er Mohammed 844-2521 |  |  |  |
+| Addre | ss Midl | and, TX 797 | 05 |  |  | samee | r@flipsidespec.com |  |  |  |
+| WOOD | DOOR |  |  | ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: P26_01094_63910467839.pdf (Page 3)
+- **Timestamp:** 2026-05-19 21:25:33
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_rows]
+Proposal
+FlipSide Specialties
+5829 W Sam Houston Pkwy N #906
+Houston, TX 77041
+P (832) 844-2521  |  IDB26-01005
+info@flipsidespecialties.com
+Date: 3/30/2026
+flipsidespecialties.com
+1  |  10lbs ABC Fire Extinguisher - JL Industries (Tagged)-  |  EA  |  4
+2  |  JL Industries - C1017F10 - Semi Recessed FE Cabinet-  |  EA  |  4
+3  |  Corner Guards - 48in x 2in x 2in - 90 Deg, 18ga, Type 304-  |  EA  |  2
+4  |  Supply and Install-  |  LS  |  1
+Fire Extinguisher & Corner Guards
+1,645.20
+Signatures  |  Summary
+Subtotal  |  45,679.58
+Tax  |  3,768.60
+Signature  |  Print Name & Title  |  Date  |  Total  |  49,448.18
+Notes
+Add $150/trip for additional trip charge
+1.5x for after hours work (weekends, and after 5pm on weekdays.)
+Lead times are based on submittal approval date...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: proposal.pdf (Page 2)
+- **Timestamp:** 2026-05-19 21:36:00
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (22×10) ===
+|  |  |  |  |  | FlipSide Specialties 5829 W Sam Houston Pkwy N #906 Houston, TX 77041 |  |  | Pro | posa |
+|  |  |  |  |  | P (832) 844-2521 |  |  | ID | B26-0120 |
+|  |  |  |  |  | info@flipsidespecialties.com flipsidespecialties.com |  |  | Dat | e: 5/1/202 |
+|  | 166 1836 18" x 36 | " Meta | l Channel | Mirrors |  |  |  |  |  |
+| 5 | - |  |  |  |  | EA |  | 1 |  |
+|  | Wall Mount Paper | Towel | Holder |  |  |  |  |  |  |
+| 6 | - RR Signs |  |  |  |  | EA |  | 1 |  |
+| 7 | - |  |  |  |  | EA |  | 1 |  |
+|  | Installation (regula | r hours | ) |  |  |  |  |  |  |
+| 8 | - |  |  |  |  | EA |  | 1 | 952.47 |
+| Signa | tures |  |  |  |  | Summary |  |  |  |
+|  |  |  |  |  |  |  | Subtotal |  | 2,983.47 |
+|  |  |  |  |  |  |  | Tax |  | 246.1...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: P26-01352_63913052165.pdf (Page 2)
+- **Timestamp:** 2026-05-19 21:54:14
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+VISION_CROP_RESCUE: Native text extraction was empty or title-block-only. Use the attached high-resolution crops as ground truth for visible door schedule or hardware schedule content.
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: proposal.pdf (Page 3)
+- **Timestamp:** 2026-05-19 21:56:11
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (15×7) ===
+|  |  |  |  | FlipSide Specialties 5829 W Sam Houston Pkwy N #906 Houston, TX 77041 | Pro | posa |
+|  |  |  |  | P (832) 844-2521 | I | DB26-0120 |
+|  |  |  |  | info@flipsidespecialties.com flipsidespecialties.com | D | ate: 5/5/202 |
+| 2 RR Signs | - |  |  |  | 2 |  |
+| 3 Installation | (regular hours)- |  |  |  | 1 | 12,065.40 |
+| Signatures |  |  |  | Summary |  |  |
+|  |  |  |  |  | Subtotal | 52,386.68 |
+|  |  |  |  |  | Tax | 4,321.92 |
+| Signature Notes |  |  |  | Print Name & Title Date | Total | 56,708.60 |
+| Add $150/trip for | additional trip ch | arge |  |  |  |  |
+| 1.5x for after hou | rs work (weekend | s, and aft | er 5pm | on weekdays.) |  |  |
+| Lead times are b | ased on submitta | l approval | date | Exclusions Excludes ...
+[TRUNCATED]
+```
+---
+
+
+### ⚠️ Auto-Logged Extraction Anomaly: proposal.pdf (Page 2)
+- **Timestamp:** 2026-05-19 22:08:28
+- **Issue:** Zero `HARDWARE` rows extracted despite explicit structural classification.
+- **Hypothesis:** LLM failed to parse due to unrecognized block architecture, embedded legends, or JSON hallucination-prevention constraints.
+- **Raw Output Hook:**
+```text
+[Source: pdfplumber_tables]
+=== TABLE (8×5) ===
+|  |  |  | FlipSide Specialties 5829 W Sam Houston Pkwy N #906 Houston, TX 77041 | Proposal |
+|  |  |  | P (832) 844-2521 | IDB26-01168 |
+|  |  |  | info@flipsidespecialties.com flipsidespecialties.com | Date: 4/20/2026 |
+| Add $150/trip for additional trip ch | arge |  |  |  |
+| 1.5x for after hours work (weekend | s, and aft | er 5pm | on weekdays.) |  |
+| Lead times are based on submitta Terms & Conditions | l approval | date | Exclusions Excludes keying, glazing and installation U.N.O. |  |
+| Above pricing good for 30 days | D | elivery to | curbsite | - unloading by other |  |
+| Subject to change upon receipt of | additional | informa | tion/drawings/details. | Page 2 |
+
+[Source: pdfplumber_rows]
+Proposal
+FlipSide Specialties
+5829 W Sam ...
+[TRUNCATED]
+```
+---

@@ -145,6 +145,17 @@ def classify_page(text: str) -> str:
         r"SMOKE\s+SEAL|DOOR\s+BOTTOM|ASTRAGAL|WALL\s+BUMPER)\b",
         upper,
     )) >= 2
+    signals = _collect_schedule_signals(text)
+    spec_narrative_hits = sum(
+        1
+        for kw in (
+            "PART 1", "PART 2", "PART 3", "SUBMITTALS", "QUALITY ASSURANCE",
+            "PRODUCT DATA", "SHOP DRAWINGS", "WARRANTY", "TEMPLATES",
+            "KEYING", "INSTALLATION", "ADJUSTING", "CLEANING AND PROTECTION",
+            "OPERATION AND MAINTENANCE", "MAINTENANCE DATA", "CLOSEOUT",
+        )
+        if kw in upper
+    )
 
     # Some vendor PDFs use an "Opening List" instead of a full dimensional
     # door schedule. It is still the authoritative door-to-hardware mapping
@@ -152,15 +163,35 @@ def classify_page(text: str) -> str:
     if "OPENING LIST" in upper and has_hdw_set_column and door_mark_count >= 4:
         return PageType.DOOR_SCHEDULE
 
+    if re.search(r"\bHARDWARE\s+SET\s+DESCRIPTIONS?\b", upper):
+        return PageType.HARDWARE_SET
+
+    # Specification prose often discusses the required "door hardware
+    # schedule" as a submittal, but contains no actual set/component table.
+    # Treat it as reference text unless schedule rows or explicit set blocks
+    # are present.
+    if (
+        spec_narrative_hits >= 3
+        and not has_set_blocks
+        and not (has_hdw_set_column and door_mark_count >= 4)
+        and signals["dimensions"] < 2
+        and signals["row_lines"] < 2
+        and signals["real_doors"] < 4
+    ):
+        return PageType.OTHER
+
     # Manufacturer / option / finish code legends are reference pages. They
     # are useful to humans, but they are not hardware component schedules and
     # should not spend LLM/OCR budget or hallucinate components.
     if (
         re.search(r"\b(?:MANUFACTURER|OPTION|FINISH)\s+LIST\b", upper)
         and not has_set_blocks
-        and not has_components
     ):
         return PageType.OTHER
+
+    if has_set_blocks and has_components:
+        has_door_body = signals["dimensions"] >= 2
+        return PageType.MIXED if has_door_body else PageType.HARDWARE_SET
 
     # 2. The Smart LLM Arbiter
     # If it passed the gatekeeper, we let the LLM definitively classify the raw text.
@@ -1098,7 +1129,7 @@ def extract_structured_page(
                 page_idx,
                 page_text=combined_native or fitz_raw_text or "",
                 page_type=PageType.MIXED,
-                max_candidates=7,
+                max_candidates=9,
             )
             if crop_candidates:
                 logger.info(
@@ -1186,7 +1217,7 @@ def extract_structured_page(
                     page_idx,
                     page_text=combined_native or fitz_raw_text or "",
                     page_type=PageType.MIXED,
-                    max_candidates=7,
+                    max_candidates=9,
                 )
                 if crop_candidates:
                     content = (
@@ -1262,7 +1293,7 @@ def extract_structured_page(
                     page_idx,
                     page_text=combined_native or fitz_raw_text or "",
                     page_type=PageType.MIXED,
-                    max_candidates=7,
+                    max_candidates=9,
                 )
                 if crop_candidates:
                     content = (
@@ -1338,8 +1369,16 @@ def extract_structured_page(
         has_dimensions = bool(re.search(r"\d+['\u2019]\s*-?\s*\d+\"", content))  # 3'-0" pattern
         has_hw_components = any(kw in upper for kw in ("HINGE", "CLOSER", "LOCKSET", "DEADBOLT", "THRESHOLD", "DOOR STOP", "KICK PLATE"))
         
+        hardware_set_description_sheet = bool(re.search(r"\bHARDWARE\s+SET\s+DESCRIPTIONS?\b", upper))
+
         # Aggressive backstop: multiple signals override the LLM
-        if (evidence is not None and (evidence.is_door_schedule or evidence.is_hardware_schedule)) or \
+        if hardware_set_description_sheet and not has_dimensions:
+            logger.warning(
+                "Page %d: hardware set description title detected with crop candidates; forcing HARDWARE_SET.",
+                page_idx + 1,
+            )
+            page_type = PageType.HARDWARE_SET
+        elif (evidence is not None and (evidence.is_door_schedule or evidence.is_hardware_schedule)) or \
            (has_schedule_kw and (len(real_doors) >= 2 or has_dimensions)) or \
            (len(real_doors) >= 5 and has_dimensions) or \
            (len(real_doors) >= 3 and has_hw_components):
@@ -1364,7 +1403,13 @@ def extract_structured_page(
         except Exception as e:
             logger.debug("Page %d: crop detection skipped: %s", page_idx + 1, e)
 
-    if page_type == PageType.OTHER and crop_candidates:
+    upper_content = content.upper()
+    is_reference_list_content = (
+        bool(re.search(r"\b(?:MANUFACTURER|OPTION|FINISH)\s+LIST\b", upper_content))
+        and not re.search(r"(?m)^\s*(?:HARDWARE\s+SETS?|SET\s*#?\s*\d+|SET\s+NO\.?|GROUP\s*#?\s*\d+)", upper_content)
+    )
+
+    if page_type == PageType.OTHER and crop_candidates and not is_reference_list_content:
         best_crop_conf = max(float(crop.get("confidence") or 0.0) for crop in crop_candidates)
         if best_crop_conf >= 0.28:
             logger.warning(

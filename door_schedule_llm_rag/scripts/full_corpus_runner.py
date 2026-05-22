@@ -58,6 +58,10 @@ def _configure_safe_env(output_root: Path) -> None:
         os.environ["FORCE_DATABASE_URL"] = local_db_url
 
 
+def _env_truthy(name: str, default: str = "1") -> bool:
+    return os.environ.get(name, default).strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _safe_slug(value: str, limit: int = 80) -> str:
     value = re.sub(r"[^A-Za-z0-9._-]+", "_", value).strip("._-")
     return (value or "pdf")[:limit]
@@ -130,6 +134,19 @@ def _load_done(report_path: Path) -> set[str]:
             if row.get("status") == "ok":
                 done.add(row.get("run_id", ""))
     return done
+
+
+def _load_report_run_ids(report_paths: list[Path] | None) -> set[str]:
+    excluded: set[str] = set()
+    for report_path in report_paths or []:
+        if not report_path.exists():
+            continue
+        with report_path.open("r", newline="", encoding="utf-8") as fh:
+            for row in csv.DictReader(fh):
+                run_id = str(row.get("run_id") or "").strip()
+                if run_id:
+                    excluded.add(run_id)
+    return excluded
 
 
 def _append_report(report_path: Path, row: dict) -> None:
@@ -206,7 +223,7 @@ def run_one_pdf_worker(pdf_path: Path, output_dir: Path, output_root: Path) -> N
     doors, hardware = pipeline.run_pipeline(
         pdf_folder=str(pdf_path.parent),
         output_dir=str(output_dir),
-        use_rag=True,
+        use_rag=_env_truthy("FULL_CORPUS_USE_RAG", "1"),
         pdf_files=[pdf_path],
     )
     crop_metrics = getattr(pipeline, "LAST_CROP_METRICS", None) or _collect_crop_metrics(output_root, pdf_path.name)
@@ -268,6 +285,7 @@ def run_corpus(
     max_runtime_minutes: float | None = None,
     shuffle: bool = False,
     seed: int | None = None,
+    exclude_run_ids: set[str] | None = None,
 ) -> Path:
     _configure_safe_env(output_root)
     if not os.environ.get("OPENAI_API_KEY"):
@@ -276,6 +294,10 @@ def run_corpus(
     run_started = time.time()
     max_runtime_s = (max_runtime_minutes * 60.0) if max_runtime_minutes else None
     inventory = build_inventory(target_dir, output_root)
+    if exclude_run_ids:
+        before = len(inventory)
+        inventory = [item for item in inventory if item.get("run_id") not in exclude_run_ids]
+        print(f"Excluded {before - len(inventory)} PDFs from prior report(s); remaining={len(inventory)}", flush=True)
     if shuffle:
         rng = random.Random(seed)
         rng.shuffle(inventory)
@@ -378,6 +400,12 @@ def main() -> int:
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--shuffle", action="store_true")
     parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument(
+        "--exclude-report",
+        action="append",
+        default=[],
+        help="CSV report(s) whose run_id values should be skipped before limit/shuffle selection.",
+    )
     parser.add_argument("--worker-pdf", default=None)
     parser.add_argument("--worker-output", default=None)
     args = parser.parse_args()
@@ -407,6 +435,7 @@ def main() -> int:
         max_runtime_minutes=args.max_runtime_minutes,
         shuffle=args.shuffle,
         seed=args.seed,
+        exclude_run_ids=_load_report_run_ids([Path(p) for p in args.exclude_report]),
     )
     return 0
 

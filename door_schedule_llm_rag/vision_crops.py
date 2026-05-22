@@ -9,6 +9,7 @@ schedule regions and renders only those regions at higher DPI.
 from __future__ import annotations
 
 import base64
+import io
 import logging
 import re
 from dataclasses import asdict, dataclass
@@ -40,6 +41,7 @@ class CropCandidate:
     page_size: Tuple[float, float]
     text: str
     base64_image: str
+    rotation_degrees: int = 0
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -77,7 +79,7 @@ def detect_schedule_crops(
         rects.extend(_text_anchor_rects(page, page_rect))
         rects.extend(_visual_table_rects(page, page_rect))
         if _needs_tiles(page_text, page_type, rects):
-            rects.extend(_tile_rects(page_rect))
+            rects.extend(_tile_rects(page_rect, visual_only=not (page_text or "").strip()))
 
         merged = _dedupe_rects(rects, page_rect)
         page_default_type = _infer_crop_type(page_text, page_type)
@@ -85,14 +87,14 @@ def detect_schedule_crops(
         for entry in merged[:max_candidates]:
             source, score, bbox = entry[0], entry[1], entry[2]
             anchor_type = entry[3] if len(entry) > 3 else None
+            rotation_degrees = int(entry[4] or 0) if len(entry) > 4 else 0
             crop_kind = anchor_type or page_default_type
             rect = fitz.Rect(*bbox)
+            render_dpi = min(420, int(dpi * 1.6)) if rotation_degrees else dpi
             try:
-                pix = page.get_pixmap(dpi=dpi, clip=rect, alpha=False)
-                img_bytes = pix.tobytes("jpeg", jpg_quality=88)
+                img_bytes = _render_crop_bytes(page, rect, dpi=render_dpi, rotation_degrees=rotation_degrees)
             except TypeError:
-                pix = page.get_pixmap(dpi=dpi, clip=rect, alpha=False)
-                img_bytes = pix.tobytes("jpeg")
+                img_bytes = _render_crop_bytes(page, rect, dpi=render_dpi, rotation_degrees=rotation_degrees, jpeg_quality=None)
             crop_text = _clip_text(page, rect)
 
             candidates.append(
@@ -104,6 +106,7 @@ def detect_schedule_crops(
                     page_size=page_size,
                     text=crop_text,
                     base64_image=base64.b64encode(img_bytes).decode("utf-8"),
+                    rotation_degrees=rotation_degrees,
                 )
             )
 
@@ -144,6 +147,25 @@ def _clip_text(page, rect, max_chars: int = 10000) -> str:
     except Exception:
         text = ""
     return text[:max_chars]
+
+
+def _render_crop_bytes(page, rect, *, dpi: int, rotation_degrees: int = 0, jpeg_quality: Optional[int] = 88) -> bytes:
+    pix = page.get_pixmap(dpi=dpi, clip=rect, alpha=False)
+    if not rotation_degrees:
+        if jpeg_quality is None:
+            return pix.tobytes("jpeg")
+        return pix.tobytes("jpeg", jpg_quality=jpeg_quality)
+
+    from PIL import Image
+
+    img = Image.open(io.BytesIO(pix.tobytes("png"))).convert("RGB")
+    img = img.rotate(rotation_degrees, expand=True)
+    out = io.BytesIO()
+    save_kwargs = {"format": "JPEG"}
+    if jpeg_quality is not None:
+        save_kwargs["quality"] = jpeg_quality
+    img.save(out, **save_kwargs)
+    return out.getvalue()
 
 
 def _keyword_crop_type(keyword: str) -> str:
@@ -353,6 +375,13 @@ def _visual_table_rects(page, page_rect) -> list[tuple]:
 
 
 def _needs_tiles(page_text: str, page_type: str, rects: list) -> bool:
+    text = page_text or ""
+    if rects:
+        sources = {str(item[0] or "").lower() for item in rects}
+        if sources and all(source.startswith("visual_grid") for source in sources) and (
+            not text.strip() or len(text) < 2000
+        ):
+            return True
     if len(rects) >= 2:
         return False
     if len(rects) == 1:
@@ -370,7 +399,7 @@ def _needs_tiles(page_text: str, page_type: str, rects: list) -> bool:
     return not rects
 
 
-def _tile_rects(page_rect) -> list[tuple]:
+def _tile_rects(page_rect, *, visual_only: bool = False) -> list[tuple]:
     w = page_rect.width
     h = page_rect.height
     tiles = [
@@ -382,7 +411,27 @@ def _tile_rects(page_rect) -> list[tuple]:
         ("tile_left_band", 0.28, (0, 0, w * 0.62, h)),
         ("tile_center", 0.26, (w * 0.20, h * 0.20, w * 0.80, h * 0.80)),
     ]
-    return [(name, score, bbox, None) for name, score, bbox in tiles]
+    rects = [(name, score, bbox, None, 0) for name, score, bbox in tiles]
+    if not visual_only:
+        return rects
+
+    # Some architectural sheets keep the title block upright but rotate the
+    # schedules into side bands. For native-empty pages, add upright crop
+    # variants so OCR and vision rescue can read those tables without relying
+    # on the model to discover the orientation from a full-page thumbnail.
+    broad_unrotated = [
+        ("tile_visual_schedule_stack", 0.66, (w * 0.24, h * 0.18, w * 0.72, h * 0.82), "mixed", 0),
+        ("tile_visual_lower_schedule_band", 0.65, (w * 0.24, h * 0.44, w * 0.72, h * 0.98), "mixed", 0),
+        ("tile_visual_bottom_hardware_band", 0.64, (w * 0.24, h * 0.70, w * 0.72, h * 0.98), "hardware", 0),
+    ]
+    rotated = [
+        ("tile_rotated_door_schedule_ccw", 0.62, (w * 0.80, h * 0.02, w * 0.98, h * 0.56), "door", 90),
+        ("tile_rotated_door_schedule_cw", 0.615, (w * 0.80, h * 0.02, w * 0.98, h * 0.56), "door", 270),
+        ("tile_rotated_hardware_schedule_ccw", 0.61, (w * 0.54, h * 0.50, w * 0.97, h * 0.74), "hardware", 90),
+        ("tile_rotated_hardware_schedule_cw", 0.605, (w * 0.54, h * 0.50, w * 0.97, h * 0.74), "hardware", 270),
+        ("tile_rotated_right_half_ccw", 0.59, (w * 0.48, 0, w * 0.98, h * 0.74), "mixed", 90),
+    ]
+    return broad_unrotated + rotated + rects
 
 
 def _merge_crop_types(a: Optional[str], b: Optional[str]) -> Optional[str]:
@@ -403,6 +452,7 @@ def _dedupe_rects(rects, page_rect) -> list[tuple]:
         score = item[1]
         bbox = item[2]
         ctype = item[3] if len(item) > 3 else None
+        rotation_degrees = int(item[4] or 0) if len(item) > 4 else 0
         x0, y0, x1, y1 = bbox
         x0 = max(0.0, min(float(x0), page_rect.width))
         y0 = max(0.0, min(float(y0), page_rect.height))
@@ -417,14 +467,15 @@ def _dedupe_rects(rects, page_rect) -> list[tuple]:
         merged = False
         for i, ex in enumerate(cleaned):
             ex_source, ex_score, ex_bbox, ex_ctype = ex[0], ex[1], ex[2], ex[3] if len(ex) > 3 else None
-            if _iou(candidate_bbox, ex_bbox) > 0.75:
+            ex_rotation = int(ex[4] or 0) if len(ex) > 4 else 0
+            if rotation_degrees == ex_rotation and _iou(candidate_bbox, ex_bbox) > 0.75:
                 new_score = max(float(score), float(ex_score))
                 new_type = _merge_crop_types(ctype, ex_ctype)
-                cleaned[i] = (f"{ex_source}+{source}", new_score, ex_bbox, new_type)
+                cleaned[i] = (f"{ex_source}+{source}", new_score, ex_bbox, new_type, ex_rotation)
                 merged = True
                 break
         if not merged:
-            cleaned.append((source, score, candidate_bbox, ctype))
+            cleaned.append((source, score, candidate_bbox, ctype, rotation_degrees))
 
     cleaned.sort(key=lambda item: item[1], reverse=True)
     return cleaned

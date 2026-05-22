@@ -256,6 +256,10 @@ def _should_run_direct_pdf_witness(mode: str, pdf_doors: list[dict], pdf_hardwar
         return False
     if not pdf_doors and not pdf_hardware:
         return True
+    if pdf_doors and pdf_hardware:
+        opening_list_doors = sum(1 for row in pdf_doors if row.get("_table_shape") == "opening_list")
+        if opening_list_doors >= max(3, int(len(pdf_doors) * 0.8)) and len(pdf_hardware) >= 3:
+            return False
     if pdf_doors:
         missing_dims = sum(
             1 for row in pdf_doors
@@ -606,24 +610,27 @@ def run_pipeline(
     # ── Boot-time: make sure RAG is seeded so the agent and verification
     # layer actually have context on the first page. This is the fix for the
     # previous silent "RAG returns []" bug.
-    try:
-        status = _rag_ensure_seeded()
-        if status.get("available"):
-            logger.info(
-                "RAG ready: instructions[door=%d, hw=%d], examples[door=%d, hw=%d], anomalies=%d",
-                status.get("instructions_door", 0),
-                status.get("instructions_hardware", 0),
-                status.get("examples_door", 0),
-                status.get("examples_hardware", 0),
-                status.get("anomalies", 0),
-            )
-        else:
-            logger.warning(
-                "RAG is NOT available — pipeline will run without retrieval context. "
-                "This is OK but reduces long-term self-improvement."
-            )
-    except Exception as e:
-        logger.warning("RAG seeding skipped: %s", e)
+    if use_rag:
+        try:
+            status = _rag_ensure_seeded()
+            if status.get("available"):
+                logger.info(
+                    "RAG ready: instructions[door=%d, hw=%d], examples[door=%d, hw=%d], anomalies=%d",
+                    status.get("instructions_door", 0),
+                    status.get("instructions_hardware", 0),
+                    status.get("examples_door", 0),
+                    status.get("examples_hardware", 0),
+                    status.get("anomalies", 0),
+                )
+            else:
+                logger.warning(
+                    "RAG is NOT available — pipeline will run without retrieval context. "
+                    "This is OK but reduces long-term self-improvement."
+                )
+        except Exception as e:
+            logger.warning("RAG seeding skipped: %s", e)
+    else:
+        logger.info("RAG disabled for this pipeline run; skipping RAG seeding.")
 
     all_doors = []
     all_components = []
@@ -693,13 +700,35 @@ def run_pipeline(
             if page_type == PageType.OTHER and not is_continuation and not crop_candidates:
                 logger.debug("Skipping page %d (classified as OTHER)", page_idx + 1)
                 continue
-            if page_type == PageType.OTHER and crop_candidates:
+            upper_text = text.upper()
+            is_reference_list_page = (
+                bool(re.search(r"\b(?:MANUFACTURER|OPTION|FINISH)\s+LIST\b", upper_text))
+                and not re.search(r"(?m)^\s*(?:HARDWARE\s+SETS?|SET\s*#?\s*\d+|SET\s+NO\.?|GROUP\s*#?\s*\d+)", upper_text)
+            )
+            if page_type == PageType.OTHER and crop_candidates and not is_reference_list_page:
                 logger.warning(
                     "Page %d classified OTHER but has %d crop candidates; processing as MIXED.",
                     page_idx + 1,
                     len(crop_candidates),
                 )
                 page_type = PageType.MIXED
+
+            if _is_likely_quote_or_proposal_pdf(fname) and page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED):
+                has_hardware_signal = (
+                    re.search(
+                        r"(?i)\b(?:HARDWARE\s+SET|HARDWARE\s+GROUP|HINGE|CLOSER|LOCKSET|ELECTRIC\s+STRIKE|"
+                        r"WEATHERSTRIP|THRESHOLD|SILENCER|DOOR\s+STOP)\b",
+                        text,
+                    )
+                    or any((crop.get("crop_type") in ("hardware", "mixed")) for crop in (crop_candidates or []))
+                )
+                if has_hardware_signal:
+                    logger.info(
+                        "Likely quote/proposal PDF %s: routing page %d as hardware-only to avoid discarded door extraction.",
+                        fname,
+                        page_idx + 1,
+                    )
+                    page_type = PageType.HARDWARE_SET
 
             # Extract doors and/or hardware
             t1 = time.time()
@@ -1074,6 +1103,17 @@ def run_pipeline(
             logger.info("Removed %d duplicate door rows (kept most complete)", dupes)
 
     # ── Columns for output ──
+    if not df_doors.empty:
+        if "is_pair" not in df_doors.columns:
+            df_doors["is_pair"] = False
+        else:
+            df_doors["is_pair"] = df_doors["is_pair"].fillna(False).astype(bool)
+        if "door_leaves" not in df_doors.columns:
+            df_doors["door_leaves"] = 1
+        else:
+            leaves = pd.to_numeric(df_doors["door_leaves"], errors="coerce")
+            df_doors["door_leaves"] = leaves.fillna(1).clip(lower=1).astype(int)
+
     door_cols = [
         "project_id", "source_file", "page", "page_type", "source_method", "source_confidence",
         "source_location", "verification_flags", "hybrid_decision", "hybrid_conflicts", "evidence_expected_door_rows",

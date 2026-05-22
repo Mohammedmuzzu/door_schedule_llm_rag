@@ -22,7 +22,7 @@ from prompts.rescue import (
     hardware_missing_sets_hint,
 )
 from rag_store import query_door_instructions, query_hardware_instructions
-from llm_extract import extract_doors_llm, extract_hardware_llm
+from llm_extract import extract_doors_llm, extract_hardware_llm, normalize_hardware_rows
 from page_evidence import collect as collect_evidence
 from page_extractor import PageType
 from verification import verify_and_rescue
@@ -63,6 +63,15 @@ def _dedupe_doors_by_number(doors: List[dict]) -> List[dict]:
         if key not in best or _row_completeness(door) > _row_completeness(best[key]):
             best[key] = door
     return list(best.values())
+
+
+def _drop_self_referential_hardware_sets(doors: List[dict]) -> List[dict]:
+    for door in doors:
+        door_number = re.sub(r"\s+", "", str(door.get("door_number") or "")).upper()
+        hardware_set = re.sub(r"\s+", "", str(door.get("hardware_set") or "")).upper()
+        if hardware_set and hardware_set == door_number and re.search(r"[A-Z]", door_number):
+            door.pop("hardware_set", None)
+    return doors
 
 
 def _split_markdown_row(line: str) -> List[str]:
@@ -109,6 +118,13 @@ def _split_combined_dimensions(value: object) -> Optional[Tuple[str, str]]:
     if not match:
         return None
     return match.group(1), match.group(2)
+
+
+def _find_dimensions(value: object) -> List[str]:
+    return re.findall(
+        r"\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\"",
+        str(value or ""),
+    )
 
 
 def _looks_like_combined_dimensions(value: object) -> bool:
@@ -305,7 +321,7 @@ def _parse_compact_door_table_rows(text: str) -> List[dict]:
         }
         doors.append({k: v for k, v in door.items() if v not in (None, "")})
 
-    return _dedupe_doors_by_number(doors)
+    return _drop_self_referential_hardware_sets(_dedupe_doors_by_number(doors))
 
 
 def _parse_formal_door_table_rows(text: str) -> List[dict]:
@@ -365,7 +381,79 @@ def _parse_formal_door_table_rows(text: str) -> List[dict]:
         }
         doors.append({k: v for k, v in door.items() if v not in (None, "")})
 
-    return _dedupe_doors_by_number(doors)
+    return _drop_self_referential_hardware_sets(_dedupe_doors_by_number(doors))
+
+
+def _parse_packed_dimension_door_rows(text: str) -> List[dict]:
+    """
+    Parse sheets where width, height, thickness and type are packed into one
+    pipe cell instead of separate table columns.
+    """
+    rows: List[dict] = []
+    status_words = {"NEW", "EXISTING", "EXIST", "EXISTING TO REMAIN"}
+
+    for line in text.splitlines():
+        cells = _split_markdown_row(line)
+        if len(cells) < 7:
+            continue
+        door_number = str(cells[0] or "").strip()
+        if not (
+            _looks_like_door_mark(door_number)
+            or (
+                re.fullmatch(r"\d{1,4}[A-Z]?", door_number, re.IGNORECASE)
+                and not (1900 <= int(re.match(r"\d+", door_number).group()) <= 2099)
+            )
+        ):
+            continue
+
+        dim_idx = None
+        dims: List[str] = []
+        for idx, cell in enumerate(cells[2:7], 2):
+            dims = _find_dimensions(cell)
+            if len(dims) >= 2:
+                dim_idx = idx
+                break
+        if dim_idx is None:
+            continue
+
+        room_name = str(cells[1] or "").strip() or None
+        if room_name:
+            room_name = re.sub(r"\s+(?:NEW|EXISTING|EXIST)\s*$", "", room_name, flags=re.IGNORECASE).strip() or room_name
+
+        dim_cell = str(cells[dim_idx] or "")
+        after_dims = dim_cell
+        for dim in dims:
+            after_dims = after_dims.replace(dim, " ")
+        door_type = re.sub(r"\s+", " ", after_dims).strip(" -") or None
+
+        hardware_set = None
+        for cell in cells[dim_idx + 1: dim_idx + 8]:
+            token = str(cell or "").strip()
+            if not token or token.upper() in status_words:
+                continue
+            if "," in token or _is_dimension(token):
+                continue
+            match = re.search(r"(?:^|\s)([A-Z]?\d{1,3}[A-Z]?|\d{1,2}\.\d)\s*$", token, re.IGNORECASE)
+            if match and _looks_like_hardware_set_token(match.group(1)):
+                hardware_set = match.group(1)
+
+        door_width = dims[0]
+        door_height = dims[1]
+        row = {
+            "door_number": door_number,
+            "room_name": room_name,
+            "door_width": door_width,
+            "door_height": door_height,
+            "door_thickness": dims[2] if len(dims) > 2 else None,
+            "door_type": door_type,
+            "hardware_set": hardware_set,
+            "_table_shape": "packed_dimension",
+            "is_pair": bool(str(door_width).strip().startswith(("6'", "7'", "8'"))),
+            "door_leaves": 2 if str(door_width).strip().startswith(("6'", "7'", "8'")) else 1,
+        }
+        rows.append({k: v for k, v in row.items() if v not in (None, "")})
+
+    return _drop_self_referential_hardware_sets(_dedupe_doors_by_number(rows))
 
 
 def _collect_pipe_cells(text: str) -> List[str]:
@@ -433,6 +521,48 @@ def _parse_door_cell_stream_fallback(text: str) -> List[dict]:
             "door_leaves": 2 if str(door_width).startswith(("2 @", "6'")) else 1,
         })
 
+    return _drop_self_referential_hardware_sets(_dedupe_doors_by_number(doors))
+
+
+def _parse_opening_list_fallback(text: str) -> List[dict]:
+    """
+    Recover vendor "Opening List" pages that map openings to hardware sets.
+
+    These pages often have no physical dimensions, so the normal door-table
+    fallback intentionally ignores them. They are still valuable because they
+    carry the door-to-hardware join.
+    """
+    upper = (text or "").upper()
+    if "OPENING LIST" not in upper or not any(token in upper for token in ("HDW SET", "HDWR SET", "HDWE SET", "HARDWARE SET")):
+        return []
+
+    doors: List[dict] = []
+    for line in text.splitlines():
+        cells = _split_markdown_row(line)
+        if len(cells) < 2:
+            continue
+
+        door_number = str(cells[0] or "").strip()
+        hardware_set = str(cells[1] or "").strip()
+        if not _looks_like_door_mark(door_number):
+            continue
+        if not _looks_like_hardware_set_token(hardware_set):
+            continue
+
+        row = {
+            "door_number": door_number,
+            "hardware_set": hardware_set,
+            "_table_shape": "opening_list",
+            "is_pair": False,
+            "door_leaves": 1,
+        }
+        if len(cells) >= 4:
+            row["door_type"] = str(cells[-2] or "").strip() or None
+            row["frame_type"] = str(cells[-1] or "").strip() or None
+        elif len(cells) == 3:
+            row["door_type"] = str(cells[2] or "").strip() or None
+        doors.append({k: v for k, v in row.items() if v not in (None, "")})
+
     return _dedupe_doors_by_number(doors)
 
 
@@ -497,6 +627,12 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
     formal_doors = _parse_formal_door_table_rows(text)
     if len(formal_doors) >= 3:
         return formal_doors
+    opening_doors = _parse_opening_list_fallback(text)
+    if len(opening_doors) >= 3:
+        return opening_doors
+    packed_doors = _parse_packed_dimension_door_rows(text)
+    if len(packed_doors) >= 3:
+        return packed_doors
 
     doors: List[dict] = []
     dim_re = re.compile(r"\d+\s*['\u2019]\s*-\s*\d+(?:\s+\d+/\d+)?\s*\"")
@@ -583,7 +719,359 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
 
     stream_doors = _parse_door_cell_stream_fallback(text) if len(doors) < 3 else []
     merged = _dedupe_doors_by_number(doors + stream_doors)
-    return merged
+    return _drop_self_referential_hardware_sets(merged)
+
+
+_VENDOR_HW_COMPONENT_TERMS = (
+    "HINGE",
+    "EXIT",
+    "EXIT DEVICE",
+    "CYLINDER",
+    "CORE",
+    "PULL",
+    "CLOSER",
+    "CONTINUOUS HINGE",
+    "KICK PLATE",
+    "ARMOR PLATE",
+    "MOP PLATE",
+    "PUSH PLATE",
+    "THRESHOLD",
+    "WEATHERSTRIP",
+    "SEAL",
+    "GASKET",
+    "DOOR BOTTOM",
+    "ASTRAGAL",
+    "GASKETING",
+    "SWEEP",
+    "RAIN GUARD",
+    "LOCKSET",
+    "LEVERSET",
+    "DEADLOCK",
+    "DEADBOLT",
+    "FLUSH BOLT",
+    "FLUSH PULL",
+    "HEADER BOLT",
+    "THRESHOLD BOLT",
+    "OVERHEAD HOLDER",
+    "SILENCER",
+    "STRIKE",
+    "DUST PROOF STRIKE",
+    "ELECTRIC STRIKE",
+    "POWER TRANSFER",
+    "HARNESS",
+    "CARD READER",
+    "POWER SUPPLY",
+    "POINT-TO-POINT",
+    "ELEVATION DIAGRAM",
+    "RISER DIAGRAM",
+    "COORDINATOR",
+    "WALL BUMPER",
+    "FLOOR STOP",
+    "DOOR STOP",
+    "LATCH PROTECTOR",
+    "HOLDER",
+    "VIEWER",
+    "STOP",
+)
+
+_VENDOR_HW_MFR_CODES = {
+    "CKN", "FL", "GL", "HA", "LO", "NO", "PE", "SC", "TR",
+    "IVE", "LCN", "NGP", "SCH", "VON",
+}
+
+
+def _looks_like_vendor_hw_component(description: str) -> bool:
+    upper = str(description or "").upper()
+    return any(term in upper for term in _VENDOR_HW_COMPONENT_TERMS)
+
+
+def _is_vendor_hw_set_header(token: str) -> Optional[re.Match]:
+    return re.match(r"(?i)^\s*SET\s*#?\s*([A-Z0-9.-]+)\s*(?:[-:]\s*(.+))?$", token or "")
+
+
+def _is_vendor_hw_component_start(token: str) -> Optional[re.Match]:
+    match = re.match(
+        r"^\s*\(?(\d+(?:-\d+/\d+)?|LOT)\)?\s+(?:(EA|EACH|SET|PR|PAIR)\s+)?(.+?)\s*$",
+        token or "",
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    if not _looks_like_vendor_hw_component(match.group(3)):
+        return None
+    return match
+
+
+def _is_finish_code(token: str) -> bool:
+    upper = str(token or "").strip().upper()
+    if not upper:
+        return False
+    if "," in upper:
+        return all(_is_finish_code(part) for part in re.split(r"\s*,\s*", upper) if part)
+    if re.fullmatch(r"(?:US)?\d{3}[A-Z]{0,2}", upper):
+        return True
+    if re.fullmatch(r"(?:US)?\d{2}[A-Z]{1,2}", upper):
+        return True
+    if re.fullmatch(r"(?:US)?[A-Z]{2}\d{2,4}[A-Z]?", upper):
+        return True
+    return False
+
+
+def _split_finish_manufacturer_token(token: str) -> tuple[Optional[str], Optional[str]]:
+    parts = str(token or "").strip().split()
+    if len(parts) < 2:
+        return None, None
+    manufacturer = parts[-1].upper()
+    finish = " ".join(parts[:-1]).strip().upper()
+    if manufacturer in _VENDOR_HW_MFR_CODES and _is_finish_code(finish):
+        return finish, manufacturer
+    return None, None
+
+
+def _parse_vendor_hardware_sets_fallback(text: str) -> List[dict]:
+    """
+    Deterministic parser for vendor-generated hardware schedules laid out as:
+    Set #100 - name | 4 Hinge | BB1279 ... | US10B | HA | ...
+    """
+    if not re.search(r"(?i)\bSET\s*#?\s*[A-Z0-9.-]+\b", text or ""):
+        return []
+
+    tokens = [
+        re.sub(r"\s+", " ", token).strip()
+        for token in re.split(r"\s*\|\s*|\r?\n+", text or "")
+        if re.sub(r"\s+", " ", token).strip()
+    ]
+    rows: list[dict] = []
+    current_set_id: Optional[str] = None
+    current_set_name: Optional[str] = None
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        set_match = _is_vendor_hw_set_header(token)
+        if set_match:
+            current_set_id = set_match.group(1).strip()
+            current_set_name = (set_match.group(2) or "").strip() or None
+            i += 1
+            continue
+
+        component_match = _is_vendor_hw_component_start(token)
+        if not current_set_id or not component_match:
+            i += 1
+            continue
+
+        qty_raw = component_match.group(1).strip()
+        unit_raw = (component_match.group(2) or "EA").strip().upper()
+        description = component_match.group(3).strip()
+        row = {
+            "hardware_set_id": current_set_id,
+            "hardware_set_name": current_set_name,
+            "qty": qty_raw if qty_raw.isdigit() else None,
+            "qty_raw": qty_raw,
+            "unit": "PAIR" if unit_raw == "PR" else unit_raw,
+            "description": description,
+        }
+
+        extras: list[str] = []
+        j = i + 1
+        while j < len(tokens) and len(extras) < 4:
+            nxt = tokens[j]
+            if _is_vendor_hw_set_header(nxt) or _is_vendor_hw_component_start(nxt):
+                break
+            if nxt.upper().startswith("NOTE"):
+                break
+            extras.append(nxt)
+            j += 1
+
+        catalog_assigned = False
+        for extra in extras:
+            upper = extra.upper().strip()
+            combined_finish, combined_mfr = _split_finish_manufacturer_token(extra)
+            if combined_finish and row.get("catalog_number"):
+                if not row.get("finish_code"):
+                    row["finish_code"] = combined_finish
+                if combined_mfr and not row.get("manufacturer_code"):
+                    row["manufacturer_code"] = combined_mfr
+            elif upper in _VENDOR_HW_MFR_CODES and not row.get("manufacturer_code"):
+                row["manufacturer_code"] = upper
+            elif not row.get("catalog_number"):
+                row["catalog_number"] = extra
+                catalog_assigned = True
+            elif _is_finish_code(upper) and not row.get("finish_code"):
+                row["finish_code"] = upper
+            else:
+                row.setdefault("extra_fields", {})[f"extra_{len(row.get('extra_fields', {})) + 1}"] = extra
+
+        if catalog_assigned and not row.get("finish_code"):
+            extras_fields = row.get("extra_fields") or {}
+            for key, value in list(extras_fields.items()):
+                if _is_finish_code(value):
+                    row["finish_code"] = value
+                    extras_fields.pop(key, None)
+                    break
+            if not extras_fields:
+                row.pop("extra_fields", None)
+
+        rows.append(row)
+        i = max(j, i + 1)
+
+    has_schedule_title = re.search(
+        r"(?i)\b(?:DOOR\s+HARDWARE\s+SCHEDULE|HARDWARE\s+SETS?|HARDWARE\s+GROUPS?)\b",
+        text or "",
+    )
+    return normalize_hardware_rows(rows) if len(rows) >= 3 or (rows and has_schedule_title) else []
+
+
+def _grid_hw_set_header(token: str) -> Optional[str]:
+    match = re.search(r"(?i)\bSET\s*[:#]?\s*([A-Z0-9.]+)\b", token or "")
+    if not match:
+        return None
+    return match.group(1).strip().rstrip(".")
+
+
+def _hardware_group_no_header(token: str) -> Optional[str]:
+    match = re.search(r"(?i)\bHARDWARE\s+GROUP\s+NO\.?\s*([A-Z0-9.]+)\b", token or "")
+    if not match:
+        return None
+    return match.group(1).strip().rstrip(".")
+
+
+def _parse_grid_hw_component(token: str) -> Optional[dict]:
+    clean = re.sub(r"\s+", " ", str(token or "")).strip(" .")
+    match = re.match(
+        r"(?i)^(\d+(?:-\d+/\d+)?)\s*(?:(EA|EACH|SET|PR|PAIR)\.?)?\s+(.+?)$",
+        clean,
+    )
+    if not match:
+        return None
+    qty_raw = match.group(1).strip()
+    unit_raw = (match.group(2) or "EA").strip().upper()
+    description = match.group(3).strip(" .")
+    if not _looks_like_vendor_hw_component(description):
+        return None
+    upper_description = description.upper()
+    strong_terms = (
+        "HINGE", "EXIT", "CLOSER", "LOCK", "DEAD", "STRIKE", "THRESHOLD",
+        "WEATHER", "SEAL", "GASKET", "SWEEP", "STOP", "PULL", "BOLT",
+        "HARNESS", "READER", "POWER", "SILENCER", "PLATE",
+    )
+    if re.search(r"\d+\s*['\u2019]\s*-\s*\d+|\d+/\d+\"", description) and not any(
+        term in upper_description for term in strong_terms
+    ):
+        return None
+    return {
+        "qty": qty_raw if qty_raw.isdigit() else None,
+        "qty_raw": qty_raw,
+        "unit": "PAIR" if unit_raw == "PR" else unit_raw,
+        "description": description,
+    }
+
+
+def _parse_grid_hardware_sets_fallback(text: str) -> List[dict]:
+    """
+    Recover architectural-sheet hardware schedules laid out in grid columns:
+    ``SET: 1.0 | SET: 4.0`` followed by component rows per column.
+    """
+    if not re.search(r"(?i)\b(?:HARDWARE\s+SCHEDULE|SET\s*:\s*[A-Z0-9.]+)\b", text or ""):
+        return []
+
+    rows: list[dict] = []
+    set_by_col: dict[int, str] = {}
+    current_set_id: Optional[str] = None
+    in_hardware_section = False
+
+    for line in (text or "").splitlines():
+        upper_line = line.upper()
+        cells = _split_markdown_row(line) or [line.strip()]
+        if "HARDWARE SCHEDULE" in upper_line or "HARDWARE SET" in upper_line:
+            in_hardware_section = True
+        if not in_hardware_section and any(_grid_hw_set_header(str(cell or "")) for cell in cells):
+            in_hardware_section = True
+        if not in_hardware_section:
+            continue
+
+        for col_idx, cell in enumerate(cells):
+            token = str(cell or "").strip()
+            if not token:
+                continue
+
+            set_id = _grid_hw_set_header(token)
+            if set_id:
+                set_by_col[col_idx] = set_id
+                current_set_id = set_id
+                continue
+
+            component = _parse_grid_hw_component(token)
+            if not component:
+                continue
+            component_set_id = set_by_col.get(col_idx) or current_set_id
+            if not component_set_id:
+                continue
+            row = {"hardware_set_id": component_set_id, **component}
+            rows.append(row)
+
+    return normalize_hardware_rows(rows) if len(rows) >= 3 else []
+
+
+def _parse_hardware_group_columns_fallback(text: str) -> List[dict]:
+    """
+    Recover dense architectural sheets with side-by-side ``Hardware Group No.``
+    columns. Each active group uses three cells: component, catalog, finish/mfr.
+    """
+    if not re.search(r"(?i)\bHARDWARE\s+GROUP\s+NO\.?\s*[A-Z0-9.]+\b", text or ""):
+        return []
+
+    rows: list[dict] = []
+    active_groups: list[str] = []
+    for line in (text or "").splitlines():
+        cells = _split_markdown_row(line)
+        if not cells:
+            continue
+
+        group_ids = [_hardware_group_no_header(str(cell or "")) for cell in cells]
+        group_ids = [group_id for group_id in group_ids if group_id]
+        if group_ids:
+            active_groups = group_ids
+            continue
+        if not active_groups:
+            continue
+        if len(cells) < len(active_groups) * 3:
+            continue
+
+        for group_idx, group_id in enumerate(active_groups):
+            base = group_idx * 3
+            if base >= len(cells):
+                continue
+            component = _parse_grid_hw_component(str(cells[base] or ""))
+            if not component:
+                continue
+            row = {"hardware_set_id": group_id, **component}
+            if base + 1 < len(cells):
+                catalog = str(cells[base + 1] or "").strip()
+                if catalog:
+                    row["catalog_number"] = catalog
+            if base + 2 < len(cells):
+                finish_mfr = str(cells[base + 2] or "").strip()
+                finish, manufacturer = _split_finish_manufacturer_token(finish_mfr)
+                if finish:
+                    row["finish_code"] = finish
+                if manufacturer:
+                    row["manufacturer_code"] = manufacturer
+                elif finish_mfr:
+                    row["finish_code"] = finish_mfr
+            rows.append(row)
+
+    return normalize_hardware_rows(rows) if len(rows) >= 3 else []
+
+
+def _parse_deterministic_hardware_sets_fallback(text: str) -> List[dict]:
+    group_rows = _parse_hardware_group_columns_fallback(text)
+    grid_rows = _parse_grid_hardware_sets_fallback(text)
+    vendor_rows = _parse_vendor_hardware_sets_fallback(text)
+    if group_rows and len(group_rows) >= max(len(grid_rows), len(vendor_rows)):
+        return group_rows
+    if re.search(r"(?i)\bSET\s*:\s*[A-Z0-9.]+\b", text or "") and grid_rows:
+        return grid_rows
+    return grid_rows if len(grid_rows) > len(vendor_rows) else vendor_rows
 
 
 class ExtractionContext:
@@ -645,6 +1133,26 @@ def extract_page_with_llm(
     if not raw_text or len(raw_text) < 30:
         return [], []
     evidence = collect_evidence(raw_text)
+    explicit_door_schedule = re.search(
+        r"(?i)\b(?:DOOR\s+(?:AND\s+WINDOW\s+)?SCHEDULE|OPENING\s+LIST)\b",
+        raw_text,
+    ) is not None
+    hardware_only_title = (
+        re.search(r"(?i)\b(?:DOOR\s+HARDWARE\s+(?:SETS?|SCHEDULE)|HARDWARE\s+SETS?)\b", raw_text) is not None
+        and not explicit_door_schedule
+    )
+    preparsed_full_hardware: List[dict] = []
+    if (
+        len(raw_text) > 1000
+        and (page_type in (PageType.HARDWARE_SET, PageType.MIXED) or evidence.is_hardware_schedule)
+    ):
+        parsed = _parse_deterministic_hardware_sets_fallback(raw_text)
+        if len(parsed) >= 8:
+            preparsed_full_hardware = parsed
+            logger.info(
+                "Deterministic full-page hardware fallback recovered %d components before chunk LLM.",
+                len(preparsed_full_hardware),
+            )
 
     # Semantic Chunking for smaller models
     # Split text into chunks of roughly MAX_PAGE_CHARS cleanly on newlines
@@ -695,26 +1203,52 @@ def extract_page_with_llm(
         hardware = []
 
         # ── Extract Doors (if page has door content) ──
-        if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED):
-            door_chunks = query_door_instructions(text) if use_rag else []
-            door_prompt = build_door_prompt(
-                door_chunks, text,
-                max_chars=MAX_PAGE_CHARS,
-                is_continuation=is_continuation,
-                prev_level_area=ctx.last_level_area,
-            )
-            doors = extract_doors_llm(door_prompt["system"], door_prompt["user"], base64_image=base64_image)
-
-            # Retry if empty and page looks like it has door data
-            if not doors and retry_with_hint and len(text) > 200:
-                hint = BORDERLESS_DOOR_RETRY_HINT
-                door_prompt2 = build_door_prompt(
-                    door_chunks, text + hint,
-                    max_chars=MAX_PAGE_CHARS,
-                    is_continuation=is_continuation,
-                    prev_level_area=ctx.last_level_area,
+        if page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED) and not hardware_only_title:
+            deterministic_door_source = None
+            doors = _parse_opening_list_fallback(text)
+            if doors:
+                deterministic_door_source = "opening-list"
+            elif len(text) > 9000 and evidence.is_door_schedule:
+                dense_doors = _parse_door_table_fallback(text)
+                dense_physical = _physical_door_count(dense_doors)
+                has_packed_rows = any(row.get("_table_shape") == "packed_dimension" for row in dense_doors)
+                if dense_physical >= 8 or (has_packed_rows and dense_physical >= 3):
+                    doors = dense_doors
+                    deterministic_door_source = "dense door-table"
+            if deterministic_door_source:
+                logger.info(
+                    "Deterministic %s fallback recovered %d door rows.",
+                    deterministic_door_source,
+                    len(doors),
                 )
-                doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
+            else:
+                skip_native_door_llm = (
+                    "VISION_CROP_RESCUE" in (text or "").upper()
+                    and any((crop.get("crop_type") in ("door", "mixed")) for crop in (crop_candidates or []))
+                )
+                if skip_native_door_llm:
+                    logger.info("Skipping native door LLM on crop-only page; relying on high-resolution crop rescue.")
+                    doors = []
+                else:
+                    door_chunks = query_door_instructions(text) if use_rag else []
+                    door_prompt = build_door_prompt(
+                        door_chunks, text,
+                        max_chars=MAX_PAGE_CHARS,
+                        is_continuation=is_continuation,
+                        prev_level_area=ctx.last_level_area,
+                    )
+                    doors = extract_doors_llm(door_prompt["system"], door_prompt["user"], base64_image=base64_image)
+
+                    # Retry if empty and page looks like it has door data
+                    if not doors and retry_with_hint and len(text) > 200:
+                        hint = BORDERLESS_DOOR_RETRY_HINT
+                        door_prompt2 = build_door_prompt(
+                            door_chunks, text + hint,
+                            max_chars=MAX_PAGE_CHARS,
+                            is_continuation=is_continuation,
+                            prev_level_area=ctx.last_level_area,
+                        )
+                        doors = extract_doors_llm(door_prompt2["system"], door_prompt2["user"], base64_image=base64_image, force_model="gpt-4o")
 
             ctx.update_from_doors(doors)
 
@@ -727,8 +1261,12 @@ def extract_page_with_llm(
                 r"SET\s*NO\.?|GROUP\s*NO\.?|HW\s*[#\-]?\s*\d+|SET\s*[#\-]?\s*\d+|GROUP\s*[#\-]?\s*\d+)",
                 text.upper(),
             )) >= 1
+            has_hw_sets = has_hw_sets or bool(re.search(r"(?i)\bSET\s*:\s*[A-Z0-9.]+\b", text))
             has_components = len(re.findall(r"(?:HINGE|CLOSER|LOCK|DEADBOLT|STRIKE|THRESHOLD|WEATHERSTRIP)", text.upper())) >= 2
             if has_hw_sets and has_components:
+                force_hardware = True
+        elif page_type == PageType.MIXED:
+            if re.search(r"(?i)\bSET\s*:\s*[A-Z0-9.]+\b", text) and evidence.hw_components >= 2:
                 force_hardware = True
 
         should_extract_hardware = (
@@ -738,14 +1276,33 @@ def extract_page_with_llm(
         )
 
         if should_extract_hardware:
-            hw_chunks = query_hardware_instructions(text) if use_rag else []
-            hw_prompt = build_hardware_prompt(
-                hw_chunks, text,
-                max_chars=MAX_PAGE_CHARS,
-                is_continuation=is_continuation,
-                prev_set_id=ctx.last_hardware_set_id,
+            hw_chunks = []
+            hardware = [] if preparsed_full_hardware else _parse_deterministic_hardware_sets_fallback(text)
+            used_deterministic_hardware = bool(hardware)
+            skip_native_hardware_llm = (
+                (bool(preparsed_full_hardware) or not hardware)
+                and page_type == PageType.HARDWARE_SET
+                and evidence.hw_components < 2
+                and any((crop.get("crop_type") in ("hardware", "mixed")) for crop in (crop_candidates or []))
             )
-            hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"], base64_image=base64_image)
+            if preparsed_full_hardware:
+                used_deterministic_hardware = True
+                skip_native_hardware_llm = True
+            if hardware:
+                logger.info("Deterministic hardware fallback recovered %d components.", len(hardware))
+            elif preparsed_full_hardware:
+                logger.info("Skipping chunk hardware LLM; using deterministic full-page hardware rows.")
+            elif skip_native_hardware_llm:
+                logger.info("Skipping native hardware LLM on low-text hardware page; relying on crop rescue.")
+            else:
+                hw_chunks = query_hardware_instructions(text) if use_rag else []
+                hw_prompt = build_hardware_prompt(
+                    hw_chunks, text,
+                    max_chars=MAX_PAGE_CHARS,
+                    is_continuation=is_continuation,
+                    prev_set_id=ctx.last_hardware_set_id,
+                )
+                hardware = extract_hardware_llm(hw_prompt["system"], hw_prompt["user"], base64_image=base64_image)
 
             # ── Corrective Agentic Loop / Heuristic Counters ──
             # Count explicit markers in the text
@@ -759,7 +1316,13 @@ def extract_page_with_llm(
             is_missing_sets = len(extracted_set_ids) < expected_sets - 1  # Allowing for slight mismatch in regex
 
             # Retry if empty, suspiciously small, or heuristic count fails
-            if (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000)) and retry_with_hint and len(text) > 200:
+            if (
+                not used_deterministic_hardware
+                and not skip_native_hardware_llm
+                and (not hardware or is_missing_sets or (len(hardware) < 5 and len(text) > 5000))
+                and retry_with_hint
+                and len(text) > 200
+            ):
                 if is_missing_sets:
                     logger.warning(f"Heuristic Trigger: Extracted {len(extracted_set_ids)} hw sets, expected ~{expected_sets}. Triggering corrective retry.")
                     hint = hardware_missing_sets_hint(len(extracted_set_ids), expected_sets)
@@ -784,6 +1347,10 @@ def extract_page_with_llm(
     # hardware pass may return [] after a door-focused interpretation. If the
     # raw text has many explicit set/component markers, make one final
     # hardware-only call over the full page text and merge it additively.
+    if preparsed_full_hardware and not all_hardware:
+        all_hardware = preparsed_full_hardware
+        ctx.update_from_hardware(all_hardware)
+
     hw_marker_count = len(re.findall(
         r"(?i)\b(?:HARDWARE\s+SET|SET\s*(?:NO\.?|#)?\s*[\w\d.-]+|GROUP\s*(?:NO\.?|#)?\s*[\w\d.-]+)\b",
         raw_text,
@@ -792,11 +1359,22 @@ def extract_page_with_llm(
         r"(?i)\b(?:HINGE|CLOSER|LOCKSET|DEADBOLT|STRIKE|THRESHOLD|WEATHERSTRIP|STOP|SEAL|GASKET|EXIT\s+DEVICE)\b",
         raw_text,
     ))
+    if len(all_hardware) == 0:
+        parsed_full_hw = _parse_deterministic_hardware_sets_fallback(raw_text)
+        if parsed_full_hw:
+            logger.warning(
+                "Deterministic full-page hardware fallback recovered %d rows before LLM rescue.",
+                len(parsed_full_hw),
+            )
+            all_hardware = parsed_full_hw
+            ctx.update_from_hardware(all_hardware)
+
     if (
         len(all_hardware) == 0
         and hw_marker_count >= 3
         and hw_component_count >= 5
         and len(raw_text) > 1000
+        and (evidence.is_hardware_schedule or page_type == PageType.HARDWARE_SET)
     ):
         logger.warning(
             "Full-page hardware rescue: %d set markers and %d component hits but 0 hardware rows.",
@@ -842,36 +1420,38 @@ def extract_page_with_llm(
     if (
         len(all_doors) == 0
         and evidence.is_door_schedule
+        and not hardware_only_title
+        and page_type != PageType.HARDWARE_SET
+        and (page_type in (PageType.DOOR_SCHEDULE, PageType.MIXED) or not evidence.is_hardware_schedule)
     ):
-        logger.warning(
-            "Evidence-driven door rescue: page classified as %s but evidence suggests %d door rows.",
-            page_type,
-            evidence.expected_door_rows(),
-        )
-        rescue_prompt = build_door_prompt(
-            query_door_instructions(raw_text) if use_rag else [],
-            raw_text + EVIDENCE_DRIVEN_DOOR_RESCUE_HINT,
-            max_chars=MAX_PAGE_CHARS,
-            is_continuation=is_continuation,
-            prev_level_area=ctx.last_level_area,
-        )
-        rescued_doors = extract_doors_llm(
-            rescue_prompt["system"], rescue_prompt["user"], base64_image=base64_image, force_model="gpt-4o"
-        )
-        if rescued_doors:
-            all_doors = _dedupe_doors_by_number(all_doors + rescued_doors)
-            if all_doors:
-                ctx.update_from_doors(all_doors)
-
-        if not all_doors:
-            parsed_doors = _parse_door_table_fallback(raw_text)
-            if parsed_doors:
-                logger.warning(
-                    "Deterministic door table fallback recovered %d rows after LLM rescue returned empty.",
-                    len(parsed_doors),
-                )
-                all_doors = _dedupe_doors_by_number(all_doors + parsed_doors)
-                ctx.update_from_doors(all_doors)
+        parsed_doors = _parse_door_table_fallback(raw_text)
+        if parsed_doors:
+            logger.warning(
+                "Deterministic door table fallback recovered %d rows before evidence-driven LLM rescue.",
+                len(parsed_doors),
+            )
+            all_doors = _dedupe_doors_by_number(all_doors + parsed_doors)
+            ctx.update_from_doors(all_doors)
+        else:
+            logger.warning(
+                "Evidence-driven door rescue: page classified as %s but evidence suggests %d door rows.",
+                page_type,
+                evidence.expected_door_rows(),
+            )
+            rescue_prompt = build_door_prompt(
+                query_door_instructions(raw_text) if use_rag else [],
+                raw_text + EVIDENCE_DRIVEN_DOOR_RESCUE_HINT,
+                max_chars=MAX_PAGE_CHARS,
+                is_continuation=is_continuation,
+                prev_level_area=ctx.last_level_area,
+            )
+            rescued_doors = extract_doors_llm(
+                rescue_prompt["system"], rescue_prompt["user"], base64_image=base64_image, force_model="gpt-4o"
+            )
+            if rescued_doors:
+                all_doors = _dedupe_doors_by_number(all_doors + rescued_doors)
+                if all_doors:
+                    ctx.update_from_doors(all_doors)
 
     # ── Full-page door rescue for door/window schedule markup pages ──
     # Some vector markup pages expose "DOOR/WINDOW SCHEDULE" text and visible
@@ -881,10 +1461,8 @@ def extract_page_with_llm(
     if (
         len(all_doors) == 0
         and len(all_hardware) > 0
-        and (
-            re.search(r"(?i)\bDOOR\b.*\bSCHEDULE\b|\bWINDOW\b.*\bSCHEDULE\b", raw_text)
-            or page_type == PageType.MIXED  # Scanned PDFs classified as MIXED with 0 doors need rescue
-        )
+        and page_type != PageType.HARDWARE_SET
+        and explicit_door_schedule
     ):
         logger.warning(
             "Full-page door rescue: schedule text and %d hardware rows but 0 door rows.",
@@ -910,6 +1488,8 @@ def extract_page_with_llm(
 
     physical_count = _physical_door_count(all_doors)
     should_try_fallback = (
+        page_type != PageType.HARDWARE_SET
+        and
         evidence.is_door_schedule
         and (
             len(all_doors) < max(1, evidence.expected_door_rows() // 2)

@@ -13,7 +13,12 @@ from llm_extract import (  # noqa: E402
     is_probable_hardware_component,
     llm_config,
 )
-from agent import _parse_door_table_fallback  # noqa: E402
+from agent import (  # noqa: E402
+    _parse_door_table_fallback,
+    _parse_grid_hardware_sets_fallback,
+    _parse_hardware_group_columns_fallback,
+    _parse_vendor_hardware_sets_fallback,
+)
 from page_evidence import PageEvidence, collect  # noqa: E402
 from page_extractor import PageType, classify_page, _collect_schedule_signals  # noqa: E402
 from pipeline import (  # noqa: E402
@@ -21,17 +26,20 @@ from pipeline import (  # noqa: E402
     _is_likely_quote_or_proposal_pdf,
     _merge_direct_pdf_witness,
     _resolve_hybrid_direct_pdf_mode,
+    _should_run_direct_pdf_witness,
 )
 from verification import (  # noqa: E402
     _crop_has_door_schedule_evidence,
     _crop_has_hardware_schedule_evidence,
+    _deterministic_crop_hardware_rows,
+    _deterministic_crop_door_rows,
     _filter_crop_door_rows,
     _missing_referenced_hw_sets,
     _normalize_crop_hardware_rows,
 )
 from schema import HardwareComponentRow  # noqa: E402
 from verification import _needs_crop_door_rescue, _needs_crop_hardware_rescue  # noqa: E402
-from vision_crops import _needs_tiles  # noqa: E402
+from vision_crops import _needs_tiles, _tile_rects  # noqa: E402
 
 
 def test_unknown_placeholders_are_not_treated_as_extracted_values():
@@ -108,6 +116,12 @@ def test_hardware_noise_filter_rejects_schedule_references():
     assert not is_probable_hardware_component(
         {"hardware_set_id": "1", "hardware_set_name": "DOOR CLOSER", "description": "CLOSER", "qty": 1, "catalog_number": "8413", "manufacturer_code": "ABC Corp"}
     )
+    assert not is_probable_hardware_component(
+        {"hardware_set_id": "DOOR_HARDWARE", "description": "HOLLOW METAL DOOR / PRIME & PAINT DOOR & FRAME PTXXX", "qty": 1}
+    )
+    assert not is_probable_hardware_component(
+        {"hardware_set_id": "DOOR_HARDWARE", "description": "GLASS PANEL / DOOR & FRAME TO BE PAINTED", "qty": 1}
+    )
     assert is_probable_hardware_component(
         {"hardware_set_id": "1", "description": "Electric strike", "qty": 1}
     )
@@ -139,10 +153,57 @@ def test_crop_rescue_triggers_on_scanned_mixed_undershoot():
     assert _needs_crop_hardware_rescue([], evidence, PageType.MIXED, crops)
 
 
+def test_hardware_set_pages_do_not_run_door_crop_rescue():
+    evidence = PageEvidence(real_door_numbers=8, dimensions=8, hw_components=6, text_length=1000)
+    crops = [{"crop_type": "mixed"}, {"crop_type": "door"}]
+
+    assert not _needs_crop_door_rescue([], evidence, PageType.HARDWARE_SET, crops)
+
+
+def test_crop_door_rescue_skips_complete_mixed_sheet_with_large_hardware_grid():
+    evidence = PageEvidence(real_door_numbers=80, dimensions=80, row_lines=80, hw_components=100, text_length=30000)
+    doors = [
+        {"door_number": f"10{i}", "door_width": "3'-0\"", "door_height": "7'-0\""}
+        for i in range(12)
+    ]
+    hardware = [{"hardware_set_id": "1", "description": "HINGE"} for _ in range(60)]
+    crops = [{"crop_type": "mixed"}, {"crop_type": "door"}]
+
+    assert not _needs_crop_door_rescue(doors, evidence, PageType.MIXED, crops, hardware)
+
+
 def test_visual_only_single_grid_still_gets_fallback_tiles():
     rects = [("visual_grid", 0.88, (33.0, 708.6, 580.2, 783.0), None)]
     assert _needs_tiles("", PageType.MIXED, rects)
     assert not _needs_tiles("DOOR SCHEDULE", PageType.MIXED, rects + [("tile_top_right", 0.36, (1, 2, 3, 4), None)])
+
+
+def test_visual_only_multiple_tight_grids_still_get_broad_tiles():
+    rects = [
+        ("visual_grid", 0.88, (277.0, 353.0, 490.0, 411.0), None),
+        ("visual_grid", 0.88, (318.0, 245.0, 454.0, 288.0), None),
+        ("visual_grid", 0.88, (277.0, 178.0, 490.0, 221.0), None),
+    ]
+
+    assert _needs_tiles("", PageType.MIXED, rects)
+    assert _needs_tiles("Title block only\nSHEET TITLE: DOOR SCHEDULE", PageType.MIXED, rects)
+
+
+def test_visual_only_tiles_include_rotated_schedule_bands():
+    class PageRect:
+        width = 612.0
+        height = 792.0
+
+    tiles = _tile_rects(PageRect(), visual_only=True)
+    by_source = {tile[0]: tile for tile in tiles}
+
+    assert by_source["tile_visual_schedule_stack"][3] == "mixed"
+    assert by_source["tile_visual_bottom_hardware_band"][3] == "hardware"
+    assert by_source["tile_rotated_door_schedule_ccw"][3] == "door"
+    assert by_source["tile_rotated_door_schedule_ccw"][4] == 90
+    assert by_source["tile_rotated_door_schedule_cw"][4] == 270
+    assert by_source["tile_rotated_hardware_schedule_ccw"][3] == "hardware"
+    assert by_source["tile_top_left"][4] == 0
 
 
 def test_opening_list_routes_as_door_schedule_without_ocr_signal():
@@ -176,6 +237,61 @@ A
     assert classify_page(text) == PageType.DOOR_SCHEDULE
 
 
+def test_opening_list_fallback_extracts_door_to_hardware_mapping():
+    text = """
+[Source: pdfplumber_rows]
+Section 08711 | DOOR HARDWARE SCHEDULE
+Opening List
+Opening | Hdw Set | Opening Label | Door Type | Frame Type
+D101A | 109 |  | H | H
+D101B | 103 |  | I | I
+D102A | 101 |  | A | A
+D102B | 101 |  | A | A
+"""
+    rows = _parse_door_table_fallback(text)
+    by_mark = {row["door_number"]: row for row in rows}
+
+    assert set(by_mark) == {"D101A", "D101B", "D102A", "D102B"}
+    assert by_mark["D101A"]["hardware_set"] == "109"
+    assert by_mark["D101B"]["door_type"] == "I"
+
+
+def test_alphanumeric_door_mark_is_not_used_as_its_own_hardware_set():
+    text = """
+[Source: pdfplumber_rows]
+NO | TYPE | SIZE | FRAME | HDWR
+D101 | A | 3'-0" x 7'-0" | HM | D101
+D102 | A | 3'-0" x 7'-0" | HM | 5
+D103 | A | 3'-0" x 7'-0" | HM | 5
+"""
+    rows = _parse_door_table_fallback(text)
+    by_mark = {row["door_number"]: row for row in rows}
+
+    assert "hardware_set" not in by_mark["D101"]
+    assert by_mark["D102"]["hardware_set"] == "5"
+
+
+def test_packed_dimension_schedule_rows_extract_without_llm():
+    text = """
+[Source: pdfplumber_rows]
+DOOR SCHEDULE
+TAG ROOM | STATUS | DOOR DESCRIPTION | WIDTH HEIGHT THICKNESS DOOR TYPE | FRAME TYPE | MATERIAL | STILE | HARDWARE SET STATUS | REMARKS
+1 | MAIN ENTRY NEW | NEW DOUBLE STOREFRONT | 6' - 0" 7' - 0" 0' - 1 3/4" A | SEE A301 | STOREFRONT | ALUM | WIDE (5") 1 | NEW | 1,2,4
+2 | DINING | NEW SINGLE STOREFRONT | 3' - 0" 7' - 0" 0' - 1 3/4" A | SEE A301 | STOREFRONT | ALUM | WIDE (5") 2A | NEW
+4 | OFFICE | NEW MANAGER'S OFFICE | 3' - 0" 7' - 0" 0' - 1 3/4" C | D1 (SEE A120) 1 | H.M. | - | 4 | NEW
+"""
+    rows = _parse_door_table_fallback(text)
+    by_mark = {row["door_number"]: row for row in rows}
+
+    assert set(by_mark) == {"1", "2", "4"}
+    assert by_mark["1"]["room_name"] == "MAIN ENTRY"
+    assert by_mark["1"]["door_width"] == "6' - 0\""
+    assert by_mark["1"]["door_height"] == "7' - 0\""
+    assert by_mark["1"]["hardware_set"] == "1"
+    assert by_mark["2"]["hardware_set"] == "2A"
+    assert by_mark["4"]["hardware_set"] == "4"
+
+
 def test_reference_code_lists_route_to_other_not_hardware():
     text = """
 Section 08711 | DOOR HARDWARE SCHEDULE
@@ -190,6 +306,94 @@ HA
 Hager
 """
     assert classify_page(text) == PageType.OTHER
+
+    option_text = """
+Section 08711 | DOOR HARDWARE SCHEDULE
+Option List
+Code
+Description
+CD
+Cylinder Dogging
+JD
+Less FSIC Cylinder
+Tapcon Screws
+Tapcon Screws (#TC316175) 1 3/4"
+"""
+    assert classify_page(option_text) == PageType.OTHER
+
+
+def test_hardware_specification_prose_routes_to_other():
+    text = """
+Section 08710 DOOR HARDWARE
+PART 1 GENERAL
+1.1 SUBMITTALS
+Submit product data, shop drawings, templates, warranty, and final keying schedule.
+PART 2 PRODUCTS
+Door closers shall be adjusted to comply with accessibility requirements.
+PART 3 EXECUTION
+Install hardware according to manufacturer's written instructions.
+Cleaning and protection shall be provided before substantial completion.
+"""
+    assert classify_page(text) == PageType.OTHER
+
+
+def test_hardware_set_description_title_routes_to_hardware_set():
+    text = """
+Sheet Content:
+HARDWARE SET
+DESCRIPTIONS
+Project Number: 002.01
+Copyright 2025 Architect
+"""
+    assert classify_page(text) == PageType.HARDWARE_SET
+
+
+def test_clear_hardware_set_page_routes_without_door_extraction():
+    text = """
+Section 08711 | DOOR HARDWARE SCHEDULE
+Hardware Sets
+Set #100 - EXIT HOLD OPEN CLOSER
+8 Hinge | BB1279 4 1/2 x 4 1/2 NRP | US10B | HA
+2 Exit Device | CD 25-V-NL-OP | 313AN | FL
+2 Closer | 8501H | 690 | NO
+Set #101 - LOCK ONLY
+3 Hinge | BB1279 4 1/2 X 4 1/2 | US10B | HA
+1 Lockset | ALX53T SPA | 613 | SC
+"""
+    assert classify_page(text) == PageType.HARDWARE_SET
+
+
+def test_hardware_set_page_does_not_run_door_rescue_on_title_numbers():
+    import agent as agent_module
+
+    text = """
+Sheet Content:
+HARDWARE SET
+DESCRIPTIONS
+Project Number: 002.01
+"""
+    old_doors = agent_module.extract_doors_llm
+    old_hardware = agent_module.extract_hardware_llm
+
+    def fail(*_args, **_kwargs):
+        raise AssertionError("LLM should not be called")
+
+    try:
+        agent_module.extract_doors_llm = fail
+        agent_module.extract_hardware_llm = fail
+        doors, hardware = agent_module.extract_page_with_llm(
+            text,
+            PageType.HARDWARE_SET,
+            use_rag=False,
+            retry_with_hint=False,
+            crop_candidates=[{"crop_type": "hardware"}],
+        )
+    finally:
+        agent_module.extract_doors_llm = old_doors
+        agent_module.extract_hardware_llm = old_hardware
+
+    assert doors == []
+    assert hardware == []
 
 
 def test_crop_only_door_rescue_requires_local_door_schedule_evidence():
@@ -215,13 +419,145 @@ def test_crop_only_filters_profile_labels_and_generic_invented_door_rows():
     }
     rows = [
         {"door_number": "A2", "room_name": "WELLNESS ROOM", "door_width": "3'-0\""},
+        {"door_number": "C", "room_name": "SINGLE GLAZED", "door_width": "3'-0\""},
+        {"door_number": "L", "room_name": "SINGLE FLUSH SWING", "door_width": "3'-0\""},
         {"door_number": "202", "room_name": "CONFERENCE ROOM", "door_width": "3'-0\""},
-        {"door_number": "100", "room_name": "WELLNESS ROOM", "door_width": "3'-0\""},
+        {"door_number": "100", "room_name": "WELLNESS ROOM", "door_width": "3'-0\"", "hardware_set": "AL-2C"},
     ]
 
     filtered = _filter_crop_door_rows(rows, crop, page_text)
 
     assert [row["door_number"] for row in filtered] == ["100"]
+    assert filtered[0]["hardware_set"] is None
+
+
+def test_trusted_rotated_door_crop_keeps_rows_when_ocr_misses_mark():
+    page_text = "VISION_CROP_RESCUE: weak native text"
+    crop = {
+        "crop_type": "door",
+        "source": "tile_rotated_door_schedule_ccw",
+        "text": "",
+        "_ocr_text_220": "\n".join(
+            [
+                "y=10 x=100 conf=0.98 text=DOOR SCHEDULE",
+                "y=20 x=10 conf=0.98 text=NO",
+                "y=20 x=80 conf=0.98 text=WIDTH",
+                "y=20 x=120 conf=0.98 text=HEIGHT",
+                "y=20 x=200 conf=0.98 text=HARDWARE",
+                "y=40 x=80 conf=0.98 text=UCC",
+            ]
+        ),
+    }
+    rows = [
+        {"door_number": "100", "room_name": "UCC", "door_width": "3'-0\"", "door_height": "7'-0\""},
+        {"door_number": "A2", "room_name": "UCC", "door_width": "3'-0\""},
+    ]
+
+    filtered = _filter_crop_door_rows(rows, crop, page_text)
+
+    assert [row["door_number"] for row in filtered] == ["100"]
+
+
+def test_crop_only_rotated_ocr_columns_recover_multiple_door_rows():
+    page_text = "VISION_CROP_RESCUE: weak native text"
+    crop = {
+        "crop_type": "mixed",
+        "text": "",
+        "_ocr_text_220": "\n".join(
+            [
+                "y=104 x=108 conf=0.98 text=DOOR SCHEDULE",
+                "y=128 x=26 conf=0.99 text=117",
+                "y=129 x=47 conf=1.00 text=100",
+                "y=129 x=59 conf=0.99 text=NO.",
+                "y=174 x=26 conf=0.97 text=WELLNESS ROOM",
+                "y=174 x=47 conf=0.99 text=24HR VESTIBULE",
+                "y=296 x=58 conf=0.98 text=TYPE",
+                "y=298 x=46 conf=0.95 text=EX",
+                "y=299 x=25 conf=1.00 text=A2",
+                "y=328 x=58 conf=0.99 text=WIDTH",
+                "y=335 x=48 conf=0.87 text=2.9",
+                "y=338 x=26 conf=0.85 text=3'-0",
+                "y=381 x=58 conf=0.98 text=HEIGHT",
+                "y=390 x=48 conf=0.91 text=7-8",
+                "y=391 x=26 conf=0.87 text=7'-0",
+                "y=800 x=68 conf=1.00 text=HARDWARE",
+                "y=814 x=59 conf=1.00 text=SET",
+                "y=819 x=27 conf=0.99 text=16",
+            ]
+        ),
+    }
+
+    rows = _deterministic_crop_door_rows(crop, page_text)
+    by_mark = {row["door_number"]: row for row in rows}
+
+    assert set(by_mark) == {"117", "100"}
+    assert by_mark["117"]["room_name"] == "WELLNESS ROOM"
+    assert by_mark["100"]["room_name"] == "24HR VESTIBULE"
+    assert by_mark["117"]["door_width"] == "3'-0\""
+    assert by_mark["100"]["door_height"] == "7'-8\""
+
+
+def test_crop_only_horizontal_ocr_schedule_recovers_door_rows():
+    page_text = "VISION_CROP_RESCUE: weak native text"
+    crop = {
+        "crop_type": "mixed",
+        "_ocr_text_220": "\n".join(
+            [
+                "y=180 x=82 conf=0.99 text=DOOR SCHEDULE",
+                "y=220 x=60 conf=0.99 text=NUMBER",
+                "y=220 x=215 conf=0.99 text=ROOM",
+                "y=220 x=980 conf=0.99 text=SIZE",
+                "y=220 x=1320 conf=0.99 text=TYPE",
+                "y=220 x=1510 conf=0.99 text=HARDWARE",
+                "y=220 x=1705 conf=0.99 text=RATING",
+                "y=220 x=1930 conf=0.99 text=REMARKS",
+                "y=260 x=62 conf=0.98 text=R1OO",
+                "y=260 x=215 conf=0.98 text=RESIDENT",
+                "y=260 x=410 conf=0.98 text=UNIT",
+                "y=260 x=540 conf=0.98 text=ENTRY",
+                "y=260 x=980 conf=0.98 text=4'-O\"X",
+                "y=260 x=1120 conf=0.98 text=7'-O\"",
+                "y=260 x=1325 conf=0.98 text=A",
+                "y=260 x=1520 conf=0.98 text=1",
+                "y=290 x=62 conf=0.98 text=RIO!",
+                "y=290 x=215 conf=0.98 text=RESIDENT",
+                "y=290 x=410 conf=0.98 text=UNIT",
+                "y=290 x=540 conf=0.98 text=BATHROOM",
+                "y=290 x=980 conf=0.98 text=3'-O\"X",
+                "y=290 x=1120 conf=0.98 text=7'-O\"",
+                "y=290 x=1325 conf=0.98 text=B",
+                "y=290 x=1520 conf=0.98 text=2",
+                "y=320 x=72 conf=0.98 text=01",
+                "y=320 x=215 conf=0.98 text=LOBBY",
+                "y=320 x=980 conf=0.98 text=4'-O\"X",
+                "y=320 x=1120 conf=0.98 text=7'-O\"",
+                "y=320 x=1325 conf=0.98 text=A",
+                "y=320 x=1520 conf=0.98 text=1",
+                "y=350 x=72 conf=0.98 text=02",
+                "y=350 x=215 conf=0.98 text=MARKETING",
+                "y=350 x=980 conf=0.98 text=3'-O\"X",
+                "y=350 x=1120 conf=0.98 text=7'-O\"",
+                "y=350 x=1325 conf=0.98 text=A",
+                "y=350 x=1520 conf=0.98 text=10",
+                "y=380 x=72 conf=0.98 text=03",
+                "y=380 x=215 conf=0.98 text=OFFICE",
+                "y=380 x=980 conf=0.98 text=3'-O\"X",
+                "y=380 x=1120 conf=0.98 text=7'-O\"",
+                "y=380 x=1325 conf=0.98 text=A",
+                "y=380 x=1520 conf=0.98 text=10",
+            ]
+        ),
+    }
+
+    rows = _filter_crop_door_rows(_deterministic_crop_door_rows(crop, page_text), crop, page_text)
+    by_mark = {row["door_number"]: row for row in rows}
+
+    assert {"R100", "R101", "01", "02", "03"}.issubset(by_mark)
+    assert by_mark["R100"]["room_name"] == "RESIDENT UNIT ENTRY"
+    assert by_mark["R101"]["room_name"] == "RESIDENT UNIT BATHROOM"
+    assert by_mark["R100"]["door_width"] == "4'-0\""
+    assert by_mark["R101"]["door_height"] == "7'-0\""
+    assert by_mark["02"]["hardware_set"] == "10"
 
 
 def test_crop_only_hardware_rescue_normalizes_item_numbers_without_set_header():
@@ -239,6 +575,81 @@ def test_crop_only_hardware_rescue_normalizes_item_numbers_without_set_header():
     normalized = _normalize_crop_hardware_rows(rows, crop, page_text)
 
     assert {row["hardware_set_id"] for row in normalized} == {"DOOR_HARDWARE"}
+
+
+def test_rotated_hardware_crop_requires_readable_column_headers():
+    page_text = "VISION_CROP_RESCUE: weak native text"
+    wrong_way_crop = {
+        "crop_type": "hardware",
+        "source": "tile_rotated_hardware_schedule_cw",
+        "_ocr_text_220": "y=10 x=10 conf=0.95 text=HARDWARE GROUP NO.16\ny=20 x=20 conf=0.95 text=SILENCER",
+    }
+    readable_crop = {
+        "crop_type": "hardware",
+        "source": "tile_rotated_hardware_schedule_ccw",
+        "_ocr_text_220": (
+            "y=10 x=10 conf=0.95 text=DOOR HARDWARE SCHEDULE\n"
+            "y=20 x=10 conf=0.95 text=QUANTITY\n"
+            "y=20 x=80 conf=0.95 text=DESCRIPTION\n"
+            "y=20 x=160 conf=0.95 text=MODEL NUMBER\n"
+            "y=20 x=250 conf=0.95 text=FINISH\n"
+            "y=20 x=300 conf=0.95 text=MFR\n"
+            "y=40 x=10 conf=0.95 text=HARDWARE GROUP NO. 4\n"
+            "y=55 x=60 conf=0.95 text=3\n"
+            "y=55 x=125 conf=0.95 text=HINGE"
+        ),
+    }
+
+    assert not _crop_has_hardware_schedule_evidence(wrong_way_crop, page_text)
+    assert _crop_has_hardware_schedule_evidence(readable_crop, page_text)
+
+
+def test_deterministic_rotated_hardware_ocr_table_parser():
+    page_text = "VISION_CROP_RESCUE: weak native text"
+    crop = {
+        "crop_type": "hardware",
+        "source": "tile_rotated_hardware_schedule_ccw",
+        "_ocr_text_220": "\n".join(
+            [
+                "y=10 x=120 conf=0.99 text=DOOR HARDWARE SCHEDULE",
+                "y=20 x=50 conf=0.99 text=QUANTITY",
+                "y=20 x=130 conf=0.99 text=DESCRIPTION",
+                "y=20 x=250 conf=0.99 text=MODEL NUMBER",
+                "y=20 x=430 conf=0.99 text=FINISH",
+                "y=20 x=470 conf=0.99 text=MFR",
+                "y=40 x=60 conf=0.99 text=HARDWARE GROUP NO. 04 ALT",
+                "y=55 x=80 conf=0.99 text=4",
+                "y=55 x=126 conf=0.99 text=HINGE",
+                "y=55 x=240 conf=0.99 text=BB1279",
+                "y=55 x=435 conf=0.99 text=26D",
+                "y=55 x=470 conf=0.99 text=HAG",
+                "y=70 x=80 conf=0.99 text=1",
+                "y=70 x=126 conf=0.99 text=SURFACE CLOSER",
+                "y=70 x=240 conf=0.99 text=4111",
+                "y=70 x=435 conf=0.99 text=689",
+                "y=70 x=470 conf=0.99 text=LCN",
+                "y=90 x=60 conf=0.99 text=HARDWARE GROUP NO. 10",
+                "y=105 x=80 conf=0.99 text=3",
+                "y=105 x=126 conf=0.99 text=SILENCER",
+                "y=105 x=240 conf=0.99 text=SR64",
+                "y=105 x=435 conf=0.99 text=GRY",
+                "y=105 x=470 conf=0.99 text=IVE",
+                "y=120 x=80 conf=0.99 text=1",
+                "y=120 x=126 conf=0.99 text=WALL STOP",
+                "y=120 x=240 conf=0.99 text=WS407CCV",
+                "y=120 x=435 conf=0.99 text=630",
+                "y=120 x=470 conf=0.99 text=IVE",
+            ]
+        ),
+    }
+
+    rows = _deterministic_crop_hardware_rows(crop, page_text)
+    by_key = {(row["hardware_set_id"], row["description"]): row for row in rows}
+
+    assert by_key[("4", "HINGE")]["qty"] == 4
+    assert by_key[("4", "SURFACE CLOSER")]["manufacturer_code"] == "LCN"
+    assert by_key[("10", "SILENCER")]["catalog_number"] == "SR64"
+    assert len(rows) == 4
 
 
 def test_crop_only_hardware_rescue_keeps_explicit_set_headers():
@@ -385,6 +796,85 @@ def test_truncated_formal_row_does_not_infer_hardware_from_frame_tokens():
     assert "hardware_set" not in by_mark["217"]
 
 
+def test_vendor_hardware_set_fallback_parses_pipe_layout_without_llm():
+    text = """
+Section 08711 | DOOR HARDWARE SCHEDULE | Hardware Sets |
+Set #103 - EXIT - HOLD OPEN CLOSER |
+4 Hinge | BB1279 4 1/2 x 4 1/2 NRP | US10B HA |
+1 Exit Device | 25-R-L x 510L QUANTUM | SP313, 313AN FL |
+1 Closer | 8501H | 690 | NO |
+Set #104 - BARN DOOR HARDWARE |
+4 Flush Pull | 106 | US10B | HA |
+"""
+    rows = _parse_vendor_hardware_sets_fallback(text)
+    by_key = {(row["hardware_set_id"], row["description"]): row for row in rows}
+
+    assert len(rows) == 4
+    assert by_key[("103", "Hinge")]["qty"] == 4
+    assert by_key[("103", "Hinge")]["catalog_number"].startswith("BB1279")
+    assert by_key[("103", "Hinge")]["finish_code"] == "US10B"
+    assert by_key[("103", "Hinge")]["manufacturer_code"] == "HA"
+    assert by_key[("103", "Exit Device")]["manufacturer_code"] == "FL"
+    assert by_key[("103", "Exit Device")]["finish_code"] == "SP313, 313AN"
+    assert by_key[("103", "Closer")]["catalog_number"] == "8501H"
+    assert by_key[("103", "Closer")]["finish_code"] == "690"
+    assert by_key[("104", "Flush Pull")]["catalog_number"] == "106"
+    assert by_key[("104", "Flush Pull")]["hardware_set_name"] == "BARN DOOR HARDWARE"
+
+    small_text = """
+DOOR HARDWARE SCHEDULE
+Hardware Sets
+Set #1 - SINGLE OFFICE
+1 SET Weatherstrip | 700S | 628 | NGP
+"""
+    small_rows = _parse_vendor_hardware_sets_fallback(small_text)
+    assert len(small_rows) == 1
+    assert small_rows[0]["unit"] == "SET"
+    assert small_rows[0]["catalog_number"] == "700S"
+
+
+def test_grid_hardware_set_fallback_parses_multicolumn_set_schedule():
+    text = """
+HARDWARE SCHEDULE
+SET: 1.0 | SET: 4.0
+2 EA. CONTINUOUS HINGE | 1 EA. MORTISE DEADLOCK
+1 EA. CONCEALED VERT ROD EXIT, NIGHTLATCH | 1 EA. CORE
+2 EA. SURFACE CLOSER | 1 EA. DOOR STOP
+104 | 3'-0" | 8'-0" | 1 3/4" | A | SOLID CORE | PTD | WOOD | 8
+"""
+    rows = _parse_grid_hardware_sets_fallback(text)
+    by_set = {}
+    for row in rows:
+        by_set.setdefault(row["hardware_set_id"], []).append(row["description"])
+
+    assert by_set["1"] == [
+        "CONTINUOUS HINGE",
+        "CONCEALED VERT ROD EXIT, NIGHTLATCH",
+        "SURFACE CLOSER",
+    ]
+    assert by_set["4"] == ["MORTISE DEADLOCK", "CORE", "DOOR STOP"]
+    assert all(row["description"] != "3'-0\" 8'-0\" 1 3/4\" A SOLID CORE PTD WOOD 8" for row in rows)
+
+
+def test_hardware_group_no_columns_parse_without_llm():
+    text = """
+[Source: pdfplumber_rows]
+Hardware Group No. 01.A | Hardware Group No. 07 | Hardware Group No. 13 | ISSUE LOG
+Provide each SGL door(s) with the following: | Provide each SGL door(s) with the following: | Provide each SGL door(s) with the following: | DOOR SCHEDULE
+QTY DESCRIPTION | CATALOG NUMBER | FINISH MFR. | QTY DESCRIPTION | CATALOG NUMBER | FINISH MFR. | QTY DESCRIPTION | CATALOG NUMBER | FINISH MFR. | Mark | Room Name
+1 EA CONT. HINGE | 112XY HEIGHT AS REQ | 628 IVE | 3 EA HINGE | 5BB1 4.5 X 4.5 | 652 IVE | 3 EA HINGE | 5BB1 4.5 X 4.5 | 652 IVE | 001 | LOBBY
+1 EA PANIC HARDWARE | CD-99-NL | 626 VON | 1 EA CLASSROOM LOCK | L9070L 06A | 626 SCH | 1 EA OFFICE/ENTRY LOCK | L9050L 06A L583-363 | 626 SCH | 002 | APPARATUS BAY
+1 EA MORTISE CYLINDER | MATCH EXISTING "CYBER KEY" | CYB | 1 EA WALL STOP | WS406/407CCV | 630 IVE | 1 EA SURFACE CLOSER | SC71 RW/PA X MTG. PLT. | 689 FAL
+"""
+    rows = _parse_hardware_group_columns_fallback(text)
+    by_key = {(row["hardware_set_id"], row["description"]): row for row in rows}
+
+    assert len(rows) == 9
+    assert by_key[("01.A", "CONT. HINGE")]["catalog_number"] == "112XY HEIGHT AS REQ"
+    assert by_key[("07", "CLASSROOM LOCK")]["manufacturer_code"] == "SCH"
+    assert by_key[("13", "SURFACE CLOSER")]["finish_code"] == "689"
+
+
 def test_missing_referenced_hw_sets_normalizes_ids():
     doors = [
         {"door_number": "100A", "hardware_set": "5"},
@@ -419,6 +909,17 @@ def test_hybrid_direct_pdf_enabled_defaults_to_rescue_mode():
     assert _resolve_hybrid_direct_pdf_mode(None, "always") == "always"
 
 
+def test_direct_pdf_witness_skips_complete_opening_list_with_hardware():
+    doors = [
+        {"door_number": "D101A", "hardware_set": "109", "_table_shape": "opening_list"},
+        {"door_number": "D101B", "hardware_set": "103", "_table_shape": "opening_list"},
+        {"door_number": "D102A", "hardware_set": "101", "_table_shape": "opening_list"},
+    ]
+    hardware = [{"hardware_set_id": "109", "description": "Hinge"} for _ in range(3)]
+
+    assert not _should_run_direct_pdf_witness("rescue", doors, hardware)
+
+
 def test_cross_reference_backfills_matching_door_number_hardware_sets():
     import pandas as pd
 
@@ -451,18 +952,31 @@ if __name__ == "__main__":
     test_door_mark_filter_rejects_room_names()
     test_quote_files_do_not_contribute_door_schedule_rows()
     test_crop_rescue_triggers_on_scanned_mixed_undershoot()
+    test_crop_door_rescue_skips_complete_mixed_sheet_with_large_hardware_grid()
     test_visual_only_single_grid_still_gets_fallback_tiles()
     test_opening_list_routes_as_door_schedule_without_ocr_signal()
+    test_opening_list_fallback_extracts_door_to_hardware_mapping()
+    test_alphanumeric_door_mark_is_not_used_as_its_own_hardware_set()
+    test_packed_dimension_schedule_rows_extract_without_llm()
     test_reference_code_lists_route_to_other_not_hardware()
+    test_hardware_specification_prose_routes_to_other()
+    test_hardware_set_description_title_routes_to_hardware_set()
+    test_clear_hardware_set_page_routes_without_door_extraction()
+    test_hardware_set_page_does_not_run_door_rescue_on_title_numbers()
     test_crop_only_door_rescue_requires_local_door_schedule_evidence()
     test_crop_only_filters_profile_labels_and_generic_invented_door_rows()
+    test_crop_only_rotated_ocr_columns_recover_multiple_door_rows()
+    test_crop_only_horizontal_ocr_schedule_recovers_door_rows()
     test_crop_only_hardware_rescue_normalizes_item_numbers_without_set_header()
     test_crop_only_hardware_rescue_keeps_explicit_set_headers()
     test_direct_pdf_witness_fills_and_adds_conservatively()
     test_direct_pdf_witness_records_conflicts_without_overwriting()
     test_formal_door_table_fallback_uses_hardware_column()
+    test_vendor_hardware_set_fallback_parses_pipe_layout_without_llm()
+    test_grid_hardware_set_fallback_parses_multicolumn_set_schedule()
     test_missing_referenced_hw_sets_normalizes_ids()
     test_openai_model_routing_respects_selected_model_by_default()
     test_hybrid_direct_pdf_enabled_defaults_to_rescue_mode()
+    test_direct_pdf_witness_skips_complete_opening_list_with_hardware()
     test_cross_reference_backfills_matching_door_number_hardware_sets()
     print("tests_ok")

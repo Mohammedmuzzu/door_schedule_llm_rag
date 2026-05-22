@@ -46,22 +46,16 @@ def get_embedding_model():
     global _embedding_model
     if not _RAG_AVAILABLE:
         return None
-        
-    if st is not None:
-        # Use Streamlit caching if available
-        @st.cache_resource
-        def _load_model():
-            logger.info("Loading embedding model with st.cache_resource: %s", EMBEDDING_MODEL)
-            from sentence_transformers import SentenceTransformer
-            return SentenceTransformer(EMBEDDING_MODEL)
-        return _load_model()
-    else:
-        # Fallback to global if not running under Streamlit
-        if _embedding_model is None:
-            logger.info("Loading embedding model: %s", EMBEDDING_MODEL)
-            from sentence_transformers import SentenceTransformer
-            _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
-        return _embedding_model
+
+    # Keep a plain module-level cache even when Streamlit is importable. The
+    # extractor and QA runners import Streamlit libraries in normal CLI mode;
+    # defining an st.cache_resource function inside this helper caused the
+    # sentence-transformer to be reloaded on repeated RAG queries.
+    if _embedding_model is None:
+        logger.info("Loading embedding model: %s", EMBEDDING_MODEL)
+        from sentence_transformers import SentenceTransformer
+        _embedding_model = SentenceTransformer(EMBEDDING_MODEL)
+    return _embedding_model
 
 
 def embed(texts: List[str]) -> List[List[float]]:
