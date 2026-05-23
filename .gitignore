@@ -15,6 +15,7 @@ secret/
 
 # Proprietary Documents & Large Binaries
 pdfs/
+data/pdfs/
 *.pdf
 *.zip
 *.tar.gz
@@ -23,12 +24,13 @@ pdfs/
 **/*.xlsx
 **/*.csv
 extracted_data/
+**/extracted_data/
 evaluation_output/
 evaluation_output_v2/
 **/qa_out/
 scratch/
 *.db
-door_schedule_llm_rag/qa_visual_compare/
+**/qa_visual_compare/
 temp14.png
 
 # RAG vector store (rebuilt at runtime)
@@ -38,9 +40,14 @@ temp14.png
 .vscode/
 .idea/
 .DS_Store
+.netlify/
+.vercel/
+.wrangler/
+node_modules/
+dist/
 
 skills/.skills/
 
 # Streamlit secrets
 .streamlit/secrets.toml
-door_schedule_llm_rag/.streamlit/secrets.toml
+**/.streamlit/secrets.toml

@@ -1,26 +1,45 @@
----
-title: Door Schedule LLM RAG
-emoji: 🚪
-colorFrom: blue
-colorTo: gray
-sdk: docker
-app_port: 8501
----
+# Door Schedule Monorepo
 
-# Door Schedule LLM RAG
+Production-oriented monorepo for the door schedule extraction tools.
 
-Streamlit Docker Space for extracting door schedules and hardware schedules from PDFs using cloud LLMs, PDF parsers, and local RAG instructions.
+## Apps
 
-## Required Space Secrets
+| App | Path | Purpose |
+| --- | --- | --- |
+| Door Schedule LLM RAG | `apps/door-schedule-llm-rag` | Streamlit/Python extraction pipeline, QA, RAG instructions, exports. |
+| FastBid24 Door Analyzer | `apps/fastbid24-door-analyzer` | Static React browser app for the FastBid24 analyzer experience. |
 
-Set these in **Settings > Variables and secrets** on Hugging Face:
+## Shared Local Data
 
-- `OPENAI_API_KEY`
-- `LLM_PROVIDER=openai`
-- `DEPLOYMENT_ENV=production`
+| Path | Purpose |
+| --- | --- |
+| `data/pdfs` | Local input PDFs for extraction and QA runs. Ignored by git. |
+| `docs` | Product and architecture notes. |
 
-Optional:
+## Run Locally
 
-- `OPENAI_MODEL=gpt-4o-mini`
-- `MAX_PAGE_CHARS=16000`
-- Supabase/S3 values from `door_schedule_llm_rag/.env.example` if you want exports persisted outside the Space.
+### Door Schedule LLM RAG
+
+```powershell
+cd c:\Users\muzaf\my_lab\sushmita_proj\apps\door-schedule-llm-rag
+& "c:\Users\muzaf\my_lab\computervision\Scripts\streamlit.exe" run app.py
+```
+
+### FastBid24 Door Analyzer
+
+```powershell
+cd c:\Users\muzaf\my_lab\sushmita_proj
+.\apps\fastbid24-door-analyzer\serve.ps1
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8503/
+```
+
+## Deployment Direction
+
+- Deploy `apps/fastbid24-door-analyzer` as a static app, for example Cloudflare Pages.
+- Deploy `apps/door-schedule-llm-rag` as the Python/Streamlit extraction app, for example a Docker-based service.
+- Keep secrets in each deployment platform, never committed in the repo.

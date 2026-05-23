@@ -1,0 +1,27 @@
+{
+  "app": "fastbid24-door-analyzer",
+  "runtime_source": "app.jsx",
+  "model": "gpt-5.5",
+  "prompts": [
+    {
+      "id": "door_schedule_extraction",
+      "version": "1.0.0",
+      "file": "door_schedule_extraction.md"
+    },
+    {
+      "id": "hardware_set_extraction",
+      "version": "1.0.0",
+      "file": "hardware_set_extraction.md"
+    },
+    {
+      "id": "door_hardware_mapping",
+      "version": "1.0.0",
+      "file": "door_hardware_mapping.md"
+    },
+    {
+      "id": "rfi_coordination_review",
+      "version": "1.0.0",
+      "file": "rfi_coordination_review.md"
+    }
+  ]
+}
