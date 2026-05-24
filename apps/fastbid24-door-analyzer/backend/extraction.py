@@ -13,6 +13,12 @@ class ExtractionError(Exception):
     pass
 
 
+class ExtractionProviderError(ExtractionError):
+    def __init__(self, public_message: str, raw_message: str = ""):
+        super().__init__(public_message)
+        self.raw_message = raw_message
+
+
 STAGED_DOOR_SYSTEM = """You are extracting a door schedule from a construction drawing.
 
 Return structured JSON only.
@@ -153,9 +159,10 @@ def _log(logs: list[dict[str, Any]], kind: str, text: str, stage: str | None = N
     logs.append({"kind": kind, "level": kind, "text": text, "message": text, "stage": stage, "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
 
 
-def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_tokens: int, reasoning_effort: str, logs: list[dict[str, Any]]) -> dict[str, Any]:
-    if not settings.openai_api_key:
-        raise ExtractionError("Server OpenAI key is not configured.")
+def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_tokens: int, reasoning_effort: str, logs: list[dict[str, Any]], api_key: str | None = None) -> dict[str, Any]:
+    resolved_api_key = api_key or settings.openai_api_key
+    if not resolved_api_key:
+        raise ExtractionError("Analysis service is not configured for this account.")
     started = time.time()
     body: dict[str, Any] = {
         "model": settings.openai_model,
@@ -169,7 +176,7 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
         req = urllib.request.Request(
             "https://api.openai.com/v1/responses",
             data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json", "Authorization": f"Bearer {settings.openai_api_key}"},
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {resolved_api_key}"},
             method="POST",
         )
         try:
@@ -179,17 +186,24 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
             try:
                 payload = json.loads(exc.read().decode("utf-8"))
             except Exception:
-                payload = {"error": {"message": f"OpenAI HTTP {exc.code}"}}
-            raise ExtractionError(payload.get("error", {}).get("message") or f"OpenAI HTTP {exc.code}") from exc
+                payload = {"error": {"message": f"Analysis service HTTP {exc.code}"}}
+            raw_message = payload.get("error", {}).get("message") or f"Analysis service HTTP {exc.code}"
+            if exc.code in {401, 403}:
+                public_message = "Analysis service rejected this account key. Ask an admin to replace it."
+            elif exc.code == 429:
+                public_message = "Analysis service is quota-limited or busy. Try again later."
+            else:
+                public_message = f"Analysis service returned an error (HTTP {exc.code})."
+            raise ExtractionProviderError(public_message, raw_message) from exc
         except urllib.error.URLError as exc:
-            raise ExtractionError(f"Network error contacting OpenAI: {exc.reason}") from exc
+            raise ExtractionError(f"Network error contacting analysis service: {exc.reason}") from exc
 
-    _log(logs, "info", f"{label} - sending PDF/data to {settings.openai_model}.", label)
+    _log(logs, "info", f"{label} - processing document data.", label)
     try:
         data = send(body)
-    except ExtractionError as exc:
-        if re.search(r"reasoning|effort|parameter", str(exc), re.I):
-            _log(logs, "warn", f"{label} - retrying without reasoning param: {exc}", label)
+    except ExtractionProviderError as exc:
+        if re.search(r"reasoning|effort|parameter", exc.raw_message, re.I):
+            _log(logs, "warn", f"{label} - retrying with simplified request.", label)
             body.pop("reasoning", None)
             data = send(body)
         else:
@@ -206,7 +220,7 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
     text = text or "{}"
     truncated = (data.get("incomplete_details") or {}).get("reason") == "max_output_tokens"
     elapsed = round(time.time() - started)
-    _log(logs, "ok", f"{label} - returned in {elapsed}s - {len(text) / 1024:.1f} KB JSON{' - TRUNCATED' if truncated else ''}.", label)
+    _log(logs, "ok", f"{label} - completed in {elapsed}s{' - truncated' if truncated else ''}.", label)
 
     try:
         parsed = json.loads(text)
@@ -423,7 +437,7 @@ def rollup_summary(doors: list[dict[str, Any]], sets: list[dict[str, Any]], scop
         "exterior_openings": len([d for d in doors if d.get("interior_or_exterior") == "Exterior"]),
         "fire_rated_openings": len([d for d in doors if is_fire(d)]),
         "overall_bid_risk": "Medium",
-        "estimator_summary": f"Secure backend staged pipeline ({settings.openai_model}, {elapsed}s) extracted {len(doors)} opening(s) and {len(sets)} hardware set(s). Verify against source PDF before bidding.",
+        "estimator_summary": f"Secure analysis extracted {len(doors)} opening(s) and {len(sets)} hardware set(s). Verify against source PDF before bidding.",
     }
 
 
@@ -499,17 +513,17 @@ def synthesize(doors: list[dict[str, Any]], sets: list[dict[str, Any]], scope: s
     return {"risks": risks, "rfis": rfis, "notes": notes, "recs": recs}
 
 
-def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: bool = True) -> dict[str, Any]:
+def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: bool = True, api_key: str | None = None) -> dict[str, Any]:
     logs: list[dict[str, Any]] = []
     if not file_bytes or b"%PDF-" not in file_bytes[:1024]:
         raise ExtractionError("Uploaded file does not look like a PDF.")
 
     scope = scope or "Supply & Installation"
     data_url = "data:application/pdf;base64," + base64.b64encode(file_bytes).decode("ascii")
-    _log(logs, "info", f"Secure backend extraction started for {filename} ({len(file_bytes) / 1024:.0f} KB).", "start")
+    _log(logs, "info", f"Secure analysis started for {filename} ({len(file_bytes) / 1024:.0f} KB).", "start")
 
     call1 = _openai_json_call(
-        "Call 1 (doors)",
+        "Door schedule review",
         [
             {"role": "system", "content": STAGED_DOOR_SYSTEM},
             {"role": "user", "content": [
@@ -520,6 +534,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         32000,
         "high",
         logs,
+        api_key=api_key,
     )
     raw_doors = call1["parsed"].get("doors") or call1["parsed"].get("rows") or call1["parsed"].get("door_analysis") or []
     doors = [normalize_door(d) for d in raw_doors if isinstance(d, dict)]
@@ -534,7 +549,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
     }
 
     call2 = _openai_json_call(
-        "Call 2 (hardware sets)",
+        "Hardware set review",
         [
             {"role": "system", "content": STAGED_HW_SYSTEM},
             {"role": "user", "content": [
@@ -545,6 +560,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         48000,
         "high",
         logs,
+        api_key=api_key,
     )
     raw_sets = call2["parsed"].get("hardware_sets") or call2["parsed"].get("sets") or []
     sets = dedupe_sets([normalize_set(s) for s in raw_sets if isinstance(s, dict)])
@@ -589,7 +605,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
                 "mapping_qa": qa_issues,
             }
             call3 = _openai_json_call(
-                "Call 3 (RFIs)",
+                "Bid review",
                 [
                     {"role": "system", "content": STAGED_RFI_SYSTEM},
                     {"role": "user", "content": [{"type": "input_text", "text": "Review the following extracted data (already in canonical form). Produce only real-issue RFIs and coordination notes per your system instructions. Do not invent issues for clean rows.\n\nEXTRACTED_DATA:\n" + json.dumps(payload) + '\n\nReturn JSON: { "rfis": [...] }'}]},
@@ -597,6 +613,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
                 16000,
                 "medium",
                 logs,
+                api_key=api_key,
             )
             call3_elapsed = call3["elapsed"]
             rfis = call3["parsed"].get("rfis") if isinstance(call3["parsed"].get("rfis"), list) else []
@@ -607,9 +624,9 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
                 project_risks.append({"severity": str(item.get("severity") or "medium").lower(), "category": item.get("category") or "General", "issue": item.get("issue") or "", "affected_openings": item.get("affected_doors") if isinstance(item.get("affected_doors"), list) else [], "recommendation": item.get("recommendation") or "", "status": "Open"})
         except ExtractionError as exc:
             call3_skipped = True
-            _log(logs, "warn", f"Call 3 (RFI review) failed: {exc}. Continuing with heuristic recommendations.", "Call 3 (RFIs)")
+            _log(logs, "warn", f"Bid review could not complete: {exc}. Continuing with estimator recommendations.", "Bid review")
     else:
-        _log(logs, "info", "Call 3 skipped (RFI review disabled).", "Call 3 (RFIs)")
+        _log(logs, "info", "Bid review skipped.", "Bid review")
 
     synth = synthesize(doors, sets, scope, sheet_context)
     recs = synth["recs"]
@@ -623,7 +640,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
 
     total_items = sum(len(s.get("items") or []) for s in sets)
     total_elapsed = elapsed_core + call3_elapsed
-    _log(logs, "ok", f"Secure staged pipeline done - {len(doors)} doors - {len(sets)} sets - {total_items} items - {len(project_risks)} risks - {len(rfi_log)} RFIs - {total_elapsed}s total.", "done")
+    _log(logs, "ok", f"Secure analysis done - {len(doors)} doors - {len(sets)} sets - {total_items} items - {len(project_risks)} risks - {len(rfi_log)} RFIs - {total_elapsed}s total.", "done")
     return {
         "analysis": {
             "project_summary": project_summary,

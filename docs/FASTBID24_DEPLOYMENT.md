@@ -16,7 +16,9 @@ Required:
 ```text
 DATABASE_URL=postgresql://...
 FASTBID24_DATABASE_NAME=fastbid24_door_analyzer
-FASTBID24_OPENAI_API_KEY=<your OpenAI API key>
+FASTBID24_SECRET_KEY=<long random secret used to encrypt assigned user keys>
+FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY=false
+FASTBID24_OPENAI_API_KEY=<optional server fallback analysis key>
 FASTBID24_OPENAI_MODEL=gpt-5.5
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
@@ -147,12 +149,13 @@ Root directory: empty or repository root
 ## 8. Production Checklist
 
 - Backend health URL returns `ok: true`.
-- Backend health reports `openai_configured: true`.
+- Backend health reports `secret_configured: true`.
 - Frontend `config.js` points to the real backend API URL.
 - `FASTBID24_CORS_ORIGINS` contains only the frontend domain.
-- Cloud Pages frontend does not contain OpenAI keys, direct OpenAI calls, or prompt bodies.
+- Cloud Pages frontend does not contain provider keys, direct provider calls, or prompt bodies.
 - First admin account is created.
 - Test normal user creation from Admin.
+- Assign an analysis key to the normal user from Admin.
 - Test one PDF run from a normal user.
 - Confirm the PDF appears in S3.
 - Confirm the run appears in Admin.
@@ -188,7 +191,9 @@ PORT=10000
 FASTBID24_API_HOST=0.0.0.0
 FASTBID24_API_PORT=10000
 FASTBID24_DATABASE_NAME=fastbid24_door_analyzer
-FASTBID24_OPENAI_API_KEY=<your OpenAI API key>
+FASTBID24_SECRET_KEY=<long random secret used to encrypt assigned user keys>
+FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY=false
+FASTBID24_OPENAI_API_KEY=<optional server fallback analysis key>
 FASTBID24_OPENAI_MODEL=gpt-5.5
 FASTBID24_MAX_UPLOAD_MB=100
 FASTBID24_SESSION_DAYS=14

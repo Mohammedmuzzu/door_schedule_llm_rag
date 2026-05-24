@@ -58,6 +58,35 @@ class User(Base):
     organization = relationship("Organization", back_populates="users")
     sessions = relationship("UserSession", back_populates="user")
     runs = relationship("PdfRun", back_populates="user")
+    ai_credential = relationship(
+        "UserAiCredential",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
+        foreign_keys="UserAiCredential.user_id",
+    )
+
+
+class UserAiCredential(Base):
+    __tablename__ = "user_ai_credentials"
+    __table_args__ = (
+        UniqueConstraint("user_id", name="uq_user_ai_credentials_user_id"),
+        Index("ix_user_ai_credentials_org_user", "organization_id", "user_id"),
+    )
+
+    id = uuid_pk()
+    organization_id = Column(UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    provider = Column(String(64), nullable=False, default="analysis")
+    encrypted_api_key = Column(Text, nullable=False)
+    key_fingerprint = Column(String(64), nullable=False)
+    key_hint = Column(String(32), nullable=True)
+    created_by_user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+
+    user = relationship("User", back_populates="ai_credential", foreign_keys=[user_id])
+    created_by = relationship("User", foreign_keys=[created_by_user_id])
 
 
 class UserSession(Base):

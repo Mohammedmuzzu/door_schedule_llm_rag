@@ -1,4 +1,5 @@
 import json
+import re
 import time
 import uuid
 from collections import defaultdict, deque
@@ -22,9 +23,22 @@ from models import (
     PdfRunLog,
     RfiItem,
     User,
+    UserAiCredential,
     UserSession,
 )
-from security import hash_password, issue_token, normalize_email, token_digest, verify_password
+from security import (
+    SecretConfigurationError,
+    SecretDecryptionError,
+    decrypt_secret,
+    encrypt_secret,
+    hash_password,
+    issue_token,
+    normalize_email,
+    secret_fingerprint,
+    secret_hint,
+    token_digest,
+    verify_password,
+)
 from storage import StorageNotConfigured, upload_pdf
 
 
@@ -52,6 +66,7 @@ def parse_json_field(name: str, default):
 
 
 def serialize_user(user: User) -> dict:
+    credential = getattr(user, "ai_credential", None)
     return {
         "id": str(user.id),
         "organization_id": str(user.organization_id),
@@ -59,10 +74,28 @@ def serialize_user(user: User) -> dict:
         "name": user.name,
         "role": user.role,
         "status": user.status,
+        "analysis_key_configured": bool(credential),
+        "analysis_key_hint": credential.key_hint if credential else None,
+        "analysis_key_updated_at": iso(credential.updated_at) if credential else None,
         "created_at": iso(user.created_at),
         "updated_at": iso(user.updated_at),
         "last_login_at": iso(user.last_login_at),
     }
+
+
+def public_log_message(message: str) -> str:
+    clean = str(message or "")
+    clean = re.sub(r"\bOpenAI\b", "analysis service", clean, flags=re.I)
+    clean = re.sub(r"\bgpt[-\w.]*\b", "analysis engine", clean, flags=re.I)
+    clean = re.sub(r"\bCall\s+\d+\s*\([^)]+\)", "Analysis step", clean, flags=re.I)
+    clean = re.sub(r"sending PDF/data to [^.]+", "processing document data", clean, flags=re.I)
+    return clean
+
+
+def public_log_payload(payload: dict | None) -> dict:
+    if not isinstance(payload, dict):
+        return {}
+    return {key: payload[key] for key in ("kind", "level", "stage", "ts") if key in payload}
 
 
 def serialize_log(log: PdfRunLog) -> dict:
@@ -72,8 +105,8 @@ def serialize_log(log: PdfRunLog) -> dict:
         "user_id": str(log.user_id),
         "level": log.level,
         "stage": log.stage,
-        "message": log.message,
-        "payload": log.payload or {},
+        "message": public_log_message(log.message),
+        "payload": public_log_payload(log.payload),
         "created_at": iso(log.created_at),
     }
 
@@ -96,8 +129,6 @@ def serialize_run(run: PdfRun, include_analysis: bool = False, include_logs: boo
         "project_name": run.project_name,
         "project_number": run.project_number,
         "architect": run.architect,
-        "pdf_type": run.pdf_type,
-        "model": run.model,
         "summary_json": run.summary_json or {},
         "metrics_json": run.metrics_json or {},
         "created_at": iso(run.created_at),
@@ -110,6 +141,17 @@ def serialize_run(run: PdfRun, include_analysis: bool = False, include_logs: boo
     if include_logs:
         data["logs"] = [serialize_log(log) for log in run.logs]
     return data
+
+
+def public_extraction_result(result: dict) -> dict:
+    qa = result.get("qa") if isinstance(result.get("qa"), dict) else {}
+    return {
+        "analysis": result.get("analysis") or {},
+        "qa": {
+            "extraction_complete": qa.get("extraction_complete", True),
+            "extraction_failures": qa.get("extraction_failures") or [],
+        },
+    }
 
 
 def get_bearer_token() -> str | None:
@@ -193,6 +235,67 @@ def add_audit(db, user: User | None, action: str, entity_type: str, entity_id: s
             payload=payload or {},
         )
     )
+
+
+def audit_safe_user_patch(body: dict) -> dict:
+    hidden = {"password", "analysis_api_key"}
+    payload = {key: value for key, value in body.items() if key not in hidden}
+    if "password" in body:
+        payload["password"] = "updated"
+    if "analysis_api_key" in body:
+        payload["analysis_key"] = "updated"
+    return payload
+
+
+def get_account_analysis_key(db, user: User) -> str | None:
+    credential = (
+        db.query(UserAiCredential)
+        .filter(UserAiCredential.organization_id == user.organization_id, UserAiCredential.user_id == user.id)
+        .first()
+    )
+    if credential:
+        return decrypt_secret(credential.encrypted_api_key)
+    if settings.allow_global_analysis_key:
+        return settings.openai_api_key
+    return None
+
+
+def upsert_account_analysis_key(db, target: User, admin: User, raw_key: str) -> None:
+    clean = (raw_key or "").strip()
+    if not clean:
+        raise ValueError("Analysis key cannot be empty.")
+    if len(clean) > 4096:
+        raise ValueError("Analysis key is too long.")
+    credential = (
+        db.query(UserAiCredential)
+        .filter(UserAiCredential.organization_id == target.organization_id, UserAiCredential.user_id == target.id)
+        .first()
+    )
+    if not credential:
+        credential = UserAiCredential(
+            organization_id=target.organization_id,
+            user_id=target.id,
+            provider="analysis",
+        )
+        db.add(credential)
+    credential.encrypted_api_key = encrypt_secret(clean)
+    credential.key_fingerprint = secret_fingerprint(clean)
+    credential.key_hint = secret_hint(clean)
+    credential.created_by_user_id = admin.id
+    db.flush()
+
+
+def clear_account_analysis_key(db, target: User) -> bool:
+    credential = (
+        db.query(UserAiCredential)
+        .filter(UserAiCredential.organization_id == target.organization_id, UserAiCredential.user_id == target.id)
+        .first()
+    )
+    if not credential:
+        return False
+    db.delete(credential)
+    db.flush()
+    return True
 
 
 def rate_limit_extraction(user: User) -> tuple[bool, int]:
@@ -388,7 +491,6 @@ def register_routes(app: Flask) -> None:
                                                 "logs_json": {"type": "string"},
                                                 "metrics_json": {"type": "string"},
                                                 "scope": {"type": "string"},
-                                                "model": {"type": "string"},
                                             },
                                         }
                                     }
@@ -430,6 +532,7 @@ def register_routes(app: Flask) -> None:
                                                 "email": {"type": "string", "format": "email"},
                                                 "password": {"type": "string", "minLength": 8},
                                                 "role": {"type": "string", "enum": ["admin", "user"]},
+                                                "analysis_api_key": {"type": "string", "writeOnly": True},
                                             },
                                         }
                                     }
@@ -442,6 +545,23 @@ def register_routes(app: Flask) -> None:
                         "patch": {
                             "summary": "Admin: update user",
                             "parameters": [{"name": "user_id", "in": "path", "required": True, "schema": {"type": "string"}}],
+                            "requestBody": {
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {"type": "string"},
+                                                "role": {"type": "string", "enum": ["admin", "user"]},
+                                                "status": {"type": "string", "enum": ["active", "inactive"]},
+                                                "password": {"type": "string", "minLength": 8},
+                                                "analysis_api_key": {"type": "string", "writeOnly": True},
+                                                "clear_analysis_api_key": {"type": "boolean"},
+                                            },
+                                        }
+                                    }
+                                }
+                            },
                             "responses": {"200": {"description": "User updated"}},
                         }
                     },
@@ -495,7 +615,8 @@ def register_routes(app: Flask) -> None:
                 "ok": True,
                 "database_configured": settings.database_configured,
                 "s3_configured": settings.s3_configured,
-                "openai_configured": settings.openai_configured,
+                "analysis_fallback_configured": settings.analysis_fallback_configured,
+                "secret_configured": settings.secret_configured,
                 "bucket": settings.s3_bucket_name,
             }
         )
@@ -574,8 +695,14 @@ def register_routes(app: Flask) -> None:
             response = api_error(429, "RateLimited", "Extraction rate limit reached. Try again later.")
             response.headers["Retry-After"] = str(retry_after)
             return response
-        if not settings.openai_configured:
-            return api_error(503, "OpenAINotConfigured", "Server OpenAI key is not configured.")
+        try:
+            analysis_key = get_account_analysis_key(db, user)
+        except SecretConfigurationError:
+            return api_error(503, "AnalysisKeyNotConfigured", "Secure analysis keys are not configured on the server.")
+        except SecretDecryptionError:
+            return api_error(503, "AnalysisKeyUnavailable", "This account's analysis key could not be read. Ask an admin to replace it.")
+        if not analysis_key:
+            return api_error(503, "AnalysisKeyNotConfigured", "Analysis service is not configured for this account.")
 
         pdf = request.files.get("pdf")
         if not pdf:
@@ -597,7 +724,7 @@ def register_routes(app: Flask) -> None:
         run_rfis = str(request.form.get("run_rfis", "true")).lower() not in {"0", "false", "no"}
 
         try:
-            result = extract_pdf_secure(file_bytes, filename, scope, run_rfis=run_rfis)
+            result = extract_pdf_secure(file_bytes, filename, scope, run_rfis=run_rfis, api_key=analysis_key)
         except ExtractionError as exc:
             add_audit(db, user, "extract.failed", "pdf", None, {"filename": filename, "error": str(exc)})
             return api_error(502, "ExtractionFailed", str(exc))
@@ -611,12 +738,11 @@ def register_routes(app: Flask) -> None:
             {
                 "filename": filename,
                 "scope": scope,
-                "model": settings.openai_model,
                 "doors": len(result.get("analysis", {}).get("door_analysis") or []),
                 "hardware_sets": len(result.get("analysis", {}).get("hardware_set_review") or []),
             },
         )
-        return jsonify(result)
+        return jsonify(public_extraction_result(result))
 
     @app.get("/api/v1/runs")
     @require_user
@@ -673,8 +799,8 @@ def register_routes(app: Flask) -> None:
             project_name=ps.get("project_name") or project.get("name"),
             project_number=ps.get("project_number") or project.get("number"),
             architect=ps.get("architect") or project.get("architect"),
-            pdf_type=qa.get("pdf_type"),
-            model=request.form.get("model") or qa.get("chat_model"),
+            pdf_type=None,
+            model=None,
             analysis_json=analysis,
             project_json=project,
             summary_json={"project_summary": ps},
@@ -812,6 +938,14 @@ def register_routes(app: Flask) -> None:
             return api_error(422, "ValidationError", "Password must be at least 8 characters.")
         if db.query(User).filter(User.email == email).first():
             return api_error(409, "DuplicateUser", "A user with this email already exists.")
+        analysis_key = (body.get("analysis_api_key") or "").strip()
+        if analysis_key:
+            if len(analysis_key) > 4096:
+                return api_error(422, "ValidationError", "Analysis key is too long.")
+            try:
+                encrypt_secret(analysis_key)
+            except SecretConfigurationError:
+                return api_error(503, "AnalysisKeyNotConfigured", "Secure analysis keys are not configured on the server.")
         created = User(
             organization_id=user.organization_id,
             email=email,
@@ -822,7 +956,9 @@ def register_routes(app: Flask) -> None:
         )
         db.add(created)
         db.flush()
-        add_audit(db, user, "admin.users.create", "user", str(created.id), {"email": email, "role": role})
+        if analysis_key:
+            upsert_account_analysis_key(db, created, user, analysis_key)
+        add_audit(db, user, "admin.users.create", "user", str(created.id), {"email": email, "role": role, "analysis_key": "set" if analysis_key else "unset"})
         return jsonify({"user": serialize_user(created)}), 201
 
     @app.patch("/api/v1/admin/users/<user_id>")
@@ -833,6 +969,16 @@ def register_routes(app: Flask) -> None:
         if not target:
             return api_error(404, "NotFound", "User not found.")
         body = request.get_json(silent=True) or {}
+        analysis_key = (body.get("analysis_api_key") or "").strip() if "analysis_api_key" in body else None
+        if analysis_key is not None:
+            if not analysis_key:
+                return api_error(422, "ValidationError", "Analysis key cannot be empty.")
+            if len(analysis_key) > 4096:
+                return api_error(422, "ValidationError", "Analysis key is too long.")
+            try:
+                encrypt_secret(analysis_key)
+            except SecretConfigurationError:
+                return api_error(503, "AnalysisKeyNotConfigured", "Secure analysis keys are not configured on the server.")
         if "role" in body:
             if body["role"] not in {"admin", "user"}:
                 return api_error(422, "ValidationError", "Role must be admin or user.")
@@ -849,7 +995,11 @@ def register_routes(app: Flask) -> None:
             if len(body["password"]) < 8:
                 return api_error(422, "ValidationError", "Password must be at least 8 characters.")
             target.password_hash = hash_password(body["password"])
-        add_audit(db, user, "admin.users.update", "user", str(target.id), body)
+        if analysis_key is not None:
+            upsert_account_analysis_key(db, target, user, analysis_key)
+        elif body.get("clear_analysis_api_key"):
+            clear_account_analysis_key(db, target)
+        add_audit(db, user, "admin.users.update", "user", str(target.id), audit_safe_user_patch(body))
         return jsonify({"user": serialize_user(target)})
 
     @app.get("/api/v1/admin/runs")

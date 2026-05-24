@@ -9,7 +9,7 @@ C:\Users\muzaf\Downloads\FastBid24 Door Analyzer (1).zip
 ## Notes
 
 - `app.jsx` contains the React app and calls the authenticated backend extraction endpoint.
-- OpenAI credentials and proprietary extraction prompts live only in the Render backend.
+- Provider credentials and proprietary extraction prompts live only in the Render backend.
 - `prompts/` contains public, non-sensitive placeholders because Cloud Pages serves static files directly.
 - The UI layer uses a dense estimator workbench pattern while keeping secrets and LLM prompt IP out of the frontend bundle.
 
@@ -27,7 +27,7 @@ The main entry point is `index.html`, which loads the refactored `app.jsx` and `
 
 ## Backend Setup
 
-The backend uses the repo `.env` for `DATABASE_URL`, S3 credentials, and `FASTBID24_OPENAI_API_KEY`. It derives a FastBid-specific database from `FASTBID24_DATABASE_NAME` or defaults to `fastbid24_door_analyzer`.
+The backend uses the repo `.env` for `DATABASE_URL`, S3 credentials, and `FASTBID24_SECRET_KEY`. Admins assign encrypted per-user analysis keys from the Admin screen. A server-side fallback key is available only when explicitly enabled.
 
 ```powershell
 & "c:\Users\muzaf\my_lab\computervision\Scripts\python.exe" apps\fastbid24-door-analyzer\backend\scripts\init_backend.py

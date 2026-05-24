@@ -15,6 +15,7 @@ def main() -> int:
     print("Checking FastBid24 backend deployment...")
     print(f"Database configured: {settings.database_configured}")
     print(f"S3 configured: {settings.s3_configured}")
+    print(f"Secret encryption configured: {settings.secret_configured}")
     print(f"S3 bucket: {settings.s3_bucket_name}")
 
     with get_engine().connect() as conn:

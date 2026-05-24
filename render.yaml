@@ -22,6 +22,10 @@ services:
         value: gpt-5.5
       - key: FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR
         value: 12
+      - key: FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY
+        value: false
+      - key: FASTBID24_SECRET_KEY
+        sync: false
       - key: FASTBID24_OPENAI_API_KEY
         sync: false
       - key: FASTBID24_CORS_ORIGINS

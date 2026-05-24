@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* ====================================================================
    FastBid24 Door Analyzer — single-file app
-   Real PDF text extraction (pdf.js) + OpenAI extraction
+   Secure backend extraction + estimator workbench UI
    ==================================================================== */
 const { useState, useEffect, useRef, useMemo, useCallback, Fragment } = React;
 
@@ -193,7 +193,7 @@ async function apiExtractPdf({ token, file, scope, runRFIs = true }) {
   return apiRequest('/extract', { method: 'POST', token, body: form });
 }
 
-async function apiCreateRun({ token, file, analysis, project, logs, scope, model }) {
+async function apiCreateRun({ token, file, analysis, project, logs, scope }) {
   const metrics = {
     door_count: analysis?.door_analysis?.length || 0,
     hardware_set_count: analysis?.hardware_set_review?.length || 0,
@@ -210,7 +210,6 @@ async function apiCreateRun({ token, file, analysis, project, logs, scope, model
   }))));
   form.append('metrics_json', JSON.stringify(metrics));
   form.append('scope', scope || '');
-  form.append('model', model || '');
   return apiRequest('/runs', { method: 'POST', token, body: form });
 }
 
@@ -231,7 +230,6 @@ function runToProposal(run) {
     scope: run.scope || ps.scope_type || '',
     risk: ps.overall_bid_risk || '—',
     extractionStatus: run.status === 'review_required' ? 'REVIEW_REQUIRED' : 'OK',
-    pdfType: run.pdf_type || 'TEXT_BASED_PDF',
     date: (run.created_at || '').slice(0, 10),
     createdAt: run.created_at,
     sourceFilename: run.source_filename,
@@ -459,11 +457,6 @@ function exportAnalysisToExcel({ analysis, project, tweaks }) {
       { label: 'Status', value: analysis.status || 'OK', style: analysis.status === 'REVIEW_REQUIRED' ? XL.warn : XL.okStatus },
       { label: 'Workbook Completeness', value: (analysis.qa?.extraction_complete === false) ? 'INCOMPLETE — re-run or review manually' : 'Complete', style: (analysis.qa?.extraction_complete === false) ? XL.warn : XL.okStatus },
       { label: 'Extraction Failures', value: analysis.qa?.extraction_failures?.length || 0, style: (analysis.qa?.extraction_failures?.length || 0) > 0 ? XL.warn : XL.cell },
-      { label: 'Reason', value: analysis.reason || '—' },
-      { label: 'PDF Type', value: analysis.qa?.pdf_type || 'TEXT_BASED_PDF' },
-      { label: 'Pages Rendered', value: analysis.qa?.pages_rendered || 0 },
-      { label: 'Regions Detected', value: analysis.qa?.regions_detected?.length || 0 },
-      { label: 'Crops Processed', value: analysis.qa?.crops?.length || 0 },
       { label: 'Failed Mappings', value: analysis.qa?.validation?.failedMappings?.length || 0 },
       { spacer: true },
       { section: 'SUMMARY METRICS' },
@@ -757,70 +750,45 @@ function exportAnalysisToExcel({ analysis, project, tweaks }) {
     sections: rfiSections,
   }), 'RFIs & Coordination');
 
-  // ---------- 9) SOURCE NOTES ----------
+  // ---------- 9) REVIEW QA ----------
+  const qaValidation = analysis.qa?.validation || {};
   XLSX.utils.book_append_sheet(wb, buildSheet({
     title: 'Extraction QA',
-    subtitle: 'Pipeline trace, page classifications, source crops, and extraction metadata',
+    subtitle: 'Estimator-facing completeness and review checklist',
     sections: [
       {
-        header: 'EXTRACTION METADATA',
+        header: 'QA SUMMARY',
         cols: [{ key: 'k', label: 'Property', width: 26 }, { key: 'v', label: 'Value', width: 60 }],
         rows: [
-          { k: 'PDF Type', v: analysis.qa?.pdf_type || '' },
           { k: 'Source File', v: analysis.qa?.file_name || '' },
           { k: 'File Size (KB)', v: Math.round((analysis.qa?.file_size || 0) / 1024) },
-          { k: 'Model', v: analysis.qa?.chat_model || '' },
-          { k: 'Pages Rendered', v: analysis.qa?.pages_rendered || 0 },
-          { k: 'Render DPI Target', v: RENDER_TARGET_DPI },
           { k: 'Scope', v: analysis.qa?.scope || '' },
-          { k: 'Status', v: analysis.status || 'OK' },
-          { k: 'Reason', v: analysis.reason || '' },
-          { k: 'Avg Confidence', v: analysis.qa?.validation?.avgConfidence != null ? Math.round(analysis.qa.validation.avgConfidence * 100) + '%' : '' },
-          { k: 'Failed Mappings', v: analysis.qa?.validation?.failedMappings?.length || 0 },
-          { k: 'Reasoning Pass Succeeded', v: analysis.qa?.reasoning_succeeded ? 'Yes' : 'No' },
+          { k: 'Status', v: analysis.status === 'OK' ? 'OK' : 'Review' },
+          { k: 'Avg Confidence', v: qaValidation.avgConfidence != null ? Math.round(qaValidation.avgConfidence * 100) + '%' : '' },
+          { k: 'Mapping Review Items', v: qaValidation.failedMappings?.length || 0 },
+          { k: 'Missing Field Rows', v: qaValidation.missingFields?.length || 0 },
           { k: 'Extracted At', v: analysis.qa?.extracted_at || '' },
         ],
       },
       {
-        header: 'PAGE CLASSIFICATIONS',
+        header: `MAPPING REVIEW (${(qaValidation.failedMappings || []).length})`,
         cols: [
-          { key: 'page', label: 'Page', width: 8 },
-          { key: 'roles', label: 'Detected Roles', width: 40 },
-          { key: 'count', label: '# Regions', width: 11 },
-          { key: 'notes', label: 'Sheet Notes', width: 40 },
+          { key: 'mark', label: 'Door', width: 16 },
+          { key: 'set', label: 'Hardware Set', width: 18 },
+          { key: 'message', label: 'Message', width: 70 },
         ],
-        rows: (analysis.qa?.classifications || []).map(c => ({
-          page: c.pageNum,
-          roles: (c.regions || []).map(r => r.role).join(', ') || '(none)',
-          count: (c.regions || []).length,
-          notes: c.sheet_notes || '',
+        rows: (qaValidation.failedMappings || []).map(f => ({
+          mark: f.mark || '', set: f.set || '', message: f.message || '',
         })),
       },
       {
-        header: 'DOOR SCHEDULE REGIONS',
+        header: `MISSING FIELDS (${(qaValidation.missingFields || []).length})`,
         cols: [
-          { key: 'cropId', label: 'Crop ID', width: 24 },
-          { key: 'page', label: 'Page', width: 8 },
-          { key: 'label', label: 'Label', width: 30 },
-          { key: 'strips', label: '# Strips', width: 10 },
-          { key: 'rows', label: 'Rows Extracted', width: 14 },
+          { key: 'mark', label: 'Door', width: 16 },
+          { key: 'fields', label: 'Missing Fields', width: 70 },
         ],
-        rows: (analysis.qa?.door_regions || []).map(d => ({
-          cropId: d.crop_id, page: d.pageNum, label: d.label || '',
-          strips: (d.strips || []).length, rows: d.totalRows || 0,
-        })),
-      },
-      {
-        header: 'HARDWARE SET BLOCKS',
-        cols: [
-          { key: 'cropId', label: 'Crop ID', width: 28 },
-          { key: 'page', label: 'Page', width: 8 },
-          { key: 'setId', label: 'Set ID', width: 12 },
-          { key: 'header', label: 'Header Text', width: 32 },
-          { key: 'items', label: 'Items Extracted', width: 16 },
-        ],
-        rows: (analysis.qa?.hw_blocks || []).map(b => ({
-          cropId: b.crop_id, page: b.pageNum, setId: b.set_id, header: b.header || '', items: b.items || 0,
+        rows: (qaValidation.missingFields || []).map(m => ({
+          mark: m.mark || '', fields: (m.fields || []).join(', '),
         })),
       },
       {
@@ -947,294 +915,7 @@ function exportAnalysisToComsenseCSV({ analysis, project, tweaks, delimiter = ',
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-/* ---------- PDF text extraction (browser-side) ---------- */
-async function extractPdfText(file, onProgress) {
-  if (!window.pdfjsLib) throw new Error('pdf.js not loaded');
-  const buf = await file.arrayBuffer();
-  const pdf = await window.pdfjsLib.getDocument({ data: buf }).promise;
-  let allText = '';
-  for (let p = 1; p <= pdf.numPages; p++) {
-    const page = await pdf.getPage(p);
-    const tc = await page.getTextContent();
-    const items = tc.items.map(i => i.str).join(' ');
-    allText += `\n\n--- Page ${p} ---\n${items}`;
-    onProgress?.({ page: p, pages: pdf.numPages, sample: items.slice(0, 120) });
-  }
-  return { text: allText.trim(), pages: pdf.numPages, pdf, arrayBuffer: buf };
-}
-
-/* ---------- PDF page rendering for image-based PDFs ---------- */
-const RENDER_TARGET_DPI    = 300;     // Minimum 300 DPI per spec
-const MAX_RENDER_LONG_EDGE = 4200;    // higher cap for 300dpi arch sheets
-const PREVIEW_LONG_EDGE    = 720;     // QA preview size
-const MAX_CANVAS_AREA      = 16777216;// 16M px — safe across browsers
-const TEXT_THRESHOLD_CHARS = 500;     // (unused in current pipeline; kept for legacy)
-
-/* Decide if a PDF should go through the vision pipeline.
-   Returns { isImageBased, pdfType, reason, metrics } so we can show the user WHY. */
-function detectPdfMode({ text, forceVision }) {
-  if (forceVision) return { isImageBased: true, pdfType: 'IMAGE_BASED_PDF', reason: 'forced_by_user', metrics: { length: text.length } };
-  const len = text.length;
-  // Count alpha characters and unique meaningful tokens
-  const alphaCount = (text.match(/[a-zA-Z]/g) || []).length;
-  const tokens = text.toLowerCase().match(/[a-z0-9]{3,}/g) || [];
-  const uniqueTokens = new Set(tokens).size;
-  const alphaRatio = len ? alphaCount / len : 0;
-  const metrics = { length: len, alphaCount, alphaRatio: +alphaRatio.toFixed(3), uniqueTokens, totalTokens: tokens.length };
-
-  if (len < TEXT_THRESHOLD_CHARS) return { isImageBased: true, pdfType: 'IMAGE_BASED_PDF', reason: 'text_too_short', metrics };
-  // Garbage-OCR sniff: lots of chars but tiny vocabulary or very low alpha ratio
-  if (uniqueTokens < 80 && len < 4000) return { isImageBased: true, pdfType: 'IMAGE_BASED_PDF', reason: 'low_vocabulary', metrics };
-  if (alphaRatio < 0.35) return { isImageBased: true, pdfType: 'IMAGE_BASED_PDF', reason: 'low_alpha_ratio', metrics };
-  return { isImageBased: false, pdfType: 'TEXT_BASED_PDF', reason: 'sufficient_text', metrics };
-}
-
-/* Vision models — OpenAI multimodal-capable. If the configured chat model isn't in this list,
-   fall back to a known vision model for the vision passes. */
-const VISION_MODEL_HINTS = [/^gpt-4o/i, /^gpt-4\.1/i, /^gpt-5/i, /^o1/i, /^o3/i, /^o4/i, /vision/i, /^chatgpt-4o/i];
-function isLikelyVisionModel(model) {
-  return !!model && VISION_MODEL_HINTS.some(re => re.test(model));
-}
-
-async function renderPdfPages(fileOrBuffer, onProgress, opts = {}) {
-  if (!window.pdfjsLib) throw new Error('pdf.js not loaded');
-  let arrayBuffer;
-  if (fileOrBuffer instanceof Blob) {
-    arrayBuffer = await fileOrBuffer.arrayBuffer();
-  } else if (fileOrBuffer instanceof ArrayBuffer) {
-    arrayBuffer = fileOrBuffer.slice(0);
-  } else if (fileOrBuffer && fileOrBuffer.byteLength != null) {
-    arrayBuffer = fileOrBuffer.slice ? fileOrBuffer.slice(0) : fileOrBuffer;
-  } else {
-    throw new Error('renderPdfPages: pass a File/Blob or ArrayBuffer');
-  }
-  const tileMode = !!opts.tileMode;
-  const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  const out = [];
-  for (let p = 1; p <= pdf.numPages; p++) {
-    const page = await pdf.getPage(p);
-    // Pick the highest scale that fits both MAX_RENDER_LONG_EDGE and MAX_CANVAS_AREA constraints.
-    const baseV = page.getViewport({ scale: 1 });
-    let scale = RENDER_TARGET_DPI / 72;
-    let testV = page.getViewport({ scale });
-    // cap by longest edge
-    let longest = Math.max(testV.width, testV.height);
-    if (longest > MAX_RENDER_LONG_EDGE) scale *= (MAX_RENDER_LONG_EDGE / longest);
-    // cap by canvas area (Safari has ~16M px area cap; respect it)
-    testV = page.getViewport({ scale });
-    const area = testV.width * testV.height;
-    if (area > MAX_CANVAS_AREA) scale *= Math.sqrt(MAX_CANVAS_AREA / area);
-    const viewport = page.getViewport({ scale });
-
-    const canvas = document.createElement('canvas');
-    canvas.width = Math.ceil(viewport.width);
-    canvas.height = Math.ceil(viewport.height);
-    const ctx = canvas.getContext('2d', { alpha: false });
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // 'print' intent renders without highlights/annotations & uses sharper text
-    await page.render({ canvasContext: ctx, viewport, intent: 'print' }).promise;
-
-    // PNG output — lossless, much better for vision OCR on small text
-    const dataUrl = canvas.toDataURL('image/png');
-
-    // preview
-    const pcanvas = document.createElement('canvas');
-    const pscale = PREVIEW_LONG_EDGE / Math.max(canvas.width, canvas.height);
-    pcanvas.width = Math.max(1, Math.round(canvas.width * pscale));
-    pcanvas.height = Math.max(1, Math.round(canvas.height * pscale));
-    pcanvas.getContext('2d').drawImage(canvas, 0, 0, pcanvas.width, pcanvas.height);
-    const previewUrl = pcanvas.toDataURL('image/jpeg', 0.8);
-
-    const pageData = {
-      pageNum: p,
-      width: canvas.width,
-      height: canvas.height,
-      dpi: Math.round(scale * 72),
-      orientation: canvas.width >= canvas.height ? 'landscape' : 'portrait',
-      dataUrl,
-      previewUrl,
-      tiles: null,
-    };
-
-    // Tile mode — generate 2×2 overlapping crops for dense arch sheets
-    if (tileMode) {
-      const tiles = [];
-      const tileW = Math.ceil(canvas.width * 0.6);   // 60% wide
-      const tileH = Math.ceil(canvas.height * 0.6);  // 60% tall (40% overlap)
-      const positions = [
-        [0, 0, 'TL'], [canvas.width - tileW, 0, 'TR'],
-        [0, canvas.height - tileH, 'BL'], [canvas.width - tileW, canvas.height - tileH, 'BR'],
-      ];
-      for (const [x, y, label] of positions) {
-        const tc = document.createElement('canvas');
-        tc.width = tileW; tc.height = tileH;
-        tc.getContext('2d').drawImage(canvas, x, y, tileW, tileH, 0, 0, tileW, tileH);
-        tiles.push({
-          label,
-          dataUrl: tc.toDataURL('image/png'),
-          bbox: [x / canvas.width, y / canvas.height, tileW / canvas.width, tileH / canvas.height],
-        });
-      }
-      pageData.tiles = tiles;
-    }
-
-    out.push(pageData);
-    onProgress?.({ page: p, pages: pdf.numPages, width: canvas.width, height: canvas.height, dpi: pageData.dpi });
-  }
-  return out;
-}
-
-/* Crop a region (bbox in normalized 0..1 coords) out of a page image */
-async function cropRegion(pageImageDataUrl, bbox) {
-  const img = await new Promise((res, rej) => {
-    const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = pageImageDataUrl;
-  });
-  const [x, y, w, h] = bbox;
-  const sx = Math.max(0, Math.round(x * img.width));
-  const sy = Math.max(0, Math.round(y * img.height));
-  const sw = Math.max(1, Math.round(w * img.width));
-  const sh = Math.max(1, Math.round(h * img.height));
-  const canvas = document.createElement('canvas');
-  canvas.width = sw; canvas.height = sh;
-  canvas.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
-  return { dataUrl: canvas.toDataURL('image/jpeg', 0.88), width: sw, height: sh };
-}
-
-/* ---------- Vision extraction (image-based PDFs) ---------- */
-const REGION_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const REGION_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-async function callOpenAIVision() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-async function cropRegionStrip(pageImageDataUrl, bbox, stripStartY, stripEndY) {
-  // bbox is the region within the page; stripStartY/stripEndY are 0..1 within the region (vertical slice)
-  const [bx, by, bw, bh] = bbox;
-  const stripBbox = [bx, by + bh * stripStartY, bw, bh * (stripEndY - stripStartY)];
-  return cropRegion(pageImageDataUrl, stripBbox);
-}
-
-async function extractWithVision() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-function iou(a, b) {
-  const ax2 = a[0] + a[2], ay2 = a[1] + a[3];
-  const bx2 = b[0] + b[2], by2 = b[1] + b[3];
-  const ix1 = Math.max(a[0], b[0]), iy1 = Math.max(a[1], b[1]);
-  const ix2 = Math.min(ax2, bx2), iy2 = Math.min(ay2, by2);
-  const iw = Math.max(0, ix2 - ix1), ih = Math.max(0, iy2 - iy1);
-  const inter = iw * ih;
-  const union = a[2]*a[3] + b[2]*b[3] - inter;
-  return union > 0 ? inter / union : 0;
-}
-
-/* Merge per-region vision results into the senior-estimator analysis schema */
-function mergeVisionExtractions(cropExtractions, scope) {
-  const doorRows = [];
-  const hardwareSets = [];
-  const notes = [];
-  for (const ce of cropExtractions) {
-    if (ce.kind === 'door_schedule' && Array.isArray(ce.data?.rows)) doorRows.push(...ce.data.rows);
-    else if (ce.kind === 'hardware_set' && Array.isArray(ce.data?.sets)) hardwareSets.push(...ce.data.sets);
-    else if (ce.kind === 'notes' && Array.isArray(ce.data?.notes)) notes.push(...ce.data.notes);
-  }
-  // dedupe doors by mark, keep highest confidence
-  const doorMap = new Map();
-  doorRows.forEach(d => {
-    if (!d.mark) return;
-    const prev = doorMap.get(d.mark);
-    if (!prev || (d.confidence ?? 0) > (prev.confidence ?? 0)) doorMap.set(d.mark, d);
-  });
-  // dedupe HW sets by id (merge items if duplicate)
-  const setMap = new Map();
-  hardwareSets.forEach(s => {
-    if (!s.id) return;
-    const prev = setMap.get(s.id);
-    if (!prev) setMap.set(s.id, s);
-    else { prev.items = [...(prev.items || []), ...(s.items || [])]; }
-  });
-
-  // Build door_analysis with risk inference (basic — we don't have a full estimator pass over the merged data yet)
-  const door_analysis = [...doorMap.values()].map(d => ({
-    mark: d.mark,
-    room_or_location: d.room_or_location,
-    door_type: d.door_type,
-    opening_type: null,
-    interior_or_exterior: null,
-    size: d.size || { width: null, height: null, thickness: null },
-    door_material: d.door_material,
-    door_finish: d.door_finish,
-    glazing: d.glazing,
-    frame_type: d.frame_type,
-    frame_material: d.frame_material,
-    frame_finish: d.frame_finish,
-    fire_rating: d.fire_rating,
-    hardware_set: d.hardware_set,
-    remarks: d.remarks || [],
-    hardware_status: 'review required',
-    install_complexity: 'medium',
-    risk_level: (d.fire_rating && d.fire_rating !== '-') ? 'medium' : 'low',
-    special_conditions: [],
-    issues: [],
-    recommendations: [],
-    rfi_required: false,
-    rfi_questions: [],
-    confidence: d.confidence ?? 0.6,
-  }));
-
-  // hardware_set_review from the extracted sets — INCLUDING items
-  const referencedByDoors = (id) => door_analysis.filter(d => d.hardware_set === id).map(d => d.mark);
-  const hardware_set_review = [...setMap.values()].map(s => {
-    const items = Array.isArray(s.items) ? s.items.filter(it => it && (it.desc || it.part)) : [];
-    return {
-      hardware_set: s.id,
-      referenced_by_doors: referencedByDoors(s.id),
-      status: items.length ? 'complete' : 'incomplete',
-      items,
-      missing_or_unclear_items: items.length ? [] : ['no hardware items extracted from crop'],
-      special_coordination: [],
-      estimator_note: s.name || null,
-      confidence: s.confidence ?? 0.6,
-    };
-  });
-
-  return {
-    project_summary: {
-      scope_type: scope,
-      project_name: null,
-      project_number: null,
-      architect: null,
-      address: null,
-      drawing: null,
-      date: null,
-      total_openings_found: door_analysis.length,
-      total_hardware_sets_referenced: new Set(door_analysis.map(d => d.hardware_set).filter(Boolean)).size,
-      hardware_sets_missing_or_unclear: hardware_set_review.filter(s => s.status !== 'complete').length,
-      high_risk_openings: door_analysis.filter(d => d.risk_level === 'high').length,
-      medium_risk_openings: door_analysis.filter(d => d.risk_level === 'medium').length,
-      low_risk_openings: door_analysis.filter(d => d.risk_level === 'low').length,
-      complex_installations: 0,
-      access_control_openings: 0,
-      exterior_openings: 0,
-      fire_rated_openings: door_analysis.filter(d => d.fire_rating && d.fire_rating !== '-').length,
-      overall_bid_risk: 'Medium',
-      estimator_summary: `Image-based PDF processed via vision. Extracted ${door_analysis.length} opening(s) and ${hardware_set_review.length} hardware set(s) across ${cropExtractions.length} region(s). Manually verify all entries against source sheets before bidding.`,
-    },
-    door_analysis,
-    hardware_set_review,
-    project_risks: [],
-    rfi_log: [],
-    estimator_notes: notes,
-    bid_recommendations: {
-      supply_only_notes: [], installation_only_notes: [], supply_and_installation_notes: [],
-      exclusions_to_consider: [], allowances_to_consider: [], coordination_items: [],
-    },
-  };
-}
+/* Browser-side extraction has been removed. Secure extraction runs on the authenticated backend. */
 
 /* ---------- Validation — flag failed mappings & decide completeness ---------- */
 function validateAnalysis(analysis) {
@@ -1275,84 +956,57 @@ function validateAnalysis(analysis) {
   const hasMapping = doors.some(d => d.hardware_set);
 
   let status = 'OK';
-  let reason = null;
-  if (!hasDoors) { status = 'REVIEW_REQUIRED'; reason = 'NO_DOORS_EXTRACTED'; }
-  else if (!hasHardware) { status = 'REVIEW_REQUIRED'; reason = 'NO_HARDWARE_EXTRACTED'; }
-  else if (!hasMapping) { status = 'REVIEW_REQUIRED'; reason = 'NO_DOOR_HARDWARE_MAPPING'; }
-  else if (failedMappings.length > doors.length * 0.3) { status = 'REVIEW_REQUIRED'; reason = 'TOO_MANY_FAILED_MAPPINGS'; }
-  else if (avgConf < 0.6) { status = 'REVIEW_REQUIRED'; reason = 'LOW_CONFIDENCE'; }
+  if (!hasDoors) status = 'REVIEW_REQUIRED';
+  else if (!hasHardware) status = 'REVIEW_REQUIRED';
+  else if (!hasMapping) status = 'REVIEW_REQUIRED';
+  else if (failedMappings.length > doors.length * 0.3) status = 'REVIEW_REQUIRED';
+  else if (avgConf < 0.6) status = 'REVIEW_REQUIRED';
 
-  return { status, reason, failedMappings, missingFields, avgConfidence: avgConf, hasDoors, hasHardware, hasMapping };
+  return { status, failedMappings, missingFields, avgConfidence: avgConf, hasDoors, hasHardware, hasMapping };
 }
 
-/* ---------- OpenAI extraction (senior estimator analysis) ---------- */
-/* ---------- Senior Estimator System Prompt (per user spec — verbatim) ---------- */
-const EXTRACTION_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-async function extractWithOpenAI() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
+function sanitizeClientValidation(validation) {
+  if (!validation || typeof validation !== 'object') return validation;
+  return {
+    failedMappings: (validation.failedMappings || []).map(item => ({
+      mark: item.mark || '',
+      set: item.set || '',
+      message: item.message || '',
+    })),
+    missingFields: (validation.missingFields || []).map(item => ({
+      mark: item.mark || '',
+      fields: Array.isArray(item.fields) ? item.fields : [],
+    })),
+    avgConfidence: validation.avgConfidence,
+    hasDoors: !!validation.hasDoors,
+    hasHardware: !!validation.hasHardware,
+    hasMapping: !!validation.hasMapping,
+  };
 }
 
-const REQUIRED_MODEL = 'gpt-5.5';  // Mandated — do not fall back to any other model
-
-/* ===========================================================================
-   IMAGE-BASED EXTRACTION PIPELINE (300 DPI, classify → extract → map → validate)
-   =========================================================================== */
-
-const TITLE_BLOCK_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const PAGE_CLASSIFIER_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const DOOR_ROW_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const HW_BLOCK_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const HW_ITEMS_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const ESTIMATOR_REASONING_SYSTEM = EXTRACTION_SYSTEM; // re-use senior-estimator prompt for the final reasoning pass
-
-const HW_FULL_REGION_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const HW_COLUMN_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-// Canonical key used to dedupe hardware-set IDs across extraction passes AND
-// to match door-schedule references against extracted sets. The schedule often
-// says "C265" while the spec page header reads "Hardware Group No. C265" or
-// "HW-C265" — these must collapse to the same key, otherwise the same set
-// gets entered twice (once with items, once as "missing") and doors never
-// resolve to their items.
-function canonicalSetKey(id) {
-  const s = String(id == null ? '' : id).trim();
-  if (!s) return '';
-  const stripped = s
-    .replace(/^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)/i, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toUpperCase();
-  return stripped || s.toUpperCase();
+function sanitizeClientAnalysis(analysis) {
+  if (!analysis || typeof analysis !== 'object') return analysis;
+  const qa = analysis.qa || {};
+  return {
+    ...analysis,
+    reason: null,
+    qa: {
+      extraction_complete: qa.extraction_complete,
+      extraction_failures: qa.extraction_failures || [],
+      validation: sanitizeClientValidation(qa.validation),
+      extracted_at: qa.extracted_at,
+      file_name: qa.file_name,
+      file_size: qa.file_size,
+      scope: qa.scope,
+    },
+  };
 }
 
-/* Format a hardware set id for display: only prepend "HW-" if it isn't already
-   prefixed with something hardware-like (avoids "HW-HARDWARE SET 9"). */
 function fmtSetId(id) {
   if (id == null || id === '') return '';
   const s = String(id).trim();
   if (/^(hw[-\s]|hardware\b|set\b|group\b|fhw|#)/i.test(s)) return s;
   return 'HW-' + s;
-}
-
-async function extractFromPdfPipeline() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-async function makePreview(dataUrl, maxEdge = PREVIEW_LONG_EDGE) {
-  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = dataUrl; });
-  const canvas = document.createElement('canvas');
-  const scale = maxEdge / Math.max(img.width, img.height);
-  canvas.width = Math.max(1, Math.round(img.width * scale));
-  canvas.height = Math.max(1, Math.round(img.height * scale));
-  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-  return canvas.toDataURL('image/jpeg', 0.8);
 }
 
 /* Synthesize risks + RFIs from raw door + hardware data — runs ALWAYS and merges
@@ -1368,7 +1022,7 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope, sheet
   const sets = hardware_set_review || [];
   const setById = new Map(sets.map(s => [s.hardware_set, s]));
 
-  // Sheet-level context captured by the staged pipeline. These notes help avoid
+  // Sheet-level context captured during secure analysis. These notes help avoid
   // generic RFIs when the drawing already answers a scope question.
   const ctx = sheet_context || {};
   const generalNotes = Array.isArray(ctx.general_notes) ? ctx.general_notes : [];
@@ -1718,255 +1372,6 @@ function arrayBufferToBase64(buffer) {
   return btoa(binary);
 }
 
-/* ---------- Native pipeline prompts (ChatGPT-style PDF reading) ---------- */
-
-/* Pass 0: Discovery — scan whole PDF, return page-level index of relevant content. */
-const PDF_DISCOVERY_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-/* Pass A: lean transcription — transcription only, no reasoning */
-const EXTRACTION_ONLY_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-/* Pass A2: completeness check — given current extraction, find what's missing */
-const COMPLETENESS_CHECK_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-/* ---------- FAST single-shot pipeline (mimics native ChatGPT-5.5 with extended thinking) ----------
-   One call. PDF in, full senior-estimator JSON out. Uses reasoning.effort = "high"
-   so the model spends its compute on extended thinking rather than us spending it
-   on multiple round-trips. Designed to finish in ~60-120s like the native UI. */
-
-const SINGLE_SHOT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-async function extractFromPdfFast() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-const STAGED_DOOR_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const STAGED_HW_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-const STAGED_RFI_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
-
-/* Shared response-API caller. system+user → parsed JSON. */
-async function _stagedOpenAICall() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-/* Normalize Call 1 door row → the app's expected door_analysis shape. */
-function _stagedNormalizeDoor(d) {
-  const remarksRaw = d.remarks;
-  const remarks = Array.isArray(remarksRaw) ? remarksRaw.filter(Boolean) : (remarksRaw ? [String(remarksRaw)] : []);
-  const remarksStr = remarks.join(' ');
-  const etrExplicit = d.existing_to_remain === true;
-  const etrInferred = /existing[\s_-]*to[\s_-]*remain|\bETR\b/i.test(remarksStr);
-  return {
-    mark: d.mark ?? null,
-    room_or_location: d.room_or_location ?? null,
-    door_type: d.door_type ?? null,
-    opening_type: d.door_type ?? null,
-    interior_or_exterior: null,
-    size: { width: d.width ?? null, height: d.height ?? null, thickness: d.thickness ?? null },
-    door_material: d.door_material ?? null,
-    door_finish: d.door_finish ?? null,
-    glazing: d.glazing ?? null,
-    frame_type: d.frame_type ?? null,
-    frame_material: d.frame_material ?? null,
-    frame_finish: d.frame_finish ?? null,
-    fire_rating: d.fire_rating ?? null,
-    hardware_set: d.hardware_set ?? null,
-    closer: d.closer ?? null,
-    electric_or_access_control: d.electric_or_access_control ?? null,
-    remarks,
-    existing_to_remain: etrExplicit || etrInferred,
-    hardware_status: 'review required',
-    install_complexity: 'medium',
-    risk_level: 'medium',
-    special_conditions: [],
-    issues: [],
-    recommendations: [],
-    rfi_required: false,
-    rfi_questions: [],
-    source_page: d.source_page ?? null,
-    source_crop_id: d.source_crop_id ?? null,
-    confidence: typeof d.confidence === 'number' ? d.confidence : 0.7,
-  };
-}
-
-/* Normalize Call 2 hardware set → the app's expected hardware_set_review shape. */
-function _stagedNormalizeSet(s) {
-  const rawItems = Array.isArray(s.items) ? s.items : [];
-  const seenItemSigs = new Set();
-  const items = [];
-  rawItems.forEach((it, i) => {
-    const item = {
-      item_no: it.item_seq ?? it.item_no ?? (i + 1),
-      qty: it.qty ?? null,
-      unit: it.unit ?? null,
-      desc: it.description ?? it.desc ?? '',
-      part: it.model_or_catalog ?? it.part ?? null,
-      mfr: it.manufacturer ?? it.mfr ?? null,
-      finish: it.finish ?? null,
-      notes: it.notes ?? null,
-      confidence: typeof it.confidence === 'number' ? it.confidence : null,
-    };
-    // Dedup within-set by (item_no, desc, part)
-    const sig = `${item.item_no ?? ''}|${(item.desc || '').trim().toLowerCase()}|${(item.part || '').trim().toLowerCase()}`;
-    if (seenItemSigs.has(sig)) return;
-    seenItemSigs.add(sig);
-    items.push(item);
-  });
-  const rawStatus = String(s.status || '').toLowerCase().trim();
-  let status = 'incomplete';
-  if (rawStatus === 'active') status = items.length ? 'complete' : 'incomplete';
-  else if (rawStatus === 'not_used' || rawStatus === 'void') status = 'voided';
-  else if (rawStatus === 'existing') status = items.length ? 'complete' : 'incomplete';
-  else if (rawStatus === 'review_required') status = 'incomplete';
-  else if (items.length) status = 'complete';
-  const missing = [];
-  if (!items.length && rawStatus !== 'not_used' && rawStatus !== 'void') missing.push('no hardware items extracted');
-  return {
-    hardware_set: s.hardware_set ?? s.id ?? null,
-    header_verbatim: s.set_title ?? null,
-    referenced_by_doors: Array.isArray(s.referenced_doors) ? s.referenced_doors : [],
-    status,
-    raw_status: rawStatus || null,
-    items,
-    missing_or_unclear_items: missing,
-    special_coordination: [],
-    estimator_note: s.set_notes ?? null,
-    confidence: typeof s.confidence === 'number' ? s.confidence : 0.7,
-  };
-}
-
-/* Code-step: door → hardware set mapping per prompts/door_hardware_mapping.md */
-function _stagedMapDoorsHardware(doors, sets) {
-  const qaIssues = [];
-  const setByCanonical = new Map();
-  sets.forEach(s => { if (s.hardware_set) setByCanonical.set(canonicalSetKey(s.hardware_set), s); });
-  // canonical-key reconciliation
-  doors.forEach(d => {
-    if (!d.hardware_set) return;
-    const k = canonicalSetKey(d.hardware_set);
-    const m = setByCanonical.get(k);
-    if (m && m.hardware_set !== d.hardware_set) {
-      d.raw_hardware_set = d.hardware_set;
-      d.hardware_set = m.hardware_set;
-    }
-  });
-  // refresh references
-  sets.forEach(s => { s.referenced_by_doors = doors.filter(d => d.hardware_set === s.hardware_set).map(d => d.mark); });
-  // stub missing sets + QA
-  const haveIds = new Set(sets.map(s => s.hardware_set));
-  doors.forEach(d => {
-    if (d.hardware_set && !haveIds.has(d.hardware_set)) {
-      sets.push({
-        hardware_set: d.hardware_set,
-        header_verbatim: null,
-        referenced_by_doors: doors.filter(x => x.hardware_set === d.hardware_set).map(x => x.mark),
-        status: 'missing',
-        raw_status: null,
-        items: [],
-        missing_or_unclear_items: ['hardware set referenced by doors but not found in spec'],
-        special_coordination: [],
-        estimator_note: null,
-        confidence: 0.3,
-      });
-      haveIds.add(d.hardware_set);
-      qaIssues.push({ kind: 'missing_set', set: d.hardware_set, mark: d.mark, message: `Door ${d.mark} references hardware set ${d.hardware_set} but the set was not extracted.` });
-    }
-  });
-  // build door↔hw mapping
-  const mapping = [];
-  const setByDisplayId = new Map(sets.map(s => [s.hardware_set, s]));
-  doors.forEach(d => {
-    if (d.existing_to_remain) {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set || null, item_no: null, qty: null, description: '(existing door — hardware to remain; not mapped per rule)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'EXISTING_TO_REMAIN' });
-      return;
-    }
-    if (!d.hardware_set) {
-      mapping.push({ door_mark: d.mark, hardware_set: null, item_no: null, qty: null, description: '(no hardware set assigned)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'NO_HW_SET' });
-      qaIssues.push({ kind: 'no_hw_set', mark: d.mark, message: `Door ${d.mark} has no hardware set assigned.` });
-      return;
-    }
-    const set = setByDisplayId.get(d.hardware_set);
-    if (!set) {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: '(hardware set not found in spec)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED' });
-      return;
-    }
-    if (set.raw_status === 'not_used' || set.raw_status === 'void') {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: '(hardware set marked NOT USED / VOID)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'SET_NOT_USED' });
-      qaIssues.push({ kind: 'set_not_used_but_referenced', set: d.hardware_set, mark: d.mark, message: `Door ${d.mark} references set ${d.hardware_set} which is marked NOT USED.` });
-      return;
-    }
-    if (!set.items || !set.items.length) {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: '(hardware set has no extracted items)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED' });
-      qaIssues.push({ kind: 'set_empty', set: d.hardware_set, mark: d.mark, message: `Door ${d.mark}: hardware set ${d.hardware_set} has zero items.` });
-      return;
-    }
-    set.items.forEach((it, i) => {
-      mapping.push({
-        door_mark: d.mark,
-        hardware_set: d.hardware_set,
-        item_no: it.item_no ?? (i + 1),
-        qty: it.qty,
-        description: it.desc || '',
-        catalog_number: it.part || null,
-        manufacturer: it.mfr || null,
-        finish: it.finish || null,
-        notes: it.notes || null,
-        status: 'OK',
-      });
-    });
-  });
-  return { mapping, qaIssues };
-}
-
-/* Code-step: rollup project summary metrics. */
-function _stagedRollupSummary(doors, sets, scope, elapsedSeconds, meta = {}) {
-  const isAccessCtrl = (d) => {
-    const v = String(d.electric_or_access_control || '').trim();
-    if (!v) return false;
-    return !/^(no|none|n\/a|null|-)$/i.test(v);
-  };
-  const isFireRated = (d) => {
-    const v = String(d.fire_rating || '').trim();
-    if (!v) return false;
-    return !/^(none|non|n\/a|null|-)$/i.test(v);
-  };
-  return {
-    scope_type: scope,
-    project_name: meta.project_name || null,
-    project_number: meta.project_number || null,
-    architect: meta.architect || null,
-    address: meta.address || null,
-    drawing: meta.drawing || null,
-    date: meta.date || null,
-    total_openings_found: doors.length,
-    total_hardware_sets_referenced: new Set(doors.map(d => d.hardware_set).filter(Boolean)).size,
-    hardware_sets_missing_or_unclear: sets.filter(s => s.status !== 'complete').length,
-    high_risk_openings: doors.filter(d => d.risk_level === 'high').length,
-    medium_risk_openings: doors.filter(d => d.risk_level === 'medium').length,
-    low_risk_openings: doors.filter(d => d.risk_level === 'low').length,
-    complex_installations: doors.filter(d => d.install_complexity === 'high').length,
-    access_control_openings: doors.filter(isAccessCtrl).length,
-    exterior_openings: doors.filter(d => d.interior_or_exterior === 'Exterior').length,
-    fire_rated_openings: doors.filter(isFireRated).length,
-    overall_bid_risk: 'Medium',
-    estimator_summary: `Staged pipeline (Call 1 doors · Call 2 hardware · code mapping + rollup${elapsedSeconds ? ` · ${elapsedSeconds}s` : ''}) extracted ${doors.length} opening(s) and ${sets.length} hardware set(s). Verify against source PDF before bidding.`,
-  };
-}
-
-async function extractFromPdfStaged() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-async function extractFromPdfDirect() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
-async function extractFromPdfDirectLegacy() {
-  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
-}
-
 function analysisToLegacy(analysis) {
   const doors = (analysis.door_analysis || []).map(d => ({
     number: d.mark,
@@ -2162,15 +1567,9 @@ const SettingsModal = ({ tweaks, setTweaks, onClose }) => {
           <div style={{padding: 12, background: 'var(--accent-green-light)', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, marginBottom: 12, display: 'flex', gap: 8}}>
             <Icon name="shield" size={14} style={{color:'var(--accent-green)', flexShrink: 0, marginTop: 2}}/>
             <div>
-              <strong>Server-managed.</strong> OpenAI calls run through the authenticated Render backend. The browser never receives the server API key.
+              <strong>Server-managed.</strong> AI analysis runs through the authenticated Render backend. The browser never receives server credentials.
             </div>
           </div>
-          <label style={{display:'block', fontSize: 12, fontWeight: 600, color:'var(--fg-muted)', marginTop: 12, marginBottom: 4}}>Model</label>
-          <div className="input" style={{display:'flex', alignItems:'center', gap: 8, opacity: 0.85}}>
-            <span className="mono" style={{fontWeight: 600}}>{REQUIRED_MODEL}</span>
-            <Badge tone="blue">mandated</Badge>
-          </div>
-          <div style={{fontSize: 11, color: 'var(--fg-muted)', marginTop: 6}}>This analyzer is locked to {REQUIRED_MODEL}. No fallback to other models.</div>
         </div>
 
         <div>
@@ -2191,6 +1590,10 @@ const TweaksPanel = ({ tweaks, setTweaks, onClose }) => {
     setTweaks(t => ({ ...t, [k]: v }));
     try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*'); } catch {}
   };
+  const setTheme = (theme) => {
+    setTweaks(t => ({ ...t, theme, themePreferenceSet: true }));
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { theme, themePreferenceSet: true } }, '*'); } catch {}
+  };
   const palettes = [
     ['Blueprint Blue', '#2f68f5', '#1e4fdb', '#5a8fff', '#153eb0'],
     ['Steel', '#64748b', '#475569', '#94a3b8', '#334155'],
@@ -2208,8 +1611,8 @@ const TweaksPanel = ({ tweaks, setTweaks, onClose }) => {
         <div className="tweak-row">
           <label className="tweak-label">Theme</label>
           <div className="row">
-            <Button size="sm" kind={tweaks.theme === 'light' ? 'primary' : 'default'} onClick={() => setKey('theme', 'light')}><Icon name="sun" size={12}/> Light</Button>
-            <Button size="sm" kind={tweaks.theme === 'dark' ? 'primary' : 'default'} onClick={() => setKey('theme', 'dark')}><Icon name="moon" size={12}/> Dark</Button>
+            <Button size="sm" kind={tweaks.theme === 'light' ? 'primary' : 'default'} onClick={() => setTheme('light')}><Icon name="sun" size={12}/> Light</Button>
+            <Button size="sm" kind={tweaks.theme === 'dark' ? 'primary' : 'default'} onClick={() => setTheme('dark')}><Icon name="moon" size={12}/> Dark</Button>
           </div>
         </div>
         <div className="tweak-row">
@@ -2304,7 +1707,7 @@ const Dashboard = ({ proposals, setRoute, onOpen, onDelete, onExportExcel, onExp
                 <thead>
                   <tr>
                     <th>Analysis</th><th>Project</th><th>Architect</th><th>Scope</th><th>Openings</th>
-                    <th>PDF</th><th>Risk</th><th>Status</th><th>Date</th>
+                    <th>Risk</th><th>Status</th><th>Date</th>
                     <th style={{width:100}}>Actions</th>
                   </tr>
                 </thead>
@@ -2316,7 +1719,6 @@ const Dashboard = ({ proposals, setRoute, onOpen, onDelete, onExportExcel, onExp
                       <td>{p.client || '—'}</td>
                       <td>{p.scope ? <Badge tone="blue">{p.scope}</Badge> : <span className="muted">—</span>}</td>
                       <td>{p.doors || 0}</td>
-                      <td>{p.pdfType === 'IMAGE_BASED_PDF' ? <Badge tone="amber">Image</Badge> : p.pdfType === 'PDF_DIRECT' ? <Badge tone="blue">Direct</Badge> : <Badge>Text</Badge>}</td>
                       <td>{p.risk && p.risk !== '—' ? <RiskPill level={p.risk}/> : <span className="muted">—</span>}</td>
                       <td>{p.extractionStatus === 'REVIEW_REQUIRED' ? <Badge tone="amber">Review</Badge> : statusBadge(p.status)}</td>
                       <td className="muted">{p.date}</td>
@@ -2400,7 +1802,7 @@ const UploadScreen = ({ onStartParse, tweaks, setTweaks }) => {
           </div>
           <div className="row" style={{marginTop: 20, justifyContent:'space-between', alignItems:'center'}}>
             <div className="muted" style={{fontSize:12, display:'flex', alignItems:'center', gap:6}}>
-              <Icon name="shield" size={14}/> Scope: <strong style={{color:'var(--fg)'}}>{scope}</strong> · PDF is sent to the authenticated backend; OpenAI credentials stay server-side.
+              <Icon name="shield" size={14}/> Scope: <strong style={{color:'var(--fg)'}}>{scope}</strong> · PDF is sent to the authenticated backend; server credentials stay server-side.
             </div>
             <Button kind="primary" size="lg" disabled={!file}
                     style={!file ? {opacity:.5, cursor:'not-allowed'} : null}
@@ -2443,61 +1845,107 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
   const startedRef = useRef(false);
   const logsRef = useRef([]);
 
+
   const steps = [
-    { label: 'Uploading PDF', detail: `${file?.name || ''} (${file ? (file.size/1024).toFixed(0) + ' KB' : ''})` },
-    { label: 'Call 1 · Door schedule extraction', detail: `gpt-5.5 reads PDF · prompts/door_schedule_extraction.md` },
-    { label: 'Call 2 · Hardware set extraction', detail: `gpt-5.5 reads PDF · prompts/hardware_set_extraction.md` },
-    { label: 'Mapping + rollup', detail: 'Code · door↔hardware mapping · summary metrics' },
-    { label: 'Call 3 · RFI review (optional)', detail: `gpt-5.5 · prompts/rfi_coordination_review.md` },
-    { label: 'Done', detail: 'Ready for review' },
+    { label: 'Preparing upload', detail: 'Starting a secure analysis session.' },
+    { label: 'Reading document', detail: 'Reviewing schedules, notes, and specification content.' },
+    { label: 'Organizing results', detail: 'Structuring openings, hardware sets, and project details.' },
+    { label: 'Checking completeness', detail: 'Looking for gaps, conflicts, and items needing review.' },
+    { label: 'Building bid view', detail: 'Preparing dashboard, QA, recommendations, and proposal data.' },
+    { label: 'Ready for review', detail: 'Analysis complete.' },
   ];
 
+  const publicActivityText = (text) => {
+    const value = String(text || '');
+    const summary = value.match(/(\d+)\s+openings.*?(\d+)\s+HW sets.*?(\d+)\s+items/i);
+    if (summary) return `${summary[1]} openings, ${summary[2]} hardware sets, ${summary[3]} hardware items prepared.`;
+    if (value === 'Done.') return 'Analysis ready for review.';
+    if (/confidence < 85%/i.test(value)) return value.replace(/\s*\(confidence < 85%\)/i, '');
+    if (/Uploading .*secure backend extraction/i.test(value)) return 'Secure analysis started.';
+    if (/Validating analysis/i.test(value)) return 'Finalizing results.';
+    if (/FAILED_MAPPING/i.test(value)) return 'Some mapping items need review in QA.';
+    if (/REVIEW_REQUIRED/i.test(value)) return 'Some items need review before bidding.';
+    if (/HIGH-risk/i.test(value)) return value.replace(/HIGH-risk/i, 'high-priority').replace(/\s+.*see Risks & RFIs/i, '');
+    if (/backend extraction/i.test(value)) return 'Analysis is running.';
+    return value;
+  };
+
   const pushLog = (kind, text) => {
-    const entry = { kind, text, ts: new Date() };
+    const entry = { kind, text: publicActivityText(text), ts: new Date() };
     logsRef.current = [...logsRef.current, entry];
     setLogs(logsRef.current);
+  };
+
+  const publicErrorMessage = (err) => {
+    const msg = err?.message || String(err || '');
+    if (/login|auth|token|sign in/i.test(msg)) return 'Sign in is required to run secure extraction.';
+    if (/rate limit|too many/i.test(msg)) return 'Extraction limit reached. Please wait and try again.';
+    if (/pdf|file|size/i.test(msg)) return msg;
+    return 'The analysis could not be completed. Please retry or contact your admin.';
   };
 
   useEffect(() => {
     if (startedRef.current) return;
     startedRef.current = true;
+    let progressTimer = null;
+    const phaseTimers = [];
+    const queuePhase = (delay, nextStep, nextProgress, message) => {
+      const timer = setTimeout(() => {
+        setStep(nextStep);
+        setProgress(p => Math.max(p, nextProgress));
+        pushLog('info', message);
+      }, delay);
+      phaseTimers.push(timer);
+    };
+    const stopPublicProgress = () => {
+      if (progressTimer) clearInterval(progressTimer);
+      phaseTimers.forEach(clearTimeout);
+    };
     (async () => {
       try {
         if (!file) throw new Error('No file provided');
         const scope = tweaks.scope || 'Supply & Installation';
 
         setStep(0);
-        setProgress(8);
+        setProgress(6);
         if (!authToken) throw new Error('Login is required for secure backend extraction.');
-        pushLog('info', `Uploading ${file.name} (${(file.size/1024).toFixed(0)} KB) to secure backend extraction…`);
+        pushLog('info', 'Secure analysis started.');
 
         const skipRFIs = !!tweaks.skipRFIs;
         setStep(1);
-        setProgress(18);
-        const pipelineResult = await apiExtractPdf({
+        setProgress(14);
+        pushLog('info', 'Reading the document.');
+        progressTimer = setInterval(() => {
+          setProgress(p => Math.min(88, p + (p < 32 ? 2.5 : p < 68 ? 1.25 : 0.45)));
+        }, 900);
+        queuePhase(2500, 2, 34, 'Organizing extracted bid data.');
+        queuePhase(7000, 3, 58, 'Checking completeness and review items.');
+        queuePhase(12000, 4, 78, 'Preparing the bid workspace.');
+        const extractionResult = await apiExtractPdf({
           token: authToken,
           file,
           scope,
           runRFIs: !skipRFIs,
         });
-        (pipelineResult.logs || []).forEach(entry => pushLog(entry.kind || entry.level || 'info', entry.text || entry.message || ''));
+        stopPublicProgress();
         setStep(4);
         setProgress(90);
 
         const result = {
-          ...pipelineResult.analysis,
-          qa: { ...pipelineResult.qa, pipeline_source: 'secure-backend' },
+          ...extractionResult.analysis,
+          qa: {
+            extraction_complete: extractionResult.qa?.extraction_complete,
+            extraction_failures: extractionResult.qa?.extraction_failures || [],
+          },
         };
 
         setStep(5);
         setProgress(95);
-        pushLog('info', 'Validating analysis…');
+        pushLog('info', 'Finalizing results.');
         if (!Array.isArray(result.door_analysis)) throw new Error('Missing door_analysis[] in response');
         const validation = validateAnalysis(result);
         result.qa = {
           ...result.qa,
-          chat_model: REQUIRED_MODEL,
-          vision_model: REQUIRED_MODEL,
           validation,
           extracted_at: new Date().toISOString(),
           file_name: file.name,
@@ -2505,26 +1953,29 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
           scope,
         };
         result.status = validation.status;
-        result.reason = validation.reason || null;
+        result.reason = null;
 
         const totalItems = (result.hardware_set_review || []).reduce((n, s) => n + (s.items?.length || 0), 0);
         const lowConf = result.door_analysis.filter(d => (d.confidence ?? 1) < 0.85).length;
         if (lowConf) pushLog('warn', `${lowConf} opening(s) flagged for review (confidence < 85%)`);
-        if (validation.failedMappings.length) pushLog('warn', `${validation.failedMappings.length} FAILED_MAPPING — see Extraction QA`);
-        if (validation.status === 'REVIEW_REQUIRED') pushLog('warn', `Status: REVIEW_REQUIRED · ${result.reason}`);
+        if (validation.failedMappings.length) pushLog('warn', `${validation.failedMappings.length} mapping item(s) need review in QA.`);
+        if (validation.status === 'REVIEW_REQUIRED') pushLog('warn', 'Some items need review before bidding.');
         const highRisk = result.door_analysis.filter(d => String(d.risk_level||'').toLowerCase() === 'high').length;
-        if (highRisk) pushLog('warn', `${highRisk} HIGH-risk opening(s) — see Risks & RFIs`);
-        pushLog('ok', `${result.door_analysis.length} openings · ${result.hardware_set_review.length} HW sets · ${totalItems} items · ${result.project_risks.length} risks · ${result.rfi_log.length} RFIs`);
+        if (highRisk) pushLog('warn', `${highRisk} high-priority opening(s) found.`);
+        pushLog('ok', `${result.door_analysis.length} openings, ${result.hardware_set_review.length} hardware sets, ${totalItems} hardware items prepared.`);
 
         setStep(5);
         setProgress(100);
-        pushLog('ok', 'Done.');
-        setTimeout(() => onDone(result, { file, logs: logsRef.current }), 500);
+        pushLog('ok', 'Analysis ready for review.');
+        setTimeout(() => onDone(sanitizeClientAnalysis(result), { file, logs: logsRef.current }), 500);
       } catch (e) {
-        setError(e.message || String(e));
-        pushLog('warn', 'Error: ' + (e.message || String(e)));
+        stopPublicProgress();
+        const message = publicErrorMessage(e);
+        setError(message);
+        pushLog('warn', message);
       }
     })();
+    return stopPublicProgress;
   }, []);
 
   return (
@@ -2553,7 +2004,9 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
             </div>
             <div className="mono" style={{fontVariantNumeric:'tabular-nums', fontWeight:600}}>{Math.round(progress)}%</div>
           </div>
-          <div className="progress-track"><div className="progress-bar" style={{width: progress + '%', background: error ? 'var(--accent-red)' : null}}/></div>
+          <div className="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(progress)}>
+            <div className="progress-bar" style={{width: progress + '%', background: error ? 'var(--accent-red)' : null}}/>
+          </div>
 
           <div className="pipeline-steps">
             {steps.map((s, i) => (
@@ -2586,12 +2039,12 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
               <div key={i} className="log-line">
                 <span className="log-ts">{l.ts.toLocaleTimeString('en-US', {hour12:false})}</span>
                 <span className={'log-' + (l.kind === 'warn' ? 'warn' : l.kind === 'ok' ? 'ok' : 'info')}>
-                  {l.kind === 'warn' ? '! ' : l.kind === 'ok' ? '✓ ' : '· '}
+                  {l.kind === 'warn' ? 'Notice ' : l.kind === 'ok' ? 'Done ' : 'Info '}
                 </span>
                 {l.text}
               </div>
             ))}
-            {!error && <div style={{opacity:0.5}}>▋</div>}
+            {!error && <div className="muted" style={{fontSize: 12}}>Working...</div>}
           </div>
         </div>
       </div>
@@ -2626,7 +2079,6 @@ const SummaryScreen = ({ analysis, project, tweaks, setRoute }) => {
             <Badge tone="blue">{scope}</Badge>
             {ps.project_number && <span style={{marginLeft: 8}} className="mono">{ps.project_number}</span>}
             {ps.architect && <span style={{marginLeft: 8}} className="muted">· {ps.architect}</span>}
-            {analysis.qa?.pdf_type === 'IMAGE_BASED_PDF' && <Badge tone="amber" style={{marginLeft: 8}}>Image-based PDF</Badge>}
           </div>
         </div>
         <div className="row">
@@ -2642,8 +2094,8 @@ const SummaryScreen = ({ analysis, project, tweaks, setRoute }) => {
           <div className="card-body" style={{display:'flex', gap: 12, alignItems:'center'}}>
             <Icon name="alert" style={{color: 'var(--accent-amber)'}}/>
             <div style={{flex: 1}}>
-              <div style={{fontWeight: 600}}>Status: REVIEW_REQUIRED</div>
-              <div className="muted" style={{fontSize: 13}}>Reason: <span className="mono">{analysis.reason || 'unspecified'}</span> · Open the Extraction QA tab to see what was extracted, failed mappings, and page crops.</div>
+              <div style={{fontWeight: 600}}>Review needed</div>
+              <div className="muted" style={{fontSize: 13}}>Open the Extraction QA tab to review missing fields and mapping items before bidding.</div>
             </div>
             <Button kind="primary" onClick={() => setRoute('qa')}><Icon name="shield"/> Open Extraction QA</Button>
           </div>
@@ -2918,7 +2370,7 @@ const DoorAnalysisScreen = ({ analysis, setAnalysis, onContinue }) => {
                                     <DetailBlock label={`Assigned hardware — ${fmtSetId(d.hardware_set)} (${assignedItems.length} item${assignedItems.length === 1 ? '' : 's'})`}>
                                       {assignedItems.length === 0 ? (
                                         <div style={{padding: 8, fontSize: 12, background: 'var(--accent-amber-light)', color: '#92400e', borderRadius: 6}}>
-                                          No items extracted for set HW-{d.hardware_set}. This is a FAILED_MAPPING — see Extraction QA.
+                                          No hardware items found for set HW-{d.hardware_set}. Review this in Extraction QA.
                                         </div>
                                       ) : (
                                         <table className="table" style={{marginTop: 4}}>
@@ -3561,9 +3013,7 @@ const ExtractionQAScreen = ({ analysis }) => {
   const qa = analysis?.qa || {};
   const validation = qa.validation || {};
   const status = analysis?.status || 'OK';
-  const reason = analysis?.reason;
-  const isImage = qa.pdf_type === 'IMAGE_BASED_PDF';
-  const [activePage, setActivePage] = useState(null);
+  const fileSizeKb = qa.file_size ? Math.round(qa.file_size / 1024) : null;
 
   const StatusBanner = () => {
     if (status === 'OK') {
@@ -3584,15 +3034,9 @@ const ExtractionQAScreen = ({ analysis }) => {
         <div className="card-body" style={{display:'flex', gap: 12, alignItems:'flex-start'}}>
           <Icon name="alert" style={{color: 'var(--accent-amber)', marginTop: 2}}/>
           <div>
-            <div style={{fontWeight: 600}}>Status: REVIEW_REQUIRED</div>
-            <div className="muted" style={{fontSize: 13, marginTop: 2}}>Reason: <span className="mono" style={{color: 'var(--fg)'}}>{reason || 'unspecified'}</span></div>
-            <div className="muted" style={{fontSize: 12, marginTop: 6, lineHeight: 1.5}}>
-              {reason === 'IMAGE_BASED_PDF_LOW_CONFIDENCE' && 'Image-based PDF processed via vision but average confidence is below threshold. Review the page crops below and re-upload a higher-resolution source if possible.'}
-              {reason === 'NO_DOORS_EXTRACTED' && 'No door schedule rows were extracted. Check that the PDF contains a door schedule and try a higher-resolution source.'}
-              {reason === 'NO_HARDWARE_EXTRACTED' && 'No hardware set items were extracted. Hardware set page may be missing or unreadable.'}
-              {reason === 'NO_DOOR_HARDWARE_MAPPING' && 'Doors extracted, but none have a hardware set assigned. Mapping pass failed.'}
-              {reason === 'TOO_MANY_FAILED_MAPPINGS' && 'Multiple doors reference hardware sets that could not be extracted.'}
-              {reason === 'LOW_CONFIDENCE' && 'Average extraction confidence is below 60%. Manual review required.'}
+            <div style={{fontWeight: 600}}>Review needed</div>
+            <div className="muted" style={{fontSize: 12, marginTop: 4, lineHeight: 1.5}}>
+              Some extracted items need estimator review. Check the missing fields and mapping review below before bidding.
             </div>
           </div>
         </div>
@@ -3605,7 +3049,7 @@ const ExtractionQAScreen = ({ analysis }) => {
       <div className="page-header">
         <div>
           <h1 className="page-title">Extraction QA</h1>
-          <div className="page-subtitle">PDF type, regions, confidence, missing fields, and mapping failures</div>
+          <div className="page-subtitle">Confidence, completeness, missing fields, and mapping review</div>
         </div>
       </div>
 
@@ -3613,50 +3057,27 @@ const ExtractionQAScreen = ({ analysis }) => {
 
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-label">PDF type</div>
-          <div className="stat-value" style={{fontSize: 18, color: isImage ? 'var(--accent-amber)' : 'var(--accent-green)'}}>{qa.pdf_type || 'TEXT_BASED_PDF'}</div>
-          <div className="stat-delta">{qa.file_name}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Detection reason</div>
-          <div className="stat-value" style={{fontSize: 14}}>{qa.detection?.reason || '—'}</div>
-          {qa.detection?.metrics && (
-            <div className="stat-delta mono-small">
-              {qa.detection.metrics.length} chars · {qa.detection.metrics.uniqueTokens || 0} unique tokens · α={qa.detection.metrics.alphaRatio}
-            </div>
-          )}
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Vision model</div>
-          <div className="stat-value mono" style={{fontSize: 14}}>{qa.vision_model || '—'}</div>
-          {qa.chat_model && <div className="stat-delta mono-small">chat: {qa.chat_model}</div>}
+          <div className="stat-label">Source file</div>
+          <div className="stat-value" style={{fontSize: 14}}>{qa.file_name || 'Uploaded PDF'}</div>
+          {fileSizeKb != null && <div className="stat-delta">{fileSizeKb} KB</div>}
         </div>
         <div className="stat-card">
           <div className="stat-label">Avg confidence</div>
           <div className="stat-value" style={{color: validation.avgConfidence < 0.6 ? 'var(--accent-red)' : validation.avgConfidence < 0.85 ? 'var(--accent-amber)' : 'var(--accent-green)'}}>
-            {validation.avgConfidence != null ? Math.round(validation.avgConfidence * 100) + '%' : '—'}
+            {validation.avgConfidence != null ? Math.round(validation.avgConfidence * 100) + '%' : '-'}
           </div>
         </div>
-      </div>
-
-      <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-label">Pages rendered</div>
-          <div className="stat-value">{qa.pages_rendered ?? 0}</div>
-          {isImage && <div className="stat-delta">@ {RENDER_TARGET_DPI} DPI (capped {MAX_RENDER_LONG_EDGE}px)</div>}
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Regions detected</div>
-          <div className="stat-value">{(qa.regions_detected || []).length}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Crops processed</div>
-          <div className="stat-value">{qa.crops?.length || 0}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Failed mappings</div>
+          <div className="stat-label">Mapping review</div>
           <div className="stat-value" style={{color: (validation.failedMappings?.length || 0) ? 'var(--accent-red)' : 'var(--accent-green)'}}>
             {validation.failedMappings?.length || 0}
+          </div>
+          <div className="stat-delta">item{(validation.failedMappings?.length || 0) === 1 ? '' : 's'} needing review</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Status</div>
+          <div className="stat-value" style={{fontSize: 18, color: status === 'OK' ? 'var(--accent-green)' : 'var(--accent-amber)'}}>
+            {status === 'OK' ? 'OK' : 'Review'}
           </div>
         </div>
       </div>
@@ -3675,15 +3096,16 @@ const ExtractionQAScreen = ({ analysis }) => {
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Door → HW mapping</div>
+          <div className="stat-label">Door -> HW mapping</div>
           <div className="stat-value" style={{fontSize: 18, color: validation.hasMapping ? 'var(--accent-green)' : 'var(--accent-red)'}}>
             {validation.hasMapping ? 'Extracted' : 'Missing'}
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Status</div>
-          <div className="stat-value" style={{fontSize: 18, color: status === 'OK' ? 'var(--accent-green)' : 'var(--accent-amber)'}}>{status}</div>
-          {reason && <div className="stat-delta mono-small">{reason}</div>}
+          <div className="stat-label">Missing fields</div>
+          <div className="stat-value" style={{fontSize: 18, color: (validation.missingFields?.length || 0) ? 'var(--accent-amber)' : 'var(--accent-green)'}}>
+            {validation.missingFields?.length || 0}
+          </div>
         </div>
       </div>
 
@@ -3693,13 +3115,12 @@ const ExtractionQAScreen = ({ analysis }) => {
           <div className="card-header"><div className="card-title">Failed mappings ({validation.failedMappings.length})</div></div>
           <div style={{overflow:'auto'}}>
             <table className="table">
-              <thead><tr><th>Door</th><th>Hardware set</th><th>Code</th><th>Message</th></tr></thead>
+              <thead><tr><th>Door</th><th>Hardware set</th><th>Message</th></tr></thead>
               <tbody>
                 {validation.failedMappings.map((f, i) => (
                   <tr key={i}>
                     <td className="mono"><strong>{f.mark}</strong></td>
                     <td><Badge tone="blue" mono>{fmtSetId(f.set)}</Badge></td>
-                    <td><Badge tone="red">{f.code}</Badge></td>
                     <td style={{fontSize: 12}}>{f.message}</td>
                   </tr>
                 ))}
@@ -3729,116 +3150,10 @@ const ExtractionQAScreen = ({ analysis }) => {
         </div>
       )}
 
-      {/* Image-based: rendered pages + regions detected */}
-      {isImage && qa.page_dimensions?.length > 0 && (
-        <div className="card" style={{marginBottom: 12}}>
-          <div className="card-header"><div className="card-title">Rendered pages ({qa.page_dimensions.length})</div></div>
-          <div style={{padding: 12, display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap: 12}}>
-            {qa.page_dimensions.map(p => {
-              const regions = (qa.regions_detected || []).filter(r => r.pageNum === p.pageNum);
-              return (
-                <div key={p.pageNum} style={{border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: 'var(--bg-sunken)'}}>
-                  <div style={{position: 'relative', background: '#000'}}>
-                    <img src={p.previewUrl} alt={`Page ${p.pageNum}`} style={{width: '100%', display: 'block'}}/>
-                    {/* region overlays */}
-                    {regions.map((r, i) => (
-                      <div key={i} style={{
-                        position: 'absolute',
-                        left: (r.bbox[0]*100) + '%', top: (r.bbox[1]*100) + '%',
-                        width: (r.bbox[2]*100) + '%', height: (r.bbox[3]*100) + '%',
-                        border: '2px solid ' + regionColor(r.type),
-                        background: regionColor(r.type) + '20',
-                        boxSizing: 'border-box', pointerEvents: 'none',
-                      }}>
-                        <span style={{position:'absolute', top: -16, left: 0, fontSize: 9, padding: '1px 4px', background: regionColor(r.type), color:'#000', borderRadius: 2, fontWeight: 700, whiteSpace: 'nowrap'}}>
-                          {r.type}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{padding: 8, fontSize: 11}}>
-                    <strong>Page {p.pageNum}</strong>
-                    <div className="muted mono-small">{p.width}×{p.height}px · {p.dpi} DPI · {p.orientation}</div>
-                    <div style={{marginTop: 4}}>{regions.length} region{regions.length === 1 ? '' : 's'}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Region crops with extractions */}
-      {isImage && qa.crops?.length > 0 && (
-        <div className="card">
-          <div className="card-header"><div className="card-title">Region crops & extractions ({qa.crops.length})</div></div>
-          <div style={{padding: 12, display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(280px, 1fr))', gap: 12}}>
-            {qa.crops.map((c, i) => {
-              // count what was actually extracted
-              let yieldText = '—';
-              if (c.kind === 'door_schedule') yieldText = `${c.data?.rows?.length || 0} row${c.data?.rows?.length === 1 ? '' : 's'}`;
-              else if (c.kind === 'hardware_set') {
-                const setN = c.data?.sets?.length || 0;
-                const itemN = (c.data?.sets || []).reduce((s, x) => s + (x.items?.length || 0), 0);
-                yieldText = `${setN} set${setN === 1 ? '' : 's'} / ${itemN} item${itemN === 1 ? '' : 's'}`;
-              } else if (c.kind === 'notes') yieldText = `${c.data?.notes?.length || 0} note${c.data?.notes?.length === 1 ? '' : 's'}`;
-              else if (c.kind === 'failed') yieldText = 'failed';
-              const splitInfo = c.data?.__strip_split;
-              return (
-                <div key={i} style={{border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: 'var(--bg-raised)'}}>
-                  <div style={{background: '#fff'}}>
-                    <img src={c.cropPreview} alt={c.region.type} style={{width: '100%', display: 'block'}}/>
-                  </div>
-                  <div style={{padding: 10, fontSize: 12}}>
-                    <div style={{display:'flex', gap: 6, alignItems:'center', marginBottom: 4}}>
-                      <Badge mono>P{c.region.pageNum}</Badge>
-                      <span style={{padding: '2px 6px', background: regionColor(c.region.type) + '22', color: 'var(--fg)', borderRadius: 4, fontSize: 10, fontWeight: 700, border: '1px solid ' + regionColor(c.region.type)}}>{c.region.type}</span>
-                      <span className="muted" style={{marginLeft: 'auto', fontSize: 10}}>Conf {Math.round((c.region.confidence ?? 0.7) * 100)}%</span>
-                    </div>
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-                      <span className="muted" style={{fontSize: 11}}>Extracted: <strong style={{color: 'var(--fg)'}}>{c.kind}</strong></span>
-                      <span style={{fontSize: 11, fontWeight: 700, color: c.kind === 'failed' ? 'var(--accent-red)' : 'var(--brand-600)'}}>{yieldText}</span>
-                    </div>
-                    {splitInfo && <div className="mono-small" style={{marginTop: 4, color: 'var(--accent-amber)'}}>Strip-split: {splitInfo.strips} strips → {splitInfo.recovered} rows</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {!isImage && (
-        <div className="card">
-          <div className="card-header"><div className="card-title">Secure backend extraction</div></div>
-          <div className="card-body" style={{fontSize: 13, lineHeight: 1.7}}>
-            This PDF was processed by the authenticated Render backend. OpenAI credentials and extraction prompts stayed server-side; the browser received only the structured analysis JSON.
-            <div style={{marginTop: 12, padding: 12, background: 'var(--bg-sunken)', borderRadius: 8, fontSize: 12}}>
-              <strong>Extracted at:</strong> {qa.extracted_at}<br/>
-              <strong>File:</strong> {qa.file_name} ({((qa.file_size || 0) / 1024).toFixed(0)} KB)<br/>
-              <strong>Model:</strong> {qa.chat_model || '—'}<br/>
-              <strong>Scope:</strong> {qa.scope}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-function regionColor(type) {
-  const map = {
-    door_schedule: '#3b82f6',
-    hardware_schedule: '#10b981',
-    hardware_set: '#10b981',
-    door_details: '#a855f7',
-    frame_details: '#a855f7',
-    legend: '#f59e0b',
-    notes: '#f59e0b',
-    other: '#94a3b8',
-  };
-  return map[type] || '#94a3b8';
-}
 
 /* ---------- Mapping (legacy fallback, kept for proposal flow) ---------- */
 const MappingScreen = ({ doors, hardwareSets, onContinue }) => {
@@ -4480,7 +3795,8 @@ const AdminScreen = ({ auth }) => {
   const [selectedRunId, setSelectedRunId] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user', analysis_api_key: '' });
+  const [keyDrafts, setKeyDrafts] = useState({});
   const token = auth?.token;
 
   const loadAdmin = useCallback(async () => {
@@ -4505,7 +3821,7 @@ const AdminScreen = ({ auth }) => {
     setBusy(true); setError('');
     try {
       await apiAdminCreateUser(token, form);
-      setForm({ name: '', email: '', password: '', role: 'user' });
+      setForm({ name: '', email: '', password: '', role: 'user', analysis_api_key: '' });
       await loadAdmin();
     } catch (err) {
       setError(err.message);
@@ -4519,11 +3835,30 @@ const AdminScreen = ({ auth }) => {
     try {
       await apiAdminUpdateUser(token, user.id, patch);
       await loadAdmin();
+      return true;
     } catch (err) {
       setError(err.message);
+      return false;
     } finally {
       setBusy(false);
     }
+  };
+
+  const setKeyDraft = (id, value) => setKeyDrafts(current => ({ ...current, [id]: value }));
+
+  const saveAnalysisKey = async (user) => {
+    const value = (keyDrafts[user.id] || '').trim();
+    if (!value) {
+      setError('Paste an analysis key before saving.');
+      return;
+    }
+    const ok = await updateUser(user, { analysis_api_key: value });
+    if (ok) setKeyDrafts(current => ({ ...current, [user.id]: '' }));
+  };
+
+  const clearAnalysisKey = async (user) => {
+    const ok = await updateUser(user, { clear_analysis_api_key: true });
+    if (ok) setKeyDrafts(current => ({ ...current, [user.id]: '' }));
   };
 
   return (
@@ -4546,6 +3881,7 @@ const AdminScreen = ({ auth }) => {
             <div><label className="tweak-label">Email</label><input className="input" type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required/></div>
             <div><label className="tweak-label">Password</label><input className="input" type="password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required/></div>
             <div><label className="tweak-label">Role</label><select className="select" value={form.role} onChange={e => setForm({...form, role: e.target.value})}><option value="user">User</option><option value="admin">Admin</option></select></div>
+            <div><label className="tweak-label">Analysis key</label><input className="input" type="password" value={form.analysis_api_key} onChange={e => setForm({...form, analysis_api_key: e.target.value})} autoComplete="off" placeholder="Optional"/></div>
             <Button kind="primary" disabled={busy}><Icon name="plus"/> Create user</Button>
           </form>
         </div>
@@ -4554,7 +3890,7 @@ const AdminScreen = ({ auth }) => {
           <div className="card-header"><div className="card-title">Workspace users</div></div>
           <div style={{overflow:'auto'}}>
             <table className="table">
-              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Analysis key</th><th>Actions</th></tr></thead>
               <tbody>
                 {users.map(u => (
                   <tr key={u.id}>
@@ -4562,13 +3898,34 @@ const AdminScreen = ({ auth }) => {
                     <td>{u.email}</td>
                     <td><Badge tone={u.role === 'admin' ? 'blue' : ''}>{u.role}</Badge></td>
                     <td><Badge tone={u.status === 'active' ? 'green' : 'red'}>{u.status}</Badge></td>
+                    <td>
+                      <div className="key-admin">
+                        <div className="key-state">
+                          <Badge tone={u.analysis_key_configured ? 'green' : 'amber'}>{u.analysis_key_configured ? 'Assigned' : 'Not set'}</Badge>
+                          {u.analysis_key_hint && <span className="mono-small">{u.analysis_key_hint}</span>}
+                        </div>
+                        <input
+                          className="input input-sm key-input"
+                          type="password"
+                          value={keyDrafts[u.id] || ''}
+                          onChange={e => setKeyDraft(u.id, e.target.value)}
+                          placeholder={u.analysis_key_configured ? 'Replace key' : 'Paste key'}
+                          autoComplete="off"
+                          spellCheck="false"
+                        />
+                        <div className="key-actions">
+                          <Button size="sm" onClick={() => saveAnalysisKey(u)} disabled={busy || !(keyDrafts[u.id] || '').trim()}>Save key</Button>
+                          {u.analysis_key_configured && <Button size="sm" kind="danger" onClick={() => clearAnalysisKey(u)} disabled={busy}>Clear</Button>}
+                        </div>
+                      </div>
+                    </td>
                     <td style={{whiteSpace:'nowrap'}}>
                       <Button size="sm" onClick={() => updateUser(u, { role: u.role === 'admin' ? 'user' : 'admin' })}>{u.role === 'admin' ? 'Make user' : 'Make admin'}</Button>
                       <Button size="sm" onClick={() => updateUser(u, { status: u.status === 'active' ? 'inactive' : 'active' })}>{u.status === 'active' ? 'Disable' : 'Enable'}</Button>
                     </td>
                   </tr>
                 ))}
-                {!users.length && <tr><td colSpan="5" className="muted">No users loaded.</td></tr>}
+                {!users.length && <tr><td colSpan="6" className="muted">No users loaded.</td></tr>}
               </tbody>
             </table>
           </div>
@@ -4579,7 +3936,7 @@ const AdminScreen = ({ auth }) => {
         <div className="card-header"><div className="card-title">PDF runs</div></div>
         <div style={{overflow:'auto'}}>
           <table className="table">
-            <thead><tr><th>Run</th><th>User</th><th>Project</th><th>PDF</th><th>Openings</th><th>Status</th><th>S3 path</th><th>Created</th></tr></thead>
+            <thead><tr><th>Run</th><th>User</th><th>Project</th><th>File</th><th>Openings</th><th>Status</th><th>S3 path</th><th>Created</th></tr></thead>
             <tbody>
               {runs.map(r => (
                 <tr key={r.id} onClick={() => setSelectedRunId(r.id)} className={selectedRunId === r.id ? 'selected' : ''} style={{cursor:'pointer'}}>
@@ -4631,7 +3988,8 @@ const AdminScreen = ({ auth }) => {
    ==================================================================== */
 
 const DEFAULT_TWEAKS = /*EDITMODE-BEGIN*/{
-  "theme": "dark",
+  "theme": "light",
+  "themePreferenceSet": false,
   "brandName": "Steel",
   "brand500": "#64748b",
   "brand600": "#475569",
@@ -4640,10 +3998,6 @@ const DEFAULT_TWEAKS = /*EDITMODE-BEGIN*/{
   "companyName": "FastBid24 Hardware Co.",
   "markup": 20,
   "template": "Modern",
-  "model": "gpt-5.5",
-  "visionModel": "",
-  "forceVision": false,
-  "tileMode": false,
   "scope": "Supply & Installation"
 }/*EDITMODE-END*/;
 
@@ -4669,12 +4023,28 @@ function App() {
   const [project, setProject] = useLocal('fb24-project', { name: '', proposalId: '' });
   const [uploadFile, setUploadFile] = useState(null);
 
-  // Remove legacy browser-stored OpenAI keys from older deployments.
+  // Remove legacy browser-stored API keys from older deployments.
   useEffect(() => {
     if (Object.prototype.hasOwnProperty.call(tweaks || {}, 'apiKey')) {
       setTweaks(({ apiKey, ...rest }) => rest);
     }
   }, [tweaks, setTweaks]);
+
+  useEffect(() => {
+    setAnalysis(current => {
+      const clean = sanitizeClientAnalysis(current);
+      return JSON.stringify(clean) === JSON.stringify(current) ? current : clean;
+    });
+  }, [setAnalysis]);
+
+  // Older builds shipped dark mode as the default without recording user intent.
+  // Treat an unmarked dark value as inherited default so fresh deployments open light.
+  useEffect(() => {
+    setTweaks(current => {
+      if (!current || current.themePreferenceSet || current.theme !== 'dark') return current;
+      return { ...current, theme: 'light', themePreferenceSet: false };
+    });
+  }, [setTweaks]);
 
   // Apply theme + brand colors
   useEffect(() => {
@@ -4697,7 +4067,7 @@ function App() {
     return () => window.removeEventListener('message', handler);
   }, []);
 
-  const toggleTheme = () => setTweaks(t => ({ ...t, theme: t.theme === 'dark' ? 'light' : 'dark' }));
+  const toggleTheme = () => setTweaks(t => ({ ...t, theme: t.theme === 'dark' ? 'light' : 'dark', themePreferenceSet: true }));
 
   const onStartParse = (file) => { setUploadFile(file); setRoute('parsing'); };
 
@@ -4740,6 +4110,7 @@ function App() {
   useEffect(() => { refreshBackendRuns(); }, [refreshBackendRuns]);
 
   const onParseDone = async (result, meta = {}) => {
+    result = sanitizeClientAnalysis(result);
     // result is the senior-estimator analysis JSON
     const ps = result.project_summary || {};
     const newProject = {
@@ -4774,7 +4145,6 @@ function App() {
       scope: ps.scope_type || tweaks.scope,
       risk: ps.overall_bid_risk || '—',
       extractionStatus: result.status || 'OK',
-      pdfType: result.qa?.pdf_type || 'TEXT_BASED_PDF',
       date: new Date().toISOString().slice(0, 10),
       createdAt: newProject.createdAt,
     };
@@ -4787,7 +4157,7 @@ function App() {
         createdAt: newProject.createdAt,
         project: newProject,
         analysis: result,
-        tweaksSnapshot: { scope: tweaks.scope, model: tweaks.model, visionModel: tweaks.visionModel },
+        tweaksSnapshot: { scope: tweaks.scope },
       });
     } catch (e) {
       console.warn('IndexedDB save failed:', e);
@@ -4802,7 +4172,6 @@ function App() {
           project: newProject,
           logs: meta.logs || [],
           scope: tweaks.scope,
-          model: REQUIRED_MODEL,
         });
         if (saved?.run) setProposals(prev => mergeProposalLists(prev, [saved.run]));
       } catch (e) {
@@ -4839,7 +4208,6 @@ function App() {
               scope: ps.scope_type || r.tweaksSnapshot?.scope || '',
               risk: ps.overall_bid_risk || '—',
               extractionStatus: r.analysis?.status || 'OK',
-              pdfType: r.analysis?.qa?.pdf_type || 'TEXT_BASED_PDF',
               date: (r.createdAt || '').slice(0, 10),
               createdAt: r.createdAt,
             };
@@ -4872,10 +4240,11 @@ function App() {
       const record = await loadProposalRecord(p);
       if (!record) { alert('This analysis was not found in the local database. It may have been created before history was enabled.'); return; }
       setProject(record.project || { proposalId: p.id });
-      setAnalysis(record.analysis || null);
+      const cleanAnalysis = sanitizeClientAnalysis(record.analysis || null);
+      setAnalysis(cleanAnalysis);
       // restore legacy doors/sets so proposal/export screens work
-      if (record.analysis) {
-        const { doors: legacyDoors, hardwareSets: legacyHardware } = analysisToLegacy(record.analysis);
+      if (cleanAnalysis) {
+        const { doors: legacyDoors, hardwareSets: legacyHardware } = analysisToLegacy(cleanAnalysis);
         setDoors(legacyDoors);
         setHardwareSets(legacyHardware);
       }
@@ -4994,16 +4363,8 @@ const SettingsScreen = ({ tweaks, setTweaks }) => {
           <div style={{padding: 12, background: 'var(--accent-green-light)', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, display: 'flex', gap: 8}}>
             <Icon name="shield" size={14} style={{color:'var(--accent-green)', flexShrink: 0, marginTop: 2}}/>
             <div>
-              <strong>Server-managed.</strong> OpenAI credentials and extraction prompts are handled on the Render backend, not in this browser.
+              <strong>Server-managed.</strong> AI credentials and extraction logic are handled on the Render backend, not in this browser.
             </div>
-          </div>
-          <div>
-            <label className="tweak-label">Model</label>
-            <div className="input" style={{display:'flex', alignItems:'center', gap: 8}}>
-              <span className="mono" style={{fontWeight: 600}}>{REQUIRED_MODEL}</span>
-              <Badge tone="blue">mandated</Badge>
-            </div>
-            <div style={{fontSize: 11, color: 'var(--fg-muted)', marginTop: 4}}>This analyzer is locked to {REQUIRED_MODEL}. No fallback.</div>
           </div>
         </div>
       </div>

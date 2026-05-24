@@ -360,6 +360,24 @@ input, textarea, select { font-family: inherit; }
   max-height: 360px;
 }
 
+.key-admin {
+  min-width: 220px;
+  display: grid;
+  gap: 6px;
+}
+
+.key-state,
+.key-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.key-input {
+  max-width: 240px;
+}
+
 /* Page header */
 .page-header {
   display: flex;
@@ -764,16 +782,18 @@ input, textarea, select { font-family: inherit; }
 
 /* Progress */
 .progress-track {
-  height: 6px;
+  height: 10px;
   background: var(--bg-sunken);
   border-radius: 999px;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 .progress-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--brand-500), var(--brand-400));
   transition: width 300ms var(--ease);
   border-radius: 999px;
+  min-width: 8px;
 }
 
 /* Confidence meter */

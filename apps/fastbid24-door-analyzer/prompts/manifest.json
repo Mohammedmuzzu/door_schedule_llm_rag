@@ -1,7 +1,6 @@
 {
   "app": "fastbid24-door-analyzer",
-  "runtime_source": "backend/extraction.py",
-  "model": "gpt-5.5",
+  "runtime_source": "server-side extraction service",
   "public_note": "Prompt bodies are server-side only. Files in this static folder are non-sensitive placeholders.",
   "prompts": [
     {

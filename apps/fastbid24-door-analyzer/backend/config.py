@@ -36,6 +36,13 @@ def _split_csv(value: str | None) -> list[str]:
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _derive_database_url(base_url: str | None, database_name: str | None) -> str | None:
     if not base_url or not database_name:
         return base_url
@@ -75,6 +82,8 @@ class Settings:
     max_upload_mb: int
     openai_api_key: str | None
     openai_model: str
+    allow_global_analysis_key: bool
+    secret_key: str | None
     extraction_rate_limit_per_hour: int
 
     @property
@@ -86,8 +95,12 @@ class Settings:
         return bool(self.aws_access_key_id and self.aws_secret_access_key and self.s3_bucket_name)
 
     @property
-    def openai_configured(self) -> bool:
-        return bool(self.openai_api_key)
+    def analysis_fallback_configured(self) -> bool:
+        return bool(self.allow_global_analysis_key and self.openai_api_key)
+
+    @property
+    def secret_configured(self) -> bool:
+        return bool(self.secret_key)
 
 
 def get_settings() -> Settings:
@@ -117,6 +130,8 @@ def get_settings() -> Settings:
         max_upload_mb=int(os.environ.get("FASTBID24_MAX_UPLOAD_MB", "100")),
         openai_api_key=os.environ.get("FASTBID24_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY"),
         openai_model=os.environ.get("FASTBID24_OPENAI_MODEL", "gpt-5.5"),
+        allow_global_analysis_key=_env_bool("FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY", False),
+        secret_key=os.environ.get("FASTBID24_SECRET_KEY") or os.environ.get("SECRET_KEY"),
         extraction_rate_limit_per_hour=int(os.environ.get("FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR", "12")),
     )
 

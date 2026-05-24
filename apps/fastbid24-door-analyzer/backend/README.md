@@ -1,12 +1,13 @@
 # FastBid24 Door Analyzer Backend
 
-Flask API for the FastBid24 browser app. It adds authentication, roles, Postgres-backed PDF run history, admin visibility, and S3 PDF storage without changing the existing browser extraction prompts or OpenAI flow.
+Flask API for the FastBid24 browser app. It adds authentication, roles, Postgres-backed PDF run history, admin visibility, encrypted per-user analysis keys, and S3 PDF storage.
 
 ## Secure Extraction
 
-- The OpenAI API key is configured only on the backend with `FASTBID24_OPENAI_API_KEY` or `OPENAI_API_KEY`.
+- Admins assign analysis keys to user accounts from the Admin screen. Keys are encrypted at rest and are never returned to the browser after saving.
+- `FASTBID24_OPENAI_API_KEY` or `OPENAI_API_KEY` can be enabled as a temporary server-side fallback only when `FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY=true`.
 - The browser uploads PDFs to `POST /api/v1/extract` with a logged-in bearer token.
-- Extraction prompts and OpenAI calls run on Render, not in the Cloud Pages frontend.
+- Extraction prompts and provider calls run on Render, not in the Cloud Pages frontend.
 - The backend stores completed analysis results and original PDFs after a run finishes.
 
 ## API Shape
@@ -33,7 +34,7 @@ Required for production:
 
 ```text
 DATABASE_URL=postgresql+psycopg2://...
-FASTBID24_OPENAI_API_KEY=<your OpenAI API key>
+FASTBID24_SECRET_KEY=<long random secret used to encrypt assigned keys>
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 AWS_REGION=...
@@ -48,6 +49,8 @@ FASTBID24_DATABASE_URL=postgresql+psycopg2://...
 FASTBID24_S3_BUCKET_NAME=your-fastbid24-bucket
 FASTBID24_CORS_ORIGINS=http://127.0.0.1:8503,http://localhost:8503
 FASTBID24_SESSION_DAYS=14
+FASTBID24_ALLOW_GLOBAL_ANALYSIS_KEY=false
+FASTBID24_OPENAI_API_KEY=<optional server fallback analysis key>
 FASTBID24_OPENAI_MODEL=gpt-5.5
 FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR=12
 ```
