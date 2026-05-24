@@ -220,6 +220,245 @@ def register_routes(app: Flask) -> None:
         app.logger.exception("Unhandled API error")
         return api_error(500, "InternalServerError", "Unexpected backend error.")
 
+    @app.get("/")
+    def api_root():
+        return jsonify(
+            {
+                "ok": True,
+                "service": "FastBid24 Door Analyzer API",
+                "message": "Backend is running. Use /api/v1/health for health checks.",
+                "health": "/api/v1/health",
+                "api_base": "/api/v1",
+            }
+        )
+
+    @app.get("/api/v1")
+    def api_index():
+        return jsonify(
+            {
+                "ok": True,
+                "service": "FastBid24 Door Analyzer API",
+                "endpoints": {
+                    "health": "/api/v1/health",
+                    "login": "/api/v1/auth/login",
+                    "runs": "/api/v1/runs",
+                    "admin_users": "/api/v1/admin/users",
+                    "admin_runs": "/api/v1/admin/runs",
+                },
+            }
+        )
+
+    @app.get("/api/openapi.json")
+    def openapi_spec():
+        return jsonify(
+            {
+                "openapi": "3.0.3",
+                "info": {
+                    "title": "FastBid24 Door Analyzer API",
+                    "version": "1.0.0",
+                    "description": "Authentication, PDF run history, S3 PDF storage, and admin APIs for FastBid24.",
+                },
+                "servers": [{"url": "/api/v1"}],
+                "components": {
+                    "securitySchemes": {
+                        "BearerAuth": {
+                            "type": "http",
+                            "scheme": "bearer",
+                            "bearerFormat": "session-token",
+                        }
+                    }
+                },
+                "security": [{"BearerAuth": []}],
+                "paths": {
+                    "/health": {
+                        "get": {
+                            "summary": "Health check",
+                            "security": [],
+                            "responses": {"200": {"description": "Backend health status"}},
+                        }
+                    },
+                    "/auth/bootstrap": {
+                        "post": {
+                            "summary": "Create the first admin user",
+                            "security": [],
+                            "requestBody": {
+                                "required": True,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "required": ["email", "password"],
+                                            "properties": {
+                                                "email": {"type": "string", "format": "email"},
+                                                "password": {"type": "string", "minLength": 8},
+                                                "name": {"type": "string"},
+                                                "organization_name": {"type": "string"},
+                                            },
+                                        }
+                                    }
+                                },
+                            },
+                            "responses": {
+                                "201": {"description": "Admin user created"},
+                                "409": {"description": "Users already exist"},
+                            },
+                        }
+                    },
+                    "/auth/login": {
+                        "post": {
+                            "summary": "Login",
+                            "security": [],
+                            "requestBody": {
+                                "required": True,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "required": ["email", "password"],
+                                            "properties": {
+                                                "email": {"type": "string", "format": "email"},
+                                                "password": {"type": "string"},
+                                            },
+                                        }
+                                    }
+                                },
+                            },
+                            "responses": {"200": {"description": "Bearer token and user profile"}},
+                        }
+                    },
+                    "/auth/logout": {
+                        "post": {
+                            "summary": "Logout current session",
+                            "responses": {"204": {"description": "Logged out"}},
+                        }
+                    },
+                    "/me": {
+                        "get": {
+                            "summary": "Current user profile",
+                            "responses": {"200": {"description": "Current user"}},
+                        }
+                    },
+                    "/runs": {
+                        "get": {
+                            "summary": "List current user's PDF runs",
+                            "responses": {"200": {"description": "Paginated runs"}},
+                        },
+                        "post": {
+                            "summary": "Store a completed PDF analysis",
+                            "requestBody": {
+                                "required": True,
+                                "content": {
+                                    "multipart/form-data": {
+                                        "schema": {
+                                            "type": "object",
+                                            "required": ["pdf", "analysis_json"],
+                                            "properties": {
+                                                "pdf": {"type": "string", "format": "binary"},
+                                                "analysis_json": {"type": "string"},
+                                                "project_json": {"type": "string"},
+                                                "logs_json": {"type": "string"},
+                                                "metrics_json": {"type": "string"},
+                                                "scope": {"type": "string"},
+                                                "model": {"type": "string"},
+                                            },
+                                        }
+                                    }
+                                },
+                            },
+                            "responses": {"201": {"description": "Run stored"}},
+                        },
+                    },
+                    "/runs/{run_id}": {
+                        "get": {
+                            "summary": "Get one PDF run",
+                            "parameters": [{"name": "run_id", "in": "path", "required": True, "schema": {"type": "string"}}],
+                            "responses": {"200": {"description": "Run detail"}},
+                        }
+                    },
+                    "/runs/{run_id}/logs": {
+                        "get": {
+                            "summary": "Get logs for one PDF run",
+                            "parameters": [{"name": "run_id", "in": "path", "required": True, "schema": {"type": "string"}}],
+                            "responses": {"200": {"description": "Run logs"}},
+                        }
+                    },
+                    "/admin/users": {
+                        "get": {
+                            "summary": "Admin: list users",
+                            "responses": {"200": {"description": "Users"}},
+                        },
+                        "post": {
+                            "summary": "Admin: create user",
+                            "requestBody": {
+                                "required": True,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "required": ["email", "password"],
+                                            "properties": {
+                                                "name": {"type": "string"},
+                                                "email": {"type": "string", "format": "email"},
+                                                "password": {"type": "string", "minLength": 8},
+                                                "role": {"type": "string", "enum": ["admin", "user"]},
+                                            },
+                                        }
+                                    }
+                                },
+                            },
+                            "responses": {"201": {"description": "User created"}},
+                        },
+                    },
+                    "/admin/users/{user_id}": {
+                        "patch": {
+                            "summary": "Admin: update user",
+                            "parameters": [{"name": "user_id", "in": "path", "required": True, "schema": {"type": "string"}}],
+                            "responses": {"200": {"description": "User updated"}},
+                        }
+                    },
+                    "/admin/runs": {
+                        "get": {
+                            "summary": "Admin: list all PDF runs",
+                            "responses": {"200": {"description": "Runs"}},
+                        }
+                    },
+                    "/admin/logs": {
+                        "get": {
+                            "summary": "Admin: list logs",
+                            "parameters": [{"name": "run_id", "in": "query", "required": False, "schema": {"type": "string"}}],
+                            "responses": {"200": {"description": "Logs"}},
+                        }
+                    },
+                },
+            }
+        )
+
+    @app.get("/api/docs")
+    def swagger_docs():
+        return """
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FastBid24 API Docs</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    window.ui = SwaggerUIBundle({
+      url: '/api/openapi.json',
+      dom_id: '#swagger-ui',
+      deepLinking: true,
+      persistAuthorization: true
+    });
+  </script>
+</body>
+</html>
+"""
+
     @app.get("/api/v1/health")
     def health():
         return jsonify(
