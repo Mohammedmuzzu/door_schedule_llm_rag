@@ -98,6 +98,13 @@ def public_log_payload(payload: dict | None) -> dict:
     return {key: payload[key] for key in ("kind", "level", "stage", "ts") if key in payload}
 
 
+def clean_project_name(value: str | None) -> str | None:
+    text = str(value or "").strip()
+    if not text or re.fullmatch(r"untitled(?: project)?|project", text, flags=re.I):
+        return None
+    return text
+
+
 def serialize_log(log: PdfRunLog) -> dict:
     return {
         "id": log.id,
@@ -782,6 +789,7 @@ def register_routes(app: Flask) -> None:
 
         ps = analysis.get("project_summary") or {}
         qa = analysis.get("qa") or {}
+        project_name = clean_project_name(ps.get("project_name")) or clean_project_name(project.get("name"))
         status = "review_required" if analysis.get("status") == "REVIEW_REQUIRED" else "completed"
         run = PdfRun(
             id=run_id,
@@ -796,7 +804,7 @@ def register_routes(app: Flask) -> None:
             s3_bucket=stored_pdf["bucket"],
             s3_key=stored_pdf["key"],
             s3_url=stored_pdf["url"],
-            project_name=ps.get("project_name") or project.get("name"),
+            project_name=project_name,
             project_number=ps.get("project_number") or project.get("number"),
             architect=ps.get("architect") or project.get("architect"),
             pdf_type=None,

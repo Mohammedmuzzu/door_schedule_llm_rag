@@ -213,6 +213,27 @@ async function apiCreateRun({ token, file, analysis, project, logs, scope }) {
   return apiRequest('/runs', { method: 'POST', token, body: form });
 }
 
+function cleanProjectTitle(value) {
+  const text = String(value || '').trim();
+  return /^(untitled|untitled project|project)$/i.test(text) ? '' : text;
+}
+
+function fileTitle(value) {
+  return String(value || '')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function runProjectTitle(run) {
+  const ps = run?.summary_json?.project_summary || {};
+  return cleanProjectTitle(run?.project_name)
+    || cleanProjectTitle(ps.project_name)
+    || fileTitle(run?.source_filename)
+    || 'Project not detected';
+}
+
 function runToProposal(run) {
   const ps = run?.summary_json?.project_summary || {};
   const metrics = run?.metrics_json || {};
@@ -221,7 +242,7 @@ function runToProposal(run) {
     id,
     backendRunId: run.id,
     backendSynced: true,
-    project: run.project_name || ps.project_name || 'Untitled',
+    project: runProjectTitle(run),
     address: ps.address || '',
     client: run.architect || ps.architect || run.user_email || '',
     doors: metrics.door_count ?? ps.total_openings_found ?? 0,
@@ -3942,7 +3963,7 @@ const AdminScreen = ({ auth }) => {
                 <tr key={r.id} onClick={() => setSelectedRunId(r.id)} className={selectedRunId === r.id ? 'selected' : ''} style={{cursor:'pointer'}}>
                   <td className="mono">{(r.proposal_id || r.id).slice(0, 18)}</td>
                   <td>{r.user_email || r.user_id}</td>
-                  <td><strong>{r.project_name || 'Untitled'}</strong>{r.project_number && <div className="mono-small">{r.project_number}</div>}</td>
+                  <td><strong>{runProjectTitle(r)}</strong>{r.project_number && <div className="mono-small">{r.project_number}</div>}</td>
                   <td>{r.source_filename}</td>
                   <td>{r.metrics_json?.door_count ?? 0}</td>
                   <td><StatusPill status={r.status}/></td>
