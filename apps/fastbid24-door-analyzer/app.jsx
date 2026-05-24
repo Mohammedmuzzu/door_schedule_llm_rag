@@ -173,6 +173,7 @@ async function apiRequest(path, { method = 'GET', token, body, headers = {} } = 
 }
 
 const apiHealth = () => apiRequest('/health');
+const apiBootstrapStatus = () => apiRequest('/auth/bootstrap/status');
 const apiBootstrap = (payload) => apiRequest('/auth/bootstrap', { method: 'POST', body: payload });
 const apiLogin = (email, password) => apiRequest('/auth/login', { method: 'POST', body: { email, password } });
 const apiLogout = (token) => apiRequest('/auth/logout', { method: 'POST', token });
@@ -7549,10 +7550,18 @@ const LoginScreen = ({ onLogin, onContinueLocal }) => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [health, setHealth] = useState(null);
+  const [bootstrapAvailable, setBootstrapAvailable] = useState(false);
 
   useEffect(() => {
     if (!API_BASE) return;
     apiHealth().then(setHealth).catch(e => setHealth({ ok: false, message: e.message }));
+    apiBootstrapStatus()
+      .then(data => {
+        const available = !!data.bootstrap_available;
+        setBootstrapAvailable(available);
+        if (!available) setMode('login');
+      })
+      .catch(() => setBootstrapAvailable(false));
   }, []);
 
   const submitLogin = async (e) => {
@@ -7574,8 +7583,13 @@ const LoginScreen = ({ onLogin, onContinueLocal }) => {
     try {
       await apiBootstrap({ email, password, name: name || email, organization_name: organizationName });
       setMode('login');
+      setBootstrapAvailable(false);
       setMessage('Admin account created. Sign in to continue.');
     } catch (err) {
+      if (/already|bootstrap/i.test(err.message || '')) {
+        setMode('login');
+        setBootstrapAvailable(false);
+      }
       setError(err.message);
     } finally {
       setBusy(false);
@@ -7610,9 +7624,11 @@ const LoginScreen = ({ onLogin, onContinueLocal }) => {
         </Button>
       </form>
       <div className="auth-actions">
-        <Button kind="ghost" onClick={() => { setMode(mode === 'login' ? 'bootstrap' : 'login'); setError(''); setMessage(''); }}>
-          {mode === 'login' ? 'First-time setup' : 'Back to sign in'}
-        </Button>
+        {bootstrapAvailable || mode === 'bootstrap' ? (
+          <Button kind="ghost" onClick={() => { setMode(mode === 'login' ? 'bootstrap' : 'login'); setError(''); setMessage(''); }}>
+            {mode === 'login' ? 'First-time setup' : 'Back to sign in'}
+          </Button>
+        ) : <span/>}
         {onContinueLocal && <Button kind="ghost" onClick={onContinueLocal}>Continue local demo</Button>}
       </div>
     </>

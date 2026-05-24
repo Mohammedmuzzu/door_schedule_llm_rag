@@ -326,6 +326,13 @@ def register_routes(app: Flask) -> None:
                             "responses": {"200": {"description": "Bearer token and user profile"}},
                         }
                     },
+                    "/auth/bootstrap/status": {
+                        "get": {
+                            "summary": "Check whether first-admin setup is still available",
+                            "security": [],
+                            "responses": {"200": {"description": "Bootstrap availability"}},
+                        }
+                    },
                     "/auth/logout": {
                         "post": {
                             "summary": "Logout current session",
@@ -499,6 +506,12 @@ def register_routes(app: Flask) -> None:
             db.flush()
             add_audit(db, user, "auth.bootstrap_admin", "user", str(user.id), {"email": email})
             return jsonify({"user": serialize_user(user)}), 201
+
+    @app.get("/api/v1/auth/bootstrap/status")
+    def bootstrap_status():
+        with session_scope() as db:
+            user_count = db.query(User).count()
+            return jsonify({"bootstrap_available": user_count == 0, "user_count": user_count})
 
     @app.post("/api/v1/auth/login")
     def login():
