@@ -6,5 +6,5 @@ const FASTBID24_DEFAULT_API = FASTBID24_LOCAL_HOSTS.has(window.location.hostname
 window.FASTBID24_CONFIG = {
   apiBaseUrl: window.FASTBID24_API_BASE_URL || FASTBID24_DEFAULT_API,
   requireAuth: true,
-  allowLocalDemo: true,
+  allowLocalDemo: false,
 };

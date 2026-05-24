@@ -1,5 +1,7 @@
 import json
+import time
 import uuid
+from collections import defaultdict, deque
 from datetime import datetime, timezone
 from functools import wraps
 
@@ -9,6 +11,7 @@ from werkzeug.exceptions import HTTPException
 
 from config import allowed_origin, settings
 from db import session_scope
+from extraction import ExtractionError, extract_pdf_secure
 from models import (
     AuditEvent,
     ExtractedDoor,
@@ -23,6 +26,9 @@ from models import (
 )
 from security import hash_password, issue_token, normalize_email, token_digest, verify_password
 from storage import StorageNotConfigured, upload_pdf
+
+
+EXTRACTION_ATTEMPTS: dict[str, deque[float]] = defaultdict(deque)
 
 
 def iso(value):
@@ -189,6 +195,21 @@ def add_audit(db, user: User | None, action: str, entity_type: str, entity_id: s
     )
 
 
+def rate_limit_extraction(user: User) -> tuple[bool, int]:
+    limit = max(1, settings.extraction_rate_limit_per_hour)
+    now = time.time()
+    window_start = now - 3600
+    key = str(user.id)
+    attempts = EXTRACTION_ATTEMPTS[key]
+    while attempts and attempts[0] < window_start:
+        attempts.popleft()
+    if len(attempts) >= limit:
+        retry_after = int(max(1, 3600 - (now - attempts[0])))
+        return False, retry_after
+    attempts.append(now)
+    return True, 0
+
+
 def register_routes(app: Flask) -> None:
     @app.before_request
     def handle_options():
@@ -242,6 +263,7 @@ def register_routes(app: Flask) -> None:
                     "health": "/api/v1/health",
                     "login": "/api/v1/auth/login",
                     "runs": "/api/v1/runs",
+                    "extract": "/api/v1/extract",
                     "admin_users": "/api/v1/admin/users",
                     "admin_runs": "/api/v1/admin/runs",
                 },
@@ -473,6 +495,7 @@ def register_routes(app: Flask) -> None:
                 "ok": True,
                 "database_configured": settings.database_configured,
                 "s3_configured": settings.s3_configured,
+                "openai_configured": settings.openai_configured,
                 "bucket": settings.s3_bucket_name,
             }
         )
@@ -542,6 +565,58 @@ def register_routes(app: Flask) -> None:
     @require_user
     def me(db, user):
         return jsonify({"user": serialize_user(user)})
+
+    @app.post("/api/v1/extract")
+    @require_user
+    def extract_pdf(db, user):
+        allowed, retry_after = rate_limit_extraction(user)
+        if not allowed:
+            response = api_error(429, "RateLimited", "Extraction rate limit reached. Try again later.")
+            response.headers["Retry-After"] = str(retry_after)
+            return response
+        if not settings.openai_configured:
+            return api_error(503, "OpenAINotConfigured", "Server OpenAI key is not configured.")
+
+        pdf = request.files.get("pdf")
+        if not pdf:
+            return api_error(422, "ValidationError", "A PDF file is required.")
+        filename = pdf.filename or "document.pdf"
+        if not filename.lower().endswith(".pdf"):
+            return api_error(422, "ValidationError", "Only PDF files are supported.")
+
+        file_bytes = pdf.read()
+        if not file_bytes:
+            return api_error(422, "ValidationError", "Uploaded PDF is empty.")
+        max_bytes = settings.max_upload_mb * 1024 * 1024
+        if len(file_bytes) > max_bytes:
+            return api_error(413, "PayloadTooLarge", f"PDF exceeds the {settings.max_upload_mb} MB upload limit.")
+
+        scope = request.form.get("scope") or "Supply & Installation"
+        if scope not in {"Supply Only", "Installation Only", "Supply & Installation"}:
+            return api_error(422, "ValidationError", "Invalid project scope.")
+        run_rfis = str(request.form.get("run_rfis", "true")).lower() not in {"0", "false", "no"}
+
+        try:
+            result = extract_pdf_secure(file_bytes, filename, scope, run_rfis=run_rfis)
+        except ExtractionError as exc:
+            add_audit(db, user, "extract.failed", "pdf", None, {"filename": filename, "error": str(exc)})
+            return api_error(502, "ExtractionFailed", str(exc))
+
+        add_audit(
+            db,
+            user,
+            "extract.completed",
+            "pdf",
+            None,
+            {
+                "filename": filename,
+                "scope": scope,
+                "model": settings.openai_model,
+                "doors": len(result.get("analysis", {}).get("door_analysis") or []),
+                "hardware_sets": len(result.get("analysis", {}).get("hardware_set_review") or []),
+            },
+        )
+        return jsonify(result)
 
     @app.get("/api/v1/runs")
     @require_user

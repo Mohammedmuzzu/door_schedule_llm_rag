@@ -1,5 +1,7 @@
 # FastBid24 Door Analyzer — Pipeline
 
+Runtime extraction runs on the authenticated Render backend. This static file is public documentation only and intentionally contains no proprietary prompt text.
+
 | Step | Type | Purpose |
 |------|------|---------|
 | Call 1 | LLM call | Door schedule extraction |
@@ -10,7 +12,5 @@
 | Step 5 | Code | Excel generation |
 
 ## Prompt files
-- `prompts/door_schedule_extraction.md` — Call 1
-- `prompts/hardware_set_extraction.md` — Call 2
-- `prompts/door_hardware_mapping.md` — Code: mapping logic spec
-- `prompts/rfi_coordination_review.md` — Call 3 (optional)
+- Prompt bodies are server-side only.
+- Public files in this folder are placeholders so Cloud Pages does not expose prompt IP.

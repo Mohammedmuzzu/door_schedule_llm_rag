@@ -8,13 +8,10 @@ C:\Users\muzaf\Downloads\FastBid24 Door Analyzer (1).zip
 
 ## Notes
 
-- `app.jsx` contains the React app and current client-side extraction flow.
-- `prompts/` documents the staged extraction pipeline:
-  - door schedule extraction
-  - hardware set extraction
-  - door-to-hardware mapping
-  - optional RFI / estimator review
-- The UI layer has been refactored for a denser estimator workbench pattern while preserving extraction logic, features, and prompt content.
+- `app.jsx` contains the React app and calls the authenticated backend extraction endpoint.
+- OpenAI credentials and proprietary extraction prompts live only in the Render backend.
+- `prompts/` contains public, non-sensitive placeholders because Cloud Pages serves static files directly.
+- The UI layer uses a dense estimator workbench pattern while keeping secrets and LLM prompt IP out of the frontend bundle.
 
 The main entry point is `index.html`, which loads the refactored `app.jsx` and `styles.css` in the browser.
 
@@ -22,7 +19,7 @@ The main entry point is `index.html`, which loads the refactored `app.jsx` and `
 
 - `index.html` - browser entry point.
 - `config.js` - frontend API/auth configuration.
-- `app.jsx` - React app source and extraction pipeline logic.
+- `app.jsx` - React app source and secure backend API client.
 - `styles.css` - workbench UI styling.
 - `prompts/` - pipeline prompt documentation and metadata references.
 - `backend/` - Flask API for login, roles, Postgres run history, logs, and S3 PDF storage.
@@ -30,7 +27,7 @@ The main entry point is `index.html`, which loads the refactored `app.jsx` and `
 
 ## Backend Setup
 
-The backend uses the repo `.env` for `DATABASE_URL` and S3 credentials. It derives a FastBid-specific database from `FASTBID24_DATABASE_NAME` or defaults to `fastbid24_door_analyzer`.
+The backend uses the repo `.env` for `DATABASE_URL`, S3 credentials, and `FASTBID24_OPENAI_API_KEY`. It derives a FastBid-specific database from `FASTBID24_DATABASE_NAME` or defaults to `fastbid24_door_analyzer`.
 
 ```powershell
 & "c:\Users\muzaf\my_lab\computervision\Scripts\python.exe" apps\fastbid24-door-analyzer\backend\scripts\init_backend.py

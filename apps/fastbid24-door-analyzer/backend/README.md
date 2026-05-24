@@ -2,10 +2,11 @@
 
 Flask API for the FastBid24 browser app. It adds authentication, roles, Postgres-backed PDF run history, admin visibility, and S3 PDF storage without changing the existing browser extraction prompts or OpenAI flow.
 
-## What Stays In The Browser
+## Secure Extraction
 
-- The OpenAI API key is still entered in the UI.
-- Extraction prompts and logic in `app.jsx` are unchanged.
+- The OpenAI API key is configured only on the backend with `FASTBID24_OPENAI_API_KEY` or `OPENAI_API_KEY`.
+- The browser uploads PDFs to `POST /api/v1/extract` with a logged-in bearer token.
+- Extraction prompts and OpenAI calls run on Render, not in the Cloud Pages frontend.
 - The backend stores completed analysis results and original PDFs after a run finishes.
 
 ## API Shape
@@ -32,6 +33,7 @@ Required for production:
 
 ```text
 DATABASE_URL=postgresql+psycopg2://...
+FASTBID24_OPENAI_API_KEY=<your OpenAI API key>
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 AWS_REGION=...
@@ -46,6 +48,8 @@ FASTBID24_DATABASE_URL=postgresql+psycopg2://...
 FASTBID24_S3_BUCKET_NAME=your-fastbid24-bucket
 FASTBID24_CORS_ORIGINS=http://127.0.0.1:8503,http://localhost:8503
 FASTBID24_SESSION_DAYS=14
+FASTBID24_OPENAI_MODEL=gpt-5.5
+FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR=12
 ```
 
 If `FASTBID24_DATABASE_URL` is not set, the backend derives a new database URL from `DATABASE_URL` using `FASTBID24_DATABASE_NAME`.

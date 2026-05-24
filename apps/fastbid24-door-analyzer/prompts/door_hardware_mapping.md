@@ -1,9 +1,5 @@
-# Door → Hardware Set Mapping Prompt
+# Door To Hardware Mapping
 
-For each door:
-- Read door.hardware_set.
-- Find matching hardware_set.
-- If match exists and status is active, expand all hardware items under that door.
-- If existing_to_remain, do not map new hardware.
-- If no match, create QA issue.
-- If hardware set has zero items, create QA issue.
+Runtime mapping rules are server-side only.
+
+Cloud Pages serves this directory as static frontend content, so proprietary extraction and mapping instructions are not shipped here.

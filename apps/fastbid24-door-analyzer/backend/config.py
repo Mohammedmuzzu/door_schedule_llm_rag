@@ -73,6 +73,9 @@ class Settings:
     host: str
     port: int
     max_upload_mb: int
+    openai_api_key: str | None
+    openai_model: str
+    extraction_rate_limit_per_hour: int
 
     @property
     def database_configured(self) -> bool:
@@ -81,6 +84,10 @@ class Settings:
     @property
     def s3_configured(self) -> bool:
         return bool(self.aws_access_key_id and self.aws_secret_access_key and self.s3_bucket_name)
+
+    @property
+    def openai_configured(self) -> bool:
+        return bool(self.openai_api_key)
 
 
 def get_settings() -> Settings:
@@ -108,6 +115,9 @@ def get_settings() -> Settings:
         host=os.environ.get("FASTBID24_API_HOST", "127.0.0.1"),
         port=int(os.environ.get("FASTBID24_API_PORT", "8765")),
         max_upload_mb=int(os.environ.get("FASTBID24_MAX_UPLOAD_MB", "100")),
+        openai_api_key=os.environ.get("FASTBID24_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY"),
+        openai_model=os.environ.get("FASTBID24_OPENAI_MODEL", "gpt-5.5"),
+        extraction_rate_limit_per_hour=int(os.environ.get("FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR", "12")),
     )
 
 

@@ -148,8 +148,8 @@ async function dbDelete(id) {
 /* ---------- Backend API bridge ---------- */
 const APP_CONFIG = {
   apiBaseUrl: '',
-  requireAuth: false,
-  allowLocalDemo: true,
+  requireAuth: true,
+  allowLocalDemo: false,
   ...(window.FASTBID24_CONFIG || {}),
 };
 const API_BASE = String(APP_CONFIG.apiBaseUrl || '').replace(/\/+$/, '');
@@ -184,6 +184,14 @@ const apiAdminCreateUser = (token, payload) => apiRequest('/admin/users', { meth
 const apiAdminUpdateUser = (token, id, payload) => apiRequest('/admin/users/' + encodeURIComponent(id), { method: 'PATCH', token, body: payload });
 const apiAdminRuns = (token) => apiRequest('/admin/runs?page_size=100', { token });
 const apiAdminLogs = (token, runId = '') => apiRequest('/admin/logs?page_size=100' + (runId ? '&run_id=' + encodeURIComponent(runId) : ''), { token });
+
+async function apiExtractPdf({ token, file, scope, runRFIs = true }) {
+  const form = new FormData();
+  form.append('pdf', file, file?.name || 'document.pdf');
+  form.append('scope', scope || 'Supply & Installation');
+  form.append('run_rfis', runRFIs ? 'true' : 'false');
+  return apiRequest('/extract', { method: 'POST', token, body: form });
+}
 
 async function apiCreateRun({ token, file, analysis, project, logs, scope, model }) {
   const metrics = {
@@ -1094,103 +1102,14 @@ async function cropRegion(pageImageDataUrl, bbox) {
 }
 
 /* ---------- Vision extraction (image-based PDFs) ---------- */
-const REGION_DETECT_SYSTEM = `You are a senior Division 8 estimator reviewing scanned architectural sheets.
-Identify the visible regions on this sheet that contain Division 8 information.
-Region types: "door_schedule", "hardware_schedule", "hardware_set", "door_details", "frame_details", "legend", "notes", "other".
+const REGION_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-Return STRICTLY valid JSON only:
-{
-  "regions": [
-    { "type": string, "label": string, "bbox": [x, y, w, h], "confidence": number }
-  ],
-  "sheet_orientation": "landscape"|"portrait",
-  "sheet_notes": string
+const REGION_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
+
+async function callOpenAIVision() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-bbox is normalized to the image (0..1). Be generous — slightly oversize crops are better than tight ones that miss rows. If no Div 8 content is visible, return regions: [].`;
-
-const REGION_EXTRACT_SYSTEM = `You are a senior Division 8 estimator transcribing a CROPPED region of a scanned architectural sheet.
-
-YOUR JOB IS TRANSCRIPTION, NOT SUMMARIZATION.
-- Read EVERY visible row, top to bottom. Do not stop early. Do not abbreviate. Do not say "etc." or "additional doors".
-- If a column for a row is unreadable, set that field to null. Do NOT skip the row — emit it with nulls.
-- Preserve marks/IDs character-for-character as written (e.g. "101A", "A.103", "DR-1.02").
-- Never invent door marks, hardware set IDs, part numbers, prices, manufacturers, or finishes.
-- Set confidence ≥ 0.85 only when you can read the row clearly. Use 0.5–0.84 for partial reads, < 0.5 for guesses.
-
-Return STRICTLY valid JSON. Pick the schema matching the crop:
-
-If door schedule rows are visible:
-{ "kind": "door_schedule", "row_count_visible": number, "rows": [{
-    "mark": string, "room_or_location": string|null, "door_type": string|null,
-    "size": {"width": string|null, "height": string|null, "thickness": string|null},
-    "door_material": string|null, "door_finish": string|null,
-    "glazing": string|null, "frame_type": string|null, "frame_material": string|null, "frame_finish": string|null,
-    "fire_rating": string|null, "hardware_set": string|null,
-    "remarks": [string], "confidence": number
-}] }
-
-If a hardware set / hardware items table is visible:
-{ "kind": "hardware_set", "sets": [{
-    "id": string, "name": string|null,
-    "items": [{ "qty": number|null, "desc": string, "part": string|null, "mfr": string|null, "finish": string|null }],
-    "confidence": number
-}] }
-
-If general notes/legends:
-{ "kind": "notes", "notes": [string] }
-
-If you genuinely cannot identify any of the above:
-{ "kind": "unknown", "raw_text": "verbatim text you can read, line by line" }
-
-CRITICAL: rows.length MUST equal the number of rows you can see in the schedule. row_count_visible MUST be your honest count of rows visible in the crop. If those differ, your output is invalid.`;
-
-async function callOpenAIVision({ apiKey, model, system, userText, imageDataUrls, detail = 'high', maxTokens = 16000 }) {
-  const content = [{ type: 'text', text: userText }];
-  for (const url of imageDataUrls) {
-    content.push({ type: 'image_url', image_url: { url, detail } });
-  }
-  const body = {
-    model,
-    messages: [
-      { role: 'system', content: system },
-      { role: 'user', content },
-    ],
-    response_format: { type: 'json_object' },
-    max_completion_tokens: maxTokens,
-  };
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-    body: JSON.stringify(body),
-  });
-  let data;
-  try { data = await res.json(); } catch { throw new Error('Network error contacting OpenAI'); }
-  // Older chat models reject max_completion_tokens — retry with max_tokens
-  if (!res.ok && /max_completion_tokens/i.test(data?.error?.message || '')) {
-    delete body.max_completion_tokens; body.max_tokens = maxTokens;
-    const res2 = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    data = await res2.json();
-    if (!res2.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res2.status));
-  } else if (!res.ok) {
-    throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-  }
-  const text = data.choices?.[0]?.message?.content || '{}';
-  const finishReason = data.choices?.[0]?.finish_reason;
-  try {
-    const parsed = JSON.parse(text);
-    parsed.__finish_reason = finishReason;
-    return parsed;
-  } catch {
-    throw new Error('Vision returned invalid JSON' + (finishReason === 'length' ? ' (output truncated — increase max tokens)' : ''));
-  }
-}
-
-/* Crop a region using a normalized bbox AND a vertical slice (for splitting tall door schedules into row strips) */
 async function cropRegionStrip(pageImageDataUrl, bbox, stripStartY, stripEndY) {
   // bbox is the region within the page; stripStartY/stripEndY are 0..1 within the region (vertical slice)
   const [bx, by, bw, bh] = bbox;
@@ -1198,213 +1117,10 @@ async function cropRegionStrip(pageImageDataUrl, bbox, stripStartY, stripEndY) {
   return cropRegion(pageImageDataUrl, stripBbox);
 }
 
-async function extractWithVision({ apiKey, model, scope, pages, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required.');
-
-  // PASS 1 — region detection per page (or per tile when tiles are present)
-  const allRegions = []; // {pageNum, type, label, bbox (page coords), confidence, source}
-  const pageMeta = [];   // {pageNum, regionsFound, sheetOrientation}
-
-  // Map a tile-local bbox (0..1 within tile) to page-level coords using tile.bbox.
-  const tileToPage = (tileBbox, localBbox) => {
-    const [tx, ty, tw, th] = tileBbox;
-    const [lx, ly, lw, lh] = localBbox;
-    return [tx + lx * tw, ty + ly * th, lw * tw, lh * th];
-  };
-
-  for (const page of pages) {
-    let totalRegions = 0;
-    const detectFor = async (imageUrl, label, mapBack) => {
-      let res;
-      try {
-        res = await callOpenAIVision({
-          apiKey, model,
-          system: REGION_DETECT_SYSTEM,
-          userText: `Identify all Division 8 regions on ${label}. Sheet appears ${page.orientation}.`,
-          imageDataUrls: [imageUrl],
-        });
-      } catch (e) {
-        onProgress?.({ kind: 'warn', text: `Region detection failed on ${label}: ${e.message}` });
-        res = { regions: [] };
-      }
-      const regs = Array.isArray(res?.regions) ? res.regions : [];
-      regs.forEach(r => {
-        if (Array.isArray(r.bbox) && r.bbox.length === 4) {
-          const pageBbox = mapBack ? mapBack(r.bbox) : r.bbox;
-          allRegions.push({ pageNum: page.pageNum, type: r.type || 'other', label: r.label || r.type, bbox: pageBbox, confidence: r.confidence ?? 0.7, source: label });
-        }
-      });
-      return { regs, sheetOrientation: res?.sheet_orientation || page.orientation, sheetNotes: res?.sheet_notes || '' };
-    };
-
-    if (page.tiles && page.tiles.length) {
-      // Tile mode — run detection on each tile, then also once on full page (cheaper context)
-      onProgress?.({ kind: 'info', text: `Pass 1 · page ${page.pageNum}: detecting regions on ${page.tiles.length} tile(s)…` });
-      for (const tile of page.tiles) {
-        const r = await detectFor(tile.dataUrl, `page ${page.pageNum} tile ${tile.label}`, (b) => tileToPage(tile.bbox, b));
-        totalRegions += r.regs.length;
-      }
-      const full = await detectFor(page.dataUrl, `page ${page.pageNum} full`, null);
-      totalRegions += full.regs.length;
-      pageMeta.push({ pageNum: page.pageNum, regionsFound: totalRegions, sheetOrientation: full.sheetOrientation, sheetNotes: full.sheetNotes });
-    } else {
-      onProgress?.({ kind: 'info', text: `Pass 1 · identifying regions on page ${page.pageNum} (${page.width}×${page.height})…` });
-      const r = await detectFor(page.dataUrl, `page ${page.pageNum}`, null);
-      totalRegions = r.regs.length;
-      pageMeta.push({ pageNum: page.pageNum, regionsFound: totalRegions, sheetOrientation: r.sheetOrientation, sheetNotes: r.sheetNotes });
-    }
-    onProgress?.({ kind: 'ok', text: `Page ${page.pageNum}: ${totalRegions} region(s) detected` });
-  }
-
-  // Deduplicate regions that overlap heavily AND share a type (tile + full-page often both find the door schedule)
-  const deduped = [];
-  for (const r of allRegions) {
-    const dup = deduped.find(d => d.pageNum === r.pageNum && d.type === r.type && iou(d.bbox, r.bbox) > 0.55);
-    if (!dup) deduped.push(r);
-    else if ((r.confidence ?? 0) > (dup.confidence ?? 0)) Object.assign(dup, r);
-  }
-
-  // PASS 2 — crop each region and extract structured data
-  const cropExtractions = [];
-  for (let i = 0; i < deduped.length; i++) {
-    const region = deduped[i];
-    const page = pages.find(p => p.pageNum === region.pageNum);
-    if (!page) continue;
-    onProgress?.({ kind: 'info', text: `Pass 2 · extracting ${region.type} from page ${region.pageNum} (${i + 1}/${deduped.length})…` });
-    let crop;
-    try { crop = await cropRegion(page.dataUrl, region.bbox); }
-    catch (e) { onProgress?.({ kind: 'warn', text: `Crop failed for ${region.type}: ${e.message}` }); continue; }
-    // preview for QA panel
-    const previewCanvas = document.createElement('canvas');
-    const pscale = PREVIEW_LONG_EDGE / Math.max(crop.width, crop.height);
-    previewCanvas.width = Math.max(1, Math.round(crop.width * pscale));
-    previewCanvas.height = Math.max(1, Math.round(crop.height * pscale));
-    const pimg = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = crop.dataUrl; });
-    previewCanvas.getContext('2d').drawImage(pimg, 0, 0, previewCanvas.width, previewCanvas.height);
-    const cropPreview = previewCanvas.toDataURL('image/jpeg', 0.8);
-
-    let res;
-    try {
-      res = await callOpenAIVision({
-        apiKey, model,
-        system: REGION_EXTRACT_SYSTEM,
-        userText: `This is a CROPPED region of type "${region.type}" from page ${region.pageNum}. Project scope: ${scope}. Read EVERY row visible — do not summarize. Extract structured data per the schema.`,
-        imageDataUrls: [crop.dataUrl],
-      });
-    } catch (e) {
-      onProgress?.({ kind: 'warn', text: `Extraction failed on ${region.type}: ${e.message}` });
-      res = { kind: 'failed', error: e.message };
-    }
-
-    // If this is a door schedule and we got fewer rows than the model claims it saw (or 0), strip-split and retry
-    if (region.type === 'door_schedule' && res?.kind === 'door_schedule') {
-      const claimed = res.row_count_visible ?? 0;
-      const got = (res.rows || []).length;
-      const tall = crop.height >= 1400; // tall crops are likely truncated
-      const truncated = res.__finish_reason === 'length';
-      if (tall || truncated || (claimed > 0 && got < claimed * 0.7)) {
-        onProgress?.({ kind: 'info', text: `Door schedule appears under-extracted (got ${got}/${claimed || '?'} rows${tall ? ', tall crop' : ''}${truncated ? ', truncated' : ''}) — splitting into row strips…` });
-        const stripCount = Math.min(4, Math.max(2, Math.ceil(crop.height / 1100)));
-        const stripOverlap = 0.08;
-        const stripRows = [];
-        for (let s = 0; s < stripCount; s++) {
-          const y0 = Math.max(0, s / stripCount - stripOverlap);
-          const y1 = Math.min(1, (s + 1) / stripCount + stripOverlap);
-          let strip;
-          try { strip = await cropRegionStrip(page.dataUrl, region.bbox, y0, y1); }
-          catch (e) { continue; }
-          try {
-            const sr = await callOpenAIVision({
-              apiKey, model,
-              system: REGION_EXTRACT_SYSTEM,
-              userText: `This is STRIP ${s+1}/${stripCount} of a door schedule (page ${region.pageNum}). The strip overlaps neighbors by ~8% so rows aren't bisected. Read EVERY row visible in THIS strip only.`,
-              imageDataUrls: [strip.dataUrl],
-            });
-            if (sr?.kind === 'door_schedule' && Array.isArray(sr.rows)) {
-              stripRows.push(...sr.rows);
-              onProgress?.({ kind: 'ok', text: `Strip ${s+1}: ${sr.rows.length} row(s)` });
-            }
-          } catch (e) {
-            onProgress?.({ kind: 'warn', text: `Strip ${s+1} extraction failed: ${e.message}` });
-          }
-        }
-        // Dedupe by mark, prefer highest confidence
-        const map = new Map();
-        [...(res.rows || []), ...stripRows].forEach(r => {
-          if (!r.mark) return;
-          const prev = map.get(r.mark);
-          if (!prev || (r.confidence ?? 0) > (prev.confidence ?? 0)) map.set(r.mark, r);
-        });
-        res.rows = [...map.values()];
-        res.row_count_visible = res.rows.length;
-        res.__strip_split = { strips: stripCount, recovered: res.rows.length };
-        onProgress?.({ kind: 'ok', text: `After strip merge: ${res.rows.length} unique door row(s)` });
-      }
-    }
-
-    // If this is a hardware_set crop and no items were extracted, strip-split & retry with item-focused prompt
-    if ((region.type === 'hardware_set' || region.type === 'hardware_schedule') && res?.kind === 'hardware_set') {
-      const totalItems = (res.sets || []).reduce((n, s) => n + (s.items?.length || 0), 0);
-      const truncated = res.__finish_reason === 'length';
-      if (totalItems === 0 || truncated || crop.height >= 1400) {
-        onProgress?.({ kind: 'info', text: `Hardware set crop returned ${totalItems} item(s)${truncated ? ' (truncated)' : ''} — running item-focused strip pass…` });
-        const stripCount = Math.min(4, Math.max(2, Math.ceil(crop.height / 1100)));
-        const stripOverlap = 0.10;
-        const allSets = new Map();
-        // seed with whatever we already have
-        (res.sets || []).forEach(s => { if (s.id) allSets.set(s.id, { id: s.id, name: s.name || null, items: [...(s.items || [])], confidence: s.confidence ?? 0.6 }); });
-        for (let i2 = 0; i2 < stripCount; i2++) {
-          const y0 = Math.max(0, i2 / stripCount - stripOverlap);
-          const y1 = Math.min(1, (i2 + 1) / stripCount + stripOverlap);
-          let strip;
-          try { strip = await cropRegionStrip(page.dataUrl, region.bbox, y0, y1); }
-          catch (e) { continue; }
-          try {
-            const sr = await callOpenAIVision({
-              apiKey, model,
-              system: REGION_EXTRACT_SYSTEM,
-              userText: `This is STRIP ${i2+1}/${stripCount} of a HARDWARE SET / hardware schedule (page ${region.pageNum}). Transcribe EVERY line item visible: qty, full description, part number, manufacturer, finish. If a set ID/heading is visible at the top of this strip, return that as the set id. If a set continues from a previous strip without a header in this strip, use the most recent set id you can see, or "continued".`,
-              imageDataUrls: [strip.dataUrl],
-            });
-            if (sr?.kind === 'hardware_set' && Array.isArray(sr.sets)) {
-              sr.sets.forEach(s => {
-                if (!s.id) return;
-                const existing = allSets.get(s.id) || { id: s.id, name: s.name || null, items: [], confidence: s.confidence ?? 0.6 };
-                existing.items = [...existing.items, ...(s.items || [])];
-                if (!existing.name && s.name) existing.name = s.name;
-                allSets.set(s.id, existing);
-              });
-              const stripItems = sr.sets.reduce((n, s) => n + (s.items?.length || 0), 0);
-              onProgress?.({ kind: 'ok', text: `HW strip ${i2+1}: ${sr.sets.length} set(s) / ${stripItems} item(s)` });
-            }
-          } catch (e) {
-            onProgress?.({ kind: 'warn', text: `HW strip ${i2+1} extraction failed: ${e.message}` });
-          }
-        }
-        // Dedupe items per set by (desc + part)
-        allSets.forEach(s => {
-          const seen = new Set();
-          s.items = s.items.filter(it => {
-            const key = (it.desc || '').toLowerCase() + '|' + (it.part || '').toLowerCase() + '|' + (it.qty || '');
-            if (seen.has(key)) return false;
-            seen.add(key); return true;
-          });
-        });
-        res.sets = [...allSets.values()];
-        const final = res.sets.reduce((n, s) => n + (s.items?.length || 0), 0);
-        res.__strip_split = { strips: stripCount, recovered: final };
-        onProgress?.({ kind: 'ok', text: `After HW strip merge: ${res.sets.length} set(s) / ${final} item(s)` });
-      }
-    }
-
-    cropExtractions.push({ region, kind: res?.kind || 'unknown', data: res, cropPreview });
-  }
-
-  const merged = mergeVisionExtractions(cropExtractions, scope);
-  return { analysis: merged, qa: { pageMeta, regions: deduped, cropExtractions: cropExtractions.map(c => ({ region: c.region, kind: c.kind, cropPreview: c.cropPreview, data: c.data })) } };
+async function extractWithVision() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-/* Intersection over union of two normalized bboxes [x,y,w,h] */
 function iou(a, b) {
   const ax2 = a[0] + a[2], ay2 = a[1] + a[3];
   const bx2 = b[0] + b[2], by2 = b[1] + b[3];
@@ -1571,601 +1287,33 @@ function validateAnalysis(analysis) {
 
 /* ---------- OpenAI extraction (senior estimator analysis) ---------- */
 /* ---------- Senior Estimator System Prompt (per user spec — verbatim) ---------- */
-const EXTRACTION_SYSTEM = `You are a senior Division 8 Doors, Frames & Hardware estimator with 15+ years of experience in commercial construction.
+const EXTRACTION_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-I am uploading a project PDF that may contain:
-- Door schedules
-- Hardware sets
-- Door/frame/glazing notes
-- Door remarks
-- Special Division 8 conditions
-
-Your job is NOT just to extract text.
-Your job is to analyze the document like a real estimator preparing a bid.
-
---------------------------------------------------
-PRIMARY OBJECTIVE
---------------------------------------------------
-
-Analyze the uploaded PDF and produce a practical senior-estimator review covering:
-
-1. Door schedule interpretation
-2. Hardware set mapping
-3. Hardware completeness review
-4. Installation complexity
-5. Risk identification
-6. RFIs / clarification items
-7. Estimator notes
-8. Structured bid-ready JSON output
-
---------------------------------------------------
-CRITICAL ANTI-HALLUCINATION RULES
---------------------------------------------------
-
-- Extract only what is clearly visible in the PDF.
-- Do not invent door marks, hardware sets, quantities, finishes, ratings, or remarks.
-- Do not complete missing numbering sequences.
-- Preserve door marks and hardware set names exactly as written.
-- If something is unclear, return null or "review required".
-- Prefer missing data over wrong data.
-- Do not assume hardware scope unless it is shown in the schedule or hardware set.
-- If a door has remarks like CR, EH, VI, AO, EL, DPS, panic, access control, etc., flag it as a coordination item.
-- If a hardware set referenced in the door schedule is missing from the hardware set page, flag it.
-- If a hardware set exists but has unclear/incomplete products, flag it.
-
---------------------------------------------------
-DOCUMENT ANALYSIS METHOD
---------------------------------------------------
-
-Step 1: Identify document sections:
-- Door schedule
-- Hardware set descriptions
-- Door panel legend
-- Door remarks legend
-- Frame types
-- Glazing types
-- Any notes affecting scope
-
-Step 2: Extract each door schedule row:
-For each opening, capture:
-- Door mark
-- Room / location
-- Door type
-- Interior/exterior
-- Width
-- Height
-- Thickness
-- Door material
-- Door finish
-- Glazing type
-- Frame type
-- Frame material
-- Frame finish
-- Fire rating
-- Hardware set
-- Remarks
-- Details if visible
-
-Step 3: Cross-reference:
-- Match each door's hardware set to the hardware set descriptions.
-- Identify whether the hardware set appears complete, incomplete, or unclear.
-- Identify special remarks that affect supply, install, or coordination.
-
-Step 4: Analyze each opening as an estimator:
-For each door, determine:
-- Opening type: single, double, pair, exterior, interior, fire-rated, storefront/aluminum, hollow metal, wood, etc.
-- Hardware completeness: complete / incomplete / review required
-- Installation complexity: low / medium / high
-- Risk level: low / medium / high
-- Special conditions
-- Issues
-- Recommendations
-- Confidence score
-
---------------------------------------------------
-SCOPE-SPECIFIC LOGIC
---------------------------------------------------
-
-If scope = Supply Only:
-
-Focus on:
-- Door, frame, hardware, glazing, finish, and material scope
-- Hardware completeness
-- Missing hardware sets
-- Unclear finishes
-- Fire-rated products
-- Access control/electrified hardware supply exclusions
-- Substitution risks
-- Long-lead or specialty items
-
-Ignore:
-- Detailed field labor difficulty unless it affects supply risk.
-
---------------------------------------------------
-
-If scope = Installation Only:
-
-Focus on:
-- Installation difficulty
-- Door/frame type
-- Exterior openings
-- Aluminum/storefront coordination
-- Access control coordination
-- Electrified hardware coordination
-- Panic/egress hardware
-- Fire-rated installation requirements
-- ADA/closer/operator concerns
-- Double-door alignment
-- Sequencing and site coordination
-
-Assume material may be supplied by others unless the PDF clearly says otherwise.
-
---------------------------------------------------
-
-If scope = Supply & Installation:
-
-Perform both supply and install analysis together.
-
-Focus on:
-- Full material scope
-- Hardware completeness
-- Labor complexity
-- Access control coordination
-- Field sequencing risks
-- Exterior/opening risk
-- Missing information affecting bid accuracy
-- Items requiring RFI before final bid
-
---------------------------------------------------
-SPECIAL CONDITIONS TO FLAG
---------------------------------------------------
-
-Flag any opening with:
-- CR / card reader
-- EH / egress hardware
-- VI / video intercom
-- EL / electrified lock
-- DPS / door position switch
-- AO / automatic operator
-- Panic device
-- Magnetic hold open
-- Delayed egress
-- Fire rating
-- Smoke rating
-- Exterior door
-- Aluminum/storefront door
-- Double door or uneven pair
-- Hidden door
-- Curtain wall/frame coordination
-- New frame in existing condition
-- Hardware by manufacturer
-- Missing or unclear hardware set
-
---------------------------------------------------
-RISK LOGIC
---------------------------------------------------
-
-High risk:
-- Exterior aluminum/storefront openings with access control or egress hardware
-- Missing hardware set
-- Electrified/access control hardware without clear responsibility
-- Automatic operator or video intercom coordination
-- Fire/smoke rated door with unclear hardware
-- Double doors with panic/electrified hardware
-- Existing frame/new frame coordination
-- Hidden/specialty doors
-
-Medium risk:
-- Standard exterior hollow metal doors
-- Interior doors with card reader
-- Double doors with standard hardware
-- Doors with glazing requiring coordination
-- Doors with unclear remarks or incomplete finish data
-
-Low risk:
-- Standard interior single wood or hollow metal doors with clear hardware set and no special remarks
-
---------------------------------------------------
-OUTPUT FORMAT
---------------------------------------------------
-
-Return structured JSON only. Do not include explanation outside JSON.
-
-Use this structure:
-
-{
-  "project_summary": {
-    "scope_type": "",
-    "project_name": "",
-    "total_openings_found": 0,
-    "total_hardware_sets_referenced": 0,
-    "hardware_sets_missing_or_unclear": 0,
-    "high_risk_openings": 0,
-    "medium_risk_openings": 0,
-    "low_risk_openings": 0,
-    "complex_installations": 0,
-    "access_control_openings": 0,
-    "exterior_openings": 0,
-    "fire_rated_openings": 0,
-    "overall_bid_risk": "",
-    "estimator_summary": ""
-  },
-
-  "door_analysis": [
-    {
-      "mark": "",
-      "room_or_location": "",
-      "door_type": "",
-      "opening_type": "",
-      "interior_or_exterior": "",
-      "size": { "width": "", "height": "", "thickness": "" },
-      "door_material": "",
-      "door_finish": "",
-      "glazing": "",
-      "frame_type": "",
-      "frame_material": "",
-      "frame_finish": "",
-      "fire_rating": "",
-      "hardware_set": "",
-      "remarks": [],
-      "hardware_status": "",
-      "install_complexity": "",
-      "risk_level": "",
-      "special_conditions": [],
-      "issues": [],
-      "recommendations": [],
-      "rfi_required": true,
-      "rfi_questions": [],
-      "confidence": 0.0
-    }
-  ],
-
-  "hardware_set_review": [
-    {
-      "hardware_set": "",
-      "referenced_by_doors": [],
-      "status": "",
-      "missing_or_unclear_items": [],
-      "special_coordination": [],
-      "estimator_note": "",
-      "confidence": 0.0
-    }
-  ],
-
-  "project_risks": [
-    {
-      "severity": "",
-      "category": "",
-      "issue": "",
-      "affected_openings": [],
-      "recommendation": ""
-    }
-  ],
-
-  "rfi_log": [
-    {
-      "priority": "",
-      "question": "",
-      "affected_openings": [],
-      "reason": ""
-    }
-  ],
-
-  "estimator_notes": [""],
-
-  "bid_recommendations": {
-    "supply_only_notes": [],
-    "installation_only_notes": [],
-    "supply_and_installation_notes": [],
-    "exclusions_to_consider": [],
-    "allowances_to_consider": [],
-    "coordination_items": []
-  }
+async function extractWithOpenAI() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
---------------------------------------------------
-QUALITY STANDARD
---------------------------------------------------
-
-Think like a real estimator asking:
-
-- Can I price this opening confidently?
-- Is the hardware set complete?
-- Is access control clearly defined?
-- Is this a material risk, labor risk, or coordination risk?
-- Will this create field issues?
-- Should this be excluded, carried as allowance, or sent as RFI?
-- Could this affect bid profitability?
-
-Be practical, conservative, and construction-focused.
-
-The final result should feel like:
-"A senior doors and hardware estimator reviewed this project instantly."`;
-
-async function extractWithOpenAI({ apiKey, model, scope, pdfText, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-  onProgress?.({ kind: 'info', text: `Sending ${(pdfText.length/1024).toFixed(1)} KB of extracted text to ${model}…` });
-  // NOTE: omit `temperature` — newer OpenAI models reject anything but the default (1).
-  const body = {
-    model,
-    messages: [
-      { role: 'system', content: EXTRACTION_SYSTEM },
-      { role: 'user', content: `The selected project scope is: ${scope || 'Supply & Installation'}\n\nAnalyze the following PDF text as a senior Division 8 estimator. Return the structured JSON described in your instructions.\n\n---PDF TEXT BEGIN---\n${pdfText.slice(0, 80000)}\n---PDF TEXT END---` },
-    ],
-    response_format: { type: 'json_object' },
-  };
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-    body: JSON.stringify(body),
-  });
-  let data;
-  try { data = await res.json(); } catch { throw new Error('Network error contacting OpenAI'); }
-  if (!res.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-  const content = data.choices?.[0]?.message?.content || '{}';
-  let parsed;
-  try { parsed = JSON.parse(content); } catch { throw new Error('Model returned invalid JSON'); }
-  parsed.project_summary = parsed.project_summary || {};
-  parsed.door_analysis = Array.isArray(parsed.door_analysis) ? parsed.door_analysis : [];
-  parsed.hardware_set_review = Array.isArray(parsed.hardware_set_review) ? parsed.hardware_set_review : [];
-  parsed.project_risks = Array.isArray(parsed.project_risks) ? parsed.project_risks : [];
-  parsed.rfi_log = Array.isArray(parsed.rfi_log) ? parsed.rfi_log : [];
-  parsed.estimator_notes = Array.isArray(parsed.estimator_notes) ? parsed.estimator_notes : [];
-  parsed.bid_recommendations = parsed.bid_recommendations || {};
-  onProgress?.({ kind: 'ok', text: `Received ${parsed.door_analysis.length} openings, ${parsed.hardware_set_review.length} hardware sets, ${parsed.project_risks.length} risks, ${parsed.rfi_log.length} RFIs` });
-  return parsed;
-}
-
-/* ---------- NEW: Direct PDF upload to OpenAI ----------
-   Sends the PDF as base64 inside a chat-completion message. The model reads the PDF
-   end-to-end (no browser-side text/image extraction) and returns the same senior-estimator
-   JSON schema. Replaces both extractWithOpenAI and extractWithVision for the standard flow. */
 const REQUIRED_MODEL = 'gpt-5.5';  // Mandated — do not fall back to any other model
 
 /* ===========================================================================
    IMAGE-BASED EXTRACTION PIPELINE (300 DPI, classify → extract → map → validate)
    =========================================================================== */
 
-const TITLE_BLOCK_EXTRACT_SYSTEM = `You are reviewing the title block / cover sheet of a construction document.
+const TITLE_BLOCK_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-Return STRICTLY valid JSON with the project metadata you can read from the title block. Read what is literally visible — never invent values. Use null if a field is not present.
+const PAGE_CLASSIFIER_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-{
-  "project_name": string|null,
-  "project_number": string|null,
-  "architect": string|null,
-  "architect_firm": string|null,
-  "owner": string|null,
-  "address": string|null,
-  "drawing_title": string|null,
-  "drawing_number": string|null,
-  "sheet_number": string|null,
-  "date": string|null,
-  "revision": string|null,
-  "scale": string|null,
-  "raw_text_seen": string
-}
+const DOOR_ROW_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-raw_text_seen = a verbatim transcription of the title block area, line by line, so a reviewer can verify.`;
+const HW_BLOCK_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-const PAGE_CLASSIFIER_SYSTEM = `You are reviewing one page of a construction document at 300 DPI.
-
-Identify which Division 8 content appears on this page and where. Possible roles:
-- "door_schedule"   — a tabular schedule of openings (rows with door marks, sizes, materials, hardware set refs)
-- "hardware_sets"   — descriptions of hardware sets / hardware groups / finish hardware sets. Identifying cues (any ONE is sufficient):
-                      • 2+ visible headings that look like "HW-NN", "HW SET NN", "SET N", "GROUP N", "FHW-N", "Hardware Set N" stacked down the page or laid out in columns
-                      • Each heading is followed by line items naming hardware components (hinges, locks, closers, exit devices, kick plates, weatherstrip, thresholds, silencers, stops, holders, electric strikes, card readers, power supplies, etc.)
-                      • A sheet titled "HARDWARE SETS", "HARDWARE GROUPS", "FINISH HARDWARE SETS", "HARDWARE SCHEDULE", "DOOR HARDWARE GROUPS"
-                      • Specification-book prose blocks where each section starts with a hardware set ID and lists components beneath
-                      A page that is wall-to-wall hardware sets in 1, 2, or 3 columns is STILL ONE region — return a single hardware_sets region covering the full block of columns, NOT one region per column. Hardware-sets content commonly spans MULTIPLE consecutive sheets in a set — classify every such page as hardware_sets.
-- "door_details"    — door type elevations, panel diagrams
-- "frame_details"   — frame type elevations
-- "legend"          — legend / symbol key
-- "notes"           — text notes (general notes, hardware notes, finish notes). Do NOT use this role for a page full of hardware-set blocks — that is "hardware_sets".
-- "cover"           — title block, cover sheet
-- "other"           — none of the above
-
-Return STRICTLY valid JSON only:
-{
-  "regions": [{ "role": string, "label": string, "bbox": [x, y, w, h], "confidence": number }],
-  "sheet_notes": string
-}
-- bbox is normalized (0..1) within the page image.
-- If a single page contains BOTH a door schedule AND hardware set descriptions, return two separate regions.
-- For a hardware_sets page that is purely hardware content, return ONE region with bbox covering all columns of sets — e.g. [0.02, 0.05, 0.96, 0.92]. Do NOT split by column.
-- Be generous with bboxes — slightly oversize crops are better than tight ones that miss rows.
-- If the page is purely cover/notes/legend, return appropriate roles with bbox covering the relevant area.
-- If you see absolutely no Division 8 content, return regions: [].`;
-
-const DOOR_ROW_EXTRACT_SYSTEM = `You are TRANSCRIBING a cropped door schedule. This is NOT a summarization task.
-
-Read EVERY visible row top-to-bottom. For every row, emit one object — even if some columns are unreadable (set those fields to null). Do NOT skip rows. Do NOT abbreviate. Do NOT say "etc.".
-
-Preserve door marks character-for-character (e.g. "101A", "A.103", "DR-1.02"). Never invent a mark, a size, a hardware set ID, or a fire rating.
-
-Return STRICTLY valid JSON:
-{
-  "row_count_visible": number,
-  "rows": [{
-    "mark": string,
-    "room_or_location": string|null,
-    "door_type": string|null,
-    "interior_or_exterior": "Interior"|"Exterior"|null,
-    "size": { "width": string|null, "height": string|null, "thickness": string|null },
-    "door_material": string|null,
-    "door_finish": string|null,
-    "glazing": string|null,
-    "frame_type": string|null,
-    "frame_material": string|null,
-    "frame_finish": string|null,
-    "fire_rating": string|null,
-    "hardware_set": string|null,
-    "remarks": [string],
-    "raw_text_seen": string,
-    "confidence": number
-  }]
-}
-
-raw_text_seen = the literal cells in row order as you read them (so a reviewer can verify).
-confidence ≥ 0.85 only for clear rows; 0.5–0.84 partial; < 0.5 guesses.
-row_count_visible MUST equal rows.length.`;
-
-const HW_BLOCK_DETECT_SYSTEM = `You are looking at a cropped hardware-sets page. Identify EVERY individual hardware set block on it. Missing a set is the worst possible failure of this task.
-
-A "block" = one hardware set heading (e.g. "HW-01", "HW SET #3", "Set 4", "Group 12", "FHW-7") plus its line items, plus any "opening note" that lists which door marks the set applies to.
-
-STEP 1 — Enumerate every visible set heading on the page FIRST, before drawing any bboxes. Scan the page top-to-bottom. If the page is multi-column, scan column-by-column LEFT-TO-RIGHT, and within each column top-to-bottom. List every heading you see — even ones at the very bottom of a column, even ones that look partial or continued from another page. A heading is any of: "HW-NN", "HW SET NN", "SET N", "GROUP N", "FHW-N", "HARDWARE SET N", "DOOR HARDWARE GROUP N", or similar followed by an ID.
-
-STEP 2 — For each enumerated ID, return the block.
-
-Return STRICTLY valid JSON:
-{
-  "layout": "single-column" | "two-column" | "three-column" | "tabular" | "mixed",
-  "set_ids_visible": [string],   // exhaustive list of every set ID/heading visible (step 1) — in reading order
-  "total_blocks_visible": number, // = set_ids_visible.length, redundant safety count
-  "blocks": [{
-    "set_id": string,
-    "header_text": string,
-    "opening_note_text": string|null,
-    "is_crossed_out": boolean,
-    "is_voided_or_removed": boolean,
-    "bbox": [x, y, w, h],
-    "confidence": number
-  }]
-}
-- blocks.length MUST equal total_blocks_visible. If you cannot draw a confident bbox for a set you enumerated, still emit a block for it with your best-guess bbox and confidence < 0.5 — DO NOT drop it.
-- bbox is normalized (0..1) within the cropped image, sized to enclose the heading, the opening note (if any), AND all items belonging to this set.
-- For multi-column layouts: a block's bbox stays inside ONE column — it does NOT span across columns. Two adjacent columns produce two side-by-side blocks at similar y, not one wide block.
-- opening_note_text = the literal line that lists which openings the set applies to (e.g. "OPENING: 103A, 201, 202A" or "Doors: 100, 100B, 101"). Use null if no such line is visible.
-- is_crossed_out: true if the block has a visible strike-through, red X, or "VOID" stamp across it.
-- is_voided_or_removed: true if a section is missing or the item list is empty / "N/A".
-- Preserve set_id exactly as written (e.g. "HW-1", "Set 3A", "01"). Preserve typos in header_text as visible (e.g. "DOUBLE ENDRY/EGRESS").
-- Generous bboxes — overlapping is OK.`;
-
-const HW_ITEMS_EXTRACT_SYSTEM = `You are TRANSCRIBING one hardware set block. Read EVERY line item visible. Missing an item is the worst possible failure of this task.
-
-A "line item" = one numbered/bulleted/quantified line inside the block that names a hardware component (hinges, locks, closers, exit devices, kick plates, weatherstripping, threshold, silencers, stop, holder, electric strike, power supply, card reader, mag lock, gasketing, sweep, astragal, coordinator, flush bolts, dust proof strike, push/pull, pivot, etc.). Sub-headings like "EACH TO HAVE:" / "PROVIDE FOLLOWING:" / a manufacturer banner are NOT items — skip them.
-
-STEP 1 — Scan top-to-bottom and count every line item line in the image. Even if the line is partially unreadable or wraps across two visual rows, COUNT IT ONCE. Set lines_counted_in_block = that integer.
-
-STEP 2 — Emit one entry in items[] for every counted line. items.length MUST equal lines_counted_in_block. Never drop a line because the part number is unreadable — emit it with description filled and the unreadable fields set to null. Never abbreviate the list with "etc." or "…".
-
-Return STRICTLY valid JSON:
-{
-  "set_id": string,
-  "set_name": string|null,
-  "header_text_verbatim": string,
-  "opening_note_doors": [string],
-  "visual_flags": [string],
-  "lines_counted_in_block": number,
-  "items": [{
-    "item_no": string|number|null,
-    "qty": number|null,
-    "unit": string|null,
-    "description": string,
-    "catalog_number": string|null,
-    "manufacturer": string|null,
-    "finish": string|null,
-    "notes": string|null,
-    "raw_text_seen": string,
-    "is_crossed_out": boolean,
-    "confidence": number
-  }]
-}
-
-Rules:
-- Read every visible line. "3 Hinges  T4A3786  McKinney  US26D" → qty=3, unit=null, description="Hinges", catalog_number="T4A3786", manufacturer="McKinney", finish="US26D".
-- "3 EA  Hinges  T4A3786  McKinney  US26D" → qty=3, unit="EA", description="Hinges".
-- "1 PR Flush Bolts  282 12" Ives" → qty=1, unit="PR", description="Flush Bolts", catalog_number="282 12\"", manufacturer="Ives".
-- "1 SET Continuous Hinge" → qty=1, unit="SET", description="Continuous Hinge".
-- A line with only "1 Closer" or "1 EA Closer  by manufacturer" is still a valid item — emit it with qty=1, description="Closer", others=null.
-- A line that wraps onto two visual rows (long part number / long description) counts as ONE item — combine the two rows into one entry.
-- Continuation rows ("…cont'd" or items continued on next column/page) — emit them anyway.
-- header_text_verbatim = the set's heading line(s) preserving spelling exactly (typos included — e.g. "DOUBLE ENDRY/EGRESS", "CONTINOUS PERIMETER").
-- opening_note_doors = if a line near the heading lists which door marks this set applies to (e.g. "OPENING NOTE: 103A, 201, 202A" or "Doors: 100B"), parse it and return the marks as an array. If no such line, return [].
-- visual_flags = list any of: "crossed_out", "voided", "red_x_mark", "strikethrough", "marked_unused", "typo_in_heading" (only if the heading clearly contains a misspelling — e.g. ENDRY vs ENTRY).
-- is_crossed_out on an item line: true if that specific line has a strike-through.
-- Never invent qty, part numbers, manufacturers, or finishes. If unreadable, null. But the LINE must still be emitted.
-- Preserve set_id exactly as written.
-- raw_text_seen = the literal line as you read it.`;
+const HW_ITEMS_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 const ESTIMATOR_REASONING_SYSTEM = EXTRACTION_SYSTEM; // re-use senior-estimator prompt for the final reasoning pass
 
-const HW_FULL_REGION_EXTRACT_SYSTEM = `You are reading an entire hardware-sets region (or a single column of one) from a construction drawing rendered at 300 DPI. The image shows ONE OR MORE hardware sets stacked vertically. Missing a set or an item is the worst possible failure of this task.
+const HW_FULL_REGION_EXTRACT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-OBJECTIVE: Transcribe EVERY hardware set visible AND EVERY line item under each set, in one structured response.
-
-STEP 1 — Enumerate every set heading visible. Scan top-to-bottom. Include partial / continued / crossed-out / VOID-stamped sets — flag them but DO NOT drop them. List the IDs first in set_ids_visible. Common heading formats: "Hardware Group No. XXX", "HW-NN", "HW SET NN", "SET N", "GROUP N", "FHW-N".
-
-STEP 2 — For EACH enumerated set, read EVERY line item beneath its heading until you hit the next set heading (or the bottom of the image). A line item is one line naming a hardware component (hinges, locks, closers, exit devices, kick plates, weatherstripping, threshold, silencers, stops, holders, electric strikes, power supplies, card readers, mag locks, gasketing, sweep, astragal, coordinators, flush bolts, dust proof strike, push/pull, pivot, etc.). Sub-headings like "EACH TO HAVE:" or a manufacturer banner are NOT items — skip them.
-
-Return STRICTLY valid JSON:
-{
-  "layout": "single-column" | "two-column" | "three-column" | "four-column" | "five-column" | "many-column" | "tabular" | "mixed",
-  "set_ids_visible": [string],            // exhaustive list from step 1, reading order
-  "sets_visible_count": number,           // = set_ids_visible.length
-  "sets": [
-    {
-      "set_id": string,
-      "set_name": string|null,
-      "header_text_verbatim": string,
-      "opening_note_doors": [string],     // door marks listed near the heading (e.g. "OPENING: 103A, 201" → ["103A","201"])
-      "opening_note_text": string|null,
-      "visual_flags": [string],           // any of: "crossed_out","voided","red_x_mark","strikethrough","marked_unused","typo_in_heading"
-      "is_crossed_out": boolean,
-      "is_voided_or_removed": boolean,
-      "lines_counted_in_block": number,   // raw line count under this heading BEFORE filtering
-      "items": [
-        {
-          "item_no": string|number|null,
-          "qty": number|null,
-          "unit": string|null,
-          "description": string,
-          "catalog_number": string|null,
-          "manufacturer": string|null,
-          "finish": string|null,
-          "notes": string|null,
-          "raw_text_seen": string,
-          "is_crossed_out": boolean,
-          "confidence": number
-        }
-      ],
-      "confidence": number
-    }
-  ]
-}
-
-Rules:
-- sets.length MUST equal sets_visible_count. If you cannot draw items for a set you enumerated, still emit an entry for it with items: [] and confidence < 0.5 — DO NOT drop it.
-- For EACH set, items.length MUST equal lines_counted_in_block. Never drop a line because the part number is unreadable — emit it with description filled and unreadable fields set to null. Never abbreviate the list with "etc." or "…".
-- A line that wraps onto two visual rows (long part number / long description) is ONE item — combine the two rows.
-- Continuation rows ("…cont'd") still emit as items.
-- Preserve set IDs character-for-character ("Hardware Group No. C265", "HW-1", "Set 3A", "FHW-7", "01").
-- Preserve typos in header_text_verbatim exactly as visible (e.g. "DOUBLE ENDRY/EGRESS", "CONTINOUS PERIMETER").
-- visual_flags: emit "typo_in_heading" only when the heading clearly contains a misspelling.
-- Never invent qty, part numbers, manufacturers, or finishes. If unreadable, null. But the LINE must still be emitted.
-- raw_text_seen = the literal line as you read it.`;
-
-const HW_COLUMN_DETECT_SYSTEM = `You are looking at a hardware-sets region from a construction drawing. Your only job: count the columns and locate them.
-
-A hardware-sets sheet may lay sets out in 1, 2, 3, 4, 5 or 6 vertical columns. You must:
-1. Count the number of vertical columns of hardware-set content in this image.
-2. For each column, return its horizontal extent as normalized x-coordinates (0=left edge, 1=right edge).
-
-Return STRICTLY valid JSON:
-{
-  "column_count": number,
-  "columns": [
-    { "x0": number, "x1": number }   // x0 = left edge of column, x1 = right edge, both 0..1
-  ]
-}
-
-Rules:
-- columns.length MUST equal column_count.
-- Columns are in left-to-right order.
-- Be generous with column widths — slight overlap with the neighbor is fine; tight columns that clip content are worse.
-- If you only see one continuous flow of sets top-to-bottom, return column_count=1 with columns=[{x0:0, x1:1}].
-- Title blocks / borders on the right edge of an architectural sheet are NOT a column — exclude them.`;
+const HW_COLUMN_DETECT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 // Canonical key used to dedupe hardware-set IDs across extraction passes AND
 // to match door-schedule references against extracted sets. The schedule often
@@ -2193,918 +1341,10 @@ function fmtSetId(id) {
   return 'HW-' + s;
 }
 
-async function extractFromPdfPipeline({ apiKey, scope, file, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-
-  const callVision = async (system, userText, imageDataUrls, maxTokens = 16000) => {
-    const content = [{ type: 'text', text: userText }];
-    for (const url of imageDataUrls) content.push({ type: 'image_url', image_url: { url, detail: 'high' } });
-    const body = {
-      model: REQUIRED_MODEL,
-      messages: [
-        { role: 'system', content: system },
-        { role: 'user', content },
-      ],
-      response_format: { type: 'json_object' },
-      max_completion_tokens: maxTokens,
-    };
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-    const text = data.choices?.[0]?.message?.content || '{}';
-    const finish = data.choices?.[0]?.finish_reason || null;
-    try {
-      const parsed = JSON.parse(text);
-      Object.defineProperty(parsed, '__finish_reason', { value: finish, enumerable: false });
-      return parsed;
-    } catch { throw new Error('Model returned invalid JSON'); }
-  };
-
-  // ----- PASS 1: Render -----
-  onProgress?.({ kind: 'info', text: `Rendering PDF at ${RENDER_TARGET_DPI} DPI (cap ${MAX_RENDER_LONG_EDGE}px long edge)…` });
-  // Tracks extraction quality flags — used to mark the workbook as INCOMPLETE
-  // when any critical vision call failed silently (caught exception path).
-  const extractionFailures = []; // [{ stage, page, region?, message }]
-  const recordFailure = (stage, ctx, message) => {
-    extractionFailures.push({ stage, ...ctx, message });
-    onProgress?.({ kind: 'warn', text: `[INCOMPLETE] ${stage}: ${message}` });
-  };
-  const pages = await renderPdfPages(file, ({ page, pages, width, height, dpi }) => {
-    onProgress?.({ kind: 'ok', text: `Page ${page}/${pages} rendered ${width}×${height} @ ${dpi}dpi` });
-  });
-
-  // ----- PASS 2: Classify each page (PARALLEL) -----
-  onProgress?.({ kind: 'info', text: `Classifying ${pages.length} page(s) in parallel…` });
-  const classifications = await Promise.all(pages.map(async (p) => {
-    let res;
-    try {
-      res = await callVision(PAGE_CLASSIFIER_SYSTEM, `This is page ${p.pageNum} of ${pages.length}, rendered at ${p.dpi} DPI.`, [p.dataUrl]);
-    } catch (e) {
-      onProgress?.({ kind: 'warn', text: `Classification failed on page ${p.pageNum}: ${e.message}` });
-      recordFailure('page_classification', { page: p.pageNum }, e.message);
-      res = { regions: [] };
-    }
-    const regs = Array.isArray(res?.regions) ? res.regions : [];
-    regs.forEach((r, idx) => { r.crop_id = `P${p.pageNum}-R${idx + 1}-${r.role || 'other'}`; });
-    onProgress?.({ kind: 'ok', text: `Page ${p.pageNum}: ${regs.map(r => r.role).join(', ') || '(no Div 8 content)'}` });
-    return { pageNum: p.pageNum, regions: regs, sheet_notes: res?.sheet_notes || '' };
-  }));
-
-  // ----- PASS 2b: Title-block extraction (PARALLEL across all pages — title blocks are usually in the bottom-right of every sheet) -----
-  onProgress?.({ kind: 'info', text: `Extracting project metadata from title block(s)…` });
-  const titleBlockResults = await Promise.all(pages.map(async (p) => {
-    try {
-      // Title blocks live in bottom-right ~30% of arch sheets. Crop and send.
-      const crop = await cropRegion(p.dataUrl, [0.65, 0.65, 0.35, 0.35]);
-      const tb = await callVision(TITLE_BLOCK_EXTRACT_SYSTEM, `Title block region from page ${p.pageNum}. Read every visible field.`, [crop.dataUrl]);
-      return { pageNum: p.pageNum, ...tb };
-    } catch (e) {
-      return { pageNum: p.pageNum, error: e.message };
-    }
-  }));
-  // Merge metadata — first non-null per field wins (later pages override only if earlier had null)
-  const projectMeta = {};
-  titleBlockResults.forEach(tb => {
-    ['project_name', 'project_number', 'architect', 'architect_firm', 'owner', 'address', 'drawing_title', 'drawing_number', 'sheet_number', 'date', 'revision'].forEach(k => {
-      if (!projectMeta[k] && tb && tb[k]) projectMeta[k] = tb[k];
-    });
-  });
-  // If architect_firm filled but architect didn't, use firm as architect
-  if (!projectMeta.architect && projectMeta.architect_firm) projectMeta.architect = projectMeta.architect_firm;
-  onProgress?.({ kind: 'ok', text: `Project metadata: ${projectMeta.project_name || '(no name)'} · ${projectMeta.architect || '(no architect)'} · ${projectMeta.project_number || '(no number)'}` });
-
-  // ----- PASS 3: Door schedule rows per page -----
-  const doorRows = []; // { ...row, source_page, source_crop_id }
-  const doorRegionsTrace = []; // for QA panel
-  for (const c of classifications) {
-    const doorRegions = c.regions.filter(r => r.role === 'door_schedule');
-    if (!doorRegions.length) continue;
-    const page = pages.find(p => p.pageNum === c.pageNum);
-    for (const reg of doorRegions) {
-      let crop;
-      try { crop = await cropRegion(page.dataUrl, reg.bbox); }
-      catch (e) { onProgress?.({ kind: 'warn', text: `Door region crop failed on page ${c.pageNum}: ${e.message}` }); continue; }
-      const stripCount = crop.height >= 1400 ? Math.min(4, Math.max(2, Math.ceil(crop.height / 1200))) : 1;
-      const overlap = 0.08;
-      const stripCrops = [];
-      onProgress?.({ kind: 'info', text: `Extracting door rows from ${reg.crop_id} (${crop.width}×${crop.height}px, ${stripCount} strip${stripCount === 1 ? '' : 's'})…` });
-      for (let s = 0; s < stripCount; s++) {
-        const y0 = stripCount === 1 ? 0 : Math.max(0, s / stripCount - overlap);
-        const y1 = stripCount === 1 ? 1 : Math.min(1, (s + 1) / stripCount + overlap);
-        let strip;
-        try { strip = await cropRegionStrip(page.dataUrl, reg.bbox, y0, y1); }
-        catch (e) { continue; }
-        let res;
-        try {
-          res = await callVision(
-            DOOR_ROW_EXTRACT_SYSTEM,
-            `This is ${stripCount === 1 ? 'a cropped door schedule' : `STRIP ${s + 1}/${stripCount} of a door schedule`} from page ${c.pageNum}. Transcribe every row visible in THIS image.`,
-            [strip.dataUrl],
-          );
-        } catch (e) {
-          onProgress?.({ kind: 'warn', text: `Door row extract failed: ${e.message}` });
-          recordFailure('door_row_extract', { page: c.pageNum, region: reg.crop_id }, e.message);
-          continue;
-        }
-        const stripCropPrev = await makePreview(strip.dataUrl);
-        stripCrops.push({ strip: s + 1, of: stripCount, preview: stripCropPrev, rowsExtracted: res?.rows?.length || 0 });
-        (res?.rows || []).forEach(row => {
-          if (!row.mark) return;
-          doorRows.push({ ...row, source_page: c.pageNum, source_crop_id: reg.crop_id, source_strip: s + 1 });
-        });
-      }
-      doorRegionsTrace.push({ crop_id: reg.crop_id, pageNum: c.pageNum, label: reg.label, bbox: reg.bbox, strips: stripCrops, totalRows: stripCrops.reduce((n, x) => n + x.rowsExtracted, 0) });
-      onProgress?.({ kind: 'ok', text: `${reg.crop_id}: ${stripCrops.reduce((n, x) => n + x.rowsExtracted, 0)} row(s)` });
-    }
-  }
-  // Dedupe by mark, keep highest confidence
-  const doorByMark = new Map();
-  doorRows.forEach(r => {
-    if (!r.mark) return;
-    const prev = doorByMark.get(r.mark);
-    if (!prev || (r.confidence ?? 0) > (prev.confidence ?? 0)) doorByMark.set(r.mark, r);
-  });
-  const doors = [...doorByMark.values()];
-  onProgress?.({ kind: 'ok', text: `${doors.length} unique door mark(s) after dedupe` });
-
-  // ----- PASS 4: Hardware set blocks per page -----
-  const hwSets = new Map(); // set_id -> { id, name, items[], source_page, source_crop_id }
-  const hwBlocksTrace = [];
-  for (const c of classifications) {
-    const hwRegions = c.regions.filter(r => r.role === 'hardware_sets');
-    if (!hwRegions.length) continue;
-    const page = pages.find(p => p.pageNum === c.pageNum);
-    for (const reg of hwRegions) {
-      let crop;
-      try { crop = await cropRegion(page.dataUrl, reg.bbox); }
-      catch (e) {
-        onProgress?.({ kind: 'warn', text: `HW region crop failed: ${e.message}` });
-        recordFailure('hw_region_crop', { page: c.pageNum, region: reg.crop_id }, e.message);
-        continue;
-      }
-
-      // ---------- PRIMARY: column-detect → per-column extraction ----------
-      // Dense hardware-set sheets often have 4-6 columns of ~30 sets total. Sending the
-      // whole region in one call (or a tight per-block crop) loses context. Instead:
-      //   1) cheap column-detect call returns horizontal column boundaries
-      //   2) for each column, run the all-in-one extractor on a tall narrow strip
-      //   3) merge results by set_id
-      // This is the same shape the chat UI works in: one focused chunk per call, full
-      // vertical context preserved, no block fragmentation.
-      onProgress?.({ kind: 'info', text: `Detecting columns within ${reg.crop_id} (${crop.width}×${crop.height}px)…` });
-      let colDetectRes;
-      try {
-        colDetectRes = await callVision(
-          HW_COLUMN_DETECT_SYSTEM,
-          `Hardware-sets region from page ${c.pageNum}. Count and locate the vertical columns.`,
-          [crop.dataUrl],
-          2000,
-        );
-      } catch (e) {
-        onProgress?.({ kind: 'warn', text: `Column detect failed for ${reg.crop_id}: ${e.message}. Falling back to single-column extraction.` });
-        recordFailure('hw_column_detect', { page: c.pageNum, region: reg.crop_id }, e.message);
-        colDetectRes = { column_count: 1, columns: [{ x0: 0, x1: 1 }] };
-      }
-      let columns = Array.isArray(colDetectRes?.columns) && colDetectRes.columns.length
-        ? colDetectRes.columns.map(co => ({
-            x0: Math.max(0, Number(co.x0) || 0),
-            x1: Math.min(1, Number(co.x1) || 1),
-          })).filter(co => co.x1 > co.x0 + 0.02).sort((a, b) => a.x0 - b.x0)
-        : [{ x0: 0, x1: 1 }];
-      // Pad columns slightly so heading IDs at the column edges aren't clipped
-      const padX = 0.015;
-      columns = columns.map(co => ({ x0: Math.max(0, co.x0 - padX), x1: Math.min(1, co.x1 + padX) }));
-      onProgress?.({ kind: 'ok', text: `${reg.crop_id}: ${columns.length} column(s) detected` });
-
-      // Run extraction on each column in parallel
-      const columnResults = await Promise.all(columns.map(async (co, ci) => {
-        const colCropId = `${reg.crop_id}-COL${ci + 1}`;
-        const [rx, ry, rw, rh] = reg.bbox;
-        const colBbox = [rx + co.x0 * rw, ry, (co.x1 - co.x0) * rw, rh];
-        let colCrop;
-        try { colCrop = await cropRegion(page.dataUrl, colBbox); }
-        catch (e) {
-          onProgress?.({ kind: 'warn', text: `Column crop failed for ${colCropId}: ${e.message}` });
-          recordFailure('hw_column_crop', { page: c.pageNum, region: colCropId }, e.message);
-          return null;
-        }
-        let colRes;
-        try {
-          colRes = await callVision(
-            HW_FULL_REGION_EXTRACT_SYSTEM,
-            `Column ${ci + 1}/${columns.length} of a hardware-sets region from page ${c.pageNum}. Read this single column top-to-bottom and transcribe every hardware set heading AND every line item beneath each. Crop dimensions: ${colCrop.width}×${colCrop.height} px at 300 DPI.`,
-            [colCrop.dataUrl],
-            16000,
-          );
-        } catch (e) {
-          onProgress?.({ kind: 'warn', text: `Column ${ci + 1} extract failed: ${e.message}` });
-          recordFailure('hw_column_extract', { page: c.pageNum, region: colCropId }, e.message);
-          return null;
-        }
-        const colSets = Array.isArray(colRes?.sets) ? colRes.sets : [];
-        const colTruncated = colRes?.__finish_reason === 'length';
-        const colItems = colSets.reduce((n, s) => n + (Array.isArray(s.items) ? s.items.length : 0), 0);
-        const colIdsVisible = Array.isArray(colRes?.set_ids_visible) ? colRes.set_ids_visible : [];
-        onProgress?.({ kind: 'ok', text: `${colCropId}: ${colSets.length} set(s), ${colItems} item(s)${colTruncated ? ' [TRUNCATED]' : ''}${colIdsVisible.length > colSets.length ? ` (${colIdsVisible.length - colSets.length} ID(s) enumerated but not emitted)` : ''}` });
-        return { colCropId, sets: colSets, idsVisible: colIdsVisible, truncated: colTruncated, crop: colCrop };
-      }));
-
-      // Aggregate everything into a single fullSets-like shape so the merge logic below
-      // can stay shared with the block-detect fallback.
-      const fullSets = [];
-      const fullIdsVisible = [];
-      let fullTruncated = false;
-      columnResults.forEach((cr) => {
-        if (!cr) return;
-        fullSets.push(...cr.sets);
-        fullIdsVisible.push(...cr.idsVisible);
-        if (cr.truncated) fullTruncated = true;
-      });
-      const fullItemsTotal = fullSets.reduce((n, s) => n + (Array.isArray(s.items) ? s.items.length : 0), 0);
-      const fullLayout = columns.length === 1 ? 'single-column'
-        : columns.length === 2 ? 'two-column'
-        : columns.length === 3 ? 'three-column'
-        : columns.length === 4 ? 'four-column'
-        : columns.length === 5 ? 'five-column'
-        : 'many-column';
-
-      if (fullSets.length) {
-        onProgress?.({ kind: 'ok', text: `${reg.crop_id} TOTAL: ${fullSets.length} set(s), ${fullItemsTotal} item(s) across ${columns.length} column(s)${fullTruncated ? ' [SOME COLUMNS TRUNCATED]' : ''}` });
-      }
-
-      const ingestSet = (setObj, sourceCropId) => {
-        const id = String(setObj.set_id || '').trim();
-        if (!id) return;
-        // Canonical key for dedup: strip common prefixes & whitespace so "Hardware Group No. C265",
-        // "HARDWARE GROUP C265", "Group C265", and "C265" all merge into the same entry.
-        const dedupKey = canonicalSetKey(id) || id;
-        const incomingItems = (Array.isArray(setObj.items) ? setObj.items : [])
-          .map(it => ({ ...it, source_page: c.pageNum, source_crop_id: sourceCropId }));
-        const existing = hwSets.get(dedupKey);
-        if (!existing) {
-          hwSets.set(dedupKey, {
-            id, // keep the original display string from whichever column found it first
-            name: setObj.set_name || null,
-            header_verbatim: setObj.header_text_verbatim || '',
-            opening_note_doors: Array.isArray(setObj.opening_note_doors) ? setObj.opening_note_doors : [],
-            opening_note_text: setObj.opening_note_text || null,
-            visual_flags: Array.isArray(setObj.visual_flags) ? setObj.visual_flags : [],
-            is_crossed_out: !!setObj.is_crossed_out,
-            is_voided: !!setObj.is_voided_or_removed,
-            items: incomingItems,
-            source_page: c.pageNum,
-            source_crop_id: sourceCropId,
-          });
-        } else {
-          // Prefer the longer header text (more informative)
-          if ((setObj.header_text_verbatim || '').length > (existing.header_verbatim || '').length) {
-            existing.header_verbatim = setObj.header_text_verbatim;
-          }
-          // Merge items by description+catalog+qty
-          const seen = new Set(existing.items.map(it => (it.description || '').toLowerCase().replace(/\s+/g,' ').trim() + '|' + (it.catalog_number || '').toLowerCase().trim() + '|' + (it.qty ?? '')));
-          incomingItems.forEach(it => {
-            const k = (it.description || '').toLowerCase().replace(/\s+/g,' ').trim() + '|' + (it.catalog_number || '').toLowerCase().trim() + '|' + (it.qty ?? '');
-            if (!seen.has(k)) { existing.items.push(it); seen.add(k); }
-          });
-          if (!existing.opening_note_doors?.length && Array.isArray(setObj.opening_note_doors) && setObj.opening_note_doors.length) existing.opening_note_doors = setObj.opening_note_doors;
-          existing.visual_flags = [...new Set([...(existing.visual_flags || []), ...(Array.isArray(setObj.visual_flags) ? setObj.visual_flags : [])])];
-        }
-      };
-      fullSets.forEach(s => {
-        const sourceCropId = `${reg.crop_id}-${String(s.set_id || '').replace(/\s+/g,'_')}`;
-        ingestSet(s, sourceCropId);
-        hwBlocksTrace.push({
-          crop_id: sourceCropId,
-          pageNum: c.pageNum,
-          set_id: s.set_id,
-          header: s.header_text_verbatim || '',
-          preview: null,
-          items: (s.items || []).length,
-          opening_note_doors: s.opening_note_doors || [],
-          visual_flags: s.visual_flags || [],
-          pass: 'all-in-one',
-        });
-      });
-
-      // Run the block-detect fallback ONLY when column-based extraction got NOTHING for this
-      // region. Truncation or partial column under-reads are acceptable (the per-column trust
-      // is already higher than per-block fragmenting); we don't want stub entries that bypass
-      // dedup and double-count sets.
-      const needFallback = fullSets.length === 0;
-      if (!needFallback) continue;
-
-      onProgress?.({ kind: 'warn', text: `${reg.crop_id} column extraction returned 0 sets — falling back to block-detect pipeline.` });
-
-      onProgress?.({ kind: 'info', text: `Detecting hardware blocks within ${reg.crop_id} (${crop.width}×${crop.height}px)…` });
-      let blockRes;
-      try {
-        blockRes = await callVision(HW_BLOCK_DETECT_SYSTEM, `Detect each hardware set block within this cropped region from page ${c.pageNum}.`, [crop.dataUrl]);
-      } catch (e) {
-        onProgress?.({ kind: 'warn', text: `Block detect failed: ${e.message}` });
-        recordFailure('hw_block_detect', { page: c.pageNum, region: reg.crop_id }, e.message);
-        blockRes = { blocks: [], set_ids_visible: [], total_blocks_visible: 0, layout: 'single-column' };
-      }
-      let blocks = Array.isArray(blockRes?.blocks) ? blockRes.blocks : [];
-      const idsVisible = Array.isArray(blockRes?.set_ids_visible) ? blockRes.set_ids_visible.filter(Boolean) : [];
-      const layout = String(blockRes?.layout || '').toLowerCase();
-      onProgress?.({ kind: 'ok', text: `${reg.crop_id}: ${blocks.length} block(s) drawn · ${idsVisible.length} ID(s) enumerated · layout=${layout || '?'}` });
-
-      // Fallback sweep — only fires when the first pass under-counts.
-      // Triggers: (a) detector returned 0 blocks; (b) detector enumerated more IDs than it drew blocks for;
-      // (c) detector claims multi-column layout (which the single-shot pass routinely under-counts).
-      const knownIds = new Set(blocks.map(b => String(b.set_id || '').trim()).filter(Boolean));
-      const missingFromEnum = idsVisible.filter(id => !knownIds.has(String(id).trim()));
-      const layoutColumns = layout.includes('three') ? 3 : layout.includes('two') ? 2 : 1;
-      const shouldSweep = blocks.length === 0
-        || missingFromEnum.length > 0
-        || layoutColumns > 1
-        || (idsVisible.length && blocks.length < idsVisible.length);
-
-      if (shouldSweep) {
-        const sweepCols = Math.max(2, layoutColumns || 2);
-        onProgress?.({ kind: 'warn', text: `${reg.crop_id}: re-sweeping in ${sweepCols} column strip(s) (initial pass found ${blocks.length}/${idsVisible.length || '?'} sets${missingFromEnum.length ? `, missing: ${missingFromEnum.slice(0,6).join(', ')}${missingFromEnum.length>6?'…':''}` : ''})…` });
-        const colOverlap = 0.04;
-        const colResults = await Promise.all(
-          Array.from({ length: sweepCols }, async (_, col) => {
-            const x0 = Math.max(0, col / sweepCols - colOverlap);
-            const x1 = Math.min(1, (col + 1) / sweepCols + colOverlap);
-            const [rx, ry, rw, rh] = reg.bbox;
-            const colBbox = [rx + x0 * rw, ry, (x1 - x0) * rw, rh];
-            let colCrop;
-            try { colCrop = await cropRegion(page.dataUrl, colBbox); }
-            catch (e) { return { col, x0, x1, blocks: [] }; }
-            let colRes;
-            try {
-              colRes = await callVision(
-                HW_BLOCK_DETECT_SYSTEM,
-                `Column ${col + 1}/${sweepCols} of a hardware-sets region from page ${c.pageNum}. Treat THIS image as a single column — enumerate every set ID visible top-to-bottom.`,
-                [colCrop.dataUrl],
-              );
-            } catch (e) { return { col, x0, x1, blocks: [] }; }
-            const cb = Array.isArray(colRes?.blocks) ? colRes.blocks : [];
-            // Reproject each column-local bbox back to region-relative coords
-            cb.forEach(b => {
-              const [bx, by, bw, bh] = b.bbox || [0, 0, 1, 1];
-              b.bbox = [x0 + bx * (x1 - x0), by, bw * (x1 - x0), bh];
-            });
-            return { col, x0, x1, blocks: cb, idsVisible: Array.isArray(colRes?.set_ids_visible) ? colRes.set_ids_visible : [] };
-          }),
-        );
-        // Merge: dedupe by set_id, prefer higher confidence; keep originals where no column hit
-        const merged = new Map();
-        const pushBlock = (b) => {
-          const id = String(b.set_id || '').trim();
-          if (!id) return;
-          const prev = merged.get(id);
-          if (!prev || (b.confidence ?? 0) > (prev.confidence ?? 0)) merged.set(id, b);
-        };
-        blocks.forEach(pushBlock);
-        colResults.forEach(cr => cr.blocks.forEach(pushBlock));
-        const mergedBlocks = [...merged.values()];
-        const colIdsEnum = colResults.flatMap(cr => cr.idsVisible || []);
-        const allIdsEnum = [...new Set([...idsVisible, ...colIdsEnum])];
-        // If after merging we still see fewer blocks than IDs enumerated by ANY pass, emit stub blocks
-        // so we at least record the set IDs we know are there (items pass will try to read them).
-        allIdsEnum.forEach(id => {
-          const k = String(id).trim();
-          if (!k || merged.has(k)) return;
-          merged.set(k, { set_id: k, header_text: k, bbox: [0, 0, 1, 1], confidence: 0.3, _stub: true });
-        });
-        const finalBlocks = [...merged.values()];
-        onProgress?.({ kind: 'ok', text: `${reg.crop_id}: re-sweep merged → ${finalBlocks.length} block(s) (${mergedBlocks.length} drawn + ${finalBlocks.length - mergedBlocks.length} stub).` });
-        blocks = finalBlocks;
-      }
-
-      // Last-resort fallback: if STILL nothing, treat the whole region as one block
-      const blocksToProcess = blocks.length ? blocks : [{ set_id: '(unknown)', header_text: '', bbox: [0, 0, 1, 1], confidence: 0.5 }];
-
-      // PARALLEL extract items for each block
-      const blockResults = await Promise.all(blocksToProcess.map(async (b, bi) => {
-        const blockCropId = `${reg.crop_id}-B${bi + 1}-${b.set_id}`;
-        // Pad bbox by ~3% on each side so items near edges aren't clipped, then clamp to region
-        const padBlock = ([x, y, w, h]) => {
-          const px = 0.03, py = 0.04;
-          const nx = Math.max(0, x - px);
-          const ny = Math.max(0, y - py);
-          const nw = Math.min(1 - nx, w + px * 2);
-          const nh = Math.min(1 - ny, h + py * 2);
-          return [nx, ny, nw, nh];
-        };
-        const paddedBlockBbox = padBlock(b.bbox || [0, 0, 1, 1]);
-        const [rx, ry, rw, rh] = reg.bbox;
-        const [bx, by, bw, bh] = paddedBlockBbox;
-        const pageBbox = [rx + bx * rw, ry + by * rh, bw * rw, bh * rh];
-        let blockCrop;
-        try { blockCrop = await cropRegion(page.dataUrl, pageBbox); }
-        catch (e) { return null; }
-
-        // Helper: one items-extraction call against a (sub)crop
-        const callItems = async (imgDataUrl, label) => {
-          try {
-            return await callVision(
-              HW_ITEMS_EXTRACT_SYSTEM,
-              `This is ${label} of hardware block "${b.set_id}" from page ${c.pageNum}. Transcribe every line item visible AND capture the opening_note_doors and any visual_flags (crossed_out, typo, voided).`,
-              [imgDataUrl],
-            );
-          } catch (e) {
-            onProgress?.({ kind: 'warn', text: `Item extract failed for ${b.set_id} (${label}): ${e.message}` });
-            recordFailure('hw_item_extract', { page: c.pageNum, set: b.set_id, label }, e.message);
-            return null;
-          }
-        };
-
-        // First attempt: whole block in one shot — unless it's clearly tall enough to risk truncation
-        const tallThreshold = 1400;
-        const isTall = blockCrop.height >= tallThreshold;
-        let itemRes = isTall ? null : await callItems(blockCrop.dataUrl, 'this block');
-
-        // Detect undercount / truncation / silent-zero; trigger strip fallback if any of:
-        //   - tall block from the start
-        //   - response truncated (finish_reason = length)
-        //   - model self-reports more lines than items emitted
-        //   - first pass returned ZERO items but block isn't marked void/crossed-out
-        //     (silent-zero is the dominant failure mode for unusual block layouts)
-        const linesCounted = itemRes?.lines_counted_in_block ?? null;
-        const truncated = itemRes?.__finish_reason === 'length';
-        const itemsEmitted = Array.isArray(itemRes?.items) ? itemRes.items.length : 0;
-        const undercount = typeof linesCounted === 'number' && linesCounted > itemsEmitted + 1;
-        const isMarkedVoid = !!b.is_crossed_out || !!b.is_voided_or_removed;
-        const silentZero = itemsEmitted === 0 && !isMarkedVoid;
-
-        let aggregatedItems = Array.isArray(itemRes?.items) ? itemRes.items : [];
-        let aggregatedHeader = itemRes?.header_text_verbatim || '';
-        let aggregatedFlags = Array.isArray(itemRes?.visual_flags) ? itemRes.visual_flags : [];
-        let aggregatedOpenDoors = Array.isArray(itemRes?.opening_note_doors) ? itemRes.opening_note_doors : [];
-        let aggregatedConf = itemRes?.confidence ?? b.confidence ?? 0.6;
-
-        if (isTall || truncated || undercount || silentZero) {
-          const reason = isTall ? `tall (${blockCrop.height}px)`
-            : truncated ? 'truncated'
-            : silentZero ? 'first-pass returned 0 items'
-            : `undercount (${itemsEmitted}/${linesCounted})`;
-          // For silent-zero on a normal-size block, try 2 strips. For tall blocks, more.
-          const stripCount = silentZero && !isTall
-            ? 2
-            : Math.min(4, Math.max(2, Math.ceil(blockCrop.height / 900)));
-          onProgress?.({ kind: 'warn', text: `${blockCropId}: re-extracting in ${stripCount} strip(s) (${reason})…` });
-          const stripOverlap = 0.10;
-          const stripResults = await Promise.all(
-            Array.from({ length: stripCount }, async (_, s) => {
-              const y0 = Math.max(0, s / stripCount - stripOverlap);
-              const y1 = Math.min(1, (s + 1) / stripCount + stripOverlap);
-              let strip;
-              try { strip = await cropRegionStrip(page.dataUrl, pageBbox, y0, y1); }
-              catch (e) { return null; }
-              return callItems(strip.dataUrl, `STRIP ${s + 1}/${stripCount}`);
-            }),
-          );
-          // Merge: dedupe items by (description + catalog_number + qty + raw_text_seen prefix)
-          const seen = new Set();
-          const merged = [];
-          const pushUnique = (it) => {
-            const key = (it.description || '').toLowerCase().replace(/\s+/g, ' ').trim() + '|'
-                      + (it.catalog_number || '').toLowerCase().trim() + '|'
-                      + (it.qty ?? '') + '|'
-                      + String(it.raw_text_seen || '').toLowerCase().replace(/\s+/g, ' ').trim().slice(0, 60);
-            if (seen.has(key)) return;
-            seen.add(key);
-            merged.push(it);
-          };
-          // Keep first-attempt items first (if any), then strip items
-          aggregatedItems.forEach(pushUnique);
-          stripResults.forEach(sr => {
-            if (!sr) return;
-            (Array.isArray(sr.items) ? sr.items : []).forEach(pushUnique);
-            if (!aggregatedHeader && sr.header_text_verbatim) aggregatedHeader = sr.header_text_verbatim;
-            if (Array.isArray(sr.visual_flags)) aggregatedFlags = [...new Set([...aggregatedFlags, ...sr.visual_flags])];
-            if (!aggregatedOpenDoors.length && Array.isArray(sr.opening_note_doors)) aggregatedOpenDoors = sr.opening_note_doors;
-          });
-          aggregatedItems = merged;
-          onProgress?.({ kind: 'ok', text: `${blockCropId}: strip pass → ${aggregatedItems.length} item(s)` });
-        }
-
-        if (!aggregatedItems.length && !itemRes) return null;
-
-        aggregatedItems.forEach(it => { it.source_page = c.pageNum; it.source_crop_id = blockCropId; });
-        const blockPreview = await makePreview(blockCrop.dataUrl);
-        return {
-          blockCropId,
-          setId: itemRes?.set_id || b.set_id,
-          setName: itemRes?.set_name || b.header_text || null,
-          headerVerbatim: aggregatedHeader || b.header_text || '',
-          openingNoteDoors: aggregatedOpenDoors,
-          openingNoteText: b.opening_note_text || null,
-          visualFlags: aggregatedFlags,
-          isCrossedOut: !!b.is_crossed_out,
-          isVoided: !!b.is_voided_or_removed,
-          headerText: b.header_text || '',
-          preview: blockPreview,
-          items: aggregatedItems,
-          confidence: aggregatedConf,
-        };
-      }));
-
-      for (const r of blockResults) {
-        if (!r) continue;
-        hwBlocksTrace.push({ crop_id: r.blockCropId, pageNum: c.pageNum, set_id: r.setId, header: r.headerText || r.headerVerbatim, preview: r.preview, items: r.items.length, opening_note_doors: r.openingNoteDoors, visual_flags: r.visualFlags });
-        // Route through the same canonical-key dedup as the column pass.
-        ingestSet({
-          set_id: r.setId,
-          set_name: r.setName,
-          header_text_verbatim: r.headerVerbatim,
-          opening_note_doors: r.openingNoteDoors,
-          opening_note_text: r.openingNoteText,
-          visual_flags: r.visualFlags,
-          is_crossed_out: r.isCrossedOut,
-          is_voided_or_removed: r.isVoided,
-          items: r.items,
-        }, r.blockCropId);
-        onProgress?.({ kind: 'ok', text: `${r.blockCropId}: ${r.items.length} item(s)${r.openingNoteDoors.length ? ` · opening note: ${r.openingNoteDoors.join(', ')}` : ''}${r.visualFlags.length ? ` · flags: ${r.visualFlags.join(', ')}` : ''}` });
-      }
-    }
-  }
-  const hwSetsArr = [...hwSets.values()];
-  const totalItems = hwSetsArr.reduce((n, s) => n + s.items.length, 0);
-  onProgress?.({ kind: 'ok', text: `${hwSetsArr.length} hardware set(s) extracted with ${totalItems} total item(s)` });
-  const emptySets = hwSetsArr.filter(s => (!s.items || s.items.length === 0) && !s.is_crossed_out && !s.is_voided);
-  if (emptySets.length) {
-    onProgress?.({ kind: 'warn', text: `${emptySets.length} set(s) returned 0 items (not voided): ${emptySets.map(s => s.id).join(', ')}. Check the QA panel for source crops; consider re-running on those pages alone.` });
-  }
-
-  // ----- Reconcile door references to extracted hardware sets via canonical key.
-  // Doors come in with raw hardware_set strings from the schedule (e.g. "C265", "10", "1.0").
-  // hwSets is keyed by canonicalSetKey which strips prefixes like "Hardware Group No."
-  // and uppercases. If the schedule's string and the spec page's header don't match
-  // verbatim, the door looks like it references a "missing" set — even though the
-  // set exists with items. Rewrite each door.hardware_set to point at the set.id
-  // chosen during dedup, so downstream lookups (hwSets.get, door_analysis.filter,
-  // extractedSetIds, mapping) all resolve correctly without further special-casing.
-  const canonicalToDisplayId = new Map();
-  hwSets.forEach((set, key) => { canonicalToDisplayId.set(key, set.id); });
-  doors.forEach(d => {
-    if (!d.hardware_set) return;
-    const key = canonicalSetKey(d.hardware_set);
-    if (!key) return;
-    const displayId = canonicalToDisplayId.get(key);
-    if (displayId && displayId !== d.hardware_set) {
-      d.raw_hardware_set = d.hardware_set; // keep original for source trace
-      d.hardware_set = displayId;
-    }
-  });
-  // Rebuild hwSets index by display id so hwSets.get(d.hardware_set) works.
-  const hwSetsByDisplayId = new Map();
-  hwSets.forEach(set => { if (set.id) hwSetsByDisplayId.set(set.id, set); });
-
-  // ----- PASS 5: Build Door↔Hardware Mapping -----
-  const mapping = []; // { door_mark, hardware_set, item_no, qty, description, catalog_number, manufacturer, finish, notes, status }
-  for (const d of doors) {
-    if (!d.hardware_set) {
-      mapping.push({ door_mark: d.mark, hardware_set: null, item_no: null, qty: null, description: '(no hardware set assigned to this door)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'NO_HW_SET', source_page: d.source_page });
-      continue;
-    }
-    const set = hwSetsByDisplayId.get(d.hardware_set) || hwSets.get(canonicalSetKey(d.hardware_set));
-    if (!set) {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: '(hardware set not found in spec)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED', source_page: d.source_page });
-      continue;
-    }
-    if (!set.items.length) {
-      mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: '(hardware set has no extracted items)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED', source_page: set.source_page });
-      continue;
-    }
-    set.items.forEach((it, i) => {
-      mapping.push({
-        door_mark: d.mark,
-        hardware_set: d.hardware_set,
-        item_no: it.item_no ?? (i + 1),
-        qty: it.qty,
-        description: it.description || '',
-        catalog_number: it.catalog_number || null,
-        manufacturer: it.manufacturer || null,
-        finish: it.finish || null,
-        notes: it.notes || null,
-        status: 'OK',
-        source_page: it.source_page,
-        source_crop_id: it.source_crop_id,
-      });
-    });
-  }
-
-  // ----- PASS 6: Estimator reasoning over the assembled data -----
-  // Pre-compute concrete findings (mismatches, voided sets, typos) so the reasoning model can
-  // produce SPECIFIC RFIs like the reference output rather than generic ones.
-  const sourcePageRef = pages.length ? `A${901 + (pages[0]?.pageNum || 1) - 1}` : 'A901';
-
-  const findings = [];
-  // 1. Set opening-note vs door-schedule mismatches
-  hwSetsArr.forEach(s => {
-    if (!s.opening_note_doors?.length) return;
-    const setDoorsFromSchedule = doors.filter(d => d.hardware_set === s.id).map(d => d.mark);
-    const inNoteOnly = s.opening_note_doors.filter(m => !setDoorsFromSchedule.includes(m));
-    const inScheduleOnly = setDoorsFromSchedule.filter(m => !s.opening_note_doors.includes(m));
-    if (inScheduleOnly.length || inNoteOnly.length) {
-      findings.push({
-        kind: 'schedule_set_mismatch',
-        set_id: s.id,
-        opening_note_doors: s.opening_note_doors,
-        schedule_mapped_doors: setDoorsFromSchedule,
-        in_note_only: inNoteOnly,
-        in_schedule_only: inScheduleOnly,
-        source: `${sourcePageRef} · ${s.source_crop_id || ''}`,
-      });
-    }
-  });
-  // 2. Hardware sets flagged as crossed-out / voided
-  hwSetsArr.forEach(s => {
-    if (s.is_crossed_out || s.is_voided || (s.visual_flags || []).some(f => /cross|void|strike|red_x/i.test(f))) {
-      findings.push({ kind: 'voided_set', set_id: s.id, header: s.header_verbatim || s.name, flags: s.visual_flags || [], source: `${sourcePageRef} · ${s.source_crop_id || ''}` });
-    }
-  });
-  // 3. Header typos detected by vision
-  hwSetsArr.forEach(s => {
-    if ((s.visual_flags || []).some(f => /typo/i.test(f))) {
-      findings.push({ kind: 'header_typo', set_id: s.id, header_verbatim: s.header_verbatim, source: `${sourcePageRef} · ${s.source_crop_id || ''}` });
-    }
-  });
-  // 4. Hardware sets referenced in opening notes but not assigned to any door in the schedule
-  hwSetsArr.forEach(s => {
-    const setDoorsFromSchedule = doors.filter(d => d.hardware_set === s.id).map(d => d.mark);
-    if (s.items.length > 0 && setDoorsFromSchedule.length === 0 && (!s.opening_note_doors || s.opening_note_doors.length === 0)) {
-      findings.push({ kind: 'unused_set', set_id: s.id, header: s.header_verbatim || s.name, source: `${sourcePageRef} · ${s.source_crop_id || ''}` });
-    }
-  });
-  // 5. Door schedule references HW set with no extracted items
-  doors.forEach(d => {
-    if (!d.hardware_set) return;
-    const s = hwSets.get(d.hardware_set);
-    if (!s || s.items.length === 0) {
-      findings.push({ kind: 'set_no_items', set_id: d.hardware_set, door_mark: d.mark, source: `${sourcePageRef} · ${d.source_crop_id || ''}` });
-    }
-  });
-  // 6. Door type vs set mismatch (e.g. double door mapped to single-door set name)
-  doors.forEach(d => {
-    if (!d.hardware_set) return;
-    const s = hwSets.get(d.hardware_set);
-    if (!s) return;
-    const isDouble = /double|pair|GL\/MFT|GL.MFT/i.test(`${d.door_type || ''} ${d.opening_type || ''} ${(d.remarks || []).join(' ')}`);
-    const setLooksSingle = /single|office|interior office/i.test(s.header_verbatim || s.name || '');
-    if (isDouble && setLooksSingle) {
-      findings.push({ kind: 'double_door_single_set', door_mark: d.mark, set_id: d.hardware_set, set_header: s.header_verbatim || s.name, source: `${sourcePageRef}` });
-    }
-  });
-
-  onProgress?.({ kind: 'info', text: `Pre-computed ${findings.length} concrete finding(s) for reasoning pass` });
-
-  // Build a compact JSON payload of raw doors + sets, then ask gpt-5.5 to produce the full senior-estimator JSON.
-  onProgress?.({ kind: 'info', text: `Running estimator reasoning on assembled data…` });
-  const reasoningPayload = {
-    scope_type: scope || 'Supply & Installation',
-    source_page_ref: sourcePageRef,
-    project_meta: projectMeta,
-    findings,
-    doors: doors.map(d => ({
-      mark: d.mark, room_or_location: d.room_or_location, door_type: d.door_type,
-      interior_or_exterior: d.interior_or_exterior, size: d.size,
-      door_material: d.door_material, door_finish: d.door_finish, glazing: d.glazing,
-      frame_type: d.frame_type, frame_material: d.frame_material, frame_finish: d.frame_finish,
-      fire_rating: d.fire_rating, hardware_set: d.hardware_set,
-      remarks: d.remarks || [], confidence: d.confidence ?? 0.7,
-    })),
-    hardware_sets: hwSetsArr.map(s => ({
-      id: s.id, name: s.name, header_verbatim: s.header_verbatim,
-      opening_note_doors: s.opening_note_doors || [],
-      visual_flags: s.visual_flags || [],
-      is_crossed_out: !!s.is_crossed_out, is_voided: !!s.is_voided,
-      items: s.items.map(it => ({ qty: it.qty, description: it.description, catalog_number: it.catalog_number, manufacturer: it.manufacturer, finish: it.finish })),
-    })),
-  };
-  let reasoning;
-  try {
-    const body = {
-      model: REQUIRED_MODEL,
-      messages: [
-        { role: 'system', content: ESTIMATOR_REASONING_SYSTEM },
-        { role: 'user', content: `The selected project scope is: ${scope || 'Supply & Installation'}
-
-The door schedule and hardware sets below were transcribed from the project PDF by an image-based extraction pipeline. The system has ALSO pre-computed concrete findings (mismatches, voided sets, typos, unused sets, single-vs-double-door mismatches) — use them as the primary source of truth for risks and RFIs.
-
-CRITICAL — YOU MUST PRODUCE SPECIFIC, GROUNDED RFIs. Generic warnings are unacceptable.
-
-For EACH item in the "findings" array, emit one RFI in rfi_log with:
-  - priority: high (for schedule_set_mismatch / set_no_items / voided_set / double_door_single_set), medium (for header_typo / unused_set)
-  - category: a short bucket like "Schedule / hardware set mismatch", "Voided hardware set", "Typo / exact wording", "Unused hardware sets", "Egress set usage mismatch", "Fire riser room", "Double door mapped to single set"
-  - question: a specific, grounded sentence referencing the exact set IDs and door marks involved. Use the form of the reference RFIs (e.g. "Set 1 opening note lists 103A, 201, 202A, but the door schedule maps multiple doors to Set 1. <-- ACTUAL DOORS -->"). Quote text verbatim from header_verbatim when relevant.
-  - affected_openings: the door marks from in_schedule_only / in_note_only / affected door for the finding
-  - recommendation: what to confirm / do (e.g. "Confirm intended Set 1 usage before final pricing.", "Do not carry Set 9 unless architect confirms it is active.")
-  - status: "Open"
-  - source: use the source field from the finding (e.g. "A901 · P3-R2-hardware_sets-B4-Set 4")
-  - reason: same as recommendation or a short justification
-
-Then, beyond findings, GENERATE ADDITIONAL RFIs across as many of the following categories as the data supports — emit at least one RFI per category that has any matching openings:
-
-  • Fire / smoke rating — UL listing across door + frame + hardware; smoke gasketing per egress path; temperature-rise cores at exit stair enclosures (IBC 716). Cite door marks with non-empty fire_rating.
-  • Egress / exit devices — exit device type (rim/mortise/CVR/SVR), trim function (passage/classroom/storeroom/nightlatch), dogging vs non-dogging, alarm features. Cite doors with panic/exit/CVR/SVR remarks.
-  • Access control / electrified hardware — power supply provision, low-voltage cabling, EAC head-end, fire-alarm release tie-in, commissioning responsibility. Trigger on CR/EL/DPS/RX/EH/maglock/electric strike/AO remarks.
-  • ADA / automatic operators — ANSI A156.10 vs A156.19, push-plate / wave-plate actuator location and mounting heights, vestibule interlock, 120 V provision.
-  • Exterior / weather — threshold detail, weatherstrip, sweep, drip cap; HM vs storefront/aluminum scope split; finish + colour.
-  • Pair / double-leaf openings — coordinators for rated pairs, astragal type, flush bolts at inactive leaf, active/inactive trim.
-  • Keying / cylinders — master-key structure, keyway, SFIC vs LFIC vs conventional, restricted keyway, construction core changeover, key counts.
-  • Acoustic / STC-rated — STC value, certified assembly, automatic door bottom, perimeter gasketing, third-party test report at submittal.
-  • High-security / sensitive rooms — server / electrical / vault / safe-room; restricted keyway, key-management, ballistic/forced-entry rating.
-  • Existing / remodel conditions — re-use vs new for door / frame / hardware, frame prep condition, field-measure requirement, keying continuity.
-  • Glazing / vision lites — tempered vs laminated vs wired vs fire-rated ceramic, thickness, film/tint, UL listing for rated glazing.
-  • Schedule completeness — missing sizes, missing finishes, ambiguous frame type, unreadable rows.
-  • Submittal / lead time — submittal due dates, hardware approval turn-around, ROJ dates for HM frames, wood doors, finish hardware, electrified components.
-  • Scope split — Div 08 vs Div 26 (power) vs Div 27/28 (low-voltage / head-end) vs Div 10 (toilet partitions) vs Div 12 (window treatments) where overlap exists.
-  • Submittal coordination — anchor templates, electrified hardware riser diagram, keying meeting attendance.
-
-Aim for 12-25 RFIs total for a typical project. Quality and specificity matter — every RFI must reference concrete door marks or set IDs from the data.
-
-ALSO populate:
-- project_risks: minimum 6 entries (more if data supports) covering the same categories as the RFIs — each with severity, category, issue (with concrete refs), affected_openings as door marks, and a specific recommendation
-- door_analysis: opening_type, hardware_status, install_complexity, risk_level, special_conditions (use the remarks field as a hint — CR/EL/DPS/panic/AO etc.), issues, recommendations, rfi_required (true for any door referenced in a finding), rfi_questions, confidence
-- hardware_set_review: referenced_by_doors, status, missing_or_unclear_items (cite specific items like "Set 9 listed as Passage Lock but crossed out"), special_coordination, estimator_note (use header_verbatim if it contains useful info)
-- estimator_notes: 4-8 specific observations
-- bid_recommendations: scope-relevant notes + exclusions + allowances + coordination items, grounded in the actual data
-- project_summary: all counts + overall_bid_risk verdict + a meaty 4-6 sentence estimator_summary
-
-DO NOT INVENT doors or hardware items not in the input. Stick to what is present. Cite door marks and set IDs verbatim.
-
-DATA:
-${JSON.stringify(reasoningPayload)}` },
-      ],
-      response_format: { type: 'json_object' },
-      max_completion_tokens: 16000,
-    };
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-    reasoning = JSON.parse(data.choices?.[0]?.message?.content || '{}');
-    const got = (reasoning.project_risks?.length || 0) + (reasoning.rfi_log?.length || 0);
-    onProgress?.({ kind: 'ok', text: `Reasoning pass returned ${reasoning.project_risks?.length || 0} risk(s), ${reasoning.rfi_log?.length || 0} RFI(s)` });
-    if (got === 0) onProgress?.({ kind: 'warn', text: 'Reasoning pass returned 0 risks and 0 RFIs — will synthesize from raw data' });
-  } catch (e) {
-    onProgress?.({ kind: 'warn', text: `Reasoning pass failed: ${e.message} — synthesizing from raw data` });
-    reasoning = null;
-  }
-
-  // ----- Assemble final analysis -----
-  // Prefer reasoning output but ensure doors/sets are present + carry source trace
-  const reasoningDoors = reasoning?.door_analysis || [];
-  const reasoningSets = reasoning?.hardware_set_review || [];
-  const reasoningDoorByMark = new Map(reasoningDoors.map(d => [d.mark, d]));
-  const reasoningSetById = new Map(reasoningSets.map(s => [s.hardware_set, s]));
-
-  const door_analysis = doors.map(d => {
-    const r = reasoningDoorByMark.get(d.mark) || {};
-    return {
-      mark: d.mark,
-      room_or_location: d.room_or_location || r.room_or_location || null,
-      door_type: d.door_type || r.door_type || null,
-      opening_type: r.opening_type || null,
-      interior_or_exterior: d.interior_or_exterior || r.interior_or_exterior || null,
-      size: d.size || r.size || { width: null, height: null, thickness: null },
-      door_material: d.door_material || r.door_material || null,
-      door_finish: d.door_finish || r.door_finish || null,
-      glazing: d.glazing || r.glazing || null,
-      frame_type: d.frame_type || r.frame_type || null,
-      frame_material: d.frame_material || r.frame_material || null,
-      frame_finish: d.frame_finish || r.frame_finish || null,
-      fire_rating: d.fire_rating || r.fire_rating || null,
-      hardware_set: d.hardware_set || r.hardware_set || null,
-      remarks: d.remarks || r.remarks || [],
-      hardware_status: r.hardware_status || 'review required',
-      install_complexity: r.install_complexity || 'medium',
-      risk_level: r.risk_level || (d.fire_rating ? 'medium' : 'low'),
-      special_conditions: r.special_conditions || [],
-      issues: r.issues || [],
-      recommendations: r.recommendations || [],
-      rfi_required: !!r.rfi_required,
-      rfi_questions: r.rfi_questions || [],
-      confidence: d.confidence ?? r.confidence ?? 0.7,
-      // Source trace
-      source_page: d.source_page,
-      source_crop_id: d.source_crop_id,
-      raw_text_seen: d.raw_text_seen || '',
-    };
-  });
-
-  const hardware_set_review = hwSetsArr.map(s => {
-    const r = reasoningSetById.get(s.id) || {};
-    const refs = door_analysis.filter(d => d.hardware_set === s.id).map(d => d.mark);
-    return {
-      hardware_set: s.id,
-      referenced_by_doors: refs,
-      status: r.status || (s.items.length ? 'complete' : 'incomplete'),
-      items: s.items.map((it, i) => ({
-        item_no: it.item_no ?? (i + 1),
-        qty: it.qty,
-        unit: it.unit || '',
-        desc: it.description || '',
-        part: it.catalog_number || '',
-        mfr: it.manufacturer || '',
-        finish: it.finish || '',
-        notes: it.notes || '',
-        source_page: it.source_page,
-        source_crop_id: it.source_crop_id,
-        raw_text_seen: it.raw_text_seen || '',
-        confidence: it.confidence ?? 0.7,
-      })),
-      missing_or_unclear_items: r.missing_or_unclear_items || (s.items.length ? [] : ['no hardware items extracted from crop']),
-      special_coordination: r.special_coordination || [],
-      estimator_note: r.estimator_note || s.name || null,
-      confidence: r.confidence ?? 0.7,
-      source_page: s.source_page,
-      source_crop_id: s.source_crop_id,
-    };
-  });
-
-  // Also flag hardware sets referenced by doors but not extracted as a set at all
-  const extractedSetIds = new Set(hardware_set_review.map(s => s.hardware_set));
-  door_analysis.forEach(d => {
-    if (d.hardware_set && !extractedSetIds.has(d.hardware_set)) {
-      hardware_set_review.push({
-        hardware_set: d.hardware_set,
-        referenced_by_doors: door_analysis.filter(x => x.hardware_set === d.hardware_set).map(x => x.mark),
-        status: 'missing',
-        items: [],
-        missing_or_unclear_items: ['hardware set referenced by doors but not found on any hardware-sets page'],
-        special_coordination: [],
-        estimator_note: null,
-        confidence: 0.4,
-        source_page: null,
-        source_crop_id: null,
-      });
-      extractedSetIds.add(d.hardware_set);
-    }
-  });
-
-  const ps = reasoning?.project_summary || {};
-  const project_summary = {
-    scope_type: scope,
-    project_name: ps.project_name || projectMeta.project_name || null,
-    project_number: ps.project_number || projectMeta.project_number || null,
-    architect: ps.architect || projectMeta.architect || projectMeta.architect_firm || null,
-    address: ps.address || projectMeta.address || null,
-    drawing: ps.drawing || projectMeta.drawing_number || projectMeta.drawing_title || projectMeta.sheet_number || null,
-    date: ps.date || projectMeta.date || null,
-    total_openings_found: door_analysis.length,
-    total_hardware_sets_referenced: new Set(door_analysis.map(d => d.hardware_set).filter(Boolean)).size,
-    hardware_sets_missing_or_unclear: hardware_set_review.filter(s => s.status !== 'complete').length,
-    high_risk_openings: door_analysis.filter(d => d.risk_level === 'high').length,
-    medium_risk_openings: door_analysis.filter(d => d.risk_level === 'medium').length,
-    low_risk_openings: door_analysis.filter(d => d.risk_level === 'low').length,
-    complex_installations: door_analysis.filter(d => d.install_complexity === 'high').length,
-    access_control_openings: door_analysis.filter(d => (d.special_conditions || []).some(c => /CR|EL|DPS|card|access/i.test(c))).length,
-    exterior_openings: door_analysis.filter(d => d.interior_or_exterior === 'Exterior').length,
-    fire_rated_openings: door_analysis.filter(d => d.fire_rating && d.fire_rating !== '-').length,
-    overall_bid_risk: ps.overall_bid_risk || 'Medium',
-    estimator_summary: ps.estimator_summary || `Image-based pipeline processed ${pages.length} page(s) at ${RENDER_TARGET_DPI} DPI. Extracted ${door_analysis.length} opening(s) and ${hardware_set_review.length} hardware set(s) with ${totalItems} total line items. Verify all data against the source PDF before bidding.`,
-  };
-
-  return {
-    analysis: {
-      project_summary,
-      door_analysis,
-      hardware_set_review,
-      door_hardware_mapping: mapping,
-      // ALWAYS merge LLM reasoning with heuristic synthesis so risks/RFIs are comprehensive
-      ...((() => {
-        const synth = synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope);
-        const merged = mergeRisksAndRFIs(reasoning, synth);
-        return {
-          project_risks: merged.risks,
-          rfi_log: merged.rfis,
-          estimator_notes: merged.notes,
-          bid_recommendations: merged.recs,
-        };
-      })()),
-    },
-    qa: {
-      pdf_type: 'IMAGE_PIPELINE',
-      pages_rendered: pages.length,
-      page_dimensions: pages.map(p => ({ pageNum: p.pageNum, width: p.width, height: p.height, dpi: p.dpi, orientation: p.orientation, previewUrl: p.previewUrl })),
-      classifications,
-      door_regions: doorRegionsTrace,
-      hw_blocks: hwBlocksTrace,
-      title_blocks: titleBlockResults,
-      project_meta: projectMeta,
-      findings,
-      reasoning_succeeded: !!reasoning,
-      extraction_complete: extractionFailures.length === 0,
-      extraction_failures: extractionFailures,
-    },
-  };
+async function extractFromPdfPipeline() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-/* Helper: small preview from a data URL */
 async function makePreview(dataUrl, maxEdge = PREVIEW_LONG_EDGE) {
   const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = dataUrl; });
   const canvas = document.createElement('canvas');
@@ -3118,7 +1358,7 @@ async function makePreview(dataUrl, maxEdge = PREVIEW_LONG_EDGE) {
 /* Synthesize risks + RFIs from raw door + hardware data — runs ALWAYS and merges
    with the LLM reasoning output. Each entry carries a `source: 'heuristic'` tag
    so it can be deduped against LLM-generated ones with the same category. */
-function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
+function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope, sheet_context) {
   const risks = [];
   const rfis = [];
   const notes = [];
@@ -3127,6 +1367,21 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
   const all = door_analysis || [];
   const sets = hardware_set_review || [];
   const setById = new Map(sets.map(s => [s.hardware_set, s]));
+
+  // Sheet-level context captured by the staged pipeline. These notes help avoid
+  // generic RFIs when the drawing already answers a scope question.
+  const ctx = sheet_context || {};
+  const generalNotes = Array.isArray(ctx.general_notes) ? ctx.general_notes : [];
+  const hwPreamble = Array.isArray(ctx.hardware_preamble) ? ctx.hardware_preamble : [];
+  const keyingNotes = Array.isArray(ctx.keying_notes) ? ctx.keying_notes : [];
+  const legend = (ctx.legend && typeof ctx.legend === 'object' && !Array.isArray(ctx.legend)) ? ctx.legend : {};
+  const allCtxText = [...generalNotes, ...hwPreamble, ...keyingNotes].join(' \n ');
+  const ctxSaysECPower =
+    /\b(EC|electrical contractor|division\s*26|div\.?\s*26)\b[^.]{0,80}\b(provide|supply|by)\b[^.]{0,40}\b(120\s*v|power|line\s*voltage)\b/i.test(allCtxText) ||
+    /\b120\s*v[^.]{0,40}\b(by|provided by)\b[^.]{0,30}\b(EC|electrical contractor)\b/i.test(allCtxText);
+  const ctxSaysLVByOthers = /\b(low[-\s]?voltage|cabling|access\s*control|EAC|head[-\s]?end)\b[^.]{0,60}\b(by|provided by|N\.?I\.?C\.?|not in contract)\b/i.test(allCtxText);
+  const ctxSaysOwnerKeying = /\b(owner|owner[-\s]?supplied|by owner|N\.?I\.?C\.?)\b[^.]{0,40}\b(cylinder|key|keying|core)/i.test(allCtxText);
+  const ctxSaysKeyingDefined = keyingNotes.length > 0 && /\b(master|grand\s*master|sub[-\s]?master|keyway|SFIC|LFIC|construction\s*core|restricted)\b/i.test(keyingNotes.join(' '));
   const marks = (arr, n = 8) => {
     const list = arr.slice(0, n).join(', ');
     return arr.length > n ? `${list}, …+${arr.length - n} more` : list;
@@ -3199,15 +1454,24 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
   }
 
   /* ===================== ACCESS CONTROL / ELECTRIFIED HARDWARE ===================== */
+  const projectAbbrevs = Object.keys(legend).filter(k => /reader|card|electric|maglock|magnetic|access|operator|REX|EPT|power\s*transfer|delayed\s*egress|panic|exit/i.test(legend[k] || ''));
+  const projectAbbrevRe = projectAbbrevs.length ? new RegExp(`\\b(${projectAbbrevs.map(a => a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'i') : null;
   const acRemarks = /\bCR\b|\bEL\b|\bDPS\b|\bRX\b|\bEH\b|\bAO\b|panic|card reader|access control|electrified|magnetic\s*lock|maglock|electric\s*strike|electric\s*latch|automatic\s*operator|push\s*paddle|power\s*supply|power\s*transfer|EPT|REX|request[-\s]to[-\s]exit|delayed\s*egress|stand[-\s]?alone\s*lock/i;
-  const ac = all.filter(d => acRemarks.test([(d.remarks||[]).join(' '), d.door_type, d.room_or_location].join(' ')));
+  const ac = all.filter(d => {
+    const txt = [(d.remarks||[]).join(' '), d.door_type, d.room_or_location].join(' ');
+    return acRemarks.test(txt) || (projectAbbrevRe && projectAbbrevRe.test(txt));
+  });
   if (ac.length) {
     pushRisk('high', 'Access control / electrified', `${ac.length} opening(s) involve electrified hardware (card readers, electric strikes/locks, maglocks, REX, DPS, power transfer, automatic operators, etc.). Power, low-voltage cabling, EAC head-end and commissioning must be split between trades.`, ac.map(d => d.mark),
       'Confirm scope split between Div 8 (hardware supply + integration), Div 26 (power), Div 27/28 (low-voltage / EAC head-end) BEFORE bidding. Carry power transfers, power supplies and EPTs as required.');
-    pushRfi('high', 'Access control / electrified', `For openings with electrified hardware (${marks(ac.map(d => d.mark))}): please confirm scope responsibility for (a) 120V power to power supplies, (b) low-voltage cabling, (c) credential readers and head-end, (d) integration with fire alarm release, (e) final commissioning and programming. Provide single-line diagrams if available.`,
-      ac.map(d => d.mark),
-      'Carry electrified hardware components on the Div 8 side only; exclude head-end + cabling unless explicitly priced.',
-      'Electrified hardware coordination is the single most common bid-risk area in Div 8.');
+    if (!(ctxSaysECPower && ctxSaysLVByOthers)) {
+      pushRfi('high', 'Access control / electrified', `For openings with electrified hardware (${marks(ac.map(d => d.mark))}): please confirm scope responsibility for (a) 120V power to power supplies, (b) low-voltage cabling, (c) credential readers and head-end, (d) integration with fire alarm release, (e) final commissioning and programming. Provide single-line diagrams if available.`,
+        ac.map(d => d.mark),
+        'Carry electrified hardware components on the Div 8 side only; exclude head-end + cabling unless explicitly priced.',
+        'Electrified hardware coordination is the single most common bid-risk area in Div 8.');
+    } else {
+      notes.push(`Project notes resolve electrified-hardware scope split (EC provides 120 V; low-voltage by others). Skipping generic scope-split RFI; ${ac.length} opening(s) still need integration coordination.`);
+    }
     recs.coordination_items.push('Coordinate electrified hardware split: Div 08 (hardware) / Div 26 (120 V) / Div 27-28 (low-voltage + head-end).');
     recs.coordination_items.push('Confirm fire alarm release tie-in for any maglocks or delayed-egress hardware.');
   }
@@ -3258,13 +1522,22 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
 
   /* ===================== KEYING SYSTEM ===================== */
   if (all.length >= 5) {
-    pushRisk('medium', 'Keying / cylinders', `Keying schedule, master-key system, construction core requirement and SFIC vs conventional cylinder format are not visible in the door schedule.`, [],
-      'Issue RFI for keying system. Carry construction cores allowance separately.');
-    pushRfi('medium', 'Keying / cylinders', `Please provide the complete keying schedule: (a) master / sub-master / grand-master structure, (b) keyway (e.g. Schlage Everest, Medeco X4, Yale 8000), (c) cylinder format (SFIC / LFIC / conventional), (d) construction core requirement and changeover, (e) restricted vs standard keyway, (f) number of operating keys and master keys.`,
-      [],
-      'Carry construction cylinders as an allowance until keying meeting is held.',
-      'Keying impacts cost and lead time but is rarely shown on door schedules.');
-    recs.allowances_to_consider.push('Allowance for construction cylinders and final keying meeting attendance.');
+    if (ctxSaysKeyingDefined) {
+      notes.push(`Keying notes captured from the drawings (${keyingNotes.length} line(s)) - no generic keying RFI generated. Verify the captured notes cover keyway, master structure, cylinder format, construction core and key counts.`);
+      if (ctxSaysOwnerKeying) {
+        recs.exclusions_to_consider.push('Cylinders / keying noted as owner-supplied or by-others on the drawings - exclude cylinder + keying scope from base bid unless otherwise directed.');
+      } else {
+        recs.allowances_to_consider.push('Allowance for construction cylinders and final keying meeting attendance (per project keying notes).');
+      }
+    } else {
+      pushRisk('medium', 'Keying / cylinders', `Keying schedule, master-key system, construction core requirement and SFIC vs conventional cylinder format are not visible in the door schedule.`, [],
+        'Issue RFI for keying system. Carry construction cores allowance separately.');
+      pushRfi('medium', 'Keying / cylinders', `Please provide the complete keying schedule: (a) master / sub-master / grand-master structure, (b) keyway (e.g. Schlage Everest, Medeco X4, Yale 8000), (c) cylinder format (SFIC / LFIC / conventional), (d) construction core requirement and changeover, (e) restricted vs standard keyway, (f) number of operating keys and master keys.`,
+        [],
+        'Carry construction cylinders as an allowance until keying meeting is held.',
+        'Keying impacts cost and lead time but is rarely shown on door schedules.');
+      recs.allowances_to_consider.push('Allowance for construction cylinders and final keying meeting attendance.');
+    }
   }
 
   /* ===================== SOUND / STC RATING ===================== */
@@ -3334,7 +1607,11 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
   /* ===================== SCOPE-SPECIFIC RECOMMENDATIONS ===================== */
   if (scope === 'Supply Only' || scope === 'Supply & Installation') {
     recs.supply_only_notes.push('Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates.');
-    recs.exclusions_to_consider.push('Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).');
+    if (!ctxSaysECPower && !ctxSaysLVByOthers) {
+      recs.exclusions_to_consider.push('Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).');
+    } else {
+      recs.exclusions_to_consider.push('Exclude 120 V power, low-voltage cabling, access-control head-end (per drawing notes - confirmed by EC / others).');
+    }
     recs.exclusions_to_consider.push('Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds.');
     if (fireDoors.length) recs.allowances_to_consider.push('Allowance for fire-rated assembly coordination, S-label gasketing and any UL field-modification charges.');
     if (stc.length) recs.allowances_to_consider.push('Allowance for STC-rated assembly testing / certification at acoustic openings.');
@@ -3349,6 +1626,12 @@ function synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope) {
   // Always-on coordination items
   recs.coordination_items.push('Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.');
   recs.coordination_items.push('Hold formal keying meeting with owner before cylinder fabrication.');
+
+  if (generalNotes.length) notes.push(`${generalNotes.length} general note(s) captured from the door-schedule sheet - review verbatim text on the Bid Recommendations screen.`);
+  if (hwPreamble.length) notes.push(`${hwPreamble.length} hardware-preamble note(s) captured from the hardware-set sheet(s) - review verbatim text on the Bid Recommendations screen.`);
+  if (Object.keys(legend).length) {
+    notes.push(`Schedule legend captured (${Object.keys(legend).length} abbreviation${Object.keys(legend).length === 1 ? '' : 's'} defined on the drawings) - project-specific abbreviations now factored into the electrified-hardware detector.`);
+  }
 
   return { risks, rfis, notes, recs };
 }
@@ -3438,655 +1721,34 @@ function arrayBufferToBase64(buffer) {
 /* ---------- Native pipeline prompts (ChatGPT-style PDF reading) ---------- */
 
 /* Pass 0: Discovery — scan whole PDF, return page-level index of relevant content. */
-const PDF_DISCOVERY_SYSTEM = `You are a senior Division 8 estimator scanning a project PDF to build a content index.
-
-Read EVERY page of the PDF. For each page, classify what's on it. We need the index to plan a thorough extraction pass.
-
-Return STRICTLY valid JSON only:
-{
-  "project_meta": {
-    "project_name": string|null,
-    "project_number": string|null,
-    "architect": string|null,
-    "address": string|null,
-    "drawing": string|null,
-    "date": string|null,
-    "scope_notes_observed": [string]
-  },
-  "pages": [{
-    "page": number,
-    "sheet_number": string|null,
-    "sheet_title": string|null,
-    "roles": [
-      "door_schedule"
-      | "hardware_sets"
-      | "hardware_schedule"
-      | "door_details"
-      | "door_elevations"
-      | "frame_details"
-      | "frame_elevations"
-      | "legend"
-      | "general_notes"
-      | "hardware_notes"
-      | "keying"
-      | "specifications"
-      | "cover"
-      | "other"
-    ],
-    "visible_door_marks": [string],
-    "visible_hardware_set_ids": [string],
-    "row_count_estimate": number|null,
-    "notes": string|null
-  }],
-  "estimated_door_total": number|null,
-  "estimated_hardware_set_total": number|null
-}
-
-Be thorough. List EVERY page, even cover/legend pages. Enumerate door marks and HW set IDs you can see — even if just headers. If multiple roles apply to a page, list all of them.`;
+const PDF_DISCOVERY_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 /* Pass A: lean transcription — transcription only, no reasoning */
-const EXTRACTION_ONLY_SYSTEM = `You are a senior Division 8 estimator transcribing a project PDF.
-
-Your job is ONLY to extract structured raw data — no reasoning, no risks, no RFIs, no recommendations. Those happen in a separate pass.
-
-Read EVERY door schedule row and EVERY hardware set with every line item visible. Do not skip rows. Do not summarize. Read all columns of multi-column hardware-set pages top-to-bottom, left-to-right.
-
-CRITICAL ANTI-HALLUCINATION:
-- Extract only what is clearly visible. Never invent door marks, hardware sets, qty, finishes, ratings, or part numbers.
-- Preserve all marks/IDs character-for-character.
-- If a field is unreadable, return null.
-- Capture remarks verbatim per door (CR, EH, EL, DPS, AO, panic, etc. should all be in remarks if visible).
-- For hardware sets: capture the FULL header verbatim (e.g. "Hardware Group No. C265 — Office") plus the canonical id ("C265"). Capture EVERY line item.
-- If a hardware set heading is crossed out / voided, capture the id and mark it with a remark "VOIDED".
-
-Return STRICTLY valid JSON only:
-{
-  "project_meta": {
-    "project_name": string|null,
-    "project_number": string|null,
-    "architect": string|null,
-    "address": string|null,
-    "drawing": string|null,
-    "date": string|null
-  },
-  "doors": [{
-    "mark": string,
-    "room_or_location": string|null,
-    "door_type": string|null,
-    "interior_or_exterior": "Interior"|"Exterior"|null,
-    "size": { "width": string|null, "height": string|null, "thickness": string|null },
-    "door_material": string|null,
-    "door_finish": string|null,
-    "glazing": string|null,
-    "frame_type": string|null,
-    "frame_material": string|null,
-    "frame_finish": string|null,
-    "fire_rating": string|null,
-    "hardware_set": string|null,
-    "remarks": [string]
-  }],
-  "hardware_sets": [{
-    "id": string,
-    "name": string|null,
-    "header_verbatim": string|null,
-    "opening_note_doors": [string],
-    "items": [{
-      "qty": number|null,
-      "desc": string,
-      "part": string|null,
-      "mfr": string|null,
-      "finish": string|null
-    }]
-  }]
-}
-
-Pure transcription. No analysis fields. No reasoning. No prose.`;
+const EXTRACTION_ONLY_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 /* Pass A2: completeness check — given current extraction, find what's missing */
-const COMPLETENESS_CHECK_SYSTEM = `You are a senior Division 8 estimator verifying that an extraction pass is complete.
-
-You will be given:
-  1. The full project PDF
-  2. A list of door marks and hardware set IDs already extracted
-  3. A list of discovered marks/IDs from the page index
-
-Your job: find what is MISSING. Look at the PDF page-by-page and return ONLY the doors AND hardware sets that were NOT in the existing extraction. Do not re-emit what's already there. Do not skip anything that's actually missing.
-
-Pay special attention to:
-- Multi-column hardware-set pages where a column was skipped
-- Schedule continuation rows on a second page
-- Hardware sets referenced by doors but not yet extracted as a set
-- Line items at the bottom of a hardware set that the first pass cut off
-- Hardware sets buried in spec book prose (look for "HARDWARE SET", "HW-", "GROUP", "FHW-" patterns)
-
-Return STRICTLY valid JSON in the SAME schema as the original transcription (doors[], hardware_sets[]), containing ONLY the missing entries. If nothing is missing, return { "doors": [], "hardware_sets": [] }.`;
+const COMPLETENESS_CHECK_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 /* ---------- FAST single-shot pipeline (mimics native ChatGPT-5.5 with extended thinking) ----------
    One call. PDF in, full senior-estimator JSON out. Uses reasoning.effort = "high"
    so the model spends its compute on extended thinking rather than us spending it
    on multiple round-trips. Designed to finish in ~60-120s like the native UI. */
 
-const SINGLE_SHOT_SYSTEM = `You are a senior Division 8 Doors, Frames & Hardware estimator with 15+ years of experience in commercial construction. A project PDF has been uploaded for you to read directly. Use extended thinking — read every page, every door schedule row, every hardware set with every line item, every relevant note.
+const SINGLE_SHOT_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-Your output is a SINGLE comprehensive senior-estimator JSON that combines:
-  (a) verbatim transcription of doors + hardware sets + items
-  (b) opening-by-opening analysis (risk, complexity, special conditions)
-  (c) project-level risks + RFIs + recommendations + bid notes
-
-CRITICAL ANTI-HALLUCINATION:
-- Extract only what is clearly visible. Never invent door marks, hardware set IDs, qty, finishes, ratings, or part numbers.
-- Preserve all marks/IDs character-for-character.
-- If a field is unreadable, return null.
-- Capture remarks verbatim per door (CR, EH, EL, DPS, AO, panic, etc.).
-- For hardware sets: capture the FULL header verbatim (e.g. "Hardware Group No. C265 — Office Door"), the canonical id ("C265"), AND every line item.
-- Read multi-column hardware-set pages top-to-bottom, left-to-right. Do not skip a column.
-- If a hardware set heading is crossed out / voided, capture the id and add "VOIDED" to a remark.
-
-CANONICAL HARDWARE SET MATCHING:
-- The door schedule may say "C265" while the spec page header reads "Hardware Group No. C265" or "HW-C265". These are the SAME set. When you fill door.hardware_set, use whichever form appears in the schedule. The id field of a hardware set should be the canonical short form (e.g. "C265", not "Hardware Group No. C265").
-
-COMPREHENSIVE RFI GENERATION:
-Build a thorough RFI log (target 15-25 entries, minimum 12 unless the project is trivial). For EACH category below that has any matching openings, emit at least one specific, grounded RFI citing actual door marks / set IDs:
-
-  • Fire / smoke rating — UL listing across door + frame + hardware; smoke gasketing per egress path; temperature-rise cores at exit stair enclosures (IBC 716).
-  • Egress / exit devices — device type (rim/mortise/CVR/SVR), trim function (passage/classroom/storeroom/nightlatch), dogging vs non-dogging.
-  • Access control / electrified hardware — power supply, low-voltage cabling, EAC head-end, fire-alarm release, commissioning. Trigger on CR/EL/DPS/RX/EH/maglock/electric strike/AO remarks.
-  • ADA / automatic operators — ANSI A156.10 vs A156.19, actuator location + mounting heights, 120 V provision, vestibule interlock.
-  • Exterior / weather — threshold, weatherstrip, sweep, drip cap; HM vs storefront/aluminum scope split.
-  • Pair / double-leaf — coordinators for rated pairs, astragal type, flush bolts at inactive leaf.
-  • Keying / cylinders — master-key structure, keyway, SFIC vs LFIC, restricted keyway, construction core.
-  • Acoustic / STC-rated — STC value, certified assembly, automatic door bottom, perimeter gasketing.
-  • High-security rooms — server / electrical / vault; restricted keyway, key-management, ballistic.
-  • Existing / remodel conditions — re-use scope, frame prep, field-measure, keying continuity.
-  • Glazing / vision lites — tempered / laminated / wired / fire-rated ceramic, UL listing for rated.
-  • Schedule completeness — missing sizes, unreadable rows, ambiguous frame type.
-  • Submittal / lead time — submittal due dates, approval turn-around, ROJ dates.
-  • Scope split — Div 08 vs Div 26 (power) vs Div 27/28 (low-voltage / head-end).
-  • Hardware set mismatches — doors referencing missing/voided sets, set opening-note vs schedule mismatches, sets with no items.
-
-Project_risks: minimum 6 entries covering the same categories. Each with severity, category, concrete issue + affected_openings + recommendation.
-
-RETURN STRICTLY VALID JSON in this exact shape:
-{
-  "project_summary": {
-    "scope_type": string,
-    "project_name": string|null, "project_number": string|null,
-    "architect": string|null, "address": string|null,
-    "drawing": string|null, "date": string|null,
-    "total_openings_found": number,
-    "total_hardware_sets_referenced": number,
-    "hardware_sets_missing_or_unclear": number,
-    "high_risk_openings": number, "medium_risk_openings": number, "low_risk_openings": number,
-    "complex_installations": number,
-    "access_control_openings": number,
-    "exterior_openings": number,
-    "fire_rated_openings": number,
-    "overall_bid_risk": "Low"|"Medium"|"High",
-    "estimator_summary": string
-  },
-  "door_analysis": [{
-    "mark": string,
-    "room_or_location": string|null,
-    "door_type": string|null,
-    "opening_type": string|null,
-    "interior_or_exterior": "Interior"|"Exterior"|null,
-    "size": { "width": string|null, "height": string|null, "thickness": string|null },
-    "door_material": string|null, "door_finish": string|null, "glazing": string|null,
-    "frame_type": string|null, "frame_material": string|null, "frame_finish": string|null,
-    "fire_rating": string|null, "hardware_set": string|null,
-    "remarks": [string],
-    "hardware_status": "complete"|"incomplete"|"review required",
-    "install_complexity": "low"|"medium"|"high",
-    "risk_level": "low"|"medium"|"high",
-    "special_conditions": [string], "issues": [string], "recommendations": [string],
-    "rfi_required": boolean, "rfi_questions": [string],
-    "confidence": number
-  }],
-  "hardware_set_review": [{
-    "hardware_set": string,
-    "header_verbatim": string|null,
-    "referenced_by_doors": [string],
-    "status": "complete"|"incomplete"|"missing"|"voided",
-    "items": [{
-      "item_no": number|null, "qty": number|null, "unit": string|null,
-      "desc": string, "part": string|null, "mfr": string|null, "finish": string|null,
-      "notes": string|null
-    }],
-    "missing_or_unclear_items": [string],
-    "special_coordination": [string],
-    "estimator_note": string|null,
-    "confidence": number
-  }],
-  "project_risks": [{
-    "severity": "low"|"medium"|"high",
-    "category": string,
-    "issue": string,
-    "affected_openings": [string],
-    "recommendation": string,
-    "status": "Open"
-  }],
-  "rfi_log": [{
-    "priority": "low"|"medium"|"high",
-    "category": string,
-    "question": string,
-    "affected_openings": [string],
-    "recommendation": string,
-    "status": "Open",
-    "reason": string
-  }],
-  "estimator_notes": [string],
-  "bid_recommendations": {
-    "supply_only_notes": [string],
-    "installation_only_notes": [string],
-    "supply_and_installation_notes": [string],
-    "exclusions_to_consider": [string],
-    "allowances_to_consider": [string],
-    "coordination_items": [string]
-  }
+async function extractFromPdfFast() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-No prose outside the JSON. No markdown. No code fences. Strict JSON only.`;
+const STAGED_DOOR_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-async function extractFromPdfFast({ apiKey, scope, file, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-  onProgress?.({ kind: 'info', text: `Reading ${file.name} (${(file.size/1024).toFixed(1)} KB)…` });
-  const arrayBuffer = await file.arrayBuffer();
-  const base64 = arrayBufferToBase64(arrayBuffer);
-  const dataUrl = `data:application/pdf;base64,${base64}`;
+const STAGED_HW_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
-  const userInstruction = `Project scope: ${scope || 'Supply & Installation'}
-
-Read the attached PDF end-to-end. Transcribe every door schedule row and every hardware set with every line item. Then run senior-estimator analysis and produce the complete JSON per your system instructions.
-
-Take your time. Use extended thinking. Read multi-column hardware-set pages thoroughly. Cross-reference door schedule hardware_set values against the hardware set ids (canonical match — strip prefixes like "Hardware Group No.", "HW-", "Set ").
-
-Return the comprehensive JSON.`;
-
-  const startedAt = Date.now();
-  let tickInterval;
-  try {
-    tickInterval = setInterval(() => {
-      const elapsed = Math.round((Date.now() - startedAt) / 1000);
-      onProgress?.({ kind: 'info', text: `gpt-5.5 thinking · ${elapsed}s elapsed…` });
-    }, 15000);
-
-    const body = {
-      model: REQUIRED_MODEL,
-      input: [
-        { role: 'system', content: SINGLE_SHOT_SYSTEM },
-        { role: 'user', content: [
-          { type: 'input_file', filename: file.name, file_data: dataUrl },
-          { type: 'input_text', text: userInstruction },
-        ] },
-      ],
-      reasoning: { effort: 'high' },
-      text: { format: { type: 'json_object' } },
-      max_output_tokens: 64000,
-    };
-    onProgress?.({ kind: 'info', text: `Sending PDF to ${REQUIRED_MODEL} (single-pass with extended thinking)…` });
-    const res = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    let data;
-    try { data = await res.json(); } catch { throw new Error('Network error contacting OpenAI'); }
-    if (!res.ok) {
-      // If gpt-5.5 rejects the reasoning param or other field, retry without it
-      const msg = data?.error?.message || '';
-      if (/reasoning|effort|parameter/i.test(msg)) {
-        onProgress?.({ kind: 'warn', text: `Retrying without reasoning param: ${msg}` });
-        delete body.reasoning;
-        const res2 = await fetch('https://api.openai.com/v1/responses', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-          body: JSON.stringify(body),
-        });
-        data = await res2.json();
-        if (!res2.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res2.status));
-      } else {
-        throw new Error(msg || ('OpenAI error ' + res.status));
-      }
-    }
-    let text = data.output_text || '';
-    if (!text && Array.isArray(data.output)) {
-      for (const item of data.output) {
-        if (item?.content) for (const c of item.content) if (typeof c?.text === 'string') text += c.text;
-      }
-    }
-    if (!text) text = '{}';
-    const incompleteReason = data.incomplete_details?.reason;
-    const elapsed = Math.round((Date.now() - startedAt) / 1000);
-    onProgress?.({ kind: 'ok', text: `gpt-5.5 returned in ${elapsed}s · ${(text.length/1024).toFixed(1)} KB JSON${incompleteReason ? ' · ' + incompleteReason : ''}` });
-    if (incompleteReason === 'max_output_tokens') onProgress?.({ kind: 'warn', text: `Output was truncated at max_output_tokens — large project. Consider running again or splitting.` });
-
-    let parsed;
-    try { parsed = JSON.parse(text); }
-    catch (e) {
-      // Try to recover: find last complete JSON object
-      const lastBrace = text.lastIndexOf('}');
-      if (lastBrace > 0) {
-        try { parsed = JSON.parse(text.slice(0, lastBrace + 1)); }
-        catch { throw new Error('Model returned invalid JSON' + (incompleteReason ? ' (' + incompleteReason + ')' : '')); }
-      } else throw new Error('Model returned invalid JSON');
-    }
-
-    // Post-process: canonical-key reconciliation + door↔hardware mapping + heuristic risk merge
-    const door_analysis = Array.isArray(parsed.door_analysis) ? parsed.door_analysis : [];
-    let hardware_set_review = Array.isArray(parsed.hardware_set_review) ? parsed.hardware_set_review : [];
-
-    // Reconcile: rewrite door.hardware_set to match the set's display id when canonical keys match
-    const setByCanonical = new Map();
-    hardware_set_review.forEach(s => { if (s.hardware_set) setByCanonical.set(canonicalSetKey(s.hardware_set), s); });
-    door_analysis.forEach(d => {
-      if (!d.hardware_set) return;
-      const key = canonicalSetKey(d.hardware_set);
-      const matching = setByCanonical.get(key);
-      if (matching && matching.hardware_set !== d.hardware_set) {
-        d.raw_hardware_set = d.hardware_set;
-        d.hardware_set = matching.hardware_set;
-      }
-    });
-    // Refresh referenced_by_doors
-    hardware_set_review.forEach(s => {
-      s.referenced_by_doors = door_analysis.filter(d => d.hardware_set === s.hardware_set).map(d => d.mark);
-    });
-    // Add stub entries for sets referenced but not extracted
-    const extractedSetIds = new Set(hardware_set_review.map(s => s.hardware_set));
-    door_analysis.forEach(d => {
-      if (d.hardware_set && !extractedSetIds.has(d.hardware_set)) {
-        hardware_set_review.push({
-          hardware_set: d.hardware_set,
-          header_verbatim: null,
-          referenced_by_doors: door_analysis.filter(x => x.hardware_set === d.hardware_set).map(x => x.mark),
-          status: 'missing',
-          items: [],
-          missing_or_unclear_items: ['hardware set referenced by doors but not found in spec'],
-          special_coordination: [],
-          estimator_note: null,
-          confidence: 0.4,
-        });
-        extractedSetIds.add(d.hardware_set);
-      }
-    });
-
-    // Build door↔hardware mapping
-    const setByDisplayId = new Map(hardware_set_review.map(s => [s.hardware_set, s]));
-    const door_hardware_mapping = [];
-    door_analysis.forEach(d => {
-      if (!d.hardware_set) {
-        door_hardware_mapping.push({ door_mark: d.mark, hardware_set: null, item_no: null, qty: null, description: '(no hardware set assigned)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'NO_HW_SET' });
-        return;
-      }
-      const set = setByDisplayId.get(d.hardware_set);
-      if (!set || !set.items || !set.items.length) {
-        door_hardware_mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: set ? '(hardware set has no extracted items)' : '(hardware set not found in spec)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED' });
-        return;
-      }
-      set.items.forEach((it, i) => {
-        door_hardware_mapping.push({
-          door_mark: d.mark,
-          hardware_set: d.hardware_set,
-          item_no: it.item_no ?? (i + 1),
-          qty: it.qty,
-          description: it.desc || '',
-          catalog_number: it.part || null,
-          manufacturer: it.mfr || null,
-          finish: it.finish || null,
-          notes: it.notes || null,
-          status: 'OK',
-        });
-      });
-    });
-
-    // Merge heuristic risks/RFIs for coverage
-    const synth = synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope);
-    const merged = mergeRisksAndRFIs(parsed, synth);
-
-    // Project summary with derived counts
-    const ps = parsed.project_summary || {};
-    const project_summary = {
-      scope_type: scope,
-      project_name: ps.project_name || null,
-      project_number: ps.project_number || null,
-      architect: ps.architect || null,
-      address: ps.address || null,
-      drawing: ps.drawing || null,
-      date: ps.date || null,
-      total_openings_found: door_analysis.length,
-      total_hardware_sets_referenced: new Set(door_analysis.map(d => d.hardware_set).filter(Boolean)).size,
-      hardware_sets_missing_or_unclear: hardware_set_review.filter(s => s.status !== 'complete').length,
-      high_risk_openings: door_analysis.filter(d => d.risk_level === 'high').length,
-      medium_risk_openings: door_analysis.filter(d => d.risk_level === 'medium').length,
-      low_risk_openings: door_analysis.filter(d => d.risk_level === 'low').length,
-      complex_installations: door_analysis.filter(d => d.install_complexity === 'high').length,
-      access_control_openings: door_analysis.filter(d => (d.special_conditions || []).some(c => /CR|EL|DPS|card|access|electrified/i.test(c))).length,
-      exterior_openings: door_analysis.filter(d => d.interior_or_exterior === 'Exterior').length,
-      fire_rated_openings: door_analysis.filter(d => d.fire_rating && d.fire_rating !== '-' && !/^non/i.test(String(d.fire_rating))).length,
-      overall_bid_risk: ps.overall_bid_risk || 'Medium',
-      estimator_summary: ps.estimator_summary || `Single-pass native pipeline (${REQUIRED_MODEL}, extended thinking, ${elapsed}s) extracted ${door_analysis.length} opening(s) and ${hardware_set_review.length} hardware set(s) with ${hardware_set_review.reduce((n,s)=>n+(s.items?.length||0),0)} line items. Verify against source PDF before bidding.`,
-    };
-
-    const totalItems = hardware_set_review.reduce((n, s) => n + (s.items?.length || 0), 0);
-    onProgress?.({ kind: 'ok', text: `Done · ${door_analysis.length} doors · ${hardware_set_review.length} sets · ${totalItems} items · ${merged.risks.length} risks · ${merged.rfis.length} RFIs · ${elapsed}s total` });
-
-    return {
-      analysis: {
-        project_summary,
-        door_analysis,
-        hardware_set_review,
-        door_hardware_mapping,
-        project_risks: merged.risks,
-        rfi_log: merged.rfis,
-        estimator_notes: merged.notes,
-        bid_recommendations: merged.recs,
-      },
-      qa: {
-        pdf_type: 'NATIVE_SINGLE_SHOT',
-        pipeline: 'native-single-shot',
-        model: REQUIRED_MODEL,
-        elapsed_seconds: elapsed,
-        reasoning_effort: 'high',
-        raw_transcription: { doors: door_analysis.map(d => ({ mark: d.mark })), hardware_sets: hardware_set_review.map(s => ({ id: s.hardware_set, item_count: s.items?.length || 0 })) },
-        truncated: incompleteReason === 'max_output_tokens',
-        reasoning_succeeded: true,
-        extraction_complete: !incompleteReason,
-        extraction_failures: [],
-      },
-    };
-  } finally {
-    if (tickInterval) clearInterval(tickInterval);
-  }
-}
-
-/* ====================================================================
-   STAGED PIPELINE — per user spec
-     Call 1: door schedule extraction         (prompts/door_schedule_extraction.md)
-     Call 2: hardware set extraction          (prompts/hardware_set_extraction.md)
-     Code  : mapping (door → hardware set)    (prompts/door_hardware_mapping.md)
-     Code  : rollup (project summary metrics)
-     Call 3: RFI / coordination review (opt.) (prompts/rfi_coordination_review.md)
-     Code  : Excel generation (existing exporter)
-   The three prompt files in /prompts are the source of truth — these
-   constants are kept in lockstep with them.
-==================================================================== */
-
-const STAGED_DOOR_SYSTEM = `You are extracting a door schedule from a construction drawing.
-
-Return structured JSON only.
-
-First, capture project-level header information from any cover sheet, title block, or schedule header visible in the drawing:
-- project_name
-- architect
-
-Then extract every visible door schedule row.
-
-For each door, capture:
-- mark
-- room_or_location
-- width
-- height
-- thickness
-- door_type
-- door_material
-- door_finish
-- frame_type
-- frame_material
-- frame_finish
-- glazing
-- fire_rating
-- hardware_set
-- closer
-- electric_or_access_control
-- remarks
-- source_page
-- source_crop_id
-- confidence
-
-Rules:
-- Preserve text exactly as shown.
-- Do not infer missing values.
-- Use null if unclear.
-- Do not complete missing door numbers.
-- Do not assume hardware items from the hardware set name.
-- Existing-to-remain doors must be marked as existing_to_remain.
-- If the row is partially unclear, still extract visible fields and mark confidence below 0.75.
-- For project_name and architect: read verbatim from the title block / cover sheet. Use null if not visible. Do not abbreviate or paraphrase.
-
-Return JSON only in this exact shape:
-{ "project_name": string|null, "architect": string|null, "doors": [ { "mark": string|null, "room_or_location": string|null, "width": string|null, "height": string|null, "thickness": string|null, "door_type": string|null, "door_material": string|null, "door_finish": string|null, "frame_type": string|null, "frame_material": string|null, "frame_finish": string|null, "glazing": string|null, "fire_rating": string|null, "hardware_set": string|null, "closer": string|null, "electric_or_access_control": string|null, "remarks": string|null, "existing_to_remain": boolean, "source_page": number|string|null, "source_crop_id": string|null, "confidence": number } ] }`;
-
-const STAGED_HW_SYSTEM = `You are extracting hardware set descriptions from a construction drawing crop.
-
-Return structured JSON only.
-
-Extract every visible hardware set or hardware group in this crop.
-
-For each hardware set, capture:
-- hardware_set
-- set_title
-- referenced_doors
-- status: active / not_used / existing / void / review_required
-- set_notes
-- items
-
-For each item, capture:
-- item_seq
-- qty
-- unit
-- description
-- manufacturer
-- model_or_catalog
-- finish
-- notes
-- confidence
-
-Rules:
-- Extract item rows exactly as visible.
-- Do not guess manufacturer or model.
-- Do not merge multiple hardware sets.
-- Do NOT emit the same hardware_set id more than once. If the same set appears across multiple pages or columns, combine its visible items into a single entry.
-- Do NOT emit the same item line twice within a set. If the same item appears twice in the same set on the drawing, list it once.
-- If text is unclear, return null and lower confidence.
-- If a hardware set says NOT USED, mark status as not_used.
-- If existing hardware is to remain, mark status as existing.
-- Do not map doors in this step.
-- Do not create RFIs in this step.
-- Return only the extracted hardware set JSON.
-
-Return JSON only in this exact shape:
-{ "hardware_sets": [ { "hardware_set": string, "set_title": string|null, "referenced_doors": [string], "status": "active"|"not_used"|"existing"|"void"|"review_required", "set_notes": string|null, "items": [ { "item_seq": number|string|null, "qty": number|string|null, "unit": string|null, "description": string|null, "manufacturer": string|null, "model_or_catalog": string|null, "finish": string|null, "notes": string|null, "confidence": number } ] } ] }`;
-
-const STAGED_RFI_SYSTEM = `You are a senior doors, frames, and hardware estimator.
-
-Review the extracted door schedule, hardware sets, and door-to-hardware mapping.
-
-Create RFIs and coordination notes only for real issues.
-
-Flag:
-- Missing hardware set
-- Hardware set referenced but no item rows extracted
-- Existing door with new hardware ambiguity
-- Exterior door without threshold/weatherstrip/sweep
-- Access control / card reader / electrified hardware
-- Panic / egress hardware
-- Double door missing pair hardware components
-- Fire-rated or smoke-rated opening requiring verification
-- Door remarks that conflict with hardware set
-- Door type that does not match assigned hardware set
-- Hardware set marked not used but referenced by door
-- Storefront or aluminum entrance coordination
-
-Return:
-- severity
-- category
-- issue
-- affected_doors
-- recommendation
-
-Return JSON only in this exact shape:
-{ "rfis": [ { "severity": "low"|"medium"|"high", "category": string, "issue": string, "affected_doors": [string], "recommendation": string } ] }`;
+const STAGED_RFI_SYSTEM = 'Secure backend handles this prompt; no LLM prompt is shipped in the frontend bundle.';
 
 /* Shared response-API caller. system+user → parsed JSON. */
-async function _stagedOpenAICall({ apiKey, label, input, onProgress, maxTokens = 32000, reasoningEffort = 'high' }) {
-  const startedAt = Date.now();
-  const body = {
-    model: REQUIRED_MODEL,
-    input,
-    reasoning: { effort: reasoningEffort },
-    text: { format: { type: 'json_object' } },
-    max_output_tokens: maxTokens,
-  };
-  let tickInterval;
-  try {
-    tickInterval = setInterval(() => {
-      const elapsed = Math.round((Date.now() - startedAt) / 1000);
-      onProgress?.({ kind: 'info', text: `${label} · gpt-5.5 thinking · ${elapsed}s elapsed…` });
-    }, 15000);
-    let res = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    let data;
-    try { data = await res.json(); } catch { throw new Error(`${label}: network error`); }
-    if (!res.ok) {
-      const msg = data?.error?.message || '';
-      if (/reasoning|effort|parameter/i.test(msg)) {
-        onProgress?.({ kind: 'warn', text: `${label} · retrying without reasoning param: ${msg}` });
-        delete body.reasoning;
-        res = await fetch('https://api.openai.com/v1/responses', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-          body: JSON.stringify(body),
-        });
-        data = await res.json();
-        if (!res.ok) throw new Error(`${label}: ${data?.error?.message || ('OpenAI error ' + res.status)}`);
-      } else {
-        throw new Error(`${label}: ${msg || ('OpenAI error ' + res.status)}`);
-      }
-    }
-    let text = data.output_text || '';
-    if (!text && Array.isArray(data.output)) {
-      for (const item of data.output) {
-        if (item?.content) for (const c of item.content) if (typeof c?.text === 'string') text += c.text;
-      }
-    }
-    if (!text) text = '{}';
-    const truncated = data.incomplete_details?.reason === 'max_output_tokens';
-    const elapsed = Math.round((Date.now() - startedAt) / 1000);
-    onProgress?.({ kind: 'ok', text: `${label} · returned in ${elapsed}s · ${(text.length/1024).toFixed(1)} KB${truncated ? ' · TRUNCATED' : ''}` });
-    let parsed;
-    try { parsed = JSON.parse(text); }
-    catch {
-      const lastBrace = text.lastIndexOf('}');
-      if (lastBrace > 0) { try { parsed = JSON.parse(text.slice(0, lastBrace + 1)); } catch { throw new Error(`${label}: invalid JSON`); } }
-      else throw new Error(`${label}: invalid JSON`);
-    }
-    return { parsed, elapsed, truncated };
-  } finally {
-    if (tickInterval) clearInterval(tickInterval);
-  }
+async function _stagedOpenAICall() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
 /* Normalize Call 1 door row → the app's expected door_analysis shape. */
@@ -4293,850 +1955,18 @@ function _stagedRollupSummary(doors, sets, scope, elapsedSeconds, meta = {}) {
   };
 }
 
-async function extractFromPdfStaged({ apiKey, scope, file, onProgress, runRFIs = true }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-  onProgress?.({ kind: 'info', text: `Reading ${file.name} (${(file.size/1024).toFixed(1)} KB)…` });
-  const arrayBuffer = await file.arrayBuffer();
-  const dataUrl = `data:application/pdf;base64,${arrayBufferToBase64(arrayBuffer)}`;
-  const scopeStr = scope || 'Supply & Installation';
-
-  // ---------- CALL 1 — door schedule extraction ----------
-  onProgress?.({ kind: 'info', text: `Call 1 / Door schedule extraction — sending PDF…` });
-  const call1 = await _stagedOpenAICall({
-    apiKey,
-    label: 'Call 1 (doors)',
-    onProgress,
-    maxTokens: 32000,
-    input: [
-      { role: 'system', content: STAGED_DOOR_SYSTEM },
-      { role: 'user', content: [
-        { type: 'input_file', filename: file.name, file_data: dataUrl },
-        { type: 'input_text', text: `Project scope: ${scopeStr}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown — do not infer. Use null for unclear values.\n\nReturn JSON: { "doors": [...] }` },
-      ] },
-    ],
-  });
-  const rawDoors = Array.isArray(call1.parsed.doors) ? call1.parsed.doors
-                 : Array.isArray(call1.parsed.rows)  ? call1.parsed.rows
-                 : Array.isArray(call1.parsed.door_analysis) ? call1.parsed.door_analysis : [];
-  const doors = rawDoors.map(_stagedNormalizeDoor);
-  const projectMeta = {
-    project_name: call1.parsed.project_name ?? call1.parsed.project?.name ?? null,
-    architect:    call1.parsed.architect    ?? call1.parsed.project?.architect ?? null,
-  };
-  onProgress?.({ kind: 'ok', text: `Call 1 done · ${doors.length} door row(s) extracted${projectMeta.project_name ? ` · project: ${projectMeta.project_name}` : ''}${projectMeta.architect ? ` · architect: ${projectMeta.architect}` : ''}.` });
-
-  // ---------- CALL 2 — hardware set extraction ----------
-  onProgress?.({ kind: 'info', text: `Call 2 / Hardware set extraction — sending PDF…` });
-  const call2 = await _stagedOpenAICall({
-    apiKey,
-    label: 'Call 2 (hardware sets)',
-    onProgress,
-    maxTokens: 48000,
-    input: [
-      { role: 'system', content: STAGED_HW_SYSTEM },
-      { role: 'user', content: [
-        { type: 'input_file', filename: file.name, file_data: dataUrl },
-        { type: 'input_text', text: `Project scope: ${scopeStr}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nReturn JSON: { "hardware_sets": [...] }` },
-      ] },
-    ],
-  });
-  const rawSets = Array.isArray(call2.parsed.hardware_sets) ? call2.parsed.hardware_sets
-                : Array.isArray(call2.parsed.sets) ? call2.parsed.sets : [];
-  const setsBeforeDedup = rawSets.map(_stagedNormalizeSet);
-
-  // ----- Dedup hardware sets by canonical key (Call 2 sometimes returns the same set
-  //       more than once when it spans multiple pages / columns). Merge items by
-  //       (item_no, desc) signature so legitimate distinct items survive but
-  //       verbatim repeats collapse. -----
-  const setsByCanon = new Map();
-  for (const s of setsBeforeDedup) {
-    if (!s.hardware_set) { setsByCanon.set(`__unkeyed_${setsByCanon.size}`, s); continue; }
-    const key = canonicalSetKey(s.hardware_set) || s.hardware_set;
-    const existing = setsByCanon.get(key);
-    if (!existing) { setsByCanon.set(key, s); continue; }
-    // Merge into existing
-    const itemSig = (it) => `${it.item_no ?? ''}|${(it.desc || '').trim().toLowerCase()}`;
-    const seenSigs = new Set((existing.items || []).map(itemSig));
-    for (const it of s.items || []) {
-      const sig = itemSig(it);
-      if (!seenSigs.has(sig)) { existing.items.push(it); seenSigs.add(sig); }
-    }
-    // Prefer the more-populated header / status
-    if (!existing.header_verbatim && s.header_verbatim) existing.header_verbatim = s.header_verbatim;
-    if (existing.status !== 'complete' && s.status === 'complete') existing.status = s.status;
-    if (!existing.raw_status && s.raw_status) existing.raw_status = s.raw_status;
-    if (!existing.estimator_note && s.estimator_note) existing.estimator_note = s.estimator_note;
-    // Union referenced doors
-    existing.referenced_by_doors = Array.from(new Set([...(existing.referenced_by_doors || []), ...(s.referenced_by_doors || [])]));
-  }
-  const sets = Array.from(setsByCanon.values());
-  const dupCount = setsBeforeDedup.length - sets.length;
-  const totalItems = sets.reduce((n, s) => n + (s.items?.length || 0), 0);
-  onProgress?.({ kind: 'ok', text: `Call 2 done · ${sets.length} hardware set(s) · ${totalItems} line item(s)${dupCount > 0 ? ` · ${dupCount} duplicate set(s) merged` : ''}.` });
-
-  // ---------- CODE — mapping (door → hardware set) ----------
-  onProgress?.({ kind: 'info', text: `Mapping · door → hardware set…` });
-  const { mapping, qaIssues } = _stagedMapDoorsHardware(doors, sets);
-  onProgress?.({ kind: 'ok', text: `Mapping done · ${mapping.length} mapping row(s) · ${qaIssues.length} QA issue(s).` });
-
-  // ---------- CODE — rollup ----------
-  const elapsedCore = (call1.elapsed || 0) + (call2.elapsed || 0);
-  const project_summary = _stagedRollupSummary(doors, sets, scopeStr, elapsedCore, projectMeta);
-
-  // ---------- CALL 3 — RFI / coordination review (optional) ----------
-  let project_risks = [], rfi_log = [], call3Elapsed = 0, call3Skipped = !runRFIs;
-  if (runRFIs) {
-    try {
-      onProgress?.({ kind: 'info', text: `Call 3 / RFI + coordination review — sending extracted data…` });
-      const payload = {
-        scope: scopeStr,
-        doors: doors.map(d => ({
-          mark: d.mark, room_or_location: d.room_or_location,
-          door_type: d.door_type, size: d.size,
-          door_material: d.door_material, fire_rating: d.fire_rating,
-          hardware_set: d.hardware_set,
-          closer: d.closer, electric_or_access_control: d.electric_or_access_control,
-          remarks: d.remarks, existing_to_remain: d.existing_to_remain,
-        })),
-        hardware_sets: sets.map(s => ({
-          hardware_set: s.hardware_set, status: s.status, raw_status: s.raw_status,
-          item_count: s.items?.length || 0,
-          item_descriptions: (s.items || []).map(it => it.desc).filter(Boolean),
-        })),
-        mapping_qa: qaIssues,
-      };
-      const call3 = await _stagedOpenAICall({
-        apiKey,
-        label: 'Call 3 (RFIs)',
-        onProgress,
-        maxTokens: 16000,
-        reasoningEffort: 'medium',
-        input: [
-          { role: 'system', content: STAGED_RFI_SYSTEM },
-          { role: 'user', content: [
-            { type: 'input_text', text: `Review the following extracted data (already in canonical form). Produce only real-issue RFIs and coordination notes per your system instructions. Do not invent issues for clean rows.\n\nEXTRACTED_DATA:\n${JSON.stringify(payload)}\n\nReturn JSON: { "rfis": [...] }` },
-          ] },
-        ],
-      });
-      call3Elapsed = call3.elapsed || 0;
-      const rfis = Array.isArray(call3.parsed.rfis) ? call3.parsed.rfis : [];
-      rfi_log = rfis.map(r => ({
-        priority: String(r.severity || 'medium').toLowerCase(),
-        category: r.category || 'General',
-        question: r.issue || '',
-        affected_openings: Array.isArray(r.affected_doors) ? r.affected_doors : [],
-        recommendation: r.recommendation || '',
-        status: 'Open',
-        reason: r.issue || '',
-      }));
-      project_risks = rfis.map(r => ({
-        severity: String(r.severity || 'medium').toLowerCase(),
-        category: r.category || 'General',
-        issue: r.issue || '',
-        affected_openings: Array.isArray(r.affected_doors) ? r.affected_doors : [],
-        recommendation: r.recommendation || '',
-        status: 'Open',
-      }));
-      onProgress?.({ kind: 'ok', text: `Call 3 done · ${rfis.length} RFI(s) / coordination note(s).` });
-    } catch (e) {
-      onProgress?.({ kind: 'warn', text: `Call 3 (RFI review) failed: ${e.message}. Continuing without RFIs.` });
-      call3Skipped = true;
-    }
-  } else {
-    onProgress?.({ kind: 'info', text: `Call 3 skipped (RFI review disabled).` });
-  }
-
-  const totalElapsed = elapsedCore + call3Elapsed;
-  onProgress?.({ kind: 'ok', text: `Staged pipeline done · ${doors.length} doors · ${sets.length} sets · ${totalItems} items · ${project_risks.length} risks · ${rfi_log.length} RFIs · ${totalElapsed}s total.` });
-
-  return {
-    analysis: {
-      project_summary,
-      door_analysis: doors,
-      hardware_set_review: sets,
-      door_hardware_mapping: mapping,
-      project_risks,
-      rfi_log,
-      estimator_notes: [],
-      bid_recommendations: {
-        supply_only_notes: [],
-        installation_only_notes: [],
-        supply_and_installation_notes: [],
-        exclusions_to_consider: [],
-        allowances_to_consider: [],
-        coordination_items: qaIssues.map(q => q.message),
-      },
-    },
-    qa: {
-      pdf_type: 'STAGED_PIPELINE',
-      pipeline: 'staged',
-      pipeline_steps: [
-        { step: 1, kind: 'llm', label: 'Door schedule extraction', prompt_file: 'prompts/door_schedule_extraction.md', elapsed_seconds: call1.elapsed, truncated: !!call1.truncated, output_count: doors.length },
-        { step: 2, kind: 'llm', label: 'Hardware set extraction',   prompt_file: 'prompts/hardware_set_extraction.md', elapsed_seconds: call2.elapsed, truncated: !!call2.truncated, output_count: sets.length },
-        { step: 3, kind: 'code', label: 'Door → hardware mapping', prompt_file: 'prompts/door_hardware_mapping.md', output_count: mapping.length },
-        { step: 4, kind: 'code', label: 'Rollup' },
-        { step: 5, kind: 'llm', label: 'RFI / coordination review', prompt_file: 'prompts/rfi_coordination_review.md', skipped: call3Skipped, elapsed_seconds: call3Elapsed, output_count: rfi_log.length },
-        { step: 6, kind: 'code', label: 'Excel generation (on export)' },
-      ],
-      model: REQUIRED_MODEL,
-      elapsed_seconds: totalElapsed,
-      mapping_qa_issues: qaIssues,
-      raw_transcription: {
-        doors: doors.map(d => ({ mark: d.mark })),
-        hardware_sets: sets.map(s => ({ id: s.hardware_set, item_count: s.items?.length || 0 })),
-      },
-      truncated: !!call1.truncated || !!call2.truncated,
-      reasoning_succeeded: true,
-      extraction_complete: !call1.truncated && !call2.truncated,
-      extraction_failures: [],
-    },
-  };
+async function extractFromPdfStaged() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-/* ---------- Multi-pass native pipeline (fallback when fast pass truncates) ---------- */
-async function extractFromPdfDirect({ apiKey, scope, file, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-  onProgress?.({ kind: 'info', text: `Reading ${file.name} (${(file.size/1024).toFixed(1)} KB)…` });
-  const arrayBuffer = await file.arrayBuffer();
-  const base64 = arrayBufferToBase64(arrayBuffer);
-  const dataUrl = `data:application/pdf;base64,${base64}`;
-  const pdfFileBlock = { type: 'input_file', filename: file.name, file_data: dataUrl };
-
-  const callResponses = async (system, userBlocks, maxTokens = 32000, label = '') => {
-    const body = {
-      model: REQUIRED_MODEL,
-      input: [
-        { role: 'system', content: system },
-        { role: 'user', content: userBlocks },
-      ],
-      text: { format: { type: 'json_object' } },
-      max_output_tokens: maxTokens,
-    };
-    const res = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    let data;
-    try { data = await res.json(); } catch { throw new Error('Network error contacting OpenAI'); }
-    if (!res.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-    let text = data.output_text || '';
-    if (!text && Array.isArray(data.output)) {
-      for (const item of data.output) {
-        if (item?.content) {
-          for (const c of item.content) {
-            if (typeof c?.text === 'string') text += c.text;
-          }
-        }
-      }
-    }
-    if (!text) text = '{}';
-    const incompleteReason = data.incomplete_details?.reason;
-    try {
-      const parsed = JSON.parse(text);
-      return { parsed, status: data.status, incompleteReason, raw_text_len: text.length, label };
-    } catch {
-      throw new Error('Model returned invalid JSON' + (incompleteReason === 'max_output_tokens' ? ' (output truncated — increase max_output_tokens)' : ''));
-    }
-  };
-
-  /* ===== PASS 0 — Discovery: build a page index ===== */
-  onProgress?.({ kind: 'info', text: `Pass 0 · scanning ${file.name} for content map…` });
-  let discovery;
-  try {
-    const r = await callResponses(
-      PDF_DISCOVERY_SYSTEM,
-      [
-        pdfFileBlock,
-        { type: 'input_text', text: 'Scan every page and return the JSON index per your schema.' },
-      ],
-      16000,
-      'discovery',
-    );
-    discovery = r.parsed || {};
-    const pageCount = (discovery.pages || []).length;
-    const schedPages = (discovery.pages || []).filter(p => (p.roles || []).some(rl => rl === 'door_schedule')).map(p => p.page);
-    const hwPages = (discovery.pages || []).filter(p => (p.roles || []).some(rl => rl === 'hardware_sets' || rl === 'hardware_schedule')).map(p => p.page);
-    const seenMarks = [...new Set((discovery.pages || []).flatMap(p => p.visible_door_marks || []))];
-    const seenSetIds = [...new Set((discovery.pages || []).flatMap(p => p.visible_hardware_set_ids || []))];
-    onProgress?.({ kind: 'ok', text: `Pass 0 · indexed ${pageCount} page(s) · schedule on p.${schedPages.join(',') || '—'} · hardware on p.${hwPages.join(',') || '—'} · ${seenMarks.length} door mark(s), ${seenSetIds.length} HW set id(s) visible` });
-    if (r.incompleteReason) onProgress?.({ kind: 'warn', text: `Pass 0 incomplete: ${r.incompleteReason}` });
-  } catch (e) {
-    onProgress?.({ kind: 'warn', text: `Pass 0 discovery failed: ${e.message}. Continuing without page index.` });
-    discovery = { pages: [], project_meta: {} };
-  }
-
-  /* ===== PASS A — Comprehensive transcription ===== */
-  onProgress?.({ kind: 'info', text: `Pass A · transcribing every door + hardware set + line item…` });
-  const discoveryHints = (() => {
-    const seenMarks = [...new Set((discovery.pages || []).flatMap(p => p.visible_door_marks || []))];
-    const seenSetIds = [...new Set((discovery.pages || []).flatMap(p => p.visible_hardware_set_ids || []))];
-    let s = '';
-    if (seenMarks.length) s += `\n\nFrom the discovery pass, these door marks are known to exist (read every one): ${seenMarks.join(', ')}`;
-    if (seenSetIds.length) s += `\n\nFrom the discovery pass, these hardware set IDs are known to exist (capture every one with all line items): ${seenSetIds.join(', ')}`;
-    if (discovery.estimated_door_total) s += `\n\nEstimated door count: ${discovery.estimated_door_total}.`;
-    if (discovery.estimated_hardware_set_total) s += `\n\nEstimated hardware set count: ${discovery.estimated_hardware_set_total}.`;
-    return s;
-  })();
-
-  const passA = await callResponses(
-    EXTRACTION_ONLY_SYSTEM,
-    [
-      pdfFileBlock,
-      { type: 'input_text', text: `Transcribe every door schedule row and every hardware set with all items. Return JSON per your schema.${discoveryHints}` },
-    ],
-    48000,
-    'passA',
-  );
-  let raw = passA.parsed || {};
-  let rawDoors = Array.isArray(raw.doors) ? raw.doors : [];
-  let rawSets = Array.isArray(raw.hardware_sets) ? raw.hardware_sets : [];
-  let rawTotalItems = rawSets.reduce((n, s) => n + (s.items?.length || 0), 0);
-  onProgress?.({ kind: 'ok', text: `Pass A · ${rawDoors.length} door(s), ${rawSets.length} HW set(s), ${rawTotalItems} item(s)${passA.status ? ' · status=' + passA.status : ''}` });
-  if (passA.incompleteReason) onProgress?.({ kind: 'warn', text: `Pass A incomplete: ${passA.incompleteReason} — verification pass will recover` });
-
-  /* ===== PASS A2 — Verification: find what's missing, up to 3 iterations ===== */
-  const seenMarksFromDiscovery = [...new Set((discovery.pages || []).flatMap(p => p.visible_door_marks || []))];
-  const seenSetIdsFromDiscovery = [...new Set((discovery.pages || []).flatMap(p => p.visible_hardware_set_ids || []))];
-  let verifyIter = 0;
-  const MAX_VERIFY_ITERS = 3;
-  while (verifyIter < MAX_VERIFY_ITERS) {
-    verifyIter++;
-    const haveMarks = rawDoors.map(d => d.mark).filter(Boolean);
-    const haveSetIds = rawSets.map(s => s.id).filter(Boolean);
-    const expectedMarks = seenMarksFromDiscovery;
-    const expectedSetIds = seenSetIdsFromDiscovery;
-    const missingMarksFromDiscovery = expectedMarks.filter(m => !haveMarks.includes(m));
-    const missingSetIdsFromDiscovery = expectedSetIds.filter(s => !haveSetIds.includes(s));
-    const referencedSetIdsFromDoors = [...new Set(rawDoors.map(d => d.hardware_set).filter(Boolean))];
-    const orphanRefs = referencedSetIdsFromDoors.filter(setId => !haveSetIds.some(have =>
-      canonicalSetKey(have) === canonicalSetKey(setId)
-    ));
-    const setsWithNoItems = rawSets.filter(s => !s.items || s.items.length === 0).map(s => s.id);
-
-    // Decide if verification is worth running this iteration
-    const expectedDoors = discovery.estimated_door_total ?? null;
-    const expectedSets = discovery.estimated_hardware_set_total ?? null;
-    const doorShortfall = expectedDoors && rawDoors.length < Math.max(1, Math.floor(expectedDoors * 0.95));
-    const setShortfall = expectedSets && rawSets.length < Math.max(1, Math.floor(expectedSets * 0.95));
-    const need =
-         missingMarksFromDiscovery.length > 0
-      || missingSetIdsFromDiscovery.length > 0
-      || orphanRefs.length > 0
-      || setsWithNoItems.length > 0
-      || doorShortfall
-      || setShortfall
-      || (verifyIter === 1); // always run at least once
-
-    if (!need) {
-      onProgress?.({ kind: 'ok', text: `Verification ${verifyIter}: nothing flagged as missing — extraction looks complete.` });
-      break;
-    }
-
-    onProgress?.({ kind: 'info', text: `Verification ${verifyIter}/${MAX_VERIFY_ITERS} · checking for missed entries (missing ${missingMarksFromDiscovery.length} marks, ${missingSetIdsFromDiscovery.length} sets, ${orphanRefs.length} orphan refs, ${setsWithNoItems.length} empty sets)…` });
-
-    const verifyInstruction = `EXISTING EXTRACTION (DO NOT RE-EMIT THESE):
-- Doors already extracted (by mark): ${haveMarks.join(', ') || '(none)'}
-- Hardware sets already extracted (by id): ${haveSetIds.join(', ') || '(none)'}
-
-KNOWN-TO-EXIST FROM PDF SCAN (from discovery pass — MUST be in final output):
-- Door marks visible in PDF: ${expectedMarks.join(', ') || '(none enumerated)'}
-- Hardware set IDs visible in PDF: ${expectedSetIds.join(', ') || '(none enumerated)'}
-
-POTENTIAL ISSUES FLAGGED:
-${missingMarksFromDiscovery.length ? `- Door marks seen in scan but not extracted: ${missingMarksFromDiscovery.join(', ')}` : ''}
-${missingSetIdsFromDiscovery.length ? `- Hardware set IDs seen in scan but not extracted: ${missingSetIdsFromDiscovery.join(', ')}` : ''}
-${orphanRefs.length ? `- Doors reference these set IDs but the set wasn't extracted: ${orphanRefs.join(', ')}. Look for them in the spec book or hardware-sets page.` : ''}
-${setsWithNoItems.length ? `- These sets were extracted but with NO line items — re-read them and emit the items: ${setsWithNoItems.join(', ')}. (If they appear voided/crossed out, mark a remark "VOIDED" and still emit zero items.)` : ''}
-
-Return JSON in the same schema as the original transcription, containing ONLY missing doors and missing/incomplete hardware sets. If a hardware set was already extracted but missing items, RE-EMIT THE WHOLE SET with the full item list. If a door's hardware_set field was blank, re-emit the door with the correct hardware_set if you can read it.`;
-
-    let passVerify;
-    try {
-      passVerify = await callResponses(
-        COMPLETENESS_CHECK_SYSTEM,
-        [
-          pdfFileBlock,
-          { type: 'input_text', text: verifyInstruction },
-        ],
-        32000,
-        `verify-${verifyIter}`,
-      );
-    } catch (e) {
-      onProgress?.({ kind: 'warn', text: `Verification ${verifyIter} failed: ${e.message}` });
-      break;
-    }
-    const vRaw = passVerify.parsed || {};
-    const vDoors = Array.isArray(vRaw.doors) ? vRaw.doors : [];
-    const vSets = Array.isArray(vRaw.hardware_sets) ? vRaw.hardware_sets : [];
-    if (passVerify.incompleteReason) onProgress?.({ kind: 'warn', text: `Verification ${verifyIter} incomplete: ${passVerify.incompleteReason}` });
-
-    // Merge — doors: dedupe by mark, prefer non-null fields from verification
-    let addedDoors = 0;
-    const doorByMark = new Map(rawDoors.map(d => [d.mark, d]));
-    vDoors.forEach(d => {
-      if (!d.mark) return;
-      if (!doorByMark.has(d.mark)) {
-        doorByMark.set(d.mark, d);
-        addedDoors++;
-      } else {
-        // Fill nulls from verify pass
-        const existing = doorByMark.get(d.mark);
-        Object.keys(d).forEach(k => {
-          if (existing[k] == null && d[k] != null) existing[k] = d[k];
-        });
-        if (Array.isArray(d.remarks) && d.remarks.length && (!existing.remarks || !existing.remarks.length)) existing.remarks = d.remarks;
-      }
-    });
-    rawDoors = [...doorByMark.values()];
-
-    // Merge — hardware sets: dedupe by canonical key, merge items
-    let addedSets = 0, addedItems = 0;
-    const setByCanonical = new Map();
-    rawSets.forEach(s => { if (s.id) setByCanonical.set(canonicalSetKey(s.id), s); });
-    vSets.forEach(s => {
-      if (!s.id) return;
-      const key = canonicalSetKey(s.id);
-      const existing = setByCanonical.get(key);
-      if (!existing) {
-        setByCanonical.set(key, s);
-        addedSets++;
-        addedItems += (s.items || []).length;
-      } else {
-        // Merge items by (desc + part + qty)
-        const seen = new Set((existing.items || []).map(it => (it.desc||'').toLowerCase().replace(/\s+/g,' ').trim() + '|' + (it.part||'').toLowerCase().trim() + '|' + (it.qty ?? '')));
-        (s.items || []).forEach(it => {
-          const k = (it.desc||'').toLowerCase().replace(/\s+/g,' ').trim() + '|' + (it.part||'').toLowerCase().trim() + '|' + (it.qty ?? '');
-          if (!seen.has(k)) {
-            existing.items = [...(existing.items || []), it];
-            seen.add(k);
-            addedItems++;
-          }
-        });
-        if (!existing.header_verbatim && s.header_verbatim) existing.header_verbatim = s.header_verbatim;
-        if (!existing.name && s.name) existing.name = s.name;
-      }
-    });
-    rawSets = [...setByCanonical.values()];
-    rawTotalItems = rawSets.reduce((n, s) => n + (s.items?.length || 0), 0);
-
-    onProgress?.({ kind: 'ok', text: `Verification ${verifyIter} · +${addedDoors} door(s), +${addedSets} set(s), +${addedItems} item(s) · totals: ${rawDoors.length}/${rawSets.length}/${rawTotalItems}` });
-
-    if (addedDoors === 0 && addedSets === 0 && addedItems === 0) {
-      onProgress?.({ kind: 'ok', text: `Verification converged after ${verifyIter} iteration(s).` });
-      break;
-    }
-  }
-
-  raw = { ...raw, doors: rawDoors, hardware_sets: rawSets };
-  if (!raw.project_meta || Object.keys(raw.project_meta || {}).length === 0) raw.project_meta = discovery.project_meta || {};
-
-  /* ===== PASS B — Senior estimator reasoning over assembled data ===== */
-  onProgress?.({ kind: 'info', text: `Pass B · senior-estimator reasoning on ${rawDoors.length} doors + ${rawSets.length} sets + ${rawTotalItems} items…` });
-  const reasoningInstruction = `The selected project scope is: ${scope || 'Supply & Installation'}
-
-The door schedule and hardware sets below were transcribed from the source PDF. Run the senior-estimator analysis on this data and return the full JSON per your system instructions.
-
-For each door, fill in opening_type, hardware_status, install_complexity, risk_level, special_conditions (CR/EL/DPS/AO/panic/etc. — pull from remarks), issues, recommendations, rfi_required, rfi_questions, confidence.
-For each hardware set, fill in referenced_by_doors, status, missing_or_unclear_items, special_coordination, estimator_note.
-Build project_risks (minimum 6 entries), rfi_log (minimum 12 entries, ideally 15-25), estimator_notes, and bid_recommendations as a senior estimator would.
-
-GENERATE RFIs across as many of the following categories as the data supports — emit at least one RFI per category that has any matching openings:
-  • Fire / smoke rating — UL listing across door + frame + hardware; smoke gasketing per egress path; temperature-rise cores at exit stair enclosures (IBC 716). Cite door marks with non-empty fire_rating.
-  • Egress / exit devices — exit device type (rim/mortise/CVR/SVR), trim function, dogging vs non-dogging, alarm features. Trigger on panic/exit/CVR/SVR remarks.
-  • Access control / electrified hardware — power supply, low-voltage cabling, EAC head-end, fire-alarm release, commissioning. Trigger on CR/EL/DPS/RX/EH/maglock/electric strike/AO remarks.
-  • ADA / automatic operators — ANSI A156.10 vs A156.19, actuator location, 120 V provision, vestibule interlock.
-  • Exterior / weather — threshold, weatherstrip, sweep, drip cap; HM vs storefront/aluminum split.
-  • Pair / double-leaf openings — coordinators, astragals, flush bolts, active/inactive trim.
-  • Keying / cylinders — master-key structure, keyway, SFIC vs LFIC, restricted keyway, construction core.
-  • Acoustic / STC-rated — STC value, certified assembly, automatic door bottom, perimeter gasketing.
-  • High-security rooms — server/electrical/vault; restricted keyway, key-management, ballistic.
-  • Existing / remodel — re-use scope, frame prep, field-measure, keying continuity.
-  • Glazing / vision lites — tempered/laminated/wired/fire-rated ceramic, UL listing for rated.
-  • Schedule completeness — missing sizes, unreadable rows, ambiguous frame type.
-  • Submittal / lead time — submittal due dates, approval turn-around, ROJ dates.
-  • Scope split — Div 08 vs Div 26 (power) vs Div 27/28 (low-voltage / head-end).
-  • Hardware set mismatches — doors referencing missing/voided sets, set opening-note vs schedule mismatches.
-
-Every RFI must cite concrete door marks or set IDs from the data. Every risk must specify affected_openings.
-
-DO NOT INVENT doors or hardware items not present in the data. Cite door marks and set IDs verbatim.
-
-RAW DATA:
-${JSON.stringify(raw)}`;
-
-  let passB;
-  try {
-    passB = await callResponses(
-      EXTRACTION_SYSTEM,
-      [{ type: 'input_text', text: reasoningInstruction }],
-      48000,
-      'passB',
-    );
-  } catch (e) {
-    onProgress?.({ kind: 'warn', text: `Pass B reasoning failed: ${e.message}. Will synthesize from raw data.` });
-    passB = { parsed: {} };
-  }
-  const reasoning = passB.parsed || {};
-  if (passB.incompleteReason) onProgress?.({ kind: 'warn', text: `Pass B incomplete: ${passB.incompleteReason}` });
-
-  /* ===== Reconciliation: canonical key matching of door references to extracted sets ===== */
-  const setByCanonicalKey = new Map();
-  rawSets.forEach(s => { if (s.id) setByCanonicalKey.set(canonicalSetKey(s.id), s); });
-  rawDoors.forEach(d => {
-    if (!d.hardware_set) return;
-    const key = canonicalSetKey(d.hardware_set);
-    const matching = setByCanonicalKey.get(key);
-    if (matching && matching.id !== d.hardware_set) {
-      d.raw_hardware_set = d.hardware_set;
-      d.hardware_set = matching.id;
-    }
-  });
-
-  /* ===== Merge raw transcription with reasoning analysis ===== */
-  const reasoningDoors = Array.isArray(reasoning.door_analysis) ? reasoning.door_analysis : [];
-  const reasoningSets  = Array.isArray(reasoning.hardware_set_review) ? reasoning.hardware_set_review : [];
-  const rDoorByMark = new Map(reasoningDoors.map(d => [d.mark, d]));
-  const rSetById   = new Map(reasoningSets.map(s => [s.hardware_set, s]));
-
-  const door_analysis = rawDoors.map(d => {
-    const r = rDoorByMark.get(d.mark) || {};
-    return {
-      mark: d.mark,
-      room_or_location: d.room_or_location ?? r.room_or_location ?? null,
-      door_type: d.door_type ?? r.door_type ?? null,
-      opening_type: r.opening_type || null,
-      interior_or_exterior: d.interior_or_exterior ?? r.interior_or_exterior ?? null,
-      size: d.size ?? r.size ?? { width: null, height: null, thickness: null },
-      door_material: d.door_material ?? r.door_material ?? null,
-      door_finish: d.door_finish ?? r.door_finish ?? null,
-      glazing: d.glazing ?? r.glazing ?? null,
-      frame_type: d.frame_type ?? r.frame_type ?? null,
-      frame_material: d.frame_material ?? r.frame_material ?? null,
-      frame_finish: d.frame_finish ?? r.frame_finish ?? null,
-      fire_rating: d.fire_rating ?? r.fire_rating ?? null,
-      hardware_set: d.hardware_set ?? r.hardware_set ?? null,
-      raw_hardware_set: d.raw_hardware_set || null,
-      remarks: d.remarks ?? r.remarks ?? [],
-      hardware_status: r.hardware_status || 'review required',
-      install_complexity: r.install_complexity || 'medium',
-      risk_level: r.risk_level || 'low',
-      special_conditions: r.special_conditions || [],
-      issues: r.issues || [],
-      recommendations: r.recommendations || [],
-      rfi_required: !!r.rfi_required,
-      rfi_questions: r.rfi_questions || [],
-      confidence: r.confidence ?? 0.8,
-    };
-  });
-
-  const hardware_set_review = rawSets.map(s => {
-    const r = rSetById.get(s.id) || {};
-    const refs = door_analysis.filter(d => d.hardware_set === s.id).map(d => d.mark);
-    return {
-      hardware_set: s.id,
-      header_verbatim: s.header_verbatim || null,
-      referenced_by_doors: r.referenced_by_doors?.length ? r.referenced_by_doors : refs,
-      status: r.status || (s.items?.length ? 'complete' : 'incomplete'),
-      items: (s.items || []).map((it, i) => ({
-        item_no: it.item_no ?? (i + 1),
-        qty: it.qty,
-        unit: it.unit || '',
-        desc: it.desc || '',
-        part: it.part || '',
-        mfr: it.mfr || '',
-        finish: it.finish || '',
-        notes: it.notes || '',
-      })),
-      missing_or_unclear_items: r.missing_or_unclear_items || (s.items?.length ? [] : ['no hardware items extracted']),
-      special_coordination: r.special_coordination || [],
-      estimator_note: r.estimator_note || s.header_verbatim || s.name || null,
-      confidence: r.confidence ?? 0.8,
-    };
-  });
-
-  // Flag missing sets (doors reference an id that has no set)
-  const extractedSetIds = new Set(hardware_set_review.map(s => s.hardware_set));
-  door_analysis.forEach(d => {
-    if (d.hardware_set && !extractedSetIds.has(d.hardware_set)) {
-      hardware_set_review.push({
-        hardware_set: d.hardware_set,
-        header_verbatim: null,
-        referenced_by_doors: door_analysis.filter(x => x.hardware_set === d.hardware_set).map(x => x.mark),
-        status: 'missing',
-        items: [],
-        missing_or_unclear_items: ['hardware set referenced by doors but not found in spec'],
-        special_coordination: [],
-        estimator_note: null,
-        confidence: 0.4,
-      });
-      extractedSetIds.add(d.hardware_set);
-    }
-  });
-
-  /* ===== Build door↔hardware mapping (one row per door per item) ===== */
-  const setByDisplayId = new Map(hardware_set_review.map(s => [s.hardware_set, s]));
-  const door_hardware_mapping = [];
-  door_analysis.forEach(d => {
-    if (!d.hardware_set) {
-      door_hardware_mapping.push({ door_mark: d.mark, hardware_set: null, item_no: null, qty: null, description: '(no hardware set assigned)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'NO_HW_SET' });
-      return;
-    }
-    const set = setByDisplayId.get(d.hardware_set);
-    if (!set || !set.items || !set.items.length) {
-      door_hardware_mapping.push({ door_mark: d.mark, hardware_set: d.hardware_set, item_no: null, qty: null, description: set ? '(hardware set has no extracted items)' : '(hardware set not found in spec)', catalog_number: null, manufacturer: null, finish: null, notes: null, status: 'FAILED_EXTRACTION_REVIEW_REQUIRED' });
-      return;
-    }
-    set.items.forEach((it, i) => {
-      door_hardware_mapping.push({
-        door_mark: d.mark,
-        hardware_set: d.hardware_set,
-        item_no: it.item_no ?? (i + 1),
-        qty: it.qty,
-        description: it.desc || '',
-        catalog_number: it.part || null,
-        manufacturer: it.mfr || null,
-        finish: it.finish || null,
-        notes: it.notes || null,
-        status: 'OK',
-      });
-    });
-  });
-
-  /* ===== Project summary ===== */
-  const ps = reasoning.project_summary || {};
-  const meta = raw.project_meta || {};
-  const project_summary = {
-    scope_type: scope,
-    project_name: meta.project_name || ps.project_name || null,
-    project_number: meta.project_number || ps.project_number || null,
-    architect: meta.architect || ps.architect || null,
-    address: meta.address || ps.address || null,
-    drawing: meta.drawing || ps.drawing || null,
-    date: meta.date || ps.date || null,
-    total_openings_found: door_analysis.length,
-    total_hardware_sets_referenced: new Set(door_analysis.map(d => d.hardware_set).filter(Boolean)).size,
-    hardware_sets_missing_or_unclear: hardware_set_review.filter(s => s.status !== 'complete').length,
-    high_risk_openings: door_analysis.filter(d => d.risk_level === 'high').length,
-    medium_risk_openings: door_analysis.filter(d => d.risk_level === 'medium').length,
-    low_risk_openings: door_analysis.filter(d => d.risk_level === 'low').length,
-    complex_installations: door_analysis.filter(d => d.install_complexity === 'high').length,
-    access_control_openings: door_analysis.filter(d => (d.special_conditions || []).some(c => /CR|EL|DPS|card|access|electrified/i.test(c))).length,
-    exterior_openings: door_analysis.filter(d => d.interior_or_exterior === 'Exterior').length,
-    fire_rated_openings: door_analysis.filter(d => d.fire_rating && d.fire_rating !== '-' && !/^non/i.test(String(d.fire_rating))).length,
-    overall_bid_risk: ps.overall_bid_risk || 'Medium',
-    estimator_summary: ps.estimator_summary || `Native PDF pipeline (gpt-5.5) read ${(discovery.pages || []).length} page(s) and extracted ${door_analysis.length} opening(s) and ${hardware_set_review.length} hardware set(s) with ${hardware_set_review.reduce((n,s)=>n+(s.items?.length||0),0)} line items. Verify against source PDF before bidding.`,
-  };
-
-  /* ===== Merge LLM risks/RFIs with heuristic synthesis for comprehensiveness ===== */
-  const synth = synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope);
-  const merged = mergeRisksAndRFIs(reasoning, synth);
-
-  const totalItems = hardware_set_review.reduce((n, s) => n + (s.items?.length || 0), 0);
-  onProgress?.({ kind: 'ok', text: `Native pipeline complete · ${door_analysis.length} doors · ${hardware_set_review.length} sets · ${totalItems} items · ${merged.risks.length} risks · ${merged.rfis.length} RFIs` });
-
-  return {
-    analysis: {
-      project_summary,
-      door_analysis,
-      hardware_set_review,
-      door_hardware_mapping,
-      project_risks: merged.risks,
-      rfi_log: merged.rfis,
-      estimator_notes: merged.notes,
-      bid_recommendations: merged.recs,
-    },
-    qa: {
-      pdf_type: 'NATIVE_PIPELINE',
-      pipeline: 'native-multi-pass',
-      model: REQUIRED_MODEL,
-      discovery,
-      raw_transcription: raw,
-      verify_iterations: verifyIter,
-      reasoning_succeeded: !!reasoning && Object.keys(reasoning).length > 0,
-      extraction_complete: true,
-      extraction_failures: [],
-    },
-  };
+async function extractFromPdfDirect() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-/* Old single-shot version kept under a different name for the image pipeline fallback path */
-async function extractFromPdfDirectLegacy({ apiKey, scope, file, onProgress }) {
-  if (!apiKey) throw new Error('OpenAI API key required. Open Settings to add one.');
-  onProgress?.({ kind: 'info', text: `Reading ${file.name} (${(file.size/1024).toFixed(1)} KB)…` });
-  const arrayBuffer = await file.arrayBuffer();
-  const base64 = arrayBufferToBase64(arrayBuffer);
-  const dataUrl = `data:application/pdf;base64,${base64}`;
-
-  const callResponses = async (system, userBlocks, maxTokens = 32000) => {
-    const body = {
-      model: REQUIRED_MODEL,
-      input: [
-        { role: 'system', content: system },
-        { role: 'user', content: userBlocks },
-      ],
-      text: { format: { type: 'json_object' } },
-      max_output_tokens: maxTokens,
-    };
-    const res = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify(body),
-    });
-    let data;
-    try { data = await res.json(); } catch { throw new Error('Network error contacting OpenAI'); }
-    if (!res.ok) throw new Error(data?.error?.message || ('OpenAI error ' + res.status));
-    let text = data.output_text || '';
-    if (!text && Array.isArray(data.output)) {
-      for (const item of data.output) {
-        if (item?.content) {
-          for (const c of item.content) {
-            if (typeof c?.text === 'string') text += c.text;
-          }
-        }
-      }
-    }
-    if (!text) text = '{}';
-    const incompleteReason = data.incomplete_details?.reason;
-    try { return { parsed: JSON.parse(text), status: data.status, incompleteReason }; }
-    catch { throw new Error('Model returned invalid JSON' + (incompleteReason === 'max_output_tokens' ? ' (output truncated — increase max_output_tokens)' : '')); }
-  };
-
-  // ===== PASS A — Pure transcription (PDF → raw doors + hardware) =====
-  onProgress?.({ kind: 'info', text: `Pass A · uploading PDF to ${REQUIRED_MODEL} for transcription…` });
-  const passA = await callResponses(
-    EXTRACTION_ONLY_SYSTEM,
-    [
-      { type: 'input_file', filename: file.name, file_data: dataUrl },
-      { type: 'input_text', text: `Transcribe every door schedule row and every hardware set with all items. Return JSON per your schema.` },
-    ],
-    32000,
-  );
-  const raw = passA.parsed;
-  const rawDoors = Array.isArray(raw.doors) ? raw.doors : [];
-  const rawSets = Array.isArray(raw.hardware_sets) ? raw.hardware_sets : [];
-  const rawTotalItems = rawSets.reduce((n, s) => n + (s.items?.length || 0), 0);
-  onProgress?.({ kind: 'ok', text: `Pass A done: ${rawDoors.length} door(s), ${rawSets.length} HW set(s), ${rawTotalItems} item(s)${passA.status ? ' · status=' + passA.status : ''}` });
-  if (passA.incompleteReason) onProgress?.({ kind: 'warn', text: `Pass A incomplete: ${passA.incompleteReason}` });
-
-  // ===== PASS B — Reasoning (raw data → risks / RFIs / recommendations / notes) =====
-  onProgress?.({ kind: 'info', text: `Pass B · running senior-estimator reasoning on extracted data…` });
-  const reasoningInstruction = `The selected project scope is: ${scope || 'Supply & Installation'}
-
-The door schedule and hardware sets below were transcribed from the source PDF. Run the senior-estimator analysis on this data and return the full JSON per your system instructions.
-
-For each door, fill in opening_type, hardware_status, install_complexity, risk_level, special_conditions (CR/EL/DPS/AO/panic/etc.), issues, recommendations, rfi_required, rfi_questions, confidence.
-For each hardware set, fill in referenced_by_doors, status, missing_or_unclear_items, special_coordination, estimator_note.
-Build project_risks (minimum 3 unless trivial), rfi_log (minimum 3 unless trivial), estimator_notes, and bid_recommendations as a senior estimator would.
-
-DO NOT INVENT doors or hardware items not present in the data. Cite door marks and set IDs verbatim.
-
-RAW DATA:
-${JSON.stringify(raw)}`;
-
-  const passB = await callResponses(
-    EXTRACTION_SYSTEM,
-    [{ type: 'input_text', text: reasoningInstruction }],
-    32000,
-  );
-  const reasoning = passB.parsed;
-  if (passB.incompleteReason) onProgress?.({ kind: 'warn', text: `Pass B incomplete: ${passB.incompleteReason}` });
-
-  // ===== Merge: raw transcription is the source of truth for doors+items;
-  //              reasoning adds risk/complexity/RFIs/recommendations =====
-  const reasoningDoors = Array.isArray(reasoning.door_analysis) ? reasoning.door_analysis : [];
-  const reasoningSets  = Array.isArray(reasoning.hardware_set_review) ? reasoning.hardware_set_review : [];
-  const rDoorByMark = new Map(reasoningDoors.map(d => [d.mark, d]));
-  const rSetById   = new Map(reasoningSets.map(s => [s.hardware_set, s]));
-
-  const door_analysis = rawDoors.map(d => {
-    const r = rDoorByMark.get(d.mark) || {};
-    return {
-      mark: d.mark,
-      room_or_location: d.room_or_location ?? r.room_or_location ?? null,
-      door_type: d.door_type ?? r.door_type ?? null,
-      opening_type: r.opening_type || null,
-      interior_or_exterior: d.interior_or_exterior ?? r.interior_or_exterior ?? null,
-      size: d.size ?? r.size ?? { width: null, height: null, thickness: null },
-      door_material: d.door_material ?? r.door_material ?? null,
-      door_finish: d.door_finish ?? r.door_finish ?? null,
-      glazing: d.glazing ?? r.glazing ?? null,
-      frame_type: d.frame_type ?? r.frame_type ?? null,
-      frame_material: d.frame_material ?? r.frame_material ?? null,
-      frame_finish: d.frame_finish ?? r.frame_finish ?? null,
-      fire_rating: d.fire_rating ?? r.fire_rating ?? null,
-      hardware_set: d.hardware_set ?? r.hardware_set ?? null,
-      remarks: d.remarks ?? r.remarks ?? [],
-      hardware_status: r.hardware_status || 'review required',
-      install_complexity: r.install_complexity || 'medium',
-      risk_level: r.risk_level || 'low',
-      special_conditions: r.special_conditions || [],
-      issues: r.issues || [],
-      recommendations: r.recommendations || [],
-      rfi_required: !!r.rfi_required,
-      rfi_questions: r.rfi_questions || [],
-      confidence: r.confidence ?? 0.8,
-    };
-  });
-
-  const hardware_set_review = rawSets.map(s => {
-    const r = rSetById.get(s.id) || {};
-    const refs = door_analysis.filter(d => d.hardware_set === s.id).map(d => d.mark);
-    return {
-      hardware_set: s.id,
-      referenced_by_doors: r.referenced_by_doors?.length ? r.referenced_by_doors : refs,
-      status: r.status || (s.items?.length ? 'complete' : 'incomplete'),
-      items: s.items || [],
-      missing_or_unclear_items: r.missing_or_unclear_items || (s.items?.length ? [] : ['no hardware items extracted']),
-      special_coordination: r.special_coordination || [],
-      estimator_note: r.estimator_note || s.header_verbatim || s.name || null,
-      confidence: r.confidence ?? 0.8,
-    };
-  });
-
-  // Project summary — prefer transcribed metadata, fall back to reasoning's project_summary
-  const ps = reasoning.project_summary || {};
-  const meta = raw.project_meta || {};
-  const project_summary = {
-    scope_type: scope,
-    project_name: meta.project_name || ps.project_name || null,
-    project_number: meta.project_number || ps.project_number || null,
-    architect: meta.architect || ps.architect || null,
-    address: meta.address || ps.address || null,
-    drawing: meta.drawing || ps.drawing || null,
-    date: meta.date || ps.date || null,
-    total_openings_found: door_analysis.length,
-    total_hardware_sets_referenced: new Set(door_analysis.map(d => d.hardware_set).filter(Boolean)).size,
-    hardware_sets_missing_or_unclear: hardware_set_review.filter(s => s.status !== 'complete').length,
-    high_risk_openings: ps.high_risk_openings ?? door_analysis.filter(d => d.risk_level === 'high').length,
-    medium_risk_openings: ps.medium_risk_openings ?? door_analysis.filter(d => d.risk_level === 'medium').length,
-    low_risk_openings: ps.low_risk_openings ?? door_analysis.filter(d => d.risk_level === 'low').length,
-    complex_installations: ps.complex_installations ?? door_analysis.filter(d => d.install_complexity === 'high').length,
-    access_control_openings: ps.access_control_openings ?? 0,
-    exterior_openings: ps.exterior_openings ?? door_analysis.filter(d => d.interior_or_exterior === 'Exterior').length,
-    fire_rated_openings: ps.fire_rated_openings ?? door_analysis.filter(d => d.fire_rating && d.fire_rating !== '-').length,
-    overall_bid_risk: ps.overall_bid_risk || 'Medium',
-    estimator_summary: ps.estimator_summary || '',
-  };
-
-  const synth = synthesizeRisksAndRFIs(door_analysis, hardware_set_review, scope);
-  const merged = mergeRisksAndRFIs(reasoning, synth);
-  const parsed = {
-    project_summary,
-    door_analysis,
-    hardware_set_review,
-    project_risks: merged.risks,
-    rfi_log: merged.rfis,
-    estimator_notes: merged.notes,
-    bid_recommendations: merged.recs,
-  };
-
-  const totalItems = (parsed.hardware_set_review || []).reduce((n, s) => n + (s.items?.length || 0), 0);
-  onProgress?.({ kind: 'ok', text: `Pass B done · ${parsed.door_analysis.length} doors · ${parsed.hardware_set_review.length} sets · ${totalItems} items · ${parsed.project_risks.length} risks · ${parsed.rfi_log.length} RFIs` });
-  return parsed;
+async function extractFromPdfDirectLegacy() {
+  throw new Error('Browser-side OpenAI extraction is disabled. Use the authenticated backend extraction endpoint.');
 }
 
-/* Map the new analysis schema → legacy `doors` and `hardwareSets` used by the proposal/export flow */
 function analysisToLegacy(analysis) {
   const doors = (analysis.door_analysis || []).map(d => ({
     number: d.mark,
@@ -5295,7 +2125,7 @@ const Sidebar = ({ route, setRoute, companyName, hasProject, projectName, curren
   );
 };
 
-const Topbar = ({ crumbs = [], onToggleTheme, theme, onOpenSettings, hasApiKey, currentUser, localMode }) => (
+const Topbar = ({ crumbs = [], onToggleTheme, theme, onOpenSettings, currentUser, localMode }) => (
   <div className="topbar">
     <div className="crumb">
       {crumbs.map((c, i) => (
@@ -5306,19 +2136,14 @@ const Topbar = ({ crumbs = [], onToggleTheme, theme, onOpenSettings, hasApiKey, 
       ))}
     </div>
     <div className="topbar-actions">
-      <span className={'api-status' + (hasApiKey ? ' connected' : '')}>
-        <Icon name={hasApiKey ? 'circle-check' : 'alert'} size={13}/>
-        {hasApiKey ? 'OpenAI ready' : 'OpenAI needed'}
+      <span className={'api-status' + (currentUser ? ' connected' : '')}>
+        <Icon name={currentUser ? 'circle-check' : 'alert'} size={13}/>
+        {currentUser ? 'Secure AI ready' : 'Login needed'}
       </span>
       <span className={'api-status' + (currentUser ? ' connected' : '')}>
         <Icon name={currentUser ? 'database' : 'shield'} size={13}/>
         {currentUser ? (currentUser.role === 'admin' ? 'Admin session' : 'User session') : localMode ? 'Local mode' : 'Backend needed'}
       </span>
-      {!hasApiKey && (
-        <Button kind="ghost" size="sm" onClick={onOpenSettings}>
-          <Icon name="alert" size={14} style={{color: 'var(--accent-amber)'}}/> Connect OpenAI
-        </Button>
-      )}
       <IconButton onClick={onOpenSettings} title="Settings"><Icon name="settings"/></IconButton>
       <IconButton onClick={onToggleTheme} title="Toggle theme"><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></IconButton>
     </div>
@@ -5333,16 +2158,13 @@ const SettingsModal = ({ tweaks, setTweaks, onClose }) => {
            footer={<Button kind="primary" onClick={onClose}>Done</Button>}>
       <div style={{display:'flex', flexDirection:'column', gap: 18}}>
         <div>
-          <div style={{fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.08, color: 'var(--fg-muted)', marginBottom: 8}}>OpenAI</div>
-          <div style={{padding: 12, background: 'var(--accent-amber-light)', border: '1px solid #fde68a', borderRadius: 8, fontSize: 12, marginBottom: 12, display: 'flex', gap: 8}}>
-            <Icon name="shield" size={14} style={{color:'#92400e', flexShrink: 0, marginTop: 2}}/>
-            <div style={{color:'#92400e'}}>
-              <strong>Stored locally.</strong> Your API key is kept in this browser's localStorage and sent directly from your browser to api.openai.com. Do not use a shared device.
+          <div style={{fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.08, color: 'var(--fg-muted)', marginBottom: 8}}>Secure AI</div>
+          <div style={{padding: 12, background: 'var(--accent-green-light)', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, marginBottom: 12, display: 'flex', gap: 8}}>
+            <Icon name="shield" size={14} style={{color:'var(--accent-green)', flexShrink: 0, marginTop: 2}}/>
+            <div>
+              <strong>Server-managed.</strong> OpenAI calls run through the authenticated Render backend. The browser never receives the server API key.
             </div>
           </div>
-          <label style={{display:'block', fontSize: 12, fontWeight: 600, color:'var(--fg-muted)', marginBottom: 4}}>API Key</label>
-          <input className="input" type="password" placeholder="sk-…"
-                 value={tweaks.apiKey || ''} onChange={e => set('apiKey', e.target.value)}/>
           <label style={{display:'block', fontSize: 12, fontWeight: 600, color:'var(--fg-muted)', marginTop: 12, marginBottom: 4}}>Model</label>
           <div className="input" style={{display:'flex', alignItems:'center', gap: 8, opacity: 0.85}}>
             <span className="mono" style={{fontWeight: 600}}>{REQUIRED_MODEL}</span>
@@ -5516,7 +2338,7 @@ const Dashboard = ({ proposals, setRoute, onOpen, onDelete, onExportExcel, onExp
 };
 
 /* ---------- Upload ---------- */
-const UploadScreen = ({ onStartParse, hasApiKey, onOpenSettings, tweaks, setTweaks }) => {
+const UploadScreen = ({ onStartParse, tweaks, setTweaks }) => {
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState(null);
   const inputRef = useRef();
@@ -5532,21 +2354,6 @@ const UploadScreen = ({ onStartParse, hasApiKey, onOpenSettings, tweaks, setTwea
           <div className="page-subtitle">Upload an architectural PDF — we'll deliver a senior-estimator review of doors, hardware, risks, and RFIs.</div>
         </div>
       </div>
-
-      {!hasApiKey && (
-        <div className="card" style={{marginBottom: 16, borderColor: 'var(--accent-amber)'}}>
-          <div className="card-body" style={{display:'flex', gap:12, alignItems:'center'}}>
-            <div style={{width:40, height:40, borderRadius:8, background:'var(--accent-amber-light)', color:'#92400e', display:'grid', placeItems:'center'}}>
-              <Icon name="key"/>
-            </div>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:600}}>Connect OpenAI to enable analysis</div>
-              <div className="muted" style={{fontSize:13}}>Add your API key in Settings. Analysis runs against your configured model.</div>
-            </div>
-            <Button kind="primary" onClick={onOpenSettings}><Icon name="settings"/> Open Settings</Button>
-          </div>
-        </div>
-      )}
 
       <div className="card" style={{marginBottom: 16}}>
         <div className="card-header"><div className="card-title">1 · Project scope</div></div>
@@ -5593,10 +2400,10 @@ const UploadScreen = ({ onStartParse, hasApiKey, onOpenSettings, tweaks, setTwea
           </div>
           <div className="row" style={{marginTop: 20, justifyContent:'space-between', alignItems:'center'}}>
             <div className="muted" style={{fontSize:12, display:'flex', alignItems:'center', gap:6}}>
-              <Icon name="info" size={14}/> Scope: <strong style={{color:'var(--fg)'}}>{scope}</strong> · PDF is uploaded directly to OpenAI for senior-estimator analysis (no browser-side text extraction).
+              <Icon name="shield" size={14}/> Scope: <strong style={{color:'var(--fg)'}}>{scope}</strong> · PDF is sent to the authenticated backend; OpenAI credentials stay server-side.
             </div>
-            <Button kind="primary" size="lg" disabled={!file || !hasApiKey}
-                    style={!file || !hasApiKey ? {opacity:.5, cursor:'not-allowed'} : null}
+            <Button kind="primary" size="lg" disabled={!file}
+                    style={!file ? {opacity:.5, cursor:'not-allowed'} : null}
                     onClick={() => onStartParse(file)}>
               <Icon name="sparkles"/> Analyze as senior estimator
             </Button>
@@ -5628,7 +2435,7 @@ const UploadScreen = ({ onStartParse, hasApiKey, onOpenSettings, tweaks, setTwea
 };
 
 /* ---------- Parsing ---------- */
-const ParsingScreen = ({ file, tweaks, onDone, onError, onCancel }) => {
+const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) => {
   const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [logs, setLogs] = useState([]);
@@ -5661,97 +2468,25 @@ const ParsingScreen = ({ file, tweaks, onDone, onError, onCancel }) => {
 
         setStep(0);
         setProgress(8);
-        pushLog('info', `Preparing ${file.name} (${(file.size/1024).toFixed(0)} KB) — staged pipeline (Call 1 doors · Call 2 hardware · code mapping/rollup · Call 3 RFIs)…`);
+        if (!authToken) throw new Error('Login is required for secure backend extraction.');
+        pushLog('info', `Uploading ${file.name} (${(file.size/1024).toFixed(0)} KB) to secure backend extraction…`);
 
-        let pipelineResult;
-        let pipelineSource = 'staged';
-        const forceVision = !!tweaks.forceVision;
         const skipRFIs = !!tweaks.skipRFIs;
-
-        if (forceVision) {
-          pushLog('info', `forceVision is on — using image pipeline instead of staged pipeline.`);
-          pipelineSource = 'image-forced';
-          setStep(1);
-          setProgress(20);
-          pipelineResult = await extractFromPdfPipeline({
-            apiKey: tweaks.apiKey,
-            scope,
-            file,
-            onProgress: ({ kind, text }) => {
-              pushLog(kind, text);
-              setProgress(p => Math.min(85, p + 3));
-            },
-          });
-        } else {
-          try {
-            setStep(1);
-            setProgress(15);
-            pipelineResult = await extractFromPdfStaged({
-              apiKey: tweaks.apiKey,
-              scope,
-              file,
-              runRFIs: !skipRFIs,
-              onProgress: ({ kind, text }) => {
-                pushLog(kind, text);
-                if (/^Call 1/i.test(text))      { setStep(1); setProgress(p => Math.max(p, 25)); }
-                else if (/^Call 2/i.test(text)) { setStep(2); setProgress(p => Math.max(p, 50)); }
-                else if (/^Mapping/i.test(text)){ setStep(3); setProgress(p => Math.max(p, 75)); }
-                else if (/^Call 3/i.test(text)) { setStep(4); setProgress(p => Math.max(p, 85)); }
-                else setProgress(p => Math.min(90, p + 1));
-              },
-            });
-          } catch (eStaged) {
-            // Staged pipeline failed — fall through to the legacy single-shot / multipass / image chain
-            pushLog('warn', `Staged pipeline failed: ${eStaged.message}. Falling back to single-shot…`);
-            pipelineSource = 'native-fast';
-            try {
-              setStep(1);
-              setProgress(20);
-              pipelineResult = await extractFromPdfFast({
-                apiKey: tweaks.apiKey,
-                scope,
-                file,
-                onProgress: ({ kind, text }) => {
-                  pushLog(kind, text);
-                  if (/thinking/i.test(text)) setProgress(p => Math.min(70, p + 1));
-                  else if (/Done|returned/i.test(text)) { setStep(3); setProgress(80); }
-                  else setProgress(p => Math.min(70, p + 3));
-                },
-              });
-            } catch (e) {
-              // Fast pipeline failed (truncation, network, etc.) — try multi-pass native, then image pipeline
-              pushLog('warn', `Fast pipeline failed: ${e.message}. Trying multi-pass native…`);
-              pipelineSource = 'native-multipass';
-              try {
-                pipelineResult = await extractFromPdfDirect({
-                  apiKey: tweaks.apiKey,
-                  scope,
-                  file,
-                  onProgress: ({ kind, text }) => {
-                    pushLog(kind, text);
-                    setProgress(p => Math.min(85, p + 2));
-                  },
-                });
-              } catch (e2) {
-                pushLog('warn', `Multi-pass native failed: ${e2.message}. Falling back to image pipeline…`);
-                pipelineSource = 'image-fallback';
-                pipelineResult = await extractFromPdfPipeline({
-                  apiKey: tweaks.apiKey,
-                  scope,
-                  file,
-                  onProgress: ({ kind, text }) => {
-                    pushLog(kind, text);
-                    setProgress(p => Math.min(85, p + 3));
-                  },
-                });
-              }
-            }
-          }
-        }
+        setStep(1);
+        setProgress(18);
+        const pipelineResult = await apiExtractPdf({
+          token: authToken,
+          file,
+          scope,
+          runRFIs: !skipRFIs,
+        });
+        (pipelineResult.logs || []).forEach(entry => pushLog(entry.kind || entry.level || 'info', entry.text || entry.message || ''));
+        setStep(4);
+        setProgress(90);
 
         const result = {
           ...pipelineResult.analysis,
-          qa: { ...pipelineResult.qa, pipeline_source: pipelineSource },
+          qa: { ...pipelineResult.qa, pipeline_source: 'secure-backend' },
         };
 
         setStep(5);
@@ -6665,8 +3400,35 @@ const RisksScreen = ({ analysis, tweaks, onContinue }) => {
 
 /* ---------- Bid Recommendations ---------- */
 const BidRecommendationsScreen = ({ analysis, tweaks, onContinue }) => {
-  const br = analysis?.bid_recommendations || {};
   const scope = tweaks.scope || 'Supply & Installation';
+
+  const br = useMemo(() => {
+    const stored = analysis?.bid_recommendations || {};
+    try {
+      const synth = synthesizeRisksAndRFIs(
+        analysis?.door_analysis || [],
+        analysis?.hardware_set_review || [],
+        scope,
+        analysis?.sheet_context || null,
+      );
+      const buckets = ['supply_only_notes','installation_only_notes','supply_and_installation_notes','exclusions_to_consider','allowances_to_consider','coordination_items'];
+      const merged = {};
+      buckets.forEach(bucket => {
+        const seen = new Set();
+        const out = [];
+        [...(Array.isArray(stored[bucket]) ? stored[bucket] : []), ...(synth.recs[bucket] || [])].forEach(line => {
+          const key = String(line || '').toLowerCase().trim();
+          if (!key || seen.has(key)) return;
+          seen.add(key);
+          out.push(line);
+        });
+        merged[bucket] = out;
+      });
+      return merged;
+    } catch {
+      return stored;
+    }
+  }, [analysis, scope]);
 
   const sections = [
     { key: 'supply_only_notes', label: 'Supply-only notes', icon: 'package', active: scope === 'Supply Only' || scope === 'Supply & Installation' },
@@ -6688,6 +3450,8 @@ const BidRecommendationsScreen = ({ analysis, tweaks, onContinue }) => {
           <Button kind="primary" onClick={onContinue}>Build proposal <Icon name="arrow-right"/></Button>
         </div>
       </div>
+
+      <CapturedDrawingNotes sheetContext={analysis?.sheet_context} />
 
       <div style={{display:'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12}}>
         {sections.map(s => {
@@ -6713,6 +3477,80 @@ const BidRecommendationsScreen = ({ analysis, tweaks, onContinue }) => {
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+};
+
+/* ---------- Captured drawing notes ---------- */
+const CapturedDrawingNotes = ({ sheetContext }) => {
+  const ctx = sheetContext || {};
+  const generalNotes = Array.isArray(ctx.general_notes) ? ctx.general_notes : [];
+  const preamble = Array.isArray(ctx.hardware_preamble) ? ctx.hardware_preamble : [];
+  const keying = Array.isArray(ctx.keying_notes) ? ctx.keying_notes : [];
+  const legend = (ctx.legend && typeof ctx.legend === 'object' && !Array.isArray(ctx.legend)) ? ctx.legend : {};
+  const legendEntries = Object.entries(legend);
+  const total = generalNotes.length + preamble.length + keying.length + legendEntries.length;
+
+  if (total === 0) {
+    return (
+      <div className="card" style={{marginBottom: 12, borderLeft: '4px solid var(--accent-amber)'}}>
+        <div className="card-body" style={{display:'flex', gap: 12, alignItems:'center'}}>
+          <Icon name="alert" style={{color: 'var(--accent-amber)'}}/>
+          <div style={{fontSize: 13, lineHeight: 1.5}}>
+            <strong>No sheet-level context captured.</strong>
+            <span className="muted"> No general notes, hardware preamble, keying notes, or legend abbreviations were extracted from the drawings. Manually verify project-specific scope language before bid.</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const Section = ({ title, icon, items, mono }) => (
+    items.length === 0 ? null : (
+      <div style={{padding: 12, borderBottom: '1px solid var(--border)'}}>
+        <div className="row" style={{gap: 8, marginBottom: 8}}>
+          <Icon name={icon} size={14} style={{color: 'var(--brand-600)'}}/>
+          <div style={{fontSize: 12, fontWeight: 600, letterSpacing: 0.4, textTransform: 'uppercase', color: 'var(--fg-muted, var(--fg))'}}>{title}</div>
+          <Badge>{items.length}</Badge>
+        </div>
+        <ul style={{margin: 0, padding: '0 0 0 18px', fontSize: 13, lineHeight: 1.6}}>
+          {items.map((s, i) => <li key={i} style={{marginBottom: 4, fontFamily: mono ? 'ui-monospace, SFMono-Regular, Menlo, monospace' : 'inherit', fontSize: mono ? 12 : 13}}>{s}</li>)}
+        </ul>
+      </div>
+    )
+  );
+
+  return (
+    <div className="card" style={{marginBottom: 12}}>
+      <div className="card-header">
+        <div className="row" style={{gap: 8}}>
+          <Icon name="file-text" size={14} style={{color: 'var(--brand-600)'}}/>
+          <div className="card-title">Captured from the drawings</div>
+        </div>
+        <Badge>{total}</Badge>
+      </div>
+      <div style={{padding: 4}}>
+        <Section title="General notes (door-schedule sheet)" icon="file-text" items={generalNotes} />
+        <Section title="Hardware preamble" icon="package" items={preamble} />
+        <Section title="Keying notes" icon="key" items={keying} />
+        {legendEntries.length > 0 && (
+          <div style={{padding: 12}}>
+            <div className="row" style={{gap: 8, marginBottom: 8}}>
+              <Icon name="library" size={14} style={{color: 'var(--brand-600)'}}/>
+              <div style={{fontSize: 12, fontWeight: 600, letterSpacing: 0.4, textTransform: 'uppercase', color: 'var(--fg-muted, var(--fg))'}}>Schedule / hardware legend</div>
+              <Badge>{legendEntries.length}</Badge>
+            </div>
+            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 6}}>
+              {legendEntries.map(([abbrev, meaning]) => (
+                <div key={abbrev} style={{display: 'flex', gap: 8, fontSize: 12, lineHeight: 1.5, padding: '6px 8px', background: 'var(--bg-sunken)', borderRadius: 4}}>
+                  <span className="mono" style={{fontWeight: 700, color: 'var(--brand-600)', flexShrink: 0}}>{abbrev}</span>
+                  <span style={{color: 'var(--fg)'}}>{meaning}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -6972,9 +3810,9 @@ const ExtractionQAScreen = ({ analysis }) => {
 
       {!isImage && (
         <div className="card">
-          <div className="card-header"><div className="card-title">Direct PDF extraction</div></div>
+          <div className="card-header"><div className="card-title">Secure backend extraction</div></div>
           <div className="card-body" style={{fontSize: 13, lineHeight: 1.7}}>
-            This PDF was uploaded directly to OpenAI as a single file. The model read the document end-to-end (text + visual layout) and returned the structured senior-estimator JSON — no browser-side text extraction or per-page image rendering was needed.
+            This PDF was processed by the authenticated Render backend. OpenAI credentials and extraction prompts stayed server-side; the browser received only the structured analysis JSON.
             <div style={{marginTop: 12, padding: 12, background: 'var(--bg-sunken)', borderRadius: 8, fontSize: 12}}>
               <strong>Extracted at:</strong> {qa.extracted_at}<br/>
               <strong>File:</strong> {qa.file_name} ({((qa.file_size || 0) / 1024).toFixed(0)} KB)<br/>
@@ -7802,7 +4640,6 @@ const DEFAULT_TWEAKS = /*EDITMODE-BEGIN*/{
   "companyName": "FastBid24 Hardware Co.",
   "markup": 20,
   "template": "Modern",
-  "apiKey": "",
   "model": "gpt-5.5",
   "visionModel": "",
   "forceVision": false,
@@ -7831,6 +4668,13 @@ function App() {
   const [proposals, setProposals] = useLocal('fb24-proposals', []);
   const [project, setProject] = useLocal('fb24-project', { name: '', proposalId: '' });
   const [uploadFile, setUploadFile] = useState(null);
+
+  // Remove legacy browser-stored OpenAI keys from older deployments.
+  useEffect(() => {
+    if (Object.prototype.hasOwnProperty.call(tweaks || {}, 'apiKey')) {
+      setTweaks(({ apiKey, ...rest }) => rest);
+    }
+  }, [tweaks, setTweaks]);
 
   // Apply theme + brand colors
   useEffect(() => {
@@ -8099,11 +4943,11 @@ function App() {
     <div className="app">
       <Sidebar route={route} setRoute={setRoute} companyName={tweaks.companyName} hasProject={hasProject} projectName={project.name} currentUser={currentUser} onLogout={onLogout}/>
       <div className="main">
-        <Topbar crumbs={crumbMap[route] || []} theme={tweaks.theme} onToggleTheme={toggleTheme} onOpenSettings={() => setSettingsOpen(true)} hasApiKey={!!tweaks.apiKey} currentUser={currentUser} localMode={localMode}/>
+        <Topbar crumbs={crumbMap[route] || []} theme={tweaks.theme} onToggleTheme={toggleTheme} onOpenSettings={() => setSettingsOpen(true)} currentUser={currentUser} localMode={localMode}/>
         <div className="content">
           {route === 'dashboard' && <Dashboard proposals={proposals} setRoute={setRoute} onOpen={onOpenProposal} onDelete={onDeleteProposal} onExportExcel={onExportProposalExcel} onExportComsenseCsv={onExportProposalComsenseCsv}/>}
-          {route === 'upload' && <UploadScreen onStartParse={onStartParse} hasApiKey={!!tweaks.apiKey} onOpenSettings={() => setSettingsOpen(true)} tweaks={tweaks} setTweaks={setTweaks}/>}
-          {route === 'parsing' && <ParsingScreen file={uploadFile} tweaks={tweaks} onDone={onParseDone} onCancel={() => setRoute('upload')}/>}
+          {route === 'upload' && <UploadScreen onStartParse={onStartParse} tweaks={tweaks} setTweaks={setTweaks}/>}
+          {route === 'parsing' && <ParsingScreen file={uploadFile} tweaks={tweaks} authToken={auth?.token} onDone={onParseDone} onCancel={() => setRoute('upload')}/>}
           {route === 'summary' && (analysis ? <SummaryScreen analysis={analysis} project={project} tweaks={tweaks} setRoute={setRoute}/> : <NoProjectState setRoute={setRoute}/>)}
           {route === 'doors' && (analysis ? <DoorAnalysisScreen analysis={analysis} setAnalysis={setAnalysis} onContinue={() => setRoute('mapping')}/> : <NoProjectState setRoute={setRoute}/>)}
           {route === 'mapping' && (analysis ? <HardwareReviewScreen analysis={analysis} onContinue={() => setRoute('risks')}/> : <NoProjectState setRoute={setRoute}/>)}
@@ -8141,19 +4985,18 @@ const SettingsScreen = ({ tweaks, setTweaks }) => {
       <div className="page-header">
         <div>
           <h1 className="page-title">Settings</h1>
-          <div className="page-subtitle">Configure OpenAI access, company details, and proposal defaults.</div>
+          <div className="page-subtitle">Configure company details and proposal defaults. AI extraction is handled securely by the backend.</div>
         </div>
       </div>
       <div className="card" style={{marginBottom: 16}}>
-        <div className="card-header"><div className="card-title">OpenAI</div></div>
+        <div className="card-header"><div className="card-title">Secure AI</div></div>
         <div className="card-body" style={{display:'flex', flexDirection:'column', gap: 12}}>
-          <div style={{padding: 12, background: 'var(--accent-amber-light)', border: '1px solid #fde68a', borderRadius: 8, fontSize: 12, display: 'flex', gap: 8}}>
-            <Icon name="shield" size={14} style={{color:'#92400e', flexShrink: 0, marginTop: 2}}/>
-            <div style={{color:'#92400e'}}>
-              <strong>Local storage only.</strong> Your API key is kept in this browser and sent directly from here to api.openai.com. Don't use a shared device.
+          <div style={{padding: 12, background: 'var(--accent-green-light)', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, display: 'flex', gap: 8}}>
+            <Icon name="shield" size={14} style={{color:'var(--accent-green)', flexShrink: 0, marginTop: 2}}/>
+            <div>
+              <strong>Server-managed.</strong> OpenAI credentials and extraction prompts are handled on the Render backend, not in this browser.
             </div>
           </div>
-          <div><label className="tweak-label">API Key</label><input className="input" type="password" placeholder="sk-…" value={tweaks.apiKey || ''} onChange={e => set('apiKey', e.target.value)}/></div>
           <div>
             <label className="tweak-label">Model</label>
             <div className="input" style={{display:'flex', alignItems:'center', gap: 8}}>

@@ -18,6 +18,12 @@ services:
         value: 100
       - key: FASTBID24_SESSION_DAYS
         value: 14
+      - key: FASTBID24_OPENAI_MODEL
+        value: gpt-5.5
+      - key: FASTBID24_EXTRACTION_RATE_LIMIT_PER_HOUR
+        value: 12
+      - key: FASTBID24_OPENAI_API_KEY
+        sync: false
       - key: FASTBID24_CORS_ORIGINS
         sync: false
       - key: DATABASE_URL

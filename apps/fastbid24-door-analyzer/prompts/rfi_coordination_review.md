@@ -1,28 +1,5 @@
 # RFI & Coordination Review Prompt
 
-You are a senior doors, frames, and hardware estimator.
+The production prompt is server-side only.
 
-Review the extracted door schedule, hardware sets, and door-to-hardware mapping.
-
-Create RFIs and coordination notes only for real issues.
-
-Flag:
-- Missing hardware set
-- Hardware set referenced but no item rows extracted
-- Existing door with new hardware ambiguity
-- Exterior door without threshold/weatherstrip/sweep
-- Access control / card reader / electrified hardware
-- Panic / egress hardware
-- Double door missing pair hardware components
-- Fire-rated or smoke-rated opening requiring verification
-- Door remarks that conflict with hardware set
-- Door type that does not match assigned hardware set
-- Hardware set marked not used but referenced by door
-- Storefront or aluminum entrance coordination
-
-Return:
-- severity
-- category
-- issue
-- affected_doors
-- recommendation
+Cloud Pages serves this directory as static frontend content, so proprietary LLM instructions are not shipped here. See the Render backend extraction service for runtime behavior.
