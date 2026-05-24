@@ -153,6 +153,67 @@ Root directory: empty or repository root
 - Confirm the run appears in Admin.
 - Confirm normal user can only see their own runs.
 
+## Render Backend Alternative
+
+Render is easier than managing an Oracle VM. It is not open-source/self-hosted, but it is a good first public deployment for this Flask API.
+
+Render supports Docker services from a repository Dockerfile. A Render web service must bind its public HTTP server to `0.0.0.0` and the `PORT` environment variable. This repo includes a Dockerfile that does that.
+
+Manual Render setup:
+
+1. Push the repo to GitHub.
+2. Open Render Dashboard.
+3. Click **New** > **Web Service**.
+4. Connect the GitHub repo.
+5. Use these settings:
+
+```text
+Name: fastbid24-door-analyzer-api
+Language/runtime: Docker
+Root directory: apps/fastbid24-door-analyzer/backend
+Dockerfile path: Dockerfile
+Health check path: /api/v1/health
+Plan: Free for testing, Starter for serious usage
+```
+
+6. Add environment variables:
+
+```text
+PORT=10000
+FASTBID24_API_HOST=0.0.0.0
+FASTBID24_API_PORT=10000
+FASTBID24_DATABASE_NAME=fastbid24_door_analyzer
+FASTBID24_MAX_UPLOAD_MB=100
+FASTBID24_SESSION_DAYS=14
+DATABASE_URL=...
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_REGION=...
+S3_BUCKET_NAME=door-schedules-fastbid24
+FASTBID24_S3_BUCKET_NAME=door-schedules-fastbid24
+FASTBID24_CORS_ORIGINS=https://your-cloudflare-pages-domain.pages.dev
+```
+
+7. Deploy.
+8. Open:
+
+```text
+https://your-render-service.onrender.com/api/v1/health
+```
+
+9. In Render Shell, run:
+
+```bash
+python scripts/init_backend.py --skip-create-database
+python scripts/check_deploy.py
+```
+
+Use `--skip-create-database` because the Supabase database has already been created locally.
+
+Blueprint setup:
+
+The repo also has `render.yaml` at the root. In Render, choose **New** > **Blueprint**, select the repo, and Render will prompt for the `sync: false` secrets.
+
 ## Capacity Notes
 
 This architecture is suitable for an MVP with 1000+ registered users if active usage is moderate. For 1000 users at the exact same time, plan paid infrastructure:

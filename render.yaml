@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: fastbid24-door-analyzer-api
+    runtime: docker
+    plan: free
+    rootDir: apps/fastbid24-door-analyzer/backend
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: FASTBID24_API_HOST
+        value: 0.0.0.0
+      - key: FASTBID24_API_PORT
+        value: 10000
+      - key: FASTBID24_DATABASE_NAME
+        value: fastbid24_door_analyzer
+      - key: FASTBID24_MAX_UPLOAD_MB
+        value: 100
+      - key: FASTBID24_SESSION_DAYS
+        value: 14
+      - key: FASTBID24_CORS_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: S3_BUCKET_NAME
+        sync: false
+      - key: FASTBID24_S3_BUCKET_NAME
+        sync: false
+      - key: S3_ENDPOINT_URL
+        sync: false
