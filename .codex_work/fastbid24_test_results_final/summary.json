@@ -1,0 +1,114 @@
+[
+  {
+    "file": "testing - project 1 .pdf",
+    "doors": 62,
+    "sets": 18,
+    "items": 134,
+    "sets_with_items": 18,
+    "empty_sets": [],
+    "mapping_rows": 455,
+    "failed_mapping_rows": 0,
+    "qa_issues": 4,
+    "steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 171,
+        "truncated": false,
+        "output_count": 62
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 108,
+        "truncated": false,
+        "output_count": 18
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 418,
+        "output_count": 134
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 455
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 1
+      }
+    ]
+  },
+  {
+    "file": "Door Schedule & Hardware Sets.pdf",
+    "doors": 43,
+    "sets": 21,
+    "items": 177,
+    "sets_with_items": 21,
+    "empty_sets": [],
+    "mapping_rows": 360,
+    "failed_mapping_rows": 0,
+    "qa_issues": 0,
+    "steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 209,
+        "truncated": false,
+        "output_count": 43
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 159,
+        "truncated": false,
+        "output_count": 21
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 440,
+        "output_count": 177
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 360
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ]
+  }
+]

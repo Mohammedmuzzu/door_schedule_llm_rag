@@ -1,0 +1,470 @@
+{
+  "parsed": {
+    "hardware_sets": [
+      {
+        "hardware_set": "1",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. CONTROL",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 1 doors.",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 100C, hardware set 1.",
+            "confidence": 0.92
+          }
+        ]
+      },
+      {
+        "hardware_set": "3",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "FULL PERIMETER COMPRESSION SEALS AT HEAD/JAMB",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 3 doors.",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "WEATHER TIGHT DOOR BOTTOM SEALS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770",
+            "finish": null,
+            "notes": "Shown as \"WEATHER TIGHT DOOR BOTTOM SEALS (ZERO: 770)\".",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 3,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. CONTROL",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 117A, hardware set 3.",
+            "confidence": 0.93
+          },
+          {
+            "item_seq": 4,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. MONITOR",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 120A, hardware set 3.",
+            "confidence": 0.93
+          }
+        ]
+      },
+      {
+        "hardware_set": "4",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. MONITOR",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 4 doors.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "5",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. MONITOR",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 132A, hardware set 5.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "7",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "FULL PERIMETER GASKET SEALS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remarks as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.94
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "AUTOMATIC DOOR BOTTOMS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remarks as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.94
+          },
+          {
+            "item_seq": 3,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for multiple hardware set 7 doors.",
+            "confidence": 0.93
+          }
+        ]
+      },
+      {
+        "hardware_set": "8",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "EGRESS HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks as \"FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE\".",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 8 doors 100E, 100F, 110C, and 110D.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "9",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "FULL PERIMETER GASKET SEALS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remarks as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.94
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "AUTOMATIC DOOR BOTTOMS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remarks as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.94
+          },
+          {
+            "item_seq": 3,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 128B, hardware set 9.",
+            "confidence": 0.9
+          }
+        ]
+      },
+      {
+        "hardware_set": "10",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "EGRESS HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 100A as \"FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE\".",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "11",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "GASKET SEALS OR SILENCERS",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 11 doors 201A and 202A.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "13",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 111A, hardware set 13.",
+            "confidence": 0.92
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "GASKET SEALS OR SILENCERS",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 13 doors 116B and 120B.",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 3,
+            "qty": null,
+            "unit": null,
+            "description": "FULL PERIMETER GASKET SEALS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 119A as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.92
+          },
+          {
+            "item_seq": 4,
+            "qty": null,
+            "unit": null,
+            "description": "AUTOMATIC DOOR BOTTOMS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "770, 364, 55-155",
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 119A as part of \"WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)\".",
+            "confidence": 0.92
+          }
+        ]
+      },
+      {
+        "hardware_set": "14",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 14 doors.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "15",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 107A, hardware set 15.",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 2,
+            "qty": null,
+            "unit": null,
+            "description": "HARDWARE BY STC DOOR MANUFACTURER",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 107A, hardware set 15.",
+            "confidence": 0.95
+          },
+          {
+            "item_seq": 3,
+            "qty": null,
+            "unit": null,
+            "description": "A.C. CONTROL",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 136A, hardware set 15.",
+            "confidence": 0.93
+          },
+          {
+            "item_seq": 4,
+            "qty": null,
+            "unit": null,
+            "description": "FULL PERIMETER GASKET SEATLS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "88S, 364",
+            "finish": null,
+            "notes": "Preserves visible typo \"SEATLS\" from door schedule remark at door 136A: \"WITH FULL PERIMETER GASKET SEATLS AND AUTOMATIC DOOR BOTTOMS (ZERO: 88S, 364)\".",
+            "confidence": 0.9
+          },
+          {
+            "item_seq": 5,
+            "qty": null,
+            "unit": null,
+            "description": "AUTOMATIC DOOR BOTTOMS",
+            "manufacturer": "ZERO",
+            "model_or_catalog": "88S, 364",
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 136A as part of \"WITH FULL PERIMETER GASKET SEATLS AND AUTOMATIC DOOR BOTTOMS (ZERO: 88S, 364)\".",
+            "confidence": 0.92
+          }
+        ]
+      },
+      {
+        "hardware_set": "16",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "INDICATOR",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remarks for hardware set 16 doors 129A and 130A.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "17",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "LOCKING HARDWARE",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 113A, hardware set 17.",
+            "confidence": 0.95
+          }
+        ]
+      },
+      {
+        "hardware_set": "19",
+        "set_title": null,
+        "status": "review_required",
+        "items": [
+          {
+            "item_seq": 1,
+            "qty": null,
+            "unit": null,
+            "description": "EXTERIOR RATED SLIDING GLASS DOOR",
+            "manufacturer": null,
+            "model_or_catalog": null,
+            "finish": null,
+            "notes": "Visible in door schedule remark at door 106A, hardware set 19.",
+            "confidence": 0.9
+          }
+        ]
+      }
+    ]
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware rescue - processing document data.",
+      "message": "Hardware rescue - processing document data.",
+      "stage": "Hardware rescue",
+      "ts": "2026-05-25T21:18:29Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware rescue - completed in 187s.",
+      "message": "Hardware rescue - completed in 187s.",
+      "stage": "Hardware rescue",
+      "ts": "2026-05-25T21:21:37Z"
+    }
+  ]
+}

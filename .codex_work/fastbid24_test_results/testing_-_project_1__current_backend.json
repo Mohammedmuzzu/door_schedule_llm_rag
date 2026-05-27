@@ -1,0 +1,4424 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "KBC WORSHIP CENTER EXPANSION",
+      "project_number": null,
+      "architect": "Studio Red Architects",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 62,
+      "total_hardware_sets_referenced": 18,
+      "hardware_sets_missing_or_unclear": 18,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 62,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 14,
+      "exterior_openings": 0,
+      "fire_rated_openings": 6,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 62 opening(s) and 18 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100A",
+        "room_or_location": "FROM ROOM: EXIST. CORRIDOR; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "10",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100B",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: LOBBY",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "A.C. CONTROL"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100C",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: LOBBY",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+        "remarks": [
+          "A.C. CONTROL, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100D",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: LOBBY",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "A.C. CONTROL"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100E",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: NEW VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100F",
+        "room_or_location": "FROM ROOM: NEW VESTIBULE; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100G",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: EXIST. CORRIDOR",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100H",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: LOBBY",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "102A",
+        "room_or_location": "FROM ROOM: WOMENS RR; TO ROOM: NEW VESTIBULE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "18",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "102B",
+        "room_or_location": "FROM ROOM: NEW VESTIBULE; TO ROOM: WOMENS RR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "18",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "103A",
+        "room_or_location": "FROM ROOM: ELEC.; TO ROOM: NEW VESTIBULE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "105A",
+        "room_or_location": "FROM ROOM: MENS RR; TO ROOM: LOBBY",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "18",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "106A",
+        "room_or_location": "FROM ROOM: VIDEO; TO ROOM: RACK ROOM",
+        "door_type": "EE",
+        "opening_type": "EE",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "5' - 8\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "19",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "EXTERIOR RATED SLIDING GLASS DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "107A",
+        "room_or_location": "FROM ROOM: WORSHIP; TO ROOM: VIDEO",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "6' - 8\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "15",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "STC 50, LOCKING HARDWARE. HARDWARE BY STC DOOR MANUFACTURER"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "107B",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: VIDEO",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "15",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "108A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: MENS RR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "18",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "109A",
+        "room_or_location": "FROM ROOM: STORAGE; TO ROOM: LOBBY",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "110A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: EXTERIOR",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "A.C. CONTROL"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "110B",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: EXTERIOR",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "A.C. CONTROL"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "110C",
+        "room_or_location": "FROM ROOM: NEW VESTIBULE; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "110D",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: NEW VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": "ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM",
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY WITH EGRESS HARDWARE, ELECTROMAGNETIC HOLD OPEN TIED TO FIRE ALARM SYSTEM"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "111A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: STORAGE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "112A",
+        "room_or_location": "FROM ROOM: OFFICE; TO ROOM: OPEN OFFICE",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "14",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "113A",
+        "room_or_location": "FROM ROOM: OPEN OFFICE; TO ROOM: LOBBY",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "17",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "114A",
+        "room_or_location": "FROM ROOM: OPEN OFFICE; TO ROOM: OFFICE",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "14",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "115A",
+        "room_or_location": "FROM ROOM: OFFICE; TO ROOM: OPEN OFFICE",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "14",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "116A",
+        "room_or_location": "FROM ROOM: OFFICE; TO ROOM: STORAGE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "12",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "116B",
+        "room_or_location": "FROM ROOM: VOMITORY; TO ROOM: STORAGE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "5' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GASKET SEALS OR SILENCERS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "117A",
+        "room_or_location": "FROM ROOM: VESTIBULE; TO ROOM: EXTERIOR",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "INSULATED METAL DOOR WITH FULL PERIMETER COMPRESSION SEALS AT HEAD/JAMB AND WEATHER TIGHT DOOR BOTTOM SEALS (ZERO: 770), A.C. CONTROL"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118A",
+        "room_or_location": "FROM ROOM: WORSHIP; TO ROOM: VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "9",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118B",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: VOMITORY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118C",
+        "room_or_location": "FROM ROOM: VOMITORY; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118D",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: VOMITORY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118E",
+        "room_or_location": "FROM ROOM: VOMITORY; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "118F",
+        "room_or_location": "FROM ROOM: WORSHIP; TO ROOM: VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "9",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "119A",
+        "room_or_location": "FROM ROOM: AV/AMP; TO ROOM: WING SPACE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120A",
+        "room_or_location": "FROM ROOM: STORAGE VESTIBULE; TO ROOM: EXTERIOR",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "8' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": "A.C. MONITOR",
+        "remarks": [
+          "INSULATED METAL DOOR WITH FULL PERIMETER COMPRESSION SEALS AT HEAD/JAMB AND WEATHER TIGHT DOOR BOTTOM SEALS (ZERO: 770), A.C. MONITOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120B",
+        "room_or_location": "FROM ROOM: STORAGE VESTIBULE; TO ROOM: WING SPACE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "8' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GASKET SEALS OR SILENCERS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "121A",
+        "room_or_location": "FROM ROOM: ELEC.; TO ROOM: WING SPACE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "122A",
+        "room_or_location": "FROM ROOM: STORAGE; TO ROOM: WING SPACE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "127B",
+        "room_or_location": "FROM ROOM: EXTERIOR; TO ROOM: WING SPACE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": "A.C. MONITOR",
+        "remarks": [
+          "A.C. MONITOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "128A",
+        "room_or_location": "FROM ROOM: GREENROOM; TO ROOM: VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "128B",
+        "room_or_location": "FROM ROOM: VESTIBULE; TO ROOM: WING SPACE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "9",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "129A",
+        "room_or_location": "FROM ROOM: RR; TO ROOM: VESTIBULE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "16",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "INDICATOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "130A",
+        "room_or_location": "FROM ROOM: GREENROOM; TO ROOM: RR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "16",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "INDICATOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "131A",
+        "room_or_location": "FROM ROOM: GREENROOM; TO ROOM: LOBBY",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "132A",
+        "room_or_location": "FROM ROOM: RISER; TO ROOM: EXTERIOR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "5",
+        "closer": null,
+        "electric_or_access_control": "A.C. MONITOR",
+        "remarks": [
+          "A.C. MONITOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "133A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: VESTIBULE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "SOLID CORE WOOD (VT IND 5540 OR SIM.), WITH FULL PERIMETER GASKET SEALS AND AUTOMATIC DOOR BOTTOMS (ZERO: 770, 364, 55-155), LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "134A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: STORAGE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "11",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "135A",
+        "room_or_location": "FROM ROOM: STOR.; TO ROOM: HOSPITALITY SUITE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "12",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "136A",
+        "room_or_location": "FROM ROOM: LOBBY; TO ROOM: HOSPITALITY SUITE",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "15",
+        "closer": null,
+        "electric_or_access_control": "A.C. CONTROL",
+        "remarks": [
+          "A.C. CONTROL, SOLID WOOD CORE DOOR (VT IND 5540 OR SIM), WITH FULL PERIMETER GASKET SEATLS AND AUTOMATIC DOOR BOTTOMS (ZERO: 88S, 364)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "137A",
+        "room_or_location": "FROM ROOM: RR; TO ROOM: HOSPITALITY SUITE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "16",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "138A",
+        "room_or_location": "FROM ROOM: USHER; TO ROOM: LOBBY",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "14",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "LOCKING HARDWARE"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "140A",
+        "room_or_location": "FROM ROOM: JAN; TO ROOM: NEW VESTIBULE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PLAM",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "13",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "141A",
+        "room_or_location": "FROM ROOM: EXISTING COURTYARD; TO ROOM: EXISTING CORRIDOR",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 0\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "180 DEGREE SWING"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "141B",
+        "room_or_location": "FROM ROOM: EXISTING COURTYARD; TO ROOM: EXISTING CORRIDOR",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 0\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "180 DEGREE SWING"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "141C",
+        "room_or_location": "FROM ROOM: EXIST. GYM; TO ROOM: EXISTING COURTYARD",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 0\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "180 DEGREE SWING"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "141D",
+        "room_or_location": "FROM ROOM: EXIST. GYM; TO ROOM: EXISTING COURTYARD",
+        "door_type": "BB",
+        "opening_type": "BB",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 0\""
+        },
+        "door_material": "ALUM",
+        "door_finish": "FF",
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "ALUM",
+        "frame_finish": "FF",
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "180 DEGREE SWING"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "203A",
+        "room_or_location": "FROM ROOM: ROOF WELL; TO ROOM: CRAWFORD BLDG LEVEL 2",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "200A",
+        "room_or_location": "CRAWFORD BLDG LEVEL 2",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": "90 MIN.",
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "FIRE RATED DOOR ASSEMBLY"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.85
+      },
+      {
+        "mark": "201A",
+        "room_or_location": "FROM ROOM: UPPER PARTERRE; TO ROOM: STORAGE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "11",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GASKET SEALS OR SILENCERS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "202A",
+        "room_or_location": "FROM ROOM: UPPER PARTERRE; TO ROOM: STORAGE",
+        "door_type": "AA",
+        "opening_type": "AA",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "SC",
+        "door_finish": "PT",
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": "PT",
+        "fire_rating": null,
+        "hardware_set": "11",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GASKET SEALS OR SILENCERS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100B",
+          "100C",
+          "100D",
+          "100H",
+          "110A",
+          "110B"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100G"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "117A",
+          "120A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "127B",
+          "203A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "132A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "7",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "118B",
+          "118C",
+          "118D",
+          "118E",
+          "128A",
+          "131A",
+          "133A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "8",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100E",
+          "100F",
+          "110C",
+          "110D",
+          "200A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "9",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "118A",
+          "118F",
+          "128B"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "10",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "11",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "134A",
+          "201A",
+          "202A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "12",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "116A",
+          "135A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "13",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "103A",
+          "109A",
+          "111A",
+          "116B",
+          "119A",
+          "120B",
+          "121A",
+          "122A",
+          "140A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "14",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "112A",
+          "114A",
+          "115A",
+          "138A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "15",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "107A",
+          "107B",
+          "136A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "16",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "129A",
+          "130A",
+          "137A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "17",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "113A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "18",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "102A",
+          "102B",
+          "105A",
+          "108A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "19",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "106A"
+        ],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100A",
+        "hardware_set": "10",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100E",
+        "hardware_set": "8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "2",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100H",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "102A",
+        "hardware_set": "18",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "102B",
+        "hardware_set": "18",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "103A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "105A",
+        "hardware_set": "18",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "106A",
+        "hardware_set": "19",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "107A",
+        "hardware_set": "15",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "107B",
+        "hardware_set": "15",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "108A",
+        "hardware_set": "18",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "109A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110A",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110B",
+        "hardware_set": "1",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110C",
+        "hardware_set": "8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110D",
+        "hardware_set": "8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "111A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "112A",
+        "hardware_set": "14",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "113A",
+        "hardware_set": "17",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "114A",
+        "hardware_set": "14",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "115A",
+        "hardware_set": "14",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "116A",
+        "hardware_set": "12",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "116B",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "117A",
+        "hardware_set": "3",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118A",
+        "hardware_set": "9",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118B",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118C",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118D",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118E",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118F",
+        "hardware_set": "9",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "119A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120A",
+        "hardware_set": "3",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120B",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "121A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "122A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "127B",
+        "hardware_set": "4",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "128A",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "128B",
+        "hardware_set": "9",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "129A",
+        "hardware_set": "16",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "130A",
+        "hardware_set": "16",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "131A",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "132A",
+        "hardware_set": "5",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "133A",
+        "hardware_set": "7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "134A",
+        "hardware_set": "11",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "135A",
+        "hardware_set": "12",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "136A",
+        "hardware_set": "15",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "137A",
+        "hardware_set": "16",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "138A",
+        "hardware_set": "14",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "140A",
+        "hardware_set": "13",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "141A",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "141B",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "141C",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "141D",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "203A",
+        "hardware_set": "4",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "200A",
+        "hardware_set": "8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "201A",
+        "hardware_set": "11",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "202A",
+        "hardware_set": "11",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. ALL NEW HARDWARE SHALL COMPLY WITH THE ACCESSIBILITY REQUIREMENTS OF THE AMERICANS WITH DISABILITIES ACT, T.A.S., AND ALL LOCAL AUTHORITY REGULATIONS.",
+        "2. COMPLY WITH LOCAL APPLICABLE CODES WITH RESPECT TO FIRE RATING OF DOORS, FRAMES AND RELATED HARDWARE.",
+        "3. SUBMIT DOOR SHOP DRAWINGS, A DETAILED HARDWARE & KEYING SCHEDULE & FINISH HARDWARE SAMPLES TO ARCHITECT FOR REVIEW & APPROVAL PRIOR TO ORDERING MATERIALS.",
+        "4. LOCATED ALL DOORS, HINGE SIDE, 6\" FROM ADJACENT WALL UNLESS NOTED OTHERWISE.",
+        "5. ALL LOCKSETS ARE TO BE KEYED SEPARATELY WITH MASTER KEY PROVIDED UNLESS NOTED OTHERWISE. CONFIRM KEYING SCHEME WITH OWNER AND EXISTING CAMPUS.",
+        "6. ALL DOORSTOPS TO BE FLOOR MOUNTED UNLESS NOTED OTHERWISE. ALL HARDWARE SIMILARLY MOUNTED TO BE INSTALLED AFTER THE INSTALLATION OF THE FINISHED FLOOR MATERIAL.",
+        "7. PAIRS OF DOORS WILL REQUIRE APPLICABLE ASTRAGALS, FLUSH BOLTS AND COORDINATORS, UNLESS NOTED OTHERWISE. RE: DOOR HARDWARE SCHEDULE FOR MORE INFORMATION.",
+        "8. UNDERCUT DOORS ARE REQUIRED TO CLEAR FINISH FLOORING MATERIAL BY 1/4\". ALL RATED DOORS SHALL BE ORDERED TO CLEAR FINISH FLOORING MATERIAL BY 1/4\"."
+      ],
+      "hardware_preamble": [
+        "1. ALL NEW HARDWARE SHALL COMPLY WITH THE ACCESSIBILITY REQUIREMENTS OF THE AMERICANS WITH DISABILITIES ACT, T.A.S., AND ALL LOCAL AUTHORITY REGULATIONS.",
+        "2. COMPLY WITH LOCAL APPLICABLE CODES WITH RESPECT TO FIRE RATING OF DOORS, FRAMES AND RELATED HARDWARE.",
+        "3. SUBMIT DOOR SHOP DRAWINGS, A DETAILED HARDWARE & KEYING SCHEDULE & FINISH HARDWARE SAMPLES TO ARCHITECT FOR REVIEW & APPROVAL PRIOR TO ORDERING MATERIALS.",
+        "4. LOCATED ALL DOORS, HINGE SIDE, 6\" FROM ADJACENT WALL UNLESS NOTED OTHERWISE.",
+        "5. ALL LOCKSETS ARE TO BE KEYED SEPARATELY WITH MASTER KEY PROVIDED UNLESS NOTED OTHERWISE. CONFIRM KEYING SCHEME WITH OWNER AND EXISTING CAMPUS.",
+        "6. ALL DOORSTOPS TO BE FLOOR MOUNTED UNLESS NOTED OTHERWISE. ALL HARDWARE SIMILARLY MOUNTED TO BE INSTALLED AFTER THE INSTALLATION OF THE FINISHED FLOOR MATERIAL.",
+        "7. PAIRS OF DOORS WILL REQUIRE APPLICABLE ASTRAGALS, FLUSH BOLTS AND COORDINATORS, UNLESS NOTED OTHERWISE. RE: DOOR HARDWARE SCHEDULE FOR MORE INFORMATION.",
+        "8. UNDERCUT DOORS ARE REQUIRED TO CLEAR FINISH FLOORING MATERIAL BY 1/4\". ALL RATED DOORS SHALL BE ORDERED TO CLEAR FINISH FLOORING MATERIAL BY 1/4\"."
+      ],
+      "keying_notes": [
+        "3. SUBMIT DOOR SHOP DRAWINGS, A DETAILED HARDWARE & KEYING SCHEDULE & FINISH HARDWARE SAMPLES TO ARCHITECT FOR REVIEW & APPROVAL PRIOR TO ORDERING MATERIALS.",
+        "5. ALL LOCKSETS ARE TO BE KEYED SEPARATELY WITH MASTER KEY PROVIDED UNLESS NOTED OTHERWISE. CONFIRM KEYING SCHEME WITH OWNER AND EXISTING CAMPUS."
+      ],
+      "legend": {
+        "AL/ALUM": "ALUMINUM",
+        "EXIST": "EXISTING",
+        "FF": "FACTORY FINISH",
+        "GALV": "GALVANIZED",
+        "GL": "GLASS (RE: SPECIFICATIONS)",
+        "HC": "HOLLOW CORE WOOD",
+        "HM": "HOLLOW METAL",
+        "LC": "LIGHT CORE WOOD",
+        "MTL": "SPECIFIED MTL",
+        "NR": "NOT REQUIRED",
+        "PLAM": "PLASTIC LAMINATE",
+        "PT": "FIELD PAINT",
+        "SC": "SOLID CORE WOOD",
+        "SCR": "SCREEN",
+        "SS": "STAINLESS STEEL",
+        "ST": "STAINED",
+        "STL": "STEEL",
+        "WD": "WOOD VENEER"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "4 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "141A",
+          "141B",
+          "141C",
+          "141D"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "high",
+        "category": "Hardware set definitions",
+        "issue": "18 hardware set(s) referenced by 58 door(s) have no extracted line items.",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "100C",
+          "100D",
+          "100E",
+          "100F",
+          "100G",
+          "100H",
+          "102A",
+          "102B",
+          "103A",
+          "105A",
+          "106A",
+          "107A",
+          "107B",
+          "108A",
+          "109A",
+          "110A",
+          "110B",
+          "110C",
+          "110D",
+          "111A",
+          "112A",
+          "113A",
+          "114A",
+          "115A",
+          "116A",
+          "116B",
+          "117A",
+          "118A",
+          "118B",
+          "118C",
+          "118D",
+          "118E",
+          "118F",
+          "119A",
+          "120A",
+          "120B",
+          "121A",
+          "122A",
+          "127B",
+          "128A",
+          "128B",
+          "129A",
+          "130A",
+          "131A",
+          "132A",
+          "133A",
+          "134A",
+          "135A",
+          "136A",
+          "137A",
+          "138A",
+          "140A",
+          "203A",
+          "200A",
+          "201A",
+          "202A"
+        ],
+        "recommendation": "Locate full hardware set definitions; carry as allowance until confirmed.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "medium",
+        "category": "Fire-rated openings",
+        "issue": "6 fire-rated opening(s) require coordinated UL-listed door, frame and hardware assemblies.",
+        "affected_openings": [
+          "100A",
+          "100E",
+          "100F",
+          "110C",
+          "110D",
+          "200A"
+        ],
+        "recommendation": "Confirm labels, positive latching, closers and gasketing requirements.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 141A, 141B, 141C, 141D. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "141A",
+          "141B",
+          "141C",
+          "141D"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "high",
+        "category": "Hardware set definitions",
+        "question": "Provide the complete line-item list for hardware set(s): 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 3, 4, 5, 7, 8, 9.",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "100C",
+          "100D",
+          "100E",
+          "100F",
+          "100G",
+          "100H",
+          "102A",
+          "102B",
+          "103A",
+          "105A",
+          "106A",
+          "107A",
+          "107B",
+          "108A",
+          "109A",
+          "110A",
+          "110B",
+          "110C",
+          "110D",
+          "111A",
+          "112A",
+          "113A",
+          "114A",
+          "115A",
+          "116A",
+          "116B",
+          "117A",
+          "118A",
+          "118B",
+          "118C",
+          "118D",
+          "118E",
+          "118F",
+          "119A",
+          "120A",
+          "120B",
+          "121A",
+          "122A",
+          "127B",
+          "128A",
+          "128B",
+          "129A",
+          "130A",
+          "131A",
+          "132A",
+          "133A",
+          "134A",
+          "135A",
+          "136A",
+          "137A",
+          "138A",
+          "140A",
+          "203A",
+          "200A",
+          "201A",
+          "202A"
+        ],
+        "recommendation": "Carry as allowance until confirmed.",
+        "status": "Open",
+        "reason": "Carry as allowance until confirmed.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (2 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "62 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "18 hardware set(s) identified; 0 have a complete extracted item list.",
+      "8 general note(s) captured from the door-schedule sheet.",
+      "8 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for fire-rated assembly coordination, S-label gasketing and any UL field-modification charges."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 100A: hardware set 10 has zero items.",
+        "Door 100B: hardware set 1 has zero items.",
+        "Door 100C: hardware set 1 has zero items.",
+        "Door 100D: hardware set 1 has zero items.",
+        "Door 100E: hardware set 8 has zero items.",
+        "Door 100F: hardware set 8 has zero items.",
+        "Door 100G: hardware set 2 has zero items.",
+        "Door 100H: hardware set 1 has zero items.",
+        "Door 102A: hardware set 18 has zero items.",
+        "Door 102B: hardware set 18 has zero items.",
+        "Door 103A: hardware set 13 has zero items.",
+        "Door 105A: hardware set 18 has zero items.",
+        "Door 106A: hardware set 19 has zero items.",
+        "Door 107A: hardware set 15 has zero items.",
+        "Door 107B: hardware set 15 has zero items.",
+        "Door 108A: hardware set 18 has zero items.",
+        "Door 109A: hardware set 13 has zero items.",
+        "Door 110A: hardware set 1 has zero items.",
+        "Door 110B: hardware set 1 has zero items.",
+        "Door 110C: hardware set 8 has zero items.",
+        "Door 110D: hardware set 8 has zero items.",
+        "Door 111A: hardware set 13 has zero items.",
+        "Door 112A: hardware set 14 has zero items.",
+        "Door 113A: hardware set 17 has zero items.",
+        "Door 114A: hardware set 14 has zero items.",
+        "Door 115A: hardware set 14 has zero items.",
+        "Door 116A: hardware set 12 has zero items.",
+        "Door 116B: hardware set 13 has zero items.",
+        "Door 117A: hardware set 3 has zero items.",
+        "Door 118A: hardware set 9 has zero items.",
+        "Door 118B: hardware set 7 has zero items.",
+        "Door 118C: hardware set 7 has zero items.",
+        "Door 118D: hardware set 7 has zero items.",
+        "Door 118E: hardware set 7 has zero items.",
+        "Door 118F: hardware set 9 has zero items.",
+        "Door 119A: hardware set 13 has zero items.",
+        "Door 120A: hardware set 3 has zero items.",
+        "Door 120B: hardware set 13 has zero items.",
+        "Door 121A: hardware set 13 has zero items.",
+        "Door 122A: hardware set 13 has zero items.",
+        "Door 127B: hardware set 4 has zero items.",
+        "Door 128A: hardware set 7 has zero items.",
+        "Door 128B: hardware set 9 has zero items.",
+        "Door 129A: hardware set 16 has zero items.",
+        "Door 130A: hardware set 16 has zero items.",
+        "Door 131A: hardware set 7 has zero items.",
+        "Door 132A: hardware set 5 has zero items.",
+        "Door 133A: hardware set 7 has zero items.",
+        "Door 134A: hardware set 11 has zero items.",
+        "Door 135A: hardware set 12 has zero items.",
+        "Door 136A: hardware set 15 has zero items.",
+        "Door 137A: hardware set 16 has zero items.",
+        "Door 138A: hardware set 14 has zero items.",
+        "Door 140A: hardware set 13 has zero items.",
+        "Door 141A has no hardware set assigned.",
+        "Door 141B has no hardware set assigned.",
+        "Door 141C has no hardware set assigned.",
+        "Door 141D has no hardware set assigned.",
+        "Door 203A: hardware set 4 has zero items.",
+        "Door 200A: hardware set 8 has zero items.",
+        "Door 201A: hardware set 11 has zero items.",
+        "Door 202A: hardware set 11 has zero items."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 196,
+        "truncated": false,
+        "output_count": 62
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 119,
+        "truncated": false,
+        "output_count": 18
+      },
+      {
+        "step": 3,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 62
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 5,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 315,
+    "mapping_qa_issues": [
+      {
+        "kind": "set_empty",
+        "set": "10",
+        "mark": "100A",
+        "message": "Door 100A: hardware set 10 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "100B",
+        "message": "Door 100B: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "100C",
+        "message": "Door 100C: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "100D",
+        "message": "Door 100D: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "8",
+        "mark": "100E",
+        "message": "Door 100E: hardware set 8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "8",
+        "mark": "100F",
+        "message": "Door 100F: hardware set 8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "2",
+        "mark": "100G",
+        "message": "Door 100G: hardware set 2 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "100H",
+        "message": "Door 100H: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "18",
+        "mark": "102A",
+        "message": "Door 102A: hardware set 18 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "18",
+        "mark": "102B",
+        "message": "Door 102B: hardware set 18 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "103A",
+        "message": "Door 103A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "18",
+        "mark": "105A",
+        "message": "Door 105A: hardware set 18 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "19",
+        "mark": "106A",
+        "message": "Door 106A: hardware set 19 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "15",
+        "mark": "107A",
+        "message": "Door 107A: hardware set 15 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "15",
+        "mark": "107B",
+        "message": "Door 107B: hardware set 15 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "18",
+        "mark": "108A",
+        "message": "Door 108A: hardware set 18 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "109A",
+        "message": "Door 109A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "110A",
+        "message": "Door 110A: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "1",
+        "mark": "110B",
+        "message": "Door 110B: hardware set 1 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "8",
+        "mark": "110C",
+        "message": "Door 110C: hardware set 8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "8",
+        "mark": "110D",
+        "message": "Door 110D: hardware set 8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "111A",
+        "message": "Door 111A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "14",
+        "mark": "112A",
+        "message": "Door 112A: hardware set 14 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "17",
+        "mark": "113A",
+        "message": "Door 113A: hardware set 17 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "14",
+        "mark": "114A",
+        "message": "Door 114A: hardware set 14 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "14",
+        "mark": "115A",
+        "message": "Door 115A: hardware set 14 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "12",
+        "mark": "116A",
+        "message": "Door 116A: hardware set 12 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "116B",
+        "message": "Door 116B: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "3",
+        "mark": "117A",
+        "message": "Door 117A: hardware set 3 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "9",
+        "mark": "118A",
+        "message": "Door 118A: hardware set 9 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "118B",
+        "message": "Door 118B: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "118C",
+        "message": "Door 118C: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "118D",
+        "message": "Door 118D: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "118E",
+        "message": "Door 118E: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "9",
+        "mark": "118F",
+        "message": "Door 118F: hardware set 9 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "119A",
+        "message": "Door 119A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "3",
+        "mark": "120A",
+        "message": "Door 120A: hardware set 3 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "120B",
+        "message": "Door 120B: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "121A",
+        "message": "Door 121A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "122A",
+        "message": "Door 122A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "4",
+        "mark": "127B",
+        "message": "Door 127B: hardware set 4 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "128A",
+        "message": "Door 128A: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "9",
+        "mark": "128B",
+        "message": "Door 128B: hardware set 9 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "16",
+        "mark": "129A",
+        "message": "Door 129A: hardware set 16 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "16",
+        "mark": "130A",
+        "message": "Door 130A: hardware set 16 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "131A",
+        "message": "Door 131A: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "5",
+        "mark": "132A",
+        "message": "Door 132A: hardware set 5 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "7",
+        "mark": "133A",
+        "message": "Door 133A: hardware set 7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "11",
+        "mark": "134A",
+        "message": "Door 134A: hardware set 11 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "12",
+        "mark": "135A",
+        "message": "Door 135A: hardware set 12 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "15",
+        "mark": "136A",
+        "message": "Door 136A: hardware set 15 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "16",
+        "mark": "137A",
+        "message": "Door 137A: hardware set 16 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "14",
+        "mark": "138A",
+        "message": "Door 138A: hardware set 14 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "13",
+        "mark": "140A",
+        "message": "Door 140A: hardware set 13 has zero items."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "141A",
+        "message": "Door 141A has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "141B",
+        "message": "Door 141B has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "141C",
+        "message": "Door 141C has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "141D",
+        "message": "Door 141D has no hardware set assigned."
+      },
+      {
+        "kind": "set_empty",
+        "set": "4",
+        "mark": "203A",
+        "message": "Door 203A: hardware set 4 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "8",
+        "mark": "200A",
+        "message": "Door 200A: hardware set 8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "11",
+        "mark": "201A",
+        "message": "Door 201A: hardware set 11 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "11",
+        "mark": "202A",
+        "message": "Door 202A: hardware set 11 has zero items."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "100C"
+        },
+        {
+          "mark": "100D"
+        },
+        {
+          "mark": "100E"
+        },
+        {
+          "mark": "100F"
+        },
+        {
+          "mark": "100G"
+        },
+        {
+          "mark": "100H"
+        },
+        {
+          "mark": "102A"
+        },
+        {
+          "mark": "102B"
+        },
+        {
+          "mark": "103A"
+        },
+        {
+          "mark": "105A"
+        },
+        {
+          "mark": "106A"
+        },
+        {
+          "mark": "107A"
+        },
+        {
+          "mark": "107B"
+        },
+        {
+          "mark": "108A"
+        },
+        {
+          "mark": "109A"
+        },
+        {
+          "mark": "110A"
+        },
+        {
+          "mark": "110B"
+        },
+        {
+          "mark": "110C"
+        },
+        {
+          "mark": "110D"
+        },
+        {
+          "mark": "111A"
+        },
+        {
+          "mark": "112A"
+        },
+        {
+          "mark": "113A"
+        },
+        {
+          "mark": "114A"
+        },
+        {
+          "mark": "115A"
+        },
+        {
+          "mark": "116A"
+        },
+        {
+          "mark": "116B"
+        },
+        {
+          "mark": "117A"
+        },
+        {
+          "mark": "118A"
+        },
+        {
+          "mark": "118B"
+        },
+        {
+          "mark": "118C"
+        },
+        {
+          "mark": "118D"
+        },
+        {
+          "mark": "118E"
+        },
+        {
+          "mark": "118F"
+        },
+        {
+          "mark": "119A"
+        },
+        {
+          "mark": "120A"
+        },
+        {
+          "mark": "120B"
+        },
+        {
+          "mark": "121A"
+        },
+        {
+          "mark": "122A"
+        },
+        {
+          "mark": "127B"
+        },
+        {
+          "mark": "128A"
+        },
+        {
+          "mark": "128B"
+        },
+        {
+          "mark": "129A"
+        },
+        {
+          "mark": "130A"
+        },
+        {
+          "mark": "131A"
+        },
+        {
+          "mark": "132A"
+        },
+        {
+          "mark": "133A"
+        },
+        {
+          "mark": "134A"
+        },
+        {
+          "mark": "135A"
+        },
+        {
+          "mark": "136A"
+        },
+        {
+          "mark": "137A"
+        },
+        {
+          "mark": "138A"
+        },
+        {
+          "mark": "140A"
+        },
+        {
+          "mark": "141A"
+        },
+        {
+          "mark": "141B"
+        },
+        {
+          "mark": "141C"
+        },
+        {
+          "mark": "141D"
+        },
+        {
+          "mark": "203A"
+        },
+        {
+          "mark": "200A"
+        },
+        {
+          "mark": "201A"
+        },
+        {
+          "mark": "202A"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 0
+        },
+        {
+          "id": "2",
+          "item_count": 0
+        },
+        {
+          "id": "3",
+          "item_count": 0
+        },
+        {
+          "id": "4",
+          "item_count": 0
+        },
+        {
+          "id": "5",
+          "item_count": 0
+        },
+        {
+          "id": "7",
+          "item_count": 0
+        },
+        {
+          "id": "8",
+          "item_count": 0
+        },
+        {
+          "id": "9",
+          "item_count": 0
+        },
+        {
+          "id": "10",
+          "item_count": 0
+        },
+        {
+          "id": "11",
+          "item_count": 0
+        },
+        {
+          "id": "12",
+          "item_count": 0
+        },
+        {
+          "id": "13",
+          "item_count": 0
+        },
+        {
+          "id": "14",
+          "item_count": 0
+        },
+        {
+          "id": "15",
+          "item_count": 0
+        },
+        {
+          "id": "16",
+          "item_count": 0
+        },
+        {
+          "id": "17",
+          "item_count": 0
+        },
+        {
+          "id": "18",
+          "item_count": 0
+        },
+        {
+          "id": "19",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for testing - project 1 .pdf (1009 KB).",
+      "message": "Secure analysis started for testing - project 1 .pdf (1009 KB).",
+      "stage": "start",
+      "ts": "2026-05-25T20:49:48Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-25T20:49:48Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 196s.",
+      "message": "Door schedule review - completed in 196s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-25T20:53:05Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-25T20:53:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 119s.",
+      "message": "Hardware set review - completed in 119s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-25T20:55:04Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-25T20:55:04Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 62 doors - 18 sets - 0 items - 3 risks - 2 RFIs - 315s total.",
+      "message": "Secure analysis done - 62 doors - 18 sets - 0 items - 3 risks - 2 RFIs - 315s total.",
+      "stage": "done",
+      "ts": "2026-05-25T20:55:04Z"
+    }
+  ]
+}

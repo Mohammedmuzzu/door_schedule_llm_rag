@@ -1,0 +1,1418 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "CAVA #010451, SCHERTZ, TX",
+      "project_number": null,
+      "architect": "ferris+sloane",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 5,
+      "total_hardware_sets_referenced": 4,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 5,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 5,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 5 opening(s) and 8 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "107",
+        "room_or_location": "BACK KITCHEN",
+        "door_type": "1C/A601",
+        "opening_type": "1C/A601",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-6\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "H.M.",
+        "door_finish": "PT-101/PT-109",
+        "glazing": null,
+        "frame_type": "2A/A601",
+        "frame_material": "H.M.",
+        "frame_finish": "PT-101/PT-109",
+        "fire_rating": "--",
+        "hardware_set": "6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "2-6"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93,
+        "raw_hardware_set": "# 6"
+      },
+      {
+        "mark": "108",
+        "room_or_location": "MANAGER'S OFFICE",
+        "door_type": "1D/A601",
+        "opening_type": "1D/A601",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "S/S",
+        "door_finish": "PT-109",
+        "glazing": null,
+        "frame_type": "2A/A601",
+        "frame_material": "H.M.",
+        "frame_finish": "PT-101/PT-109",
+        "fire_rating": "--",
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "2-6"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9,
+        "raw_hardware_set": "# 7"
+      },
+      {
+        "mark": "114",
+        "room_or_location": "RESTROOM",
+        "door_type": "1C/A601",
+        "opening_type": "1C/A601",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "H.M.",
+        "door_finish": "PT-101/PT-111",
+        "glazing": null,
+        "frame_type": "2A/A601",
+        "frame_material": "H.M.",
+        "frame_finish": "PT-101/PT-111",
+        "fire_rating": "---",
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "2-7"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9,
+        "raw_hardware_set": "# 4"
+      },
+      {
+        "mark": "115",
+        "room_or_location": "RESTROOM",
+        "door_type": "1C/A601",
+        "opening_type": "1C/A601",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "H.M.",
+        "door_finish": "PT-101/PT-111",
+        "glazing": null,
+        "frame_type": "2A/A601",
+        "frame_material": "H.M",
+        "frame_finish": "PT-101/PT-111",
+        "fire_rating": "---",
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "2-7"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9,
+        "raw_hardware_set": "# 4"
+      },
+      {
+        "mark": "116",
+        "room_or_location": "REAR DOOR",
+        "door_type": "1C/A601",
+        "opening_type": "1C/A601",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-6\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PT-101/PT-109",
+        "glazing": null,
+        "frame_type": "--",
+        "frame_material": "EXISTING",
+        "frame_finish": "PT-101/PT-109",
+        "fire_rating": "--",
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "2-6"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86,
+        "raw_hardware_set": "# 3"
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": "DOUBLE STOREFRONT EXTERIOR DOOR",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 2,
+            "unit": null,
+            "desc": "DECORATIVE PULL",
+            "part": "PLANTEK: RM5230 (60\" CTC)",
+            "mfr": "ROCKWOOD",
+            "finish": "315/711 BLACK ANODIZED",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": null,
+            "desc": "OFFSET DECORATIVE DOOR PULL",
+            "part": null,
+            "mfr": "ROCKWOOD",
+            "finish": "315/711 BLACK ANODIZED",
+            "notes": "1 PER LEAF, OUTSIDE FACE ONLY, ONLY TO BE USED IF KEYLOCK CYLINDER NEEDS TO BE AVOIDED.",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 2,
+            "unit": null,
+            "desc": "PANIC EXIT BAR",
+            "part": "1095 RIM OANIC C-STRIKE CROSSBAR EXIT DEVICE",
+            "mfr": "CRL JACKSON",
+            "finish": null,
+            "notes": "TO MATCH STOREFRONT CONDITION, 1 PER LEAF - EGRESS SIDE, GC TO VERIFY SPECIFICATION WITH DOOR",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 4,
+            "qty": 2,
+            "unit": null,
+            "desc": "DOOR CLOSER WITH INTEGRAL STOP",
+            "part": "DC55A: SIZE 5 SURFACE MOUNT DOOR CLOSER",
+            "mfr": "CRL",
+            "finish": "BLACK FINISH",
+            "notes": "MOUNT TO TOP RAIL ON EGRESS SIDE ONLY, 1 PER LEAF",
+            "confidence": 0.93
+          },
+          {
+            "item_no": 5,
+            "qty": 8,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "HEAVY DUTY BALL BEARING SQ CORNER HINGES #94014 4\"X4\"",
+            "mfr": "EMTEK/ASSA ABLOY",
+            "finish": "US26D BRUSHED S.S.",
+            "notes": "OR EQUIVALENT, USE 4 HINGES PER DOOR, G.C. TO VERIFY HINGES SUPPORT WIGHT OF DOOR.",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "METAL THRESHOLD",
+            "part": "CT-66",
+            "mfr": "KN CROWDER",
+            "finish": "BLACK",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": null,
+            "desc": "SWEEP AND SMOKE SEAL",
+            "part": "6216 ADHESIVE BACKED NEOPRENE WEATHERSTRIP",
+            "mfr": "KN CROWDER",
+            "finish": "BLACK",
+            "notes": "G.C. TO SPECIFY SWEEP, IN BLACK OR GREY COLOR",
+            "confidence": 0.92
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "SINGLE STOREFRONT EXTERIOR DOOR",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "DECORATIVE PULL",
+            "part": "PLANTEK: RM5230 (60\" CTC)",
+            "mfr": "ROCKWOOD",
+            "finish": "315/711 BLACK ANODIZED",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "OFFSET DECORATIVE DOOR PULL",
+            "part": null,
+            "mfr": "ROCKWOOD",
+            "finish": "315/711 BLACK ANODIZED",
+            "notes": "1 PER LEAF, OUTSIDE FACE ONLY, ONLY TO BE USED IF KEYLOCK CYLINDER NEEDS TO BE AVOIDED.",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PANIC EXIT BAR",
+            "part": "1095 RIM OANIC C-STRIKE CROSSBAR EXIT DEVICE",
+            "mfr": "CRL JACKSON",
+            "finish": null,
+            "notes": "TO MATCH STOREFRONT CONDITION, 1 PER LEAF - EGRESS SIDE, GC TO VERIFY SPECIFICATION WITH DOOR",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR CLOSER WITH INTEGRAL STOP",
+            "part": "DC55A: SIZE 5 SURFACE MOUNT DOOR CLOSER",
+            "mfr": "CRL",
+            "finish": "BLACK FINISH",
+            "notes": "MOUNT TO TOP RAIL ON EGRESS SIDE ONLY, 1 PER LEAF",
+            "confidence": 0.93
+          },
+          {
+            "item_no": 5,
+            "qty": 4,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "HEAVY DUTY BALL BEARING SQ CORNER HINGES #94014 4\"X4\"",
+            "mfr": "EMTEK/ASSA ABLOY",
+            "finish": "US26D BRUSHED S.S.",
+            "notes": "OR EQUIVALENT, USE 4 HINGES PER DOOR, G.C. TO VERIFY HINGES SUPPORT WIGHT OF DOOR.",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "METAL THRESHOLD",
+            "part": "CT-66",
+            "mfr": "KN CROWDER",
+            "finish": "BLACK",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "SWEEP AND SMOKE SEAL",
+            "part": "6216 ADHESIVE BACKED NEOPRENE WEATHERSTRIP",
+            "mfr": "KN CROWDER",
+            "finish": "BLACK",
+            "notes": "G.C. TO SPECIFY SWEEP, IN BLACK OR GREY COLOR",
+            "confidence": 0.92
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": "REAR EXTERIOR DOOR",
+        "referenced_by_doors": [
+          "116"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "SECURITY VIEWER",
+            "part": "DS1000",
+            "mfr": "DOOR SCOPE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "CONTINUOUS HINGE",
+            "part": null,
+            "mfr": "TBD",
+            "finish": "SATIN STAINLESS STEEL OR EQUAL",
+            "notes": "GC TO SUBMIT PROPOSAL",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "EXIT DEVICE W/ CONCEALED VERTICAL RODS",
+            "part": "8500 SERIES EXIT DEVICE",
+            "mfr": "ADAMS RITE",
+            "finish": "US32",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER - PARALLEL ARM",
+            "part": null,
+            "mfr": "TBD",
+            "finish": "SATIN STAINLESS STEEL OR EQUAL",
+            "notes": "GC TO SUBMIT PROPOSAL",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "THRESHOLD",
+            "part": null,
+            "mfr": "TBD",
+            "finish": "SATIN STAINLESS STEEL OR EQUAL",
+            "notes": "GC TO SUBMIT PROPOSAL",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "EXTERIOR DOOR SWEEP",
+            "part": null,
+            "mfr": "TBD",
+            "finish": "SATIN STAINLESS STEEL OR EQUAL",
+            "notes": "GC TO SUBMIT PROPOSAL",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "DRIP CAP ON FRAME",
+            "part": null,
+            "mfr": "TBD",
+            "finish": "SATIN STAINLESS STEEL OR EQUAL",
+            "notes": "GC TO SUBMIT PROPOSAL",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "KICK PLATE",
+            "part": "8400 34\" X 8\"",
+            "mfr": "IVSES",
+            "finish": "S32D SATIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "GASKETING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "--",
+            "confidence": 0.85
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": "RESTROOM",
+        "referenced_by_doors": [
+          "114",
+          "115"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "PRIVACY LOCKSET",
+            "part": "AU YPL02 626 (L/R)",
+            "mfr": "YALE",
+            "finish": "CHROME",
+            "notes": "ADA PRIVACY DOOR LOCK LEVER HANDLE",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "MODEL 7436-685",
+            "mfr": "DORMA",
+            "finish": "ALUM 689",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "LOCKSET",
+            "part": "MODEL BE365(CAMELOT)",
+            "mfr": "SCHLAGE",
+            "finish": "US32D",
+            "notes": "KEYPAD SET",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "HINGE SET",
+            "part": "5BB1HW",
+            "mfr": "IVES",
+            "finish": "SATIN STAINLESS OR EQUAL",
+            "notes": "HEAVY WEIGHT FULL MORTISE",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "FLOOR DOOR STOP",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "SATIN STAINLESS OF EQUAL",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "8400 34\" X 8\"",
+            "mfr": "IVSES",
+            "finish": "S32D SATIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.86
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": "DOUBLE ACTING",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR",
+            "part": "EHH-3 KITCHEN PASS THROUGH",
+            "mfr": "ELIASON",
+            "finish": "STAINLESS STEEL",
+            "notes": "W/ ADA COMPLIANT VISION WINDOW",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "\"HIDDEN HINGE\" TOP & BOTTOM ASSEMBLY",
+            "mfr": "ELIASON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "BUMPER STRIPS",
+            "part": "BUMPER STRIPS FOR EHH-3 DOOR",
+            "mfr": "ELIASON",
+            "finish": "GREY OR BLACK",
+            "notes": null,
+            "confidence": 0.93
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "NOTE: BOTTOM OF VIEWING PANEL/GLAZED SURFACE TO BE LOCATED 43\" MAXIMUM FROM THE FINISH FLOOR",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "6",
+        "header_verbatim": "BACK KITCHEN (KEYPAD LOCKSET)",
+        "referenced_by_doors": [
+          "107"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "MODEL AB700 (SIZE 4-1/2\" X 4-1/2\")",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "MODEL 7436-685",
+            "mfr": "DORMA",
+            "finish": "ALUM 689",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "LOCKSET",
+            "part": "DL2700 TRILOGY T2",
+            "mfr": "ALARM LOCK",
+            "finish": null,
+            "notes": "KEYPAD SET",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOORSTOP",
+            "part": "MODEL FS436",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": null,
+            "desc": "DOOR SILENCERS",
+            "part": "MODEL SR64",
+            "mfr": "IVES",
+            "finish": "GRAY",
+            "notes": "(AS REQUIRED)",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "8400 34\" X 8\"",
+            "mfr": "IVSES",
+            "finish": "S32D SATIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.86
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "7",
+        "header_verbatim": "OFFICE",
+        "referenced_by_doors": [
+          "108"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "OFFICE LOCKSET",
+            "part": "L9453l-06A",
+            "mfr": "SCHLAGE",
+            "finish": "SATIN CHROME",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "HINGE SET",
+            "part": "5BB1HW",
+            "mfr": "IVES",
+            "finish": "SATIN STAINLESS OR EQUAL",
+            "notes": "HEAVY WEIGHT FULL MORTISE",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "FLOOR DOOR STOP",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "SATIN STAINLESS OF EQUAL",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 5,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "8400 34\" X 8\"",
+            "mfr": "IVSES",
+            "finish": "S32D SATIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "VISION WINDOW",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "BOTTOM OF VIEWING PANEL/GLAZING SURFACE TO BE LOCATED 43\"MAX FROM FINISH FLOOR.",
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "8",
+        "header_verbatim": "CAFE GATE",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "GATE KIT",
+            "part": "LWP SERIES 36\" LEAF",
+            "mfr": "ELIASON",
+            "finish": "STAINLESS STEEL FINISH",
+            "notes": "CAGE GATE (SINGLE LEAF) NO POST",
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "MODEL AB700 (SIZE 4-1/2\" X 4-1/2\")",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "MODEL 7436-685",
+        "manufacturer": "DORMA",
+        "finish": "ALUM 689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 3,
+        "qty": 1,
+        "description": "LOCKSET",
+        "catalog_number": "DL2700 TRILOGY T2",
+        "manufacturer": "ALARM LOCK",
+        "finish": null,
+        "notes": "KEYPAD SET",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOORSTOP",
+        "catalog_number": "MODEL FS436",
+        "manufacturer": "IVES",
+        "finish": "US32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 5,
+        "qty": 3,
+        "description": "DOOR SILENCERS",
+        "catalog_number": "MODEL SR64",
+        "manufacturer": "IVES",
+        "finish": "GRAY",
+        "notes": "(AS REQUIRED)",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "6",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICKPLATE",
+        "catalog_number": "8400 34\" X 8\"",
+        "manufacturer": "IVSES",
+        "finish": "S32D SATIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 1,
+        "qty": 1,
+        "description": "OFFICE LOCKSET",
+        "catalog_number": "L9453l-06A",
+        "manufacturer": "SCHLAGE",
+        "finish": "SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 2,
+        "qty": 1,
+        "description": "HINGE SET",
+        "catalog_number": "5BB1HW",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OR EQUAL",
+        "notes": "HEAVY WEIGHT FULL MORTISE",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR DOOR STOP",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OF EQUAL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 4,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "SR64",
+        "manufacturer": "IVES",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 5,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "8400 34\" X 8\"",
+        "manufacturer": "IVSES",
+        "finish": "S32D SATIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "7",
+        "item_no": 6,
+        "qty": 1,
+        "description": "VISION WINDOW",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "BOTTOM OF VIEWING PANEL/GLAZING SURFACE TO BE LOCATED 43\"MAX FROM FINISH FLOOR.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 1,
+        "description": "PRIVACY LOCKSET",
+        "catalog_number": "AU YPL02 626 (L/R)",
+        "manufacturer": "YALE",
+        "finish": "CHROME",
+        "notes": "ADA PRIVACY DOOR LOCK LEVER HANDLE",
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "MODEL 7436-685",
+        "manufacturer": "DORMA",
+        "finish": "ALUM 689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "LOCKSET",
+        "catalog_number": "MODEL BE365(CAMELOT)",
+        "manufacturer": "SCHLAGE",
+        "finish": "US32D",
+        "notes": "KEYPAD SET",
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "HINGE SET",
+        "catalog_number": "5BB1HW",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OR EQUAL",
+        "notes": "HEAVY WEIGHT FULL MORTISE",
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 5,
+        "qty": 1,
+        "description": "FLOOR DOOR STOP",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OF EQUAL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "SR64",
+        "manufacturer": "IVES",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "8400 34\" X 8\"",
+        "manufacturer": "IVSES",
+        "finish": "S32D SATIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 1,
+        "description": "PRIVACY LOCKSET",
+        "catalog_number": "AU YPL02 626 (L/R)",
+        "manufacturer": "YALE",
+        "finish": "CHROME",
+        "notes": "ADA PRIVACY DOOR LOCK LEVER HANDLE",
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "MODEL 7436-685",
+        "manufacturer": "DORMA",
+        "finish": "ALUM 689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "LOCKSET",
+        "catalog_number": "MODEL BE365(CAMELOT)",
+        "manufacturer": "SCHLAGE",
+        "finish": "US32D",
+        "notes": "KEYPAD SET",
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "HINGE SET",
+        "catalog_number": "5BB1HW",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OR EQUAL",
+        "notes": "HEAVY WEIGHT FULL MORTISE",
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 5,
+        "qty": 1,
+        "description": "FLOOR DOOR STOP",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "SATIN STAINLESS OF EQUAL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "SR64",
+        "manufacturer": "IVES",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "8400 34\" X 8\"",
+        "manufacturer": "IVSES",
+        "finish": "S32D SATIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "3",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. VERIFY ALL EXISTING HARDWARE IS IN GOOD CONDITION FOR RE-USE. REPAIR/REPLACE DOOR HARDWARE AS REQUIRED.",
+        "2. DOOR LOCKSETS / PASSAGE SETS SHALL BE OF THE LEVER HANDLE TYPE. HARDWARE SHALL BE MOUNTED NO HIGHER THAN 48\" ABOVE FINISHED FLOOR (MOUNTED BETWEEN 44\" TO 48\"). PROVIDE LEVER HANDLE AT ALL HANDICAPPED ACCESSIBLE DOORS. MAXIMUM PULL FORCES FOR INTERIOR DOORS TO BE 5.0 LBS FORCE. MAXIMUM PULL FORCES FOR EXTERIOR DOORS TO BE 15.0 LBS FORCE",
+        "3. ALL HARDWARE TO COMPLY W/ THE LATEST REQUIREMENTS OF ADAAG/ANSI.",
+        "4. KEYING SEQUENCE TO BE COORDINATED W/ TENANT.",
+        "5. G.C. TO PROVIDE FULL SUBMITTAL OF ALL DOORS AND HARDWARE PRIOR TO ORDER/PURCHASE.",
+        "6. VERIFY STOREFRONT DOOR KICKPLATE IS ADA COMPLIANT (10\" MINIMUM HEIGHT). IF NONCOMPLIANT INSTALL CR LAURENCE / 10\" BOTTOM DOOR RAIL ADAPTOR.",
+        "7. RESTROOM DOORS TO BE PAINTED PT-109 ON THE RESTROOM SIDE AND PT-101 ON THE HALLWAY",
+        "8. HALLWAY DOOR TO BE PAINTED PT-101 ON HALLWAY SIDE AND PT-109 ON THE KITCHEN SIDE.",
+        "A. ALL EGRESS DOORS SHALL BE READILY OPENABLE FROM TEH EGRESS SIDE WITHOUT THE USE OF A KEY OR SPECIAL KNOWLEDGE OR EFFORT",
+        "B. LATCHES, HANDLES, PANIC BARS AND ALL DOOR HARDWARE WILL COMPLY WITH SECTION 1008.1.10 OF THE IBC OR PER THE SPECIFICATIONS.",
+        "C. ALL DOORS TO REMAIN UNLOCKED DURING BUSINESS HOURS.",
+        "D. MAXIMUM EFFORT TO OPERATE EXTERIOR OR INTERIOR DOORS WITH CLOSERS SHALL NOT EXCEED 5 POUNDS. THIS MAY BE INCREASED TO 15 POUNDS FOR FIRE-RATED DOORS.",
+        "E. THE BOTTOM 10 INCHES OF ALL DOORS SHALL HAVE A SMOOTH, UNINTERRUPTED SURFACE TO ALLOW THE DOOR TO BE OPENED BY A WHEELCHAIR FOOTREST WITHOUT CREATING A TRAP OR HAZARDOUS CONDITION.",
+        "F. ALL LOCKABLE DOORS SHALL BE EQUIPPED WITH REMOVABLE CORE HARDWARE, MANUFACTURED BY \"SCHLAGE\". HARDWARE TO BE SUPPLIED FROM THE MANUFACTURER WITH \"SCHLAGE\" REMOVABLE CORE CYLINDERS WITH CONSTRUCTION MASTER-KEYING.",
+        "G. ALL DOORS SHALL BE LOCATED 4\" OFF THE PERPENDICULAR WALLS UNLESS OTHERWISE NOTED.",
+        "NOTE: BOTTOM OF VIEWING PANEL/GLAZED SURFACE TO BE LOCATED 43\" MAXIMUM FROM THE FINISH FLOOR",
+        "BOTTOM OF VIEWING PANEL/GLAZING SURFACE TO BE LOCATED 43\"MAX FROM FINISH FLOOR."
+      ],
+      "hardware_preamble": [
+        "1. VERIFY ALL EXISTING HARDWARE IS IN GOOD CONDITION FOR RE-USE. REPAIR/REPLACE DOOR HARDWARE AS REQUIRED.",
+        "2. DOOR LOCKSETS / PASSAGE SETS SHALL BE OF THE LEVER HANDLE TYPE. HARDWARE SHALL BE MOUNTED NO HIGHER THAN 48\" ABOVE FINISHED FLOOR (MOUNTED BETWEEN 44\" TO 48\"). PROVIDE LEVER HANDLE AT ALL HANDICAPPED ACCESSIBLE DOORS. MAXIMUM PULL FORCES FOR INTERIOR DOORS TO BE 5.0 LBS FORCE. MAXIMUM PULL FORCES FOR EXTERIOR DOORS TO BE 15.0 LBS FORCE",
+        "3. ALL HARDWARE TO COMPLY W/ THE LATEST REQUIREMENTS OF ADAAG/ANSI.",
+        "5. G.C. TO PROVIDE FULL SUBMITTAL OF ALL DOORS AND HARDWARE PRIOR TO ORDER/PURCHASE.",
+        "6. VERIFY STOREFRONT DOOR KICKPLATE IS ADA COMPLIANT (10\" MINIMUM HEIGHT). IF NONCOMPLIANT INSTALL CR LAURENCE / 10\" BOTTOM DOOR RAIL ADAPTOR.",
+        "7. RESTROOM DOORS TO BE PAINTED PT-109 ON THE RESTROOM SIDE AND PT-101 ON THE HALLWAY",
+        "8. HALLWAY DOOR TO BE PAINTED PT-101 ON HALLWAY SIDE AND PT-109 ON THE KITCHEN SIDE.",
+        "A. ALL EGRESS DOORS SHALL BE READILY OPENABLE FROM TEH EGRESS SIDE WITHOUT THE USE OF A KEY OR SPECIAL KNOWLEDGE OR EFFORT",
+        "B. LATCHES, HANDLES, PANIC BARS AND ALL DOOR HARDWARE WILL COMPLY WITH SECTION 1008.1.10 OF THE IBC OR PER THE SPECIFICATIONS.",
+        "C. ALL DOORS TO REMAIN UNLOCKED DURING BUSINESS HOURS.",
+        "D. MAXIMUM EFFORT TO OPERATE EXTERIOR OR INTERIOR DOORS WITH CLOSERS SHALL NOT EXCEED 5 POUNDS. THIS MAY BE INCREASED TO 15 POUNDS FOR FIRE-RATED DOORS.",
+        "E. THE BOTTOM 10 INCHES OF ALL DOORS SHALL HAVE A SMOOTH, UNINTERRUPTED SURFACE TO ALLOW THE DOOR TO BE OPENED BY A WHEELCHAIR FOOTREST WITHOUT CREATING A TRAP OR HAZARDOUS CONDITION.",
+        "G. ALL DOORS SHALL BE LOCATED 4\" OFF THE PERPENDICULAR WALLS UNLESS OTHERWISE NOTED."
+      ],
+      "keying_notes": [
+        "4. KEYING SEQUENCE TO BE COORDINATED W/ TENANT.",
+        "F. ALL LOCKABLE DOORS SHALL BE EQUIPPED WITH REMOVABLE CORE HARDWARE, MANUFACTURED BY \"SCHLAGE\". HARDWARE TO BE SUPPLIED FROM THE MANUFACTURER WITH \"SCHLAGE\" REMOVABLE CORE CYLINDERS WITH CONSTRUCTION MASTER-KEYING."
+      ],
+      "legend": {}
+    },
+    "project_risks": [
+      {
+        "severity": "medium",
+        "category": "Fire-rated openings",
+        "issue": "5 fire-rated opening(s) require coordinated UL-listed door, frame and hardware assemblies.",
+        "affected_openings": [
+          "107",
+          "108",
+          "114",
+          "115",
+          "116"
+        ],
+        "recommendation": "Confirm labels, positive latching, closers and gasketing requirements.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (2 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "5 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "8 hardware set(s) identified; 8 have a complete extracted item list.",
+      "17 general note(s) captured from the door-schedule sheet.",
+      "13 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for fire-rated assembly coordination, S-label gasketing and any UL field-modification charges."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 93,
+        "truncated": false,
+        "output_count": 5
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 180,
+        "truncated": false,
+        "output_count": 8
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 27
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 273,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "114"
+        },
+        {
+          "mark": "115"
+        },
+        {
+          "mark": "116"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 7
+        },
+        {
+          "id": "2",
+          "item_count": 7
+        },
+        {
+          "id": "3",
+          "item_count": 9
+        },
+        {
+          "id": "4",
+          "item_count": 7
+        },
+        {
+          "id": "5",
+          "item_count": 3
+        },
+        {
+          "id": "6",
+          "item_count": 6
+        },
+        {
+          "id": "7",
+          "item_count": 6
+        },
+        {
+          "id": "8",
+          "item_count": 1
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for project 37.pdf (127 KB).",
+      "message": "Secure analysis started for project 37.pdf (127 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T03:31:43Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T03:31:43Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 93s.",
+      "message": "Door schedule review - completed in 93s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T03:33:16Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T03:33:16Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 180s.",
+      "message": "Hardware set review - completed in 180s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T03:36:15Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T03:36:15Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 5 doors - 8 sets - 46 items - 1 risks - 0 RFIs - 273s total.",
+      "message": "Secure analysis done - 5 doors - 8 sets - 46 items - 1 risks - 0 RFIs - 273s total.",
+      "stage": "done",
+      "ts": "2026-05-27T03:36:15Z"
+    }
+  ]
+}

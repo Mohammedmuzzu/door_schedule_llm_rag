@@ -1,0 +1,1375 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "BALANCED SOLUTIONS",
+      "project_number": null,
+      "architect": "TAFT STUDIO",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 11,
+      "total_hardware_sets_referenced": 6,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 11,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 11 opening(s) and 7 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "101",
+        "room_or_location": "OFFICE 1",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "102A",
+        "room_or_location": "EXEC RR",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 2\"",
+          "height": "8' - 0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "4",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "102B",
+        "room_or_location": "EXEC RR",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "2' - 6\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "--",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.94
+      },
+      {
+        "mark": "103",
+        "room_or_location": "CONFERENCE ROOM",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "3",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "104",
+        "room_or_location": "OFFICE 2",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "105",
+        "room_or_location": "STOR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 11\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "106",
+        "room_or_location": "OFFICE 3",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "107",
+        "room_or_location": "OFFICE 4",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "108",
+        "room_or_location": "BREAK ROOM",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 2\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "4",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "109",
+        "room_or_location": "ADA RESTROOM",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 11\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".5",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      },
+      {
+        "mark": "110",
+        "room_or_location": "OFFICE 5",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 10 1/2\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": ".1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.96
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": ".1",
+        "header_verbatim": "SINGLE - OFFICE",
+        "referenced_by_doors": [
+          "101",
+          "104",
+          "106",
+          "107",
+          "110"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "BUTT HINGES",
+            "part": "TA 2714 4.5X4.5",
+            "mfr": "MCKINNEY",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "OFFICE ENTRY",
+            "part": "5304LN-AU",
+            "mfr": "YALE",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": "446",
+            "mfr": "ROCKWOOD",
+            "finish": "BRS - BRASS/BLACK BUMPER",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".2",
+        "header_verbatim": "SINGLE - PASSAGE",
+        "referenced_by_doors": [
+          "103"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "BUTT HINGES",
+            "part": "TA 2714 4.5X4.5",
+            "mfr": "MCKINNEY",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "OFFICE ENTRY",
+            "part": "5304LN-AU",
+            "mfr": "YALE",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "SURFACE CLOSER",
+            "part": "8541ST",
+            "mfr": "NORTON",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": "446",
+            "mfr": "ROCKWOOD",
+            "finish": "BRS - BRASS/BLACK BUMPER",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".3",
+        "header_verbatim": "SINGLE - PRIVACY (RR)",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "BUTT HINGES",
+            "part": "TA 2714 4.5X4.5",
+            "mfr": "MCKINNEY",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "PRIVACY SET",
+            "part": "YPL02-AU",
+            "mfr": "YALE",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "WALL STOP",
+            "part": "ENTRA",
+            "mfr": "BLOMUS",
+            "finish": "STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".4",
+        "header_verbatim": "SINGLE - STOREROOM",
+        "referenced_by_doors": [
+          "105"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "BUTT HINGES",
+            "part": "TA 2714 4.5X4.5",
+            "mfr": "MCKINNEY",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "STOREROOM SET",
+            "part": "5305LN-AU",
+            "mfr": "YALE",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": "446",
+            "mfr": "ROCKWOOD",
+            "finish": "BRS - BRASS/BLACK BUMPER",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".5",
+        "header_verbatim": "SINGLE - PRIVACY (RR W/ CLOSER)",
+        "referenced_by_doors": [
+          "109"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "BUTT HINGES",
+            "part": "TA 2714 4.5X4.5",
+            "mfr": "MCKINNEY",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "PRIVACY SET",
+            "part": "YPL02-AU",
+            "mfr": "YALE",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "SURFACE CLOSER",
+            "part": "8541ST",
+            "mfr": "NORTON",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": "446",
+            "mfr": "ROCKWOOD",
+            "finish": "US26D/GRAY BUMPER",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".6",
+        "header_verbatim": "SINGLE - POCKET",
+        "referenced_by_doors": [
+          "102A",
+          "108"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "PULLS",
+            "part": "RM3300 FLAT END 24\"",
+            "mfr": "ROCKWOOD",
+            "finish": "BSP - BLACK SUEDE POWDER",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": ".7",
+        "header_verbatim": "SINGLE - FRAMELESS GLASS (SHOWER)",
+        "referenced_by_doors": [
+          "102B"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 2,
+            "unit": "EA.",
+            "desc": "HINGES",
+            "part": "VIENNA 037 SERIES",
+            "mfr": "CRL",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "SET",
+            "desc": "PULLS",
+            "part": "SQ8X8BCH",
+            "mfr": "CRL",
+            "finish": "MATTE BLACK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "WALL STOP",
+            "part": "ENTRA",
+            "mfr": "BLOMUS",
+            "finish": "STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "101",
+        "hardware_set": ".1",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": ".1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": ".1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102A",
+        "hardware_set": ".6",
+        "item_no": 1,
+        "qty": 1,
+        "description": "PULLS",
+        "catalog_number": "RM3300 FLAT END 24\"",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102B",
+        "hardware_set": ".7",
+        "item_no": 1,
+        "qty": 2,
+        "description": "HINGES",
+        "catalog_number": "VIENNA 037 SERIES",
+        "manufacturer": "CRL",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102B",
+        "hardware_set": ".7",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PULLS",
+        "catalog_number": "SQ8X8BCH",
+        "manufacturer": "CRL",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102B",
+        "hardware_set": ".7",
+        "item_no": 3,
+        "qty": 1,
+        "description": "WALL STOP",
+        "catalog_number": "ENTRA",
+        "manufacturer": "BLOMUS",
+        "finish": "STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": ".2",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": ".2",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": ".2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "8541ST",
+        "manufacturer": "NORTON",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": ".2",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": ".1",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": ".1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": ".1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": ".4",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": ".4",
+        "item_no": 2,
+        "qty": 1,
+        "description": "STOREROOM SET",
+        "catalog_number": "5305LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": ".4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": ".1",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": ".1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": ".1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": ".1",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": ".1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": ".1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": ".6",
+        "item_no": 1,
+        "qty": 1,
+        "description": "PULLS",
+        "catalog_number": "RM3300 FLAT END 24\"",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": ".5",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": ".5",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET",
+        "catalog_number": "YPL02-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": ".5",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "8541ST",
+        "manufacturer": "NORTON",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": ".5",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "US26D/GRAY BUMPER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": ".1",
+        "item_no": 1,
+        "qty": 4,
+        "description": "BUTT HINGES",
+        "catalog_number": "TA 2714 4.5X4.5",
+        "manufacturer": "MCKINNEY",
+        "finish": "MATTE BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": ".1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "OFFICE ENTRY",
+        "catalog_number": "5304LN-AU",
+        "manufacturer": "YALE",
+        "finish": "BSP - BLACK SUEDE POWDER",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": ".1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "446",
+        "manufacturer": "ROCKWOOD",
+        "finish": "BRS - BRASS/BLACK BUMPER",
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "UNDERCUT AT DOORS NOT TO EXCEED 1/2\"",
+        "FRAMELESS GLASS TO BE 1/2\" CLEAR TEMPERED, UNO",
+        "FRAMED GLASS TO BE 3/8\" CLEAR TEMPERED, UNO",
+        "ALL FRAMES TO BE BLACK POWDERCOAT WITH BLACK FELT AND GLAZING VINYL, UNO",
+        "SIDELIGHTS TO ALIGN WITH TOP OF DOOR FRAMES",
+        "SIDELIGHT GLASS TO BE 3/8\" CLEAR TEMPERED, UNO.",
+        "BUTT JOINTS (1/8\" MAX) TO HAVE CLEAR EXTRUDED POLYMER GASKET, REDDIPLEX I-JOINT OR EQUAL",
+        "MANUFACTURER DEVIATIONS ARE NOT ALLOWED UNLESS WRITTEN APPROVAL BY ARCHITECT IS GRANTED PRIOR TO BIDDING.",
+        "USE 3 HINGES FOR DOORS UP TO AND INCLUDING 7'-8\", ADD 1 HINGE FOR EACH ADDITIONAL 30\" IN HEIGHT",
+        "ALL DIMENSIONS ARE TO CENTERLINE OF HARDWARE",
+        "DOOR SUBCONTRACTOR TO SUBMIT ANY DEVIATIONS FOR PRIOR APPROVAL",
+        "DOOR PULL MOUNTING HEIGHT AT FRAMELESS GLASS DOORS TO BE SUBMITTED FOR PRIOR APPROVAL",
+        "PROVIDE STANDARD WEIGHT HINGES AT ALUMINUM FRAMES, U.N.O.",
+        "PROVIDE 4 EACH HINGES AT OPENINGS OVER 90 INCHES IN HEIGHT.",
+        "MOUNT CLOSERS ON ROOM SIDE WITH ALL NECESSARY BRACKETS.",
+        "COORDINATE KEYING REQUIREMENTS WITH OWNER/TENANT",
+        "MANUFACTURER DEVIATIONS ARE NOT ALLOWED UNLESS WRITTEN APPROVAL BY ARCHITECT AND BUILDING OWNER IS GRANTED PRIOR TO BIDDING.",
+        "WHERE SPECIFICATIONS DIFFERS FROM BUILDING STANDARD, PROVIDE BUILDING STANDARD.",
+        "LEVERS AND PULLS TO MEET TAS COMPLIANCE.",
+        "NOTE: THE HARDWARE SPECIFIED IN THE HARDWARE SETS IS TO BE CONSIDERED THE INTENT OF APPLICABLE FUNCTIONS FOR A COMPLETE OPENING SOLUTION AS REQUIRED BY THE USE AND FUNCTIONS OF THE OPENING. THE HARDWARE SETS SPECIFIED ARE TO BE CONSIDERED THE BASE BID."
+      ],
+      "hardware_preamble": [
+        "DOOR HARDWARE MOUNTING NOTES:\n1. USE 3 HINGES FOR DOORS UP TO AND INCLUDING 7'-8\", ADD 1 HINGE FOR EACH ADDITIONAL 30\" IN HEIGHT\n2. ALL DIMENSIONS ARE TO CENTERLINE OF HARDWARE\n3. DOOR SUBCONTRACTOR TO SUBMIT ANY DEVIATIONS FOR PRIOR APPROVAL\n4. DOOR PULL MOUNTING HEIGHT AT FRAMELESS GLASS DOORS TO BE SUBMITTED FOR PRIOR APPROVAL",
+        "HARDWARE NOTES:\n1. PROVIDE STANDARD WEIGHT HINGES AT ALUMINUM FRAMES, U.N.O.",
+        "HARDWARE NOTES:\n2. PROVIDE 4 EACH HINGES AT OPENINGS OVER 90 INCHES IN HEIGHT.",
+        "HARDWARE NOTES:\n3. MOUNT CLOSERS ON ROOM SIDE WITH ALL NECESSARY BRACKETS.",
+        "HARDWARE NOTES:\n5. MANUFACTURER DEVIATIONS ARE NOT ALLOWED UNLESS WRITTEN APPROVAL BY ARCHITECT AND BUILDING OWNER IS GRANTED PRIOR TO BIDDING.",
+        "HARDWARE NOTES:\n6. WHERE SPECIFICATIONS DIFFERS FROM BUILDING STANDARD, PROVIDE BUILDING STANDARD.",
+        "HARDWARE NOTES:\n7. LEVERS AND PULLS TO MEET TAS COMPLIANCE.",
+        "NOTE: THE HARDWARE SPECIFIED IN THE HARDWARE SETS IS TO BE CONSIDERED THE INTENT OF APPLICABLE FUNCTIONS FOR A COMPLETE OPENING SOLUTION AS REQUIRED BY THE USE AND FUNCTIONS OF THE OPENING. THE HARDWARE SETS SPECIFIED ARE TO BE CONSIDERED THE BASE BID.",
+        "SEQUENCE OF HARDWARE\n1. DOOR HANGING DEVICE\n2. DOOR SECURING DEVICE\n3. DOOR OPERATING DEVICE\n4. ACCESSORIES FOR PAIRS OF DOOR\n5. CLOSING & CONTROLLING DEVICES\n6. PROTECTIVE PLATES\n7. STOPS AND HOLDERS\n8. SEALING ACCESSORIES\n9. MISC ITEMS ATTACHED TO DOOR"
+      ],
+      "keying_notes": [
+        "COORDINATE KEYING REQUIREMENTS WITH OWNER/TENANT"
+      ],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (1 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "11 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "7 hardware set(s) identified; 7 have a complete extracted item list.",
+      "20 general note(s) captured from the door-schedule sheet.",
+      "9 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 132,
+        "truncated": false,
+        "output_count": 11
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 56,
+        "truncated": false,
+        "output_count": 7
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 31
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 188,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "102A"
+        },
+        {
+          "mark": "102B"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "104"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": ".1",
+          "item_count": 3
+        },
+        {
+          "id": ".2",
+          "item_count": 4
+        },
+        {
+          "id": ".3",
+          "item_count": 3
+        },
+        {
+          "id": ".4",
+          "item_count": 3
+        },
+        {
+          "id": ".5",
+          "item_count": 4
+        },
+        {
+          "id": ".6",
+          "item_count": 1
+        },
+        {
+          "id": ".7",
+          "item_count": 3
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for project 34.pdf (745 KB).",
+      "message": "Secure analysis started for project 34.pdf (745 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T03:24:50Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T03:24:50Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 132s.",
+      "message": "Door schedule review - completed in 132s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T03:27:03Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T03:27:03Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 56s.",
+      "message": "Hardware set review - completed in 56s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T03:27:59Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T03:27:59Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 11 doors - 7 sets - 21 items - 0 risks - 0 RFIs - 188s total.",
+      "message": "Secure analysis done - 11 doors - 7 sets - 21 items - 0 risks - 0 RFIs - 188s total.",
+      "stage": "done",
+      "ts": "2026-05-27T03:27:59Z"
+    }
+  ]
+}

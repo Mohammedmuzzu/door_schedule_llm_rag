@@ -7,6 +7,7 @@ import urllib.request
 from typing import Any
 
 from config import settings
+from hardware_rescue import detect_hardware_crops, extract_pdf_text
 
 
 class ExtractionError(Exception):
@@ -173,30 +174,40 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
     }
 
     def send(payload: dict[str, Any]) -> dict[str, Any]:
-        req = urllib.request.Request(
-            "https://api.openai.com/v1/responses",
-            data=json.dumps(payload).encode("utf-8"),
-            headers={"Content-Type": "application/json", "Authorization": f"Bearer {resolved_api_key}"},
-            method="POST",
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=900) as res:
-                return json.loads(res.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
+        for attempt in range(3):
+            req = urllib.request.Request(
+                "https://api.openai.com/v1/responses",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json", "Authorization": f"Bearer {resolved_api_key}"},
+                method="POST",
+            )
             try:
-                payload = json.loads(exc.read().decode("utf-8"))
-            except Exception:
-                payload = {"error": {"message": f"Analysis service HTTP {exc.code}"}}
-            raw_message = payload.get("error", {}).get("message") or f"Analysis service HTTP {exc.code}"
-            if exc.code in {401, 403}:
-                public_message = "Analysis service rejected this account key. Ask an admin to replace it."
-            elif exc.code == 429:
-                public_message = "Analysis service is quota-limited or busy. Try again later."
-            else:
-                public_message = f"Analysis service returned an error (HTTP {exc.code})."
-            raise ExtractionProviderError(public_message, raw_message) from exc
-        except urllib.error.URLError as exc:
-            raise ExtractionError(f"Network error contacting analysis service: {exc.reason}") from exc
+                with urllib.request.urlopen(req, timeout=900) as res:
+                    return json.loads(res.read().decode("utf-8"))
+            except urllib.error.HTTPError as exc:
+                try:
+                    error_payload = json.loads(exc.read().decode("utf-8"))
+                except Exception:
+                    error_payload = {"error": {"message": f"Analysis service HTTP {exc.code}"}}
+                raw_message = error_payload.get("error", {}).get("message") or f"Analysis service HTTP {exc.code}"
+                if exc.code in {500, 502, 503, 504} and attempt < 2:
+                    _log(logs, "warn", f"{label} - temporary service error, retrying.", label)
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                if exc.code in {401, 403}:
+                    public_message = "Analysis service rejected this account key. Ask an admin to replace it."
+                elif exc.code == 429:
+                    public_message = "Analysis service is quota-limited or busy. Try again later."
+                else:
+                    public_message = f"Analysis service returned an error (HTTP {exc.code})."
+                raise ExtractionProviderError(public_message, raw_message) from exc
+            except urllib.error.URLError as exc:
+                if attempt < 2:
+                    _log(logs, "warn", f"{label} - network interruption, retrying.", label)
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                raise ExtractionError(f"Network error contacting analysis service: {exc.reason}") from exc
+        raise ExtractionError("Analysis service did not return a response.")
 
     _log(logs, "info", f"{label} - processing document data.", label)
     try:
@@ -236,12 +247,98 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
 
 
 def canonical_set_key(value: Any) -> str:
+    s = clean_hardware_set_label(value)
+    if not s:
+        return ""
+    s = _normalize_set_label_text(s)
+    stripped = re.sub(r"^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)", "", s, flags=re.I)
+    stripped = re.sub(r"\s+", " ", stripped).strip().upper()
+    numeric = re.fullmatch(r"0*(\d+)(?:\.0+)?", stripped)
+    if numeric:
+        return numeric.group(1)
+    dotted_numeric = re.fullmatch(r"\.(\d+)", stripped)
+    if dotted_numeric:
+        return dotted_numeric.group(1)
+    if "|" in stripped:
+        parts = sorted(_compact_set_key(part) for part in stripped.split("|") if _compact_set_key(part))
+        if parts:
+            return " | ".join(parts)
+    return stripped or s.upper()
+
+
+def clean_hardware_set_label(value: Any) -> str:
     s = str(value or "").strip()
     if not s:
         return ""
-    stripped = re.sub(r"^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)", "", s, flags=re.I)
-    stripped = re.sub(r"\s+", " ", stripped).strip().upper()
-    return stripped or s.upper()
+    s = re.sub(r"^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)", "", s, flags=re.I)
+    s = re.sub(r"\s+", " ", s).strip()
+    numeric = re.fullmatch(r"(\d+)\.0+", s)
+    if numeric:
+        return numeric.group(1)
+    dotted_numeric = re.fullmatch(r"\.(\d+)", s)
+    if dotted_numeric:
+        return dotted_numeric.group(1)
+    return s
+
+
+def _normalize_set_label_text(value: str) -> str:
+    s = str(value or "").strip()
+    s = re.sub(r"\bPASASAGE\b", "PASSAGE", s, flags=re.I)
+    s = re.sub(r"\bw\s*/\s*", " ", s, flags=re.I)
+    s = re.sub(r"\s*([|/])\s*", r" \1 ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+
+def _compact_set_key(value: str) -> str:
+    s = _normalize_set_label_text(value).upper()
+    s = re.sub(r"[^A-Z0-9]+", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    numeric = re.fullmatch(r"0*(\d+)(?:\.0+)?", s)
+    return numeric.group(1) if numeric else s
+
+
+def alias_set_keys(value: Any) -> set[str]:
+    label = clean_hardware_set_label(value)
+    if not label:
+        return set()
+    normalized = _normalize_set_label_text(label)
+    keys = {canonical_set_key(normalized)}
+    for part in re.split(r"\s*[|/]\s*", normalized):
+        part = part.strip()
+        if len(part) >= 3:
+            keys.add(canonical_set_key(part))
+    loose_tokens = sorted(re.findall(r"[A-Z0-9]+", _normalize_set_label_text(normalized).upper()))
+    if loose_tokens:
+        keys.add(" ".join(loose_tokens))
+    keys.discard("")
+    return keys
+
+
+def _build_set_lookup(sets: list[dict[str, Any]]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
+    exact: dict[str, dict[str, Any]] = {}
+    alias_candidates: dict[str, list[dict[str, Any]]] = {}
+    for s in sets:
+        key = canonical_set_key(s.get("hardware_set"))
+        if key and key not in exact:
+            exact[key] = s
+        for alias in alias_set_keys(s.get("hardware_set")):
+            alias_candidates.setdefault(alias, []).append(s)
+    aliases: dict[str, dict[str, Any]] = {}
+    for alias, candidates in alias_candidates.items():
+        unique: dict[str, dict[str, Any]] = {}
+        for candidate in candidates:
+            unique[canonical_set_key(candidate.get("hardware_set"))] = candidate
+        if len(unique) == 1:
+            aliases[alias] = next(iter(unique.values()))
+    return exact, aliases
+
+
+def resolve_set(value: Any, exact: dict[str, dict[str, Any]], aliases: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    key = canonical_set_key(value)
+    if not key:
+        return None
+    return exact.get(key) or aliases.get(key)
 
 
 def _as_string_list(value: Any) -> list[str]:
@@ -269,7 +366,7 @@ def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
         "frame_material": d.get("frame_material"),
         "frame_finish": d.get("frame_finish"),
         "fire_rating": d.get("fire_rating"),
-        "hardware_set": d.get("hardware_set"),
+        "hardware_set": clean_hardware_set_label(d.get("hardware_set")),
         "closer": d.get("closer"),
         "electric_or_access_control": d.get("electric_or_access_control"),
         "remarks": remarks,
@@ -306,6 +403,9 @@ def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
             "notes": it.get("notes"),
             "confidence": it.get("confidence") if isinstance(it.get("confidence"), (int, float)) else None,
         }
+        meaningful = any(str(item.get(field) or "").strip() for field in ("qty", "unit", "desc", "part", "mfr", "finish", "notes"))
+        if not meaningful:
+            continue
         sig = f"{item.get('item_no') or ''}|{str(item.get('desc') or '').strip().lower()}|{str(item.get('part') or '').strip().lower()}"
         if sig in seen:
             continue
@@ -324,7 +424,7 @@ def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
         status = "complete" if items else "incomplete"
     missing = [] if items or raw_status in {"not_used", "void"} else ["no hardware items extracted"]
     return {
-        "hardware_set": s.get("hardware_set") or s.get("id"),
+        "hardware_set": clean_hardware_set_label(s.get("hardware_set") or s.get("id")),
         "header_verbatim": s.get("set_title"),
         "referenced_by_doors": s.get("referenced_doors") if isinstance(s.get("referenced_doors"), list) else [],
         "status": status,
@@ -359,13 +459,225 @@ def dedupe_sets(sets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return list(by_key.values())
 
 
+def _set_sort_key(value: Any) -> tuple[int, int | str]:
+    key = canonical_set_key(value)
+    return (0, int(key)) if key.isdigit() else (1, key)
+
+
+def known_hardware_set_ids(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) -> list[str]:
+    ids = {clean_hardware_set_label(d.get("hardware_set")) for d in doors if d.get("hardware_set")}
+    ids.update(clean_hardware_set_label(s.get("hardware_set")) for s in sets if s.get("hardware_set"))
+    return sorted((x for x in ids if x), key=_set_sort_key)
+
+
+def should_run_hardware_rescue(doors: list[dict[str, Any]], sets: list[dict[str, Any]], *, truncated: bool = False) -> bool:
+    referenced = {canonical_set_key(d.get("hardware_set")) for d in doors if d.get("hardware_set")}
+    referenced.discard("")
+    if not referenced:
+        return False
+    set_by_key = {canonical_set_key(s.get("hardware_set")): s for s in sets if s.get("hardware_set")}
+    total_items = sum(len(s.get("items") or []) for s in sets)
+    active_sets = [s for s in sets if str(s.get("status") or "").lower() not in {"voided", "not_used", "void"}]
+    one_item_sets = [s for s in active_sets if len(s.get("items") or []) <= 1]
+    empty_referenced = [
+        key for key in referenced
+        if not set_by_key.get(key) or not (set_by_key.get(key) or {}).get("items")
+    ]
+    if truncated and empty_referenced:
+        return True
+    if len(referenced) >= 3 and total_items < max(4, len(referenced) // 2):
+        return True
+    if len(referenced) >= 5 and active_sets and total_items <= len(active_sets) * 2 and len(one_item_sets) >= max(3, len(active_sets) // 2):
+        return True
+    return bool(empty_referenced) and len(referenced) >= 3
+
+
+def _item_signature(item: dict[str, Any]) -> str:
+    return "|".join(
+        str(item.get(field) or "").strip().lower()
+        for field in ("qty", "unit", "desc", "part", "mfr", "finish")
+    )
+
+
+def merge_rescued_sets(existing_sets: list[dict[str, Any]], rescued_sets: list[dict[str, Any]], allowed_ids: list[str] | None = None) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    by_key, aliases = _build_set_lookup(existing_sets)
+    allowed_keys = {canonical_set_key(value) for value in allowed_ids or [] if canonical_set_key(value)}
+    allowed_aliases = set(allowed_keys)
+    for value in allowed_ids or []:
+        allowed_aliases.update(alias_set_keys(value))
+    added_sets = 0
+    added_items = 0
+
+    for rescued in rescued_sets:
+        key = canonical_set_key(rescued.get("hardware_set"))
+        if not key:
+            continue
+        target = resolve_set(rescued.get("hardware_set"), by_key, aliases)
+        if not target:
+            rescued_aliases = alias_set_keys(rescued.get("hardware_set"))
+            if allowed_aliases and not ({key, *rescued_aliases} & allowed_aliases):
+                continue
+            target = rescued
+            target["hardware_set"] = clean_hardware_set_label(target.get("hardware_set"))
+            existing_sets.append(target)
+            by_key[key] = target
+            for alias in alias_set_keys(target.get("hardware_set")):
+                aliases.setdefault(alias, target)
+            added_sets += 1
+            added_items += len(target.get("items") or [])
+            continue
+
+        existing_sigs = {_item_signature(item) for item in target.get("items") or []}
+        for item in rescued.get("items") or []:
+            sig = _item_signature(item)
+            if sig in existing_sigs:
+                continue
+            target.setdefault("items", []).append(item)
+            existing_sigs.add(sig)
+            added_items += 1
+
+        for field in ("header_verbatim", "raw_status", "estimator_note"):
+            if not target.get(field) and rescued.get(field):
+                target[field] = rescued[field]
+        if target.get("items"):
+            target["status"] = "complete"
+            target["missing_or_unclear_items"] = []
+
+    return dedupe_sets(existing_sets), {"sets_added": added_sets, "items_added": added_items}
+
+
+def rescue_hardware_sets_from_crops(file_bytes: bytes, filename: str, known_ids: list[str], logs: list[dict[str, Any]], api_key: str | None) -> tuple[list[dict[str, Any]], int]:
+    try:
+        crops = detect_hardware_crops(file_bytes, max_candidates=12, dpi=260)
+    except Exception as exc:
+        _log(logs, "warn", f"Completeness check unavailable: {exc}", "Completeness check")
+        return [], 0
+
+    if not crops:
+        _log(logs, "warn", "Completeness check could not find readable hardware excerpts.", "Completeness check")
+        return [], 0
+
+    _log(logs, "info", "Completeness check started.", "Completeness check")
+    rescued_raw: list[dict[str, Any]] = []
+    elapsed = 0
+    batch_size = 2
+    known_text = ", ".join(known_ids) if known_ids else "not known"
+
+    for batch_start in range(0, len(crops), batch_size):
+        batch = crops[batch_start:batch_start + batch_size]
+        content: list[dict[str, Any]] = [
+            {
+                "type": "input_text",
+                "text": (
+                    "These are high-resolution excerpts from the same door hardware schedule. "
+                    "They may overlap. Extract every visible hardware set and line item, merge duplicate visible lines, "
+                    "and do not infer anything that is not readable."
+                ),
+            }
+        ]
+        for idx, crop in enumerate(batch, start=batch_start + 1):
+            hint = re.sub(r"\s+", " ", crop.get("text") or "").strip()[:900]
+            content.append({"type": "input_text", "text": f"Excerpt {idx}. Page {crop.get('page')}. OCR hint: {hint or 'none'}"})
+            content.append({"type": "input_image", "image_url": "data:image/jpeg;base64," + crop["base64_image"], "detail": "high"})
+        content.append(
+            {
+                "type": "input_text",
+                "text": (
+                    f"Known hardware set IDs from the door schedule: {known_text}.\n"
+                    "Return only JSON in the hardware_sets schema from the system instructions."
+                ),
+            }
+        )
+
+        try:
+            call = _openai_json_call(
+                "Completeness check",
+                [
+                    {"role": "system", "content": STAGED_HW_SYSTEM},
+                    {"role": "user", "content": content},
+                ],
+                32000,
+                "medium",
+                logs,
+                api_key=api_key,
+            )
+        except ExtractionError as exc:
+            _log(logs, "warn", f"Completeness check skipped one excerpt batch: {exc}", "Completeness check")
+            continue
+
+        elapsed += int(call["elapsed"])
+        raw_sets = call["parsed"].get("hardware_sets") or call["parsed"].get("sets") or []
+        rescued_raw.extend(s for s in raw_sets if isinstance(s, dict))
+
+    rescued = dedupe_sets([normalize_set(s) for s in rescued_raw])
+    item_count = sum(len(s.get("items") or []) for s in rescued)
+    _log(logs, "ok", f"Completeness check recovered {len(rescued)} set(s) and {item_count} item row(s).", "Completeness check")
+    return rescued, elapsed
+
+
+def rescue_hardware_sets_from_text(file_bytes: bytes, known_ids: list[str], focus_ids: list[str], logs: list[dict[str, Any]], api_key: str | None) -> tuple[list[dict[str, Any]], int]:
+    text = extract_pdf_text(file_bytes, max_chars=45000)
+    if len(text.strip()) < 500:
+        return [], 0
+    known_text = ", ".join(known_ids) if known_ids else "not known"
+    focus_text = ", ".join(focus_ids) if focus_ids else "any set with missing line items"
+    try:
+        call = _openai_json_call(
+            "Text completeness check",
+            [
+                {"role": "system", "content": STAGED_HW_SYSTEM},
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_text",
+                            "text": (
+                                "The following is native PDF text from a door schedule / hardware schedule. "
+                                "Use it as a fallback for searchable or borderless tables where image crops may miss line items. "
+                                f"Known set IDs: {known_text}. Focus on incomplete set IDs: {focus_text}. "
+                                "Extract visible hardware set, lock/latch/handle set, or hardware group definitions and line items. "
+                                "Do not infer missing rows.\n\nPDF_TEXT:\n" + text
+                            ),
+                        }
+                    ],
+                },
+            ],
+            20000,
+            "medium",
+            logs,
+            api_key=api_key,
+        )
+    except ExtractionError as exc:
+        _log(logs, "warn", f"Text completeness check skipped: {exc}", "Text completeness check")
+        return [], 0
+
+    raw_sets = call["parsed"].get("hardware_sets") or call["parsed"].get("sets") or []
+    rescued = dedupe_sets([normalize_set(s) for s in raw_sets if isinstance(s, dict)])
+    item_count = sum(len(s.get("items") or []) for s in rescued)
+    _log(logs, "ok", f"Text completeness check recovered {len(rescued)} set(s) and {item_count} item row(s).", "Text completeness check")
+    return rescued, int(call["elapsed"])
+
+
+def referenced_empty_set_ids(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) -> list[str]:
+    set_by_key, aliases = _build_set_lookup(sets)
+    missing: set[str] = set()
+    for door in doors:
+        value = door.get("hardware_set")
+        if not value:
+            continue
+        matched = resolve_set(value, set_by_key, aliases)
+        if not matched or not (matched.get("items") or []):
+            missing.add(clean_hardware_set_label(value))
+    return sorted(missing, key=_set_sort_key)
+
+
 def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     qa: list[dict[str, Any]] = []
-    set_by_canon = {canonical_set_key(s.get("hardware_set")): s for s in sets if s.get("hardware_set")}
+    set_by_canon, set_aliases = _build_set_lookup(sets)
     for d in doors:
         if not d.get("hardware_set"):
             continue
-        matched = set_by_canon.get(canonical_set_key(d["hardware_set"]))
+        matched = resolve_set(d["hardware_set"], set_by_canon, set_aliases)
         if matched and matched.get("hardware_set") != d.get("hardware_set"):
             d["raw_hardware_set"] = d.get("hardware_set")
             d["hardware_set"] = matched.get("hardware_set")
@@ -569,6 +881,37 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         "keying_notes": [x for x in call2["parsed"].get("keying_notes") or [] if isinstance(x, str) and x.strip()],
         "hardware_legend": call2["parsed"].get("hardware_legend") if isinstance(call2["parsed"].get("hardware_legend"), dict) else {},
     }
+    rescue_elapsed = 0
+    rescue_attempted = False
+    rescue_stats = {"sets_added": 0, "items_added": 0}
+    if should_run_hardware_rescue(doors, sets, truncated=bool(call2["truncated"])):
+        rescue_attempted = True
+        rescue_known_ids = known_hardware_set_ids(doors, sets)
+        rescued_sets, rescue_elapsed = rescue_hardware_sets_from_crops(
+            file_bytes,
+            filename,
+            rescue_known_ids,
+            logs,
+            api_key,
+        )
+        if rescued_sets:
+            sets, rescue_stats = merge_rescued_sets(sets, rescued_sets, allowed_ids=rescue_known_ids)
+            if rescue_stats["items_added"]:
+                _log(logs, "ok", f"Completeness check added {rescue_stats['items_added']} hardware item row(s).", "Completeness check")
+        still_empty = referenced_empty_set_ids(doors, sets)
+        if still_empty:
+            text_sets, text_elapsed = rescue_hardware_sets_from_text(
+                file_bytes,
+                rescue_known_ids,
+                still_empty,
+                logs,
+                api_key,
+            )
+            rescue_elapsed += text_elapsed
+            if text_sets:
+                sets, text_stats = merge_rescued_sets(sets, text_sets, allowed_ids=rescue_known_ids)
+                rescue_stats["sets_added"] += text_stats["sets_added"]
+                rescue_stats["items_added"] += text_stats["items_added"]
 
     def dedupe_strings(items: list[str]) -> list[str]:
         seen: set[str] = set()
@@ -588,7 +931,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         "legend": legend,
     }
     mapping, qa_issues = map_doors_hardware(doors, sets)
-    elapsed_core = int(call1["elapsed"] + call2["elapsed"])
+    elapsed_core = int(call1["elapsed"] + call2["elapsed"] + rescue_elapsed)
     project_summary = rollup_summary(doors, sets, scope, elapsed_core, project_meta)
 
     project_risks: list[dict[str, Any]] = []
@@ -659,9 +1002,10 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
             "pipeline_steps": [
                 {"step": 1, "kind": "llm", "label": "Door schedule extraction", "elapsed_seconds": call1["elapsed"], "truncated": call1["truncated"], "output_count": len(doors)},
                 {"step": 2, "kind": "llm", "label": "Hardware set extraction", "elapsed_seconds": call2["elapsed"], "truncated": call2["truncated"], "output_count": len(sets)},
-                {"step": 3, "kind": "code", "label": "Door -> hardware mapping", "output_count": len(mapping)},
-                {"step": 4, "kind": "code", "label": "Rollup"},
-                {"step": 5, "kind": "llm", "label": "RFI / coordination review", "skipped": call3_skipped, "elapsed_seconds": call3_elapsed, "output_count": len(rfi_log)},
+                {"step": 3, "kind": "llm", "label": "Completeness check", "skipped": not rescue_attempted, "elapsed_seconds": rescue_elapsed, "output_count": rescue_stats["items_added"]},
+                {"step": 4, "kind": "code", "label": "Door -> hardware mapping", "output_count": len(mapping)},
+                {"step": 5, "kind": "code", "label": "Rollup"},
+                {"step": 6, "kind": "llm", "label": "RFI / coordination review", "skipped": call3_skipped, "elapsed_seconds": call3_elapsed, "output_count": len(rfi_log)},
             ],
             "model": settings.openai_model,
             "elapsed_seconds": total_elapsed,

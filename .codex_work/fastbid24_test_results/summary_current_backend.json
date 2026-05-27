@@ -1,0 +1,985 @@
+[
+  {
+    "pdf": "testing - project 1 .pdf",
+    "doors": 62,
+    "sets": 18,
+    "items": 0,
+    "missing_or_empty_sets": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "mapping_rows": 62,
+    "qa": {
+      "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+      "pipeline": "secure-backend-staged",
+      "pipeline_steps": [
+        {
+          "step": 1,
+          "kind": "llm",
+          "label": "Door schedule extraction",
+          "elapsed_seconds": 196,
+          "truncated": false,
+          "output_count": 62
+        },
+        {
+          "step": 2,
+          "kind": "llm",
+          "label": "Hardware set extraction",
+          "elapsed_seconds": 119,
+          "truncated": false,
+          "output_count": 18
+        },
+        {
+          "step": 3,
+          "kind": "code",
+          "label": "Door -> hardware mapping",
+          "output_count": 62
+        },
+        {
+          "step": 4,
+          "kind": "code",
+          "label": "Rollup"
+        },
+        {
+          "step": 5,
+          "kind": "llm",
+          "label": "RFI / coordination review",
+          "skipped": true,
+          "elapsed_seconds": 0,
+          "output_count": 2
+        }
+      ],
+      "model": "gpt-5.5",
+      "elapsed_seconds": 315,
+      "mapping_qa_issues": [
+        {
+          "kind": "set_empty",
+          "set": "10",
+          "mark": "100A",
+          "message": "Door 100A: hardware set 10 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "100B",
+          "message": "Door 100B: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "100C",
+          "message": "Door 100C: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "100D",
+          "message": "Door 100D: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "8",
+          "mark": "100E",
+          "message": "Door 100E: hardware set 8 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "8",
+          "mark": "100F",
+          "message": "Door 100F: hardware set 8 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "2",
+          "mark": "100G",
+          "message": "Door 100G: hardware set 2 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "100H",
+          "message": "Door 100H: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "18",
+          "mark": "102A",
+          "message": "Door 102A: hardware set 18 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "18",
+          "mark": "102B",
+          "message": "Door 102B: hardware set 18 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "103A",
+          "message": "Door 103A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "18",
+          "mark": "105A",
+          "message": "Door 105A: hardware set 18 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "19",
+          "mark": "106A",
+          "message": "Door 106A: hardware set 19 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "15",
+          "mark": "107A",
+          "message": "Door 107A: hardware set 15 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "15",
+          "mark": "107B",
+          "message": "Door 107B: hardware set 15 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "18",
+          "mark": "108A",
+          "message": "Door 108A: hardware set 18 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "109A",
+          "message": "Door 109A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "110A",
+          "message": "Door 110A: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "1",
+          "mark": "110B",
+          "message": "Door 110B: hardware set 1 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "8",
+          "mark": "110C",
+          "message": "Door 110C: hardware set 8 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "8",
+          "mark": "110D",
+          "message": "Door 110D: hardware set 8 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "111A",
+          "message": "Door 111A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "14",
+          "mark": "112A",
+          "message": "Door 112A: hardware set 14 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "17",
+          "mark": "113A",
+          "message": "Door 113A: hardware set 17 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "14",
+          "mark": "114A",
+          "message": "Door 114A: hardware set 14 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "14",
+          "mark": "115A",
+          "message": "Door 115A: hardware set 14 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "12",
+          "mark": "116A",
+          "message": "Door 116A: hardware set 12 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "116B",
+          "message": "Door 116B: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "3",
+          "mark": "117A",
+          "message": "Door 117A: hardware set 3 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "9",
+          "mark": "118A",
+          "message": "Door 118A: hardware set 9 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "118B",
+          "message": "Door 118B: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "118C",
+          "message": "Door 118C: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "118D",
+          "message": "Door 118D: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "118E",
+          "message": "Door 118E: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "9",
+          "mark": "118F",
+          "message": "Door 118F: hardware set 9 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "119A",
+          "message": "Door 119A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "3",
+          "mark": "120A",
+          "message": "Door 120A: hardware set 3 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "120B",
+          "message": "Door 120B: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "121A",
+          "message": "Door 121A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "122A",
+          "message": "Door 122A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "4",
+          "mark": "127B",
+          "message": "Door 127B: hardware set 4 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "128A",
+          "message": "Door 128A: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "9",
+          "mark": "128B",
+          "message": "Door 128B: hardware set 9 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "16",
+          "mark": "129A",
+          "message": "Door 129A: hardware set 16 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "16",
+          "mark": "130A",
+          "message": "Door 130A: hardware set 16 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "131A",
+          "message": "Door 131A: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "5",
+          "mark": "132A",
+          "message": "Door 132A: hardware set 5 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "7",
+          "mark": "133A",
+          "message": "Door 133A: hardware set 7 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "11",
+          "mark": "134A",
+          "message": "Door 134A: hardware set 11 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "12",
+          "mark": "135A",
+          "message": "Door 135A: hardware set 12 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "15",
+          "mark": "136A",
+          "message": "Door 136A: hardware set 15 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "16",
+          "mark": "137A",
+          "message": "Door 137A: hardware set 16 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "14",
+          "mark": "138A",
+          "message": "Door 138A: hardware set 14 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "13",
+          "mark": "140A",
+          "message": "Door 140A: hardware set 13 has zero items."
+        },
+        {
+          "kind": "no_hw_set",
+          "mark": "141A",
+          "message": "Door 141A has no hardware set assigned."
+        },
+        {
+          "kind": "no_hw_set",
+          "mark": "141B",
+          "message": "Door 141B has no hardware set assigned."
+        },
+        {
+          "kind": "no_hw_set",
+          "mark": "141C",
+          "message": "Door 141C has no hardware set assigned."
+        },
+        {
+          "kind": "no_hw_set",
+          "mark": "141D",
+          "message": "Door 141D has no hardware set assigned."
+        },
+        {
+          "kind": "set_empty",
+          "set": "4",
+          "mark": "203A",
+          "message": "Door 203A: hardware set 4 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "8",
+          "mark": "200A",
+          "message": "Door 200A: hardware set 8 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "11",
+          "mark": "201A",
+          "message": "Door 201A: hardware set 11 has zero items."
+        },
+        {
+          "kind": "set_empty",
+          "set": "11",
+          "mark": "202A",
+          "message": "Door 202A: hardware set 11 has zero items."
+        }
+      ],
+      "raw_transcription": {
+        "doors": [
+          {
+            "mark": "100A"
+          },
+          {
+            "mark": "100B"
+          },
+          {
+            "mark": "100C"
+          },
+          {
+            "mark": "100D"
+          },
+          {
+            "mark": "100E"
+          },
+          {
+            "mark": "100F"
+          },
+          {
+            "mark": "100G"
+          },
+          {
+            "mark": "100H"
+          },
+          {
+            "mark": "102A"
+          },
+          {
+            "mark": "102B"
+          },
+          {
+            "mark": "103A"
+          },
+          {
+            "mark": "105A"
+          },
+          {
+            "mark": "106A"
+          },
+          {
+            "mark": "107A"
+          },
+          {
+            "mark": "107B"
+          },
+          {
+            "mark": "108A"
+          },
+          {
+            "mark": "109A"
+          },
+          {
+            "mark": "110A"
+          },
+          {
+            "mark": "110B"
+          },
+          {
+            "mark": "110C"
+          },
+          {
+            "mark": "110D"
+          },
+          {
+            "mark": "111A"
+          },
+          {
+            "mark": "112A"
+          },
+          {
+            "mark": "113A"
+          },
+          {
+            "mark": "114A"
+          },
+          {
+            "mark": "115A"
+          },
+          {
+            "mark": "116A"
+          },
+          {
+            "mark": "116B"
+          },
+          {
+            "mark": "117A"
+          },
+          {
+            "mark": "118A"
+          },
+          {
+            "mark": "118B"
+          },
+          {
+            "mark": "118C"
+          },
+          {
+            "mark": "118D"
+          },
+          {
+            "mark": "118E"
+          },
+          {
+            "mark": "118F"
+          },
+          {
+            "mark": "119A"
+          },
+          {
+            "mark": "120A"
+          },
+          {
+            "mark": "120B"
+          },
+          {
+            "mark": "121A"
+          },
+          {
+            "mark": "122A"
+          },
+          {
+            "mark": "127B"
+          },
+          {
+            "mark": "128A"
+          },
+          {
+            "mark": "128B"
+          },
+          {
+            "mark": "129A"
+          },
+          {
+            "mark": "130A"
+          },
+          {
+            "mark": "131A"
+          },
+          {
+            "mark": "132A"
+          },
+          {
+            "mark": "133A"
+          },
+          {
+            "mark": "134A"
+          },
+          {
+            "mark": "135A"
+          },
+          {
+            "mark": "136A"
+          },
+          {
+            "mark": "137A"
+          },
+          {
+            "mark": "138A"
+          },
+          {
+            "mark": "140A"
+          },
+          {
+            "mark": "141A"
+          },
+          {
+            "mark": "141B"
+          },
+          {
+            "mark": "141C"
+          },
+          {
+            "mark": "141D"
+          },
+          {
+            "mark": "203A"
+          },
+          {
+            "mark": "200A"
+          },
+          {
+            "mark": "201A"
+          },
+          {
+            "mark": "202A"
+          }
+        ],
+        "hardware_sets": [
+          {
+            "id": "1",
+            "item_count": 0
+          },
+          {
+            "id": "2",
+            "item_count": 0
+          },
+          {
+            "id": "3",
+            "item_count": 0
+          },
+          {
+            "id": "4",
+            "item_count": 0
+          },
+          {
+            "id": "5",
+            "item_count": 0
+          },
+          {
+            "id": "7",
+            "item_count": 0
+          },
+          {
+            "id": "8",
+            "item_count": 0
+          },
+          {
+            "id": "9",
+            "item_count": 0
+          },
+          {
+            "id": "10",
+            "item_count": 0
+          },
+          {
+            "id": "11",
+            "item_count": 0
+          },
+          {
+            "id": "12",
+            "item_count": 0
+          },
+          {
+            "id": "13",
+            "item_count": 0
+          },
+          {
+            "id": "14",
+            "item_count": 0
+          },
+          {
+            "id": "15",
+            "item_count": 0
+          },
+          {
+            "id": "16",
+            "item_count": 0
+          },
+          {
+            "id": "17",
+            "item_count": 0
+          },
+          {
+            "id": "18",
+            "item_count": 0
+          },
+          {
+            "id": "19",
+            "item_count": 0
+          }
+        ]
+      },
+      "truncated": false,
+      "reasoning_succeeded": true,
+      "extraction_complete": true,
+      "extraction_failures": []
+    }
+  },
+  {
+    "pdf": "Door Schedule & Hardware Sets.pdf",
+    "doors": 43,
+    "sets": 21,
+    "items": 116,
+    "missing_or_empty_sets": [],
+    "mapping_rows": 240,
+    "qa": {
+      "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+      "pipeline": "secure-backend-staged",
+      "pipeline_steps": [
+        {
+          "step": 1,
+          "kind": "llm",
+          "label": "Door schedule extraction",
+          "elapsed_seconds": 245,
+          "truncated": false,
+          "output_count": 43
+        },
+        {
+          "step": 2,
+          "kind": "llm",
+          "label": "Hardware set extraction",
+          "elapsed_seconds": 238,
+          "truncated": false,
+          "output_count": 21
+        },
+        {
+          "step": 3,
+          "kind": "code",
+          "label": "Door -> hardware mapping",
+          "output_count": 240
+        },
+        {
+          "step": 4,
+          "kind": "code",
+          "label": "Rollup"
+        },
+        {
+          "step": 5,
+          "kind": "llm",
+          "label": "RFI / coordination review",
+          "skipped": true,
+          "elapsed_seconds": 0,
+          "output_count": 1
+        }
+      ],
+      "model": "gpt-5.5",
+      "elapsed_seconds": 483,
+      "mapping_qa_issues": [],
+      "raw_transcription": {
+        "doors": [
+          {
+            "mark": "102A"
+          },
+          {
+            "mark": "102B"
+          },
+          {
+            "mark": "104A"
+          },
+          {
+            "mark": "105"
+          },
+          {
+            "mark": "106A"
+          },
+          {
+            "mark": "106B"
+          },
+          {
+            "mark": "107"
+          },
+          {
+            "mark": "108"
+          },
+          {
+            "mark": "200A"
+          },
+          {
+            "mark": "200B"
+          },
+          {
+            "mark": "201"
+          },
+          {
+            "mark": "202"
+          },
+          {
+            "mark": "203"
+          },
+          {
+            "mark": "204"
+          },
+          {
+            "mark": "204B"
+          },
+          {
+            "mark": "205"
+          },
+          {
+            "mark": "206"
+          },
+          {
+            "mark": "207"
+          },
+          {
+            "mark": "208"
+          },
+          {
+            "mark": "209A"
+          },
+          {
+            "mark": "209B"
+          },
+          {
+            "mark": "210"
+          },
+          {
+            "mark": "211"
+          },
+          {
+            "mark": "212"
+          },
+          {
+            "mark": "213"
+          },
+          {
+            "mark": "214"
+          },
+          {
+            "mark": "215"
+          },
+          {
+            "mark": "216"
+          },
+          {
+            "mark": "217"
+          },
+          {
+            "mark": "218"
+          },
+          {
+            "mark": "219"
+          },
+          {
+            "mark": "220"
+          },
+          {
+            "mark": "221"
+          },
+          {
+            "mark": "223"
+          },
+          {
+            "mark": "224"
+          },
+          {
+            "mark": "225"
+          },
+          {
+            "mark": "226"
+          },
+          {
+            "mark": "227"
+          },
+          {
+            "mark": "228"
+          },
+          {
+            "mark": "229"
+          },
+          {
+            "mark": "230"
+          },
+          {
+            "mark": "231"
+          },
+          {
+            "mark": "232"
+          }
+        ],
+        "hardware_sets": [
+          {
+            "id": "002",
+            "item_count": 1
+          },
+          {
+            "id": "103",
+            "item_count": 3
+          },
+          {
+            "id": "103GW",
+            "item_count": 4
+          },
+          {
+            "id": "103U",
+            "item_count": 4
+          },
+          {
+            "id": "107H",
+            "item_count": 4
+          },
+          {
+            "id": "203",
+            "item_count": 3
+          },
+          {
+            "id": "203GSLL",
+            "item_count": 3
+          },
+          {
+            "id": "205",
+            "item_count": 8
+          },
+          {
+            "id": "212S",
+            "item_count": 5
+          },
+          {
+            "id": "341",
+            "item_count": 6
+          },
+          {
+            "id": "501G",
+            "item_count": 5
+          },
+          {
+            "id": "503",
+            "item_count": 3
+          },
+          {
+            "id": "503-H",
+            "item_count": 3
+          },
+          {
+            "id": "512G",
+            "item_count": 9
+          },
+          {
+            "id": "512S",
+            "item_count": 5
+          },
+          {
+            "id": "801",
+            "item_count": 3
+          },
+          {
+            "id": "C201",
+            "item_count": 7
+          },
+          {
+            "id": "C205",
+            "item_count": 11
+          },
+          {
+            "id": "C207",
+            "item_count": 6
+          },
+          {
+            "id": "C710AM",
+            "item_count": 10
+          },
+          {
+            "id": "C714AM",
+            "item_count": 13
+          }
+        ]
+      },
+      "truncated": false,
+      "reasoning_succeeded": true,
+      "extraction_complete": true,
+      "extraction_failures": []
+    }
+  }
+]
