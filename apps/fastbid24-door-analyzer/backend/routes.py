@@ -1,8 +1,11 @@
 import json
+import os
 import re
+import threading
 import time
 import uuid
 from collections import defaultdict, deque
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from functools import wraps
 
@@ -43,6 +46,10 @@ from storage import StorageNotConfigured, upload_pdf
 
 
 EXTRACTION_ATTEMPTS: dict[str, deque[float]] = defaultdict(deque)
+EXTRACTION_JOBS: dict[str, dict] = {}
+EXTRACTION_JOB_LOCK = threading.Lock()
+EXTRACTION_EXECUTOR = ThreadPoolExecutor(max_workers=max(1, int(os.environ.get("FASTBID24_EXTRACTION_WORKERS", "1"))))
+EXTRACTION_JOB_TTL_SECONDS = 6 * 60 * 60
 
 
 def iso(value):
@@ -159,6 +166,121 @@ def public_extraction_result(result: dict) -> dict:
             "extraction_failures": qa.get("extraction_failures") or [],
         },
     }
+
+
+def public_job(job: dict) -> dict:
+    data = {
+        "id": job.get("id"),
+        "status": job.get("status"),
+        "filename": job.get("filename"),
+        "scope": job.get("scope"),
+        "message": job.get("message"),
+        "created_at": job.get("created_at"),
+        "updated_at": job.get("updated_at"),
+        "started_at": job.get("started_at"),
+        "completed_at": job.get("completed_at"),
+    }
+    if job.get("status") == "completed":
+        data["result"] = job.get("result") or {}
+    if job.get("status") == "failed":
+        data["error"] = job.get("error") or "The analysis could not be completed. Please retry or contact your admin."
+    return data
+
+
+def cleanup_extraction_jobs() -> None:
+    cutoff = time.time() - EXTRACTION_JOB_TTL_SECONDS
+    with EXTRACTION_JOB_LOCK:
+        stale = [
+            job_id
+            for job_id, job in EXTRACTION_JOBS.items()
+            if job.get("status") in {"completed", "failed"} and float(job.get("finished_ts") or 0) < cutoff
+        ]
+        for job_id in stale:
+            EXTRACTION_JOBS.pop(job_id, None)
+
+
+def set_extraction_job(job_id: str, **updates) -> dict | None:
+    with EXTRACTION_JOB_LOCK:
+        job = EXTRACTION_JOBS.get(job_id)
+        if not job:
+            return None
+        job.update(updates)
+        job["updated_at"] = iso(datetime.now(timezone.utc))
+        return dict(job)
+
+
+def get_extraction_job(job_id: str) -> dict | None:
+    with EXTRACTION_JOB_LOCK:
+        job = EXTRACTION_JOBS.get(job_id)
+        return dict(job) if job else None
+
+
+def run_extraction_job(job_id: str, user_id: str, filename: str, file_bytes: bytes, scope: str, run_rfis: bool, analysis_key: str) -> None:
+    now = datetime.now(timezone.utc)
+    set_extraction_job(
+        job_id,
+        status="running",
+        message="Analyzing document.",
+        started_at=iso(now),
+    )
+    try:
+        result = extract_pdf_secure(file_bytes, filename, scope, run_rfis=run_rfis, api_key=analysis_key)
+        public_result = public_extraction_result(result)
+        completed_at = datetime.now(timezone.utc)
+        set_extraction_job(
+            job_id,
+            status="completed",
+            message="Analysis ready for review.",
+            result=public_result,
+            completed_at=iso(completed_at),
+            finished_ts=time.time(),
+        )
+        try:
+            with session_scope() as db:
+                user = db.query(User).filter(User.id == uuid.UUID(user_id)).first()
+                if user:
+                    add_audit(
+                        db,
+                        user,
+                        "extract.completed",
+                        "pdf",
+                        None,
+                        {
+                            "filename": filename,
+                            "scope": scope,
+                            "doors": len(public_result.get("analysis", {}).get("door_analysis") or []),
+                            "hardware_sets": len(public_result.get("analysis", {}).get("hardware_set_review") or []),
+                            "job_id": job_id,
+                        },
+                    )
+        except Exception:
+            pass
+    except ExtractionError as exc:
+        message = public_log_message(str(exc)) or "The analysis could not be completed. Please retry or contact your admin."
+        set_extraction_job(
+            job_id,
+            status="failed",
+            message="Analysis could not be completed.",
+            error=message,
+            completed_at=iso(datetime.now(timezone.utc)),
+            finished_ts=time.time(),
+        )
+        try:
+            with session_scope() as db:
+                user = db.query(User).filter(User.id == uuid.UUID(user_id)).first()
+                if user:
+                    add_audit(db, user, "extract.failed", "pdf", None, {"filename": filename, "error": message, "job_id": job_id})
+        except Exception:
+            pass
+    except Exception:
+        set_extraction_job(
+            job_id,
+            status="failed",
+            message="Analysis could not be completed.",
+            error="The analysis could not be completed. Please retry or contact your admin.",
+            completed_at=iso(datetime.now(timezone.utc)),
+            finished_ts=time.time(),
+        )
 
 
 def get_bearer_token() -> str | None:
@@ -693,6 +815,76 @@ def register_routes(app: Flask) -> None:
     @require_user
     def me(db, user):
         return jsonify({"user": serialize_user(user)})
+
+    @app.post("/api/v1/extract/jobs")
+    @require_user
+    def start_extract_job(db, user):
+        cleanup_extraction_jobs()
+        allowed, retry_after = rate_limit_extraction(user)
+        if not allowed:
+            response = api_error(429, "RateLimited", "Extraction rate limit reached. Try again later.")
+            response.headers["Retry-After"] = str(retry_after)
+            return response
+        try:
+            analysis_key = get_account_analysis_key(db, user)
+        except SecretConfigurationError:
+            return api_error(503, "AnalysisKeyNotConfigured", "Secure analysis keys are not configured on the server.")
+        except SecretDecryptionError:
+            return api_error(503, "AnalysisKeyUnavailable", "This account's analysis key could not be read. Ask an admin to replace it.")
+        if not analysis_key:
+            return api_error(503, "AnalysisKeyNotConfigured", "Analysis service is not configured for this account.")
+
+        pdf = request.files.get("pdf")
+        if not pdf:
+            return api_error(422, "ValidationError", "A PDF file is required.")
+        filename = pdf.filename or "document.pdf"
+        if not filename.lower().endswith(".pdf"):
+            return api_error(422, "ValidationError", "Only PDF files are supported.")
+
+        file_bytes = pdf.read()
+        if not file_bytes:
+            return api_error(422, "ValidationError", "Uploaded PDF is empty.")
+        max_bytes = settings.max_upload_mb * 1024 * 1024
+        if len(file_bytes) > max_bytes:
+            return api_error(413, "PayloadTooLarge", f"PDF exceeds the {settings.max_upload_mb} MB upload limit.")
+
+        scope = request.form.get("scope") or "Supply & Installation"
+        if scope not in {"Supply Only", "Installation Only", "Supply & Installation"}:
+            return api_error(422, "ValidationError", "Invalid project scope.")
+        run_rfis = str(request.form.get("run_rfis", "true")).lower() not in {"0", "false", "no"}
+
+        job_id = str(uuid.uuid4())
+        now = datetime.now(timezone.utc)
+        job = {
+            "id": job_id,
+            "organization_id": str(user.organization_id),
+            "user_id": str(user.id),
+            "status": "queued",
+            "filename": filename,
+            "scope": scope,
+            "message": "Queued for analysis.",
+            "created_at": iso(now),
+            "updated_at": iso(now),
+            "created_ts": time.time(),
+        }
+        with EXTRACTION_JOB_LOCK:
+            EXTRACTION_JOBS[job_id] = job
+
+        EXTRACTION_EXECUTOR.submit(run_extraction_job, job_id, str(user.id), filename, file_bytes, scope, run_rfis, analysis_key)
+        add_audit(db, user, "extract.queued", "pdf", None, {"filename": filename, "scope": scope, "job_id": job_id})
+        return jsonify({"job": public_job(job)}), 202
+
+    @app.get("/api/v1/extract/jobs/<job_id>")
+    @require_user
+    def get_extract_job(db, user, job_id):
+        job = get_extraction_job(job_id)
+        if not job:
+            return api_error(404, "NotFound", "Extraction job was not found. Please start a new analysis.")
+        if job.get("organization_id") != str(user.organization_id):
+            return api_error(404, "NotFound", "Extraction job was not found. Please start a new analysis.")
+        if user.role != "admin" and job.get("user_id") != str(user.id):
+            return api_error(403, "Forbidden", "You can only view your own extraction jobs.")
+        return jsonify({"job": public_job(job)})
 
     @app.post("/api/v1/extract")
     @require_user

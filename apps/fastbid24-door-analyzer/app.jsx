@@ -184,13 +184,48 @@ const apiAdminCreateUser = (token, payload) => apiRequest('/admin/users', { meth
 const apiAdminUpdateUser = (token, id, payload) => apiRequest('/admin/users/' + encodeURIComponent(id), { method: 'PATCH', token, body: payload });
 const apiAdminRuns = (token) => apiRequest('/admin/runs?page_size=100', { token });
 const apiAdminLogs = (token, runId = '') => apiRequest('/admin/logs?page_size=100' + (runId ? '&run_id=' + encodeURIComponent(runId) : ''), { token });
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-async function apiExtractPdf({ token, file, scope, runRFIs = true }) {
+async function apiStartExtractJob({ token, file, scope, runRFIs = true }) {
   const form = new FormData();
   form.append('pdf', file, file?.name || 'document.pdf');
   form.append('scope', scope || 'Supply & Installation');
   form.append('run_rfis', runRFIs ? 'true' : 'false');
-  return apiRequest('/extract', { method: 'POST', token, body: form });
+  return apiRequest('/extract/jobs', { method: 'POST', token, body: form });
+}
+
+const apiGetExtractJob = (token, id) => apiRequest('/extract/jobs/' + encodeURIComponent(id), { token });
+
+async function apiExtractPdf({ token, file, scope, runRFIs = true, onStatus }) {
+  const form = new FormData();
+  form.append('pdf', file, file?.name || 'document.pdf');
+  form.append('scope', scope || 'Supply & Installation');
+  form.append('run_rfis', runRFIs ? 'true' : 'false');
+  let started;
+  try {
+    started = await apiStartExtractJob({ token, file, scope, runRFIs });
+  } catch (e) {
+    if (/not found|404/i.test(e?.message || '')) {
+      return apiRequest('/extract', { method: 'POST', token, body: form });
+    }
+    throw e;
+  }
+  let job = started?.job;
+  if (!job?.id) throw new Error('Extraction job could not be started.');
+  onStatus?.(job);
+
+  const startedAt = Date.now();
+  let delay = 2500;
+  while (Date.now() - startedAt < 45 * 60 * 1000) {
+    await sleep(delay);
+    const data = await apiGetExtractJob(token, job.id);
+    job = data?.job || {};
+    onStatus?.(job);
+    if (job.status === 'completed') return job.result;
+    if (job.status === 'failed') throw new Error(job.error || 'The analysis could not be completed. Please retry or contact your admin.');
+    delay = Math.min(8000, delay + 500);
+  }
+  throw new Error('The analysis is taking longer than expected. Please retry or contact your admin.');
 }
 
 async function apiCreateRun({ token, file, analysis, project, logs, scope }) {
@@ -1865,6 +1900,7 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
   const [error, setError] = useState(null);
   const startedRef = useRef(false);
   const logsRef = useRef([]);
+  const jobStatusRef = useRef('');
 
 
   const steps = [
@@ -1947,6 +1983,16 @@ const ParsingScreen = ({ file, tweaks, authToken, onDone, onError, onCancel }) =
           file,
           scope,
           runRFIs: !skipRFIs,
+          onStatus: (job) => {
+            const key = `${job?.status || ''}:${job?.message || ''}`;
+            if (key && key !== jobStatusRef.current) {
+              jobStatusRef.current = key;
+              if (job?.message) pushLog(job.status === 'failed' ? 'warn' : 'info', job.message);
+            }
+            if (job?.status === 'queued') setProgress(p => Math.max(p, 18));
+            if (job?.status === 'running') setProgress(p => Math.max(p, 46));
+            if (job?.status === 'completed') setProgress(p => Math.max(p, 90));
+          },
         });
         stopPublicProgress();
         setStep(4);
