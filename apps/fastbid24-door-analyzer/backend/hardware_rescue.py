@@ -29,8 +29,7 @@ def detect_hardware_crops(file_bytes: bytes, *, max_candidates: int = 8, dpi: in
     except Exception as exc:
         raise RuntimeError("PyMuPDF is required for hardware completeness checks.") from exc
 
-    candidates: list[dict[str, Any]] = []
-    page_count_total = 1
+    crop_metas: list[dict[str, Any]] = []
     with fitz.open(stream=file_bytes, filetype="pdf") as doc:
         page_count_total = max(len(doc), 1)
         for page_idx, page in enumerate(doc):
@@ -40,29 +39,47 @@ def detect_hardware_crops(file_bytes: bytes, *, max_candidates: int = 8, dpi: in
             if _needs_tiles(page_text, rects):
                 rects.extend(_tile_rects(page_rect, visual_only=not page_text.strip()))
 
-            page_candidates: list[dict[str, Any]] = []
-            per_page_limit = max_candidates if page_count_total == 1 else min(8, max(4, (max_candidates + page_count_total - 1) // page_count_total))
             for source, score, bbox, crop_type, rotation in _dedupe_rects(rects, page_rect):
                 if crop_type not in {"hardware", "mixed"} and "hardware" not in source.lower():
                     continue
                 rect = fitz.Rect(*bbox)
-                render_dpi = min(420, int(dpi * 1.6)) if rotation else dpi
-                img_bytes = _render_crop_bytes(page, rect, dpi=render_dpi, rotation_degrees=rotation)
-                page_candidates.append(
+                text = _clip_text(page, rect)
+                crop_metas.append(
                     {
+                        "page_index": page_idx,
                         "page": page_idx + 1,
                         "crop_type": crop_type or "hardware",
                         "confidence": round(float(score), 3),
                         "source": source,
                         "bbox": tuple(round(float(v), 2) for v in bbox),
-                        "text": _clip_text(page, rect),
-                        "base64_image": base64.b64encode(img_bytes).decode("ascii"),
+                        "text": text,
+                        "priority": _crop_priority(source, text),
+                        "rotation": int(rotation or 0),
                     }
                 )
-                if len(page_candidates) >= per_page_limit:
-                    break
-            candidates.extend(page_candidates)
-    candidates.sort(key=lambda crop: (_crop_priority(crop.get("source") or "", crop.get("text") or ""), crop.get("confidence") or 0), reverse=True)
+
+        crop_metas.sort(key=lambda crop: (crop.get("priority") or 0, crop.get("confidence") or 0), reverse=True)
+        if any((crop.get("priority") or 0) >= 7 for crop in crop_metas):
+            crop_metas = [crop for crop in crop_metas if (crop.get("priority") or 0) >= 7]
+        crop_metas = crop_metas[:max_candidates]
+
+        candidates: list[dict[str, Any]] = []
+        for meta in crop_metas:
+            page = doc[int(meta["page_index"])]
+            rect = fitz.Rect(*meta["bbox"])
+            render_dpi = _bounded_dpi(rect, min(360, int(dpi * 1.35)) if meta.get("rotation") else dpi)
+            img_bytes = _render_crop_bytes(page, rect, dpi=render_dpi, rotation_degrees=int(meta.get("rotation") or 0))
+            candidates.append(
+                {
+                    "page": meta["page"],
+                    "crop_type": meta["crop_type"],
+                    "confidence": meta["confidence"],
+                    "source": meta["source"],
+                    "bbox": meta["bbox"],
+                    "text": meta["text"],
+                    "base64_image": base64.b64encode(img_bytes).decode("ascii"),
+                }
+            )
     return candidates[:max_candidates]
 
 
@@ -73,7 +90,17 @@ def extract_pdf_text(file_bytes: bytes, *, max_chars: int = 45000) -> str:
         return ""
     try:
         with fitz.open(stream=file_bytes, filetype="pdf") as doc:
-            chunks = [(page.get_text("text") or "") for page in doc]
+            chunks: list[str] = []
+            total = 0
+            for page in doc:
+                chunk = page.get_text("text") or ""
+                if not chunk:
+                    continue
+                remaining = max_chars - total
+                if remaining <= 0:
+                    break
+                chunks.append(chunk[:remaining])
+                total += len(chunks[-1])
         return "\n".join(chunks).strip()[:max_chars]
     except Exception:
         return ""
@@ -98,6 +125,15 @@ def _render_crop_bytes(page: Any, rect: Any, *, dpi: int, rotation_degrees: int 
     out = io.BytesIO()
     img.save(out, format="JPEG", quality=88)
     return out.getvalue()
+
+
+def _bounded_dpi(rect: Any, desired_dpi: int, *, max_pixels: int = 6_000_000) -> int:
+    area = max(float(rect.width) * float(rect.height), 1.0)
+    pixels_at_desired = area * (desired_dpi / 72.0) ** 2
+    if pixels_at_desired <= max_pixels:
+        return desired_dpi
+    scaled = int((max_pixels / area) ** 0.5 * 72.0)
+    return max(120, min(desired_dpi, scaled))
 
 
 def _keyword_crop_type(keyword: str) -> str:

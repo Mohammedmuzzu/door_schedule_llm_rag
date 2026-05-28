@@ -582,7 +582,7 @@ def merge_rescued_sets(existing_sets: list[dict[str, Any]], rescued_sets: list[d
 
 def rescue_hardware_sets_from_crops(file_bytes: bytes, filename: str, known_ids: list[str], logs: list[dict[str, Any]], api_key: str | None) -> tuple[list[dict[str, Any]], int]:
     try:
-        crops = detect_hardware_crops(file_bytes, max_candidates=12, dpi=260)
+        crops = detect_hardware_crops(file_bytes, max_candidates=8, dpi=220)
     except Exception as exc:
         _log(logs, "warn", f"Completeness check unavailable: {exc}", "Completeness check")
         return [], 0
@@ -715,7 +715,7 @@ def rescue_hardware_sets_from_text(file_bytes: bytes, known_ids: list[str], focu
 
 def rescue_door_hardware_fields_from_crops(file_bytes: bytes, logs: list[dict[str, Any]], api_key: str | None) -> tuple[list[dict[str, Any]], int]:
     try:
-        crops = detect_hardware_crops(file_bytes, max_candidates=8, dpi=260)
+        crops = detect_hardware_crops(file_bytes, max_candidates=6, dpi=220)
     except Exception as exc:
         _log(logs, "warn", f"Door schedule completeness check unavailable: {exc}", "Door completeness check")
         return [], 0
@@ -968,14 +968,20 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         raise ExtractionError("Uploaded file does not look like a PDF.")
 
     scope = scope or "Supply & Installation"
-    data_url = "data:application/pdf;base64," + base64.b64encode(file_bytes).decode("ascii")
     native_text_cache: str | None = None
+    data_url_cache: str | None = None
 
     def native_text() -> str:
         nonlocal native_text_cache
         if native_text_cache is None:
             native_text_cache = extract_pdf_text(file_bytes, max_chars=45000)
         return native_text_cache
+
+    def pdf_data_url() -> str:
+        nonlocal data_url_cache
+        if data_url_cache is None:
+            data_url_cache = "data:application/pdf;base64," + base64.b64encode(file_bytes).decode("ascii")
+        return data_url_cache
 
     _log(logs, "info", f"Secure analysis started for {filename} ({len(file_bytes) / 1024:.0f} KB).", "start")
     use_native_text_primary = should_use_native_text_primary(file_bytes)
@@ -985,7 +991,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
             [{"type": "input_text", "text": f"Project scope: {scope}\n\nRead this native PDF text end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nPDF_TEXT:\n{native_text()}\n\nReturn JSON: {{ \"doors\": [...] }}"}]
             if use_native_text_primary
             else [
-                {"type": "input_file", "filename": filename, "file_data": data_url},
+                {"type": "input_file", "filename": filename, "file_data": pdf_data_url()},
                 {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nReturn JSON: {{ \"doors\": [...] }}"},
             ]
         )
@@ -1041,7 +1047,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
             [{"type": "input_text", "text": f"Project scope: {scope}\n\nRead this native PDF text end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every visible line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nPDF_TEXT:\n{native_text()}\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"}]
             if use_native_text_primary
             else [
-                {"type": "input_file", "filename": filename, "file_data": data_url},
+                {"type": "input_file", "filename": filename, "file_data": pdf_data_url()},
                 {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"},
             ]
         )
