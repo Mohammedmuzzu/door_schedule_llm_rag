@@ -1,0 +1,3332 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "PNC FRISCO - ELDORADO & COIT",
+      "project_number": null,
+      "architect": "RS&H",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 17,
+      "total_hardware_sets_referenced": 9,
+      "hardware_sets_missing_or_unclear": 1,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 17,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 17 opening(s) and 10 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100",
+        "room_or_location": "VETIBULE",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6'-8 1/2\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "-",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "-",
+        "frame_material": "-",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      },
+      {
+        "mark": "101",
+        "room_or_location": "ATM",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6'-8 1/2\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "-",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "-",
+        "frame_material": "-",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      },
+      {
+        "mark": "106",
+        "room_or_location": "CORRIDOR",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "107",
+        "room_or_location": "OFFICE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-8 15/256\"",
+          "height": "8'-0\"",
+          "thickness": "0\""
+        },
+        "door_material": "BY OTHERS",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "BY OTHERS",
+        "frame_material": "BY OTHERS",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "108",
+        "room_or_location": "OFFICE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-8 15/256\"",
+          "height": "8'-0\"",
+          "thickness": "0\""
+        },
+        "door_material": "BY OTHERS",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "BY OTHERS",
+        "frame_material": "BY OTHERS",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "109",
+        "room_or_location": "OFFICE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-8 15/256\"",
+          "height": "8'-0\"",
+          "thickness": "0\""
+        },
+        "door_material": "BY OTHERS",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "BY OTHERS",
+        "frame_material": "BY OTHERS",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "110",
+        "room_or_location": "OFFICE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-8 15/256\"",
+          "height": "8'-0\"",
+          "thickness": "0\""
+        },
+        "door_material": "BY OTHERS",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "BY OTHERS",
+        "frame_material": "BY OTHERS",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "111",
+        "room_or_location": "OFFICE",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-8 15/256\"",
+          "height": "8'-0\"",
+          "thickness": "0\""
+        },
+        "door_material": "BY OTHERS",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "BY OTHERS",
+        "frame_material": "BY OTHERS",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "-",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "112",
+        "room_or_location": "CASHROOM",
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.88
+      },
+      {
+        "mark": "113",
+        "room_or_location": "OFFSTAGE",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "114",
+        "room_or_location": "EXIT",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "2",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "8",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "115",
+        "room_or_location": "WOMEN",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "116",
+        "room_or_location": "MEN",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "117",
+        "room_or_location": "STORAGE",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "118",
+        "room_or_location": "BREAKROOM",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "119",
+        "room_or_location": "ELEC/IT",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "5",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "120",
+        "room_or_location": "JAN",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HM",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "1",
+        "frame_material": "HM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": "TOILET ROOMS",
+        "referenced_by_doors": [
+          "115",
+          "116"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DIGITAL LOCKSET W/ PRIVACY",
+            "part": "L1076 (W/ LOCK OUT PRIVACY)",
+            "mfr": "SIMPLEX",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.94
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "WORK ROOM",
+        "referenced_by_doors": [
+          "112"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DIGITAL LOCKSET",
+            "part": "L1021 (WITH KEY OVERRIDE)",
+            "mfr": "SIMPLEX",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.94
+          },
+          {
+            "item_no": 5,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "DOOR VIEWER",
+            "part": "DS2000S",
+            "mfr": "DOORSCOPE",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PREP DOOR FOR CARD ACCESS VIA MORTISE LOCKSET, EPT-10 HINGE",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": "ELEC/IT ROOM",
+        "referenced_by_doors": [
+          "118"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DIGITAL LOCKSET",
+            "part": "L1021 (WITH KEY OVERRIDE)",
+            "mfr": "SIMPLEX",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.94
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PREP DOOR FOR CARD ACCESS VIA MORTISE LOCKSET, EPT-10 HINGE",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": "BREAK ROOM",
+        "referenced_by_doors": [
+          "117",
+          "120"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLASSROOM LOCKSET",
+            "part": "ALX70BD BRW (C-KEYWAY)",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.94
+          },
+          {
+            "item_no": 5,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "DOOR VIEWER",
+            "part": "DS2000S",
+            "mfr": "DOORSCOPE",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": "STORAGE ROOM JANITORS ROOM",
+        "referenced_by_doors": [
+          "119"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STOREROOM LOCKSET",
+            "part": "L9080",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.94
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "6",
+        "header_verbatim": "PRIVATE OFF-STAGE OFFICE",
+        "referenced_by_doors": [
+          "113"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DIGITAL LOCKSET",
+            "part": "L1021 (WITH KEY OVERRIDE)",
+            "mfr": "SIMPLEX",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "VISION LIGHT KIT",
+            "part": "LOPRP 6x27 W/ CLEAR",
+            "mfr": "ANEMOSTAT",
+            "finish": "BRNZE",
+            "notes": "TEMPERED GLASS",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "7",
+        "header_verbatim": "CORRIDOR",
+        "referenced_by_doors": [
+          "106"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DIGITAL LOCKSET",
+            "part": "L1021 (WITH KEY OVERRIDE)",
+            "mfr": "SIMPLEX",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "BB81 4.5\"x4.5\" 26D",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "8",
+        "header_verbatim": "EXIT ONLY",
+        "referenced_by_doors": [
+          "114"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES AS REQUIRED",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ELECTRIC HINGE",
+            "part": "BB81 4.5\"x4.5\" EL2+4",
+            "mfr": "PBB",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ELECTRIC EXIT",
+            "part": "EL25R EO (3'-0\")",
+            "mfr": "FALCON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "POWER SUPPLY",
+            "part": "PS902 x 900-2RS",
+            "mfr": "FALCON",
+            "finish": "N/A",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER (PUSH SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "THRESHOLD (METAL)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WEATHER STRIPPING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ALARM",
+            "part": "PG21 MS",
+            "mfr": "ALARM LOCK",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PANIC HARDWARE WITH PUSH BAR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ALARM",
+            "part": "PG21",
+            "mfr": "ALARM LOCK",
+            "finish": "MS",
+            "notes": null,
+            "confidence": 0.86
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "HINGES AS REQUIRED",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "9",
+        "header_verbatim": "LOBBY TO HALLWAY",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PUSH BUTTON LOCKSET",
+            "part": "5000 EXTRA HEAVY DUTY W/ LEVER HANDLES AND KEY CYLINDER",
+            "mfr": "ILCO",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": "SL53 CONTINUOUS HINGE",
+            "mfr": "SELECT",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "ADDITIONAL HINGES AS REQUIRED",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ELECTRIC STRIKE",
+            "part": "HES 1006",
+            "mfr": "ASSA ABLOY",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PULL SIDE)",
+            "part": "SC71 RW/PA TB",
+            "mfr": "FALCON",
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.91
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS436",
+            "mfr": "IVES",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "DOOR HOLES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "VIEW HOLES TESTED TO NIJ IIA STANDARD FOR BULLET RESISTANCE LEVEL 2 VIEWERS PROVIDED BY CONVERGINT",
+            "confidence": 0.8
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 12\"x34\" B4E CS",
+            "mfr": "IVES",
+            "finish": "32D",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 9,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "BY FRAME MANUFACTURER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PUSH B",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "ADDITIONA",
+            "confidence": 0.6
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ELECT",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 6,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK P",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 8,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENC",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PUSH BUTTO",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "HINGES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "ADDITIONAL HING",
+            "confidence": 0.78
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ELECTRIC ST",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER (PUL",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 8,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 1,
+            "qty": "1",
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 2,
+            "qty": "1",
+            "unit": "EA",
+            "desc": "AD",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.35
+          },
+          {
+            "item_no": 6,
+            "qty": "2",
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 8,
+            "qty": "3",
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PANIC HARDWARE WITH PUSH BAR",
+            "part": "EXIT ONLY",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PUSH BUTTON LOCKSET",
+            "part": "5000 EXTRA HEAVY DUTY",
+            "mfr": "ILCO",
+            "finish": "26D",
+            "notes": "W/ LEVER HANDLES AND KEY CYLINDER",
+            "confidence": 0.86
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "DOOR HOLES",
+            "part": "VIEW HOLES TESTED TO NIJ IIA STANDARD FOR BULLET RESISTANCE LEVEL 2",
+            "mfr": null,
+            "finish": null,
+            "notes": "VIEWERS PROVIDED BY CONVERGINT",
+            "confidence": 0.84
+          },
+          {
+            "item_no": 9,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": "BY FRAME MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE AND INSTALL TACTILE SIGNAGE AT ALL EXITS. (2) TOTAL REQUIRED.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "-",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100",
+          "101",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET",
+        "catalog_number": "L1021 (WITH KEY OVERRIDE)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 5,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "7",
+        "item_no": 5,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "111",
+        "hardware_set": "-",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET",
+        "catalog_number": "L1021 (WITH KEY OVERRIDE)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": 2,
+        "description": "DOOR VIEWER",
+        "catalog_number": "DS2000S",
+        "manufacturer": "DOORSCOPE",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET",
+        "catalog_number": "L1021 (WITH KEY OVERRIDE)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 3,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 4,
+        "qty": 1,
+        "description": "VISION LIGHT KIT",
+        "catalog_number": "LOPRP 6x27 W/ CLEAR",
+        "manufacturer": "ANEMOSTAT",
+        "finish": "BRNZE",
+        "notes": "TEMPERED GLASS",
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 5,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "6",
+        "item_no": 5,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES AS REQUIRED",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 2,
+        "qty": 1,
+        "description": "ELECTRIC HINGE",
+        "catalog_number": "BB81 4.5\"x4.5\" EL2+4",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 3,
+        "qty": 1,
+        "description": "ELECTRIC EXIT",
+        "catalog_number": "EL25R EO (3'-0\")",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 4,
+        "qty": 1,
+        "description": "POWER SUPPLY",
+        "catalog_number": "PS902 x 900-2RS",
+        "manufacturer": "FALCON",
+        "finish": "N/A",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 5,
+        "qty": 1,
+        "description": "DOOR CLOSER (PUSH SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 6,
+        "qty": 1,
+        "description": "THRESHOLD (METAL)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 7,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 8,
+        "qty": 1,
+        "description": "WEATHER STRIPPING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 9,
+        "qty": 1,
+        "description": "ALARM",
+        "catalog_number": "PG21 MS",
+        "manufacturer": "ALARM LOCK",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 10,
+        "qty": 1,
+        "description": "PANIC HARDWARE WITH PUSH BAR",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "8",
+        "item_no": 8,
+        "qty": 1,
+        "description": "ALARM",
+        "catalog_number": "PG21",
+        "manufacturer": "ALARM LOCK",
+        "finish": "MS",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET W/ PRIVACY",
+        "catalog_number": "L1076 (W/ LOCK OUT PRIVACY)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET W/ PRIVACY",
+        "catalog_number": "L1076 (W/ LOCK OUT PRIVACY)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 1,
+        "description": "CLASSROOM LOCKSET",
+        "catalog_number": "ALX70BD BRW (C-KEYWAY)",
+        "manufacturer": "SCHLAGE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 5,
+        "qty": 2,
+        "description": "DOOR VIEWER",
+        "catalog_number": "DS2000S",
+        "manufacturer": "DOORSCOPE",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 1,
+        "description": "DIGITAL LOCKSET",
+        "catalog_number": "L1021 (WITH KEY OVERRIDE)",
+        "manufacturer": "SIMPLEX",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 1,
+        "qty": 1,
+        "description": "STOREROOM LOCKSET",
+        "catalog_number": "L9080",
+        "manufacturer": "SCHLAGE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "5",
+        "item_no": 6,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 1,
+        "description": "CLASSROOM LOCKSET",
+        "catalog_number": "ALX70BD BRW (C-KEYWAY)",
+        "manufacturer": "SCHLAGE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB81 4.5\"x4.5\" 26D",
+        "manufacturer": "PBB",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER (PULL SIDE)",
+        "catalog_number": "SC71 RW/PA TB",
+        "manufacturer": "FALCON",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DOOR STOP (FLOOR MOUNTED)",
+        "catalog_number": "FS436",
+        "manufacturer": "IVES",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 5,
+        "qty": 2,
+        "description": "DOOR VIEWER",
+        "catalog_number": "DS2000S",
+        "manufacturer": "DOORSCOPE",
+        "finish": "ALUM",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE (PUSH SIDE)",
+        "catalog_number": "8400 12\"x34\" B4E CS",
+        "manufacturer": "IVES",
+        "finish": "32D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": null,
+        "manufacturer": "BY FRAME MANUFACTURER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "4",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "BY FRAME MANUFACTURER",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. PROVIDE CAULK / SEALANT ON BOTH SIDES OF FRAMES, TYPICAL",
+        "2. PROVIDE TEMPERED GLAZING AT ALL STOREFRONT DOORS, AT NEW GLAZING WITHIN 24\" HORIZONTALLY FROM A DOOR, WHERE NEW GLAZING LITE IS WITHIN 18\" A.F.F.",
+        "3. FIELD VERIFY ALL CONDITIONS PRIOR TO ORDERING DOORS, HARDWARE, OR ACCESS CONTROLS, TYPICAL.",
+        "4. COORDINATE THRESHOLDS WITH NEW / EXISTING FLOOR FINISHES",
+        "5. NOTIFY ARCHITECT OF ANY DISCREPANCIES BETWEEN DOOR SCHEDULE AND PLAN AND/OR EXISTING CONDITIONS.",
+        "6. ENTIRE DOOR ASSEMBLIES TO MAINTAIN RATINGS AS SCHEDULED AND SHOWN ON THE LIFE SAFETY SHEETS. PROVIDE HARDWARE FOR RATED ASSEMBLIES TO MEET ALL APPLICABLE CODES TO INCLUDE BUT NOT LIMITED TO CLOSERS, PANIC DEVICES, CAULK / SEALANT, SWEEPS, SMOKE SEALS, ETC.",
+        "7. SET ALL THRESHOLDS IN EXTERIOR DOORS IN FULL BED OF SEALANT.",
+        "8. ALL EXTERIOR DOORS TO MEET WATER TIGHT CONDITION INCLUDING ALL WATERPROOF THRESHOLDS. BUMPER SEALS REQUIRED AT ALL EXTERIOR DOORS U.N.O.",
+        "9. SEE DOOR HARDWARE SPECIFICATION FOR DOOR HARDWARE.",
+        "10. COORDINATE ALL DOOR HARDWARE WITH ACCESS CONTROL AND FIRE ALARM SYSTEM AS REQUIRED.",
+        "11. SCOPE OF WORK: ALL NEW FINISHED DOOR FRAMES SHALL BE FINISHED AS SPECIFIED ON PLANS AND PROJECT SPECIFICATIONS.",
+        "12. ALL HARDWARE SHALL MATCH PNC STANDARD.",
+        "13. ALL DOORS, FRAMES, AND HARDWARE, INCLUDING THOSE OF DIFFERING SIZE, MATERIAL, AND OPERATION SHALL BE SUPPLIED BY THE CONTRACTOR.",
+        "14. ALL KEYING SHALL BE BY GENERAL CONTRACTOR. VERIFY THE NUMBER OF KEYS REQUIRED FOR THIS PROJECT WITH THE OWNER.",
+        "15. DOOR ASSEMBLIES SHALL BE FIRE RATED (\"LABELED\") WHEN REQUIRED BY THE LOCAL BUILDING CODE.",
+        "16. G.C. TO PROTECT PREFINISHED DOORS AND FRAMES THROUGH THE CONSTRUCTION PERIOD. DOORS THAT ARE DAMAGED AS A RESULT OF THEM OR THEIR SUBCONTRACTOR'S WORK DURING THIS PERIOD SHALL BE REPAIRED OR REPLACED BY THE G.C.",
+        "17. BIDDING CONTRACTORS SHALL VERIFY ALL INFORMATION IN REGARDS TO DOOR ASSEMBLIES, BUILDING STANDARDS (SIZES, VENEERS, FRAME TYPES, ETC.) AND RESPONSIBILITIES PRIOR TO STARTING BIDS.",
+        "18. ALL DOOR HARDWARE SHALL BE A.D.A ACCESSIBLE. ALL DOORS SHALL COMPLY WITH ICC/ANSI 404 AND SHALL HAVE LEVER OR EQUAL HARDWARE. ALL CLOSERS MUST BE ADJUSTED TO REQUIRE NO MORE THAN 8.5 LBF FOR INTERIOR DOORS AND 5.0 FOR EXTERIOR DOORS.",
+        "19. COORDINATE ALL DOORS WITH SECURITY VENDOR.",
+        "A. DOOR INSTALLED BY VENDOR. REFER TO MATRIX FOR VENDOR CONTACT INFORMATION.",
+        "B. PROVIDE (2) 180\u00b0 PEEP SIGHTS. ONE TO BE INSTALLED IN CENTER OF DOOR AT 5' - 0\" A.F.F. ONE TO BE INSTALLED IN CENTER OF DOOR AT 3' - 7\" A.F.F.",
+        "C. DOOR TO HAVE 1\" UNDERCUT.",
+        "D. ACCESS CONTROL PUSH BUTTONS SHALL BE ON CORRIDOR SIDE OF DOOR.",
+        "E. NO THRESHOLD AT INTERIOR AUTOMATIC SLIDING DOORS.",
+        "F. DOOR FRAME TO MATCH HAWORTH DEMOUNTABLE FRAME FINISH.",
+        "G. APPLY LLUMAR SAFETY-AND-SECURITY FILM ON DOOR GLAZING. INSTALL PER MANUFACTURER'S INSTRUCTIONS.",
+        "H. PAINT DOOR TO MATCH ADJACENT WALL FINISH.",
+        "I. PROVIDE 3-WAY SWITCH AND LOW VOLTAGE WIRE TO BE ROUTED FROM CONCIERGE STATIONS TO ABOVE THE STANLEY DOORS (ONE PER STANLEY DOOR).",
+        "J. BULLET RESISTANT DOOR PROVIDED BY OTHERS."
+      ],
+      "hardware_preamble": [
+        "1. PROVIDE CAULK / SEALANT ON BOTH SIDES OF FRAMES, TYPICAL",
+        "2. PROVIDE TEMPERED GLAZING AT ALL STOREFRONT DOORS, AT NEW GLAZING WITHIN 24\" HORIZONTALLY FROM A DOOR, WHERE NEW GLAZING LITE IS WITHIN 18\" A.F.F.",
+        "3. FIELD VERIFY ALL CONDITIONS PRIOR TO ORDERING DOORS, HARDWARE, OR ACCESS CONTROLS, TYPICAL.",
+        "4. COORDINATE THRESHOLDS WITH NEW / EXISTING FLOOR FINISHES",
+        "5. NOTIFY ARCHITECT OF ANY DISCREPANCIES BETWEEN DOOR SCHEDULE AND PLAN AND/OR EXISTING CONDITIONS.",
+        "6. ENTIRE DOOR ASSEMBLIES TO MAINTAIN RATINGS AS SCHEDULED AND SHOWN ON THE LIFE SAFETY SHEETS. PROVIDE HARDWARE FOR RATED ASSEMBLIES TO MEET ALL APPLICABLE CODES TO INCLUDE BUT NOT LIMITED TO CLOSERS, PANIC DEVICES, CAULK / SEALANT, SWEEPS, SMOKE SEALS, ETC.",
+        "7. SET ALL THRESHOLDS IN EXTERIOR DOORS IN FULL BED OF SEALANT.",
+        "8. ALL EXTERIOR DOORS TO MEET WATER TIGHT CONDITION INCLUDING ALL WATERPROOF THRESHOLDS. BUMPER SEALS REQUIRED AT ALL EXTERIOR DOORS U.N.O.",
+        "9. SEE DOOR HARDWARE SPECIFICATION FOR DOOR HARDWARE.",
+        "10. COORDINATE ALL DOOR HARDWARE WITH ACCESS CONTROL AND FIRE ALARM SYSTEM AS REQUIRED.",
+        "11. SCOPE OF WORK: ALL NEW FINISHED DOOR FRAMES SHALL BE FINISHED AS SPECIFIED ON PLANS AND PROJECT SPECIFICATIONS.",
+        "12. ALL HARDWARE SHALL MATCH PNC STANDARD.",
+        "13. ALL DOORS, FRAMES, AND HARDWARE, INCLUDING THOSE OF DIFFERING SIZE, MATERIAL, AND OPERATION SHALL BE SUPPLIED BY THE CONTRACTOR.",
+        "15. DOOR ASSEMBLIES SHALL BE FIRE RATED (\"LABELED\") WHEN REQUIRED BY THE LOCAL BUILDING CODE.",
+        "16. G.C. TO PROTECT PREFINISHED DOORS AND FRAMES THROUGH THE CONSTRUCTION PERIOD. DOORS THAT ARE DAMAGED AS A RESULT OF THEM OR THEIR SUBCONTRACTOR'S WORK DURING THIS PERIOD SHALL BE REPAIRED OR REPLACED BY THE G.C.",
+        "17. BIDDING CONTRACTORS SHALL VERIFY ALL INFORMATION IN REGARDS TO DOOR ASSEMBLIES, BUILDING STANDARDS (SIZES, VENEERS, FRAME TYPES, ETC.) AND RESPONSIBILITIES PRIOR TO STARTING BIDS.",
+        "18. ALL DOOR HARDWARE SHALL BE A.D.A ACCESSIBLE. ALL DOORS SHALL COMPLY WITH ICC/ANSI 404 AND SHALL HAVE LEVER OR EQUAL HARDWARE. ALL CLOSERS MUST BE ADJUSTED TO REQUIRE NO MORE THAN 8.5 LBF FOR INTERIOR DOORS AND 5.0 FOR EXTERIOR DOORS.",
+        "19. COORDINATE ALL DOORS WITH SECURITY VENDOR.",
+        "A. DOOR INSTALLED BY VENDOR. REFER TO MATRIX FOR VENDOR CONTACT INFORMATION.",
+        "B. PROVIDE (2) 180\u00b0 PEEP SIGHTS. ONE TO BE INSTALLED IN CENTER OF DOOR AT 5' - 0\" A.F.F. ONE TO BE INSTALLED IN CENTER OF DOOR AT 3' - 7\" A.F.F.",
+        "C. DOOR TO HAVE 1\" UNDERCUT.",
+        "D. ACCESS CONTROL PUSH BUTTONS SHALL BE ON CORRIDOR SIDE OF DOOR.",
+        "E. NO THRESHOLD AT INTERIOR AUTOMATIC SLIDING DOORS.",
+        "F. DOOR FRAME TO MATCH HAWORTH DEMOUNTABLE FRAME FINISH.",
+        "G. APPLY LLUMAR SAFETY-AND-SECURITY FILM ON DOOR GLAZING. INSTALL PER MANUFACTURER'S INSTRUCTIONS.",
+        "H. PAINT DOOR TO MATCH ADJACENT WALL FINISH.",
+        "I. PROVIDE 3-WAY SWITCH AND LOW VOLTAGE WIRE TO BE ROUTED FROM CONCIERGE STATIONS TO ABOVE THE STANLEY DOORS (ONE PER STANLEY DOOR).",
+        "J. BULLET RESISTANT DOOR PROVIDED BY OTHERS.",
+        "** COORDINATE ALL SIGNAGE DESIGN AND FINAL PLACEMENT WITH SIGNAGE VENDOR"
+      ],
+      "keying_notes": [
+        "14. ALL KEYING SHALL BE BY GENERAL CONTRACTOR. VERIFY THE NUMBER OF KEYS REQUIRED FOR THIS PROJECT WITH THE OWNER.",
+        "** NOTE: ALL LOCKING HARDWARE MUST BE SUPPLIED AND PREPARED TO ACCEPT 7-PIN SMALL FORMAT INTERCHANGEBLE CORES (SFIC) UNLESS NOTED OTHERWISE.**"
+      ],
+      "legend": {
+        "A": "HOLLOW METAL DOOR WITH DOOR VIEWERS",
+        "C": "HOLLOW METAL DOOR",
+        "D": "HAWORTH DEMOUNTABLE INSULATED METAL DOOR PARTITION DOOR",
+        "E": "STANLEY SINGLE SLIDING DOOR MODEL NO. 3000",
+        "1": "H.M. FRAME",
+        "2": "INSULATED METAL DOOR FRAME"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware set definitions",
+        "issue": "1 hardware set(s) referenced by 7 door(s) have no extracted line items.",
+        "affected_openings": [
+          "100",
+          "101",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111"
+        ],
+        "recommendation": "Locate full hardware set definitions; carry as allowance until confirmed.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware set definitions",
+        "question": "Provide the complete line-item list for hardware set(s): -.",
+        "affected_openings": [
+          "100",
+          "101",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111"
+        ],
+        "recommendation": "Carry as allowance until confirmed.",
+        "status": "Open",
+        "reason": "Carry as allowance until confirmed.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (2 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "17 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "10 hardware set(s) identified; 9 have a complete extracted item list.",
+      "29 general note(s) captured from the door-schedule sheet.",
+      "29 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 100 references hardware set - but the set was not extracted.",
+        "Door 100: hardware set - has zero items.",
+        "Door 101: hardware set - has zero items.",
+        "Door 107: hardware set - has zero items.",
+        "Door 108: hardware set - has zero items.",
+        "Door 109: hardware set - has zero items.",
+        "Door 110: hardware set - has zero items.",
+        "Door 111: hardware set - has zero items."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 271,
+        "truncated": false,
+        "output_count": 17
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 237,
+        "truncated": false,
+        "output_count": 10
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 396,
+        "output_count": 31
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 82
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 1
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 904,
+    "mapping_qa_issues": [
+      {
+        "kind": "missing_set",
+        "set": "-",
+        "mark": "100",
+        "message": "Door 100 references hardware set - but the set was not extracted."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "100",
+        "message": "Door 100: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "101",
+        "message": "Door 101: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "107",
+        "message": "Door 107: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "108",
+        "message": "Door 108: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "109",
+        "message": "Door 109: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "110",
+        "message": "Door 110: hardware set - has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "-",
+        "mark": "111",
+        "message": "Door 111: hardware set - has zero items."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100"
+        },
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        },
+        {
+          "mark": "111"
+        },
+        {
+          "mark": "112"
+        },
+        {
+          "mark": "113"
+        },
+        {
+          "mark": "114"
+        },
+        {
+          "mark": "115"
+        },
+        {
+          "mark": "116"
+        },
+        {
+          "mark": "117"
+        },
+        {
+          "mark": "118"
+        },
+        {
+          "mark": "119"
+        },
+        {
+          "mark": "120"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 7
+        },
+        {
+          "id": "2",
+          "item_count": 8
+        },
+        {
+          "id": "3",
+          "item_count": 7
+        },
+        {
+          "id": "4",
+          "item_count": 8
+        },
+        {
+          "id": "5",
+          "item_count": 7
+        },
+        {
+          "id": "6",
+          "item_count": 6
+        },
+        {
+          "id": "7",
+          "item_count": 6
+        },
+        {
+          "id": "8",
+          "item_count": 11
+        },
+        {
+          "id": "9",
+          "item_count": 32
+        },
+        {
+          "id": "-",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (803 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (803 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T19:57:00Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T19:57:00Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 271s.",
+      "message": "Door schedule review - completed in 271s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:01:31Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:01:31Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 237s.",
+      "message": "Hardware set review - completed in 237s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:05:28Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:29Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:29Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 4s.",
+      "message": "Completeness check - completed in 4s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:33Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:33Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 16s.",
+      "message": "Completeness check - completed in 16s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:49Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:05:49Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 56s.",
+      "message": "Completeness check - completed in 56s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:06:45Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:06:45Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 51s.",
+      "message": "Completeness check - completed in 51s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:07:36Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:07:36Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 73s.",
+      "message": "Completeness check - completed in 73s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:08:49Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:08:49Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 70s.",
+      "message": "Completeness check - completed in 70s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:09:59Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 7 set(s) and 63 item row(s).",
+      "message": "Completeness check recovered 7 set(s) and 63 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:09:59Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 19 hardware item row(s).",
+      "message": "Completeness check added 19 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:09:59Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Text completeness check - processing document data.",
+      "message": "Text completeness check - processing document data.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:09:59Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check - completed in 126s.",
+      "message": "Text completeness check - completed in 126s.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:12:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check recovered 9 set(s) and 59 item row(s).",
+      "message": "Text completeness check recovered 9 set(s) and 59 item row(s).",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:12:05Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T20:12:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 17 doors - 10 sets - 92 items - 1 risks - 1 RFIs - 904s total.",
+      "message": "Secure analysis done - 17 doors - 10 sets - 92 items - 1 risks - 1 RFIs - 904s total.",
+      "stage": "done",
+      "ts": "2026-05-27T20:12:05Z"
+    }
+  ]
+}

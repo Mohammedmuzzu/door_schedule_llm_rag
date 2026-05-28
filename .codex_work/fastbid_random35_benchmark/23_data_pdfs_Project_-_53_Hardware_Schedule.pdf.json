@@ -1,0 +1,1079 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "PNC\nTHE COLONY\nINTERIOR FIT OUT",
+      "project_number": null,
+      "architect": "P&G Design Group Corp.",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 0,
+      "total_hardware_sets_referenced": 0,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 0,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 0 opening(s) and 9 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [],
+    "hardware_set_review": [
+      {
+        "hardware_set": "01",
+        "header_verbatim": "MEN & WOMEN RESTROOM - PRIVACY LOCKSET - EXISTING DOOR REFERENCED",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PRIVACY LOCKSET",
+            "part": "ND40S RHO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.58
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": null,
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.48
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP (PUSH SIDE)",
+            "part": "WS406/407CVX",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SMOKE SEAL",
+            "part": "S88",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.42
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "02",
+        "header_verbatim": "CIPHER LOCKSET - HALLWAY 111A, ELEC/IT",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CIPHER LOCKSET",
+            "part": "CO-100-CY-70-KP-RHO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": null,
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP (PUSH SIDE)",
+            "part": "WS406/407CVX",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SMOKE SEAL",
+            "part": "S88",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.4
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "03",
+        "header_verbatim": "CIPHER LOCKSET WITH DOOR VIEWER - CASH/WORK ROOM, BREAKROOM",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CIPHER LOCKSET",
+            "part": "CO-100-CY-70-KP-RHO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 2,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR VIEWER",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.38
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": null,
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP (PUSH SIDE)",
+            "part": "WS406/407CVX",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SMOKE SEAL",
+            "part": "S88",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.4
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "04",
+        "header_verbatim": "PANIC/FIRE DEVICE - SINGLE DOOR",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": null,
+            "desc": "SECURITY EXIT PANIC",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.28
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING: OPENING SIZE 36X80",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "05",
+        "header_verbatim": "PASSAGE SET - OFFSTAGE",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PASSAGE SET - RHO",
+            "part": "ND10S",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP (PUSH SIDE)",
+            "part": "WS406/407CVX",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SMOKE SEAL",
+            "part": "S88",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.38
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "06",
+        "header_verbatim": "STOREROOM LOCKSET - JANITOR, STORAGE ROOM 112, STORAGE ROOM 116",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STOREROOM LOCK",
+            "part": "ND80PD RHO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.4
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP (PUSH SIDE)",
+            "part": "WS406/407CVX",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.28
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "07",
+        "header_verbatim": "DOUBLE STOREFRONT DOOR - KAWNEER W/ STANLEY CLOSER",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "AP",
+            "desc": "WIDE STILE STOREFRONT NON-ACCESSIBLE DOOR HARDWARE",
+            "part": "BY DOOR MANUFACTURER",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.24
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "POWER TRANSFER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.25
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PANIC HARDWARE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 4,
+            "qty": 2,
+            "unit": null,
+            "desc": "DOOR PULL",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.2
+          },
+          {
+            "item_no": 5,
+            "qty": 2,
+            "unit": null,
+            "desc": "PUSH PLATE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.2
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "STANLEY",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.28
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "AUTO OPERATOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "ACTUATOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": null,
+            "desc": "PUSH BUTTON",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": null,
+            "desc": "CONTROL / RECEIVER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.16
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR THRESHOLD",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 13,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR PACKAGE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.16
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH DBL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "08",
+        "header_verbatim": "HALLWAY 116 (REAR DOOR) - EXIT ONLY WITH DOOR VIEWER",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PANIC DEVICE",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.28
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CYLINDER",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.38
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WEATHERSTRIPPING",
+            "part": null,
+            "mfr": null,
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.2
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "RAIN DRIP",
+            "part": null,
+            "mfr": null,
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "THRESHOLD",
+            "part": null,
+            "mfr": null,
+            "finish": "ALUM",
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": null,
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.33
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ALARM LOCK",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.18
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR VIEWER",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.3
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH SGL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "09",
+        "header_verbatim": "CIPHER LOCKSET WITH DOOR VIEWER AT DOUBLE DOOR - ARM ROOM",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1191 4.5X4.5 NRP",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.43
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CIPHER LOCKSET ON ACTIVE DOOR",
+            "part": "CO-100-CY-70-KP-RHO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.42
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": "4040XP",
+            "mfr": "LCN",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.35
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "FLUSH BOLT, MANUAL CONCEALED",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.3
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.23
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "MEETING STILE MOUNTED",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.22
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR VIEWER",
+            "part": null,
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.3
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR STOP (FLOOR MOUNTED)",
+            "part": "FS438",
+            "mfr": null,
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.4
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE (PUSH SIDE)",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": null,
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.3
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "PROVIDE EACH DBL DOOR WITH THE FOLLOWING:",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "9 hardware set(s) identified; 9 have a complete extracted item list."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 25,
+        "truncated": false,
+        "output_count": 0
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 211,
+        "truncated": false,
+        "output_count": 9
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 0
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 236,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [],
+      "hardware_sets": [
+        {
+          "id": "01",
+          "item_count": 7
+        },
+        {
+          "id": "02",
+          "item_count": 7
+        },
+        {
+          "id": "03",
+          "item_count": 8
+        },
+        {
+          "id": "04",
+          "item_count": 1
+        },
+        {
+          "id": "05",
+          "item_count": 5
+        },
+        {
+          "id": "06",
+          "item_count": 6
+        },
+        {
+          "id": "07",
+          "item_count": 13
+        },
+        {
+          "id": "08",
+          "item_count": 12
+        },
+        {
+          "id": "09",
+          "item_count": 9
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Hardware Schedule.pdf (325 KB).",
+      "message": "Secure analysis started for Hardware Schedule.pdf (325 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T20:36:48Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:36:48Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 25s.",
+      "message": "Door schedule review - completed in 25s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:37:13Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:37:13Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 211s.",
+      "message": "Hardware set review - completed in 211s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:40:44Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T20:40:44Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 0 doors - 9 sets - 68 items - 0 risks - 0 RFIs - 236s total.",
+      "message": "Secure analysis done - 0 doors - 9 sets - 68 items - 0 risks - 0 RFIs - 236s total.",
+      "stage": "done",
+      "ts": "2026-05-27T20:40:44Z"
+    }
+  ]
+}

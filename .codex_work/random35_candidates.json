@@ -1,0 +1,250 @@
+{
+  "count": 151,
+  "sample": [
+    {
+      "path": "data\\pdfs\\Project - 70\\Door Schedule 1.pdf",
+      "rel": "Project - 70\\Door Schedule 1.pdf",
+      "name": "Door Schedule 1.pdf",
+      "pages": 1,
+      "size_mb": 0.4
+    },
+    {
+      "path": "data\\pdfs\\Project - 23\\Door Schedule.pdf",
+      "rel": "Project - 23\\Door Schedule.pdf",
+      "name": "Door Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.56
+    },
+    {
+      "path": "data\\pdfs\\Project - 69\\Door Schedule.pdf",
+      "rel": "Project - 69\\Door Schedule.pdf",
+      "name": "Door Schedule.pdf",
+      "pages": 2,
+      "size_mb": 0.59
+    },
+    {
+      "path": "data\\pdfs\\Project - 62\\A400_ DOOR WINDOW SCHEDULE Rev.1 markup.pdf",
+      "rel": "Project - 62\\A400_ DOOR WINDOW SCHEDULE Rev.1 markup.pdf",
+      "name": "A400_ DOOR WINDOW SCHEDULE Rev.1 markup.pdf",
+      "pages": 1,
+      "size_mb": 0.31
+    },
+    {
+      "path": "data\\pdfs\\Project - 44\\Door & Hardware schedule.pdf",
+      "rel": "Project - 44\\Door & Hardware schedule.pdf",
+      "name": "Door & Hardware schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.69
+    },
+    {
+      "path": "data\\pdfs\\Project - 13\\Door Schedule & Hardware.pdf",
+      "rel": "Project - 13\\Door Schedule & Hardware.pdf",
+      "name": "Door Schedule & Hardware.pdf",
+      "pages": 1,
+      "size_mb": 0.74
+    },
+    {
+      "path": "data\\pdfs\\Project - 23\\Hardware (1).pdf",
+      "rel": "Project - 23\\Hardware (1).pdf",
+      "name": "Hardware (1).pdf",
+      "pages": 17,
+      "size_mb": 0.17
+    },
+    {
+      "path": "data\\pdfs\\New Project-34\\Door and Hardware.pdf",
+      "rel": "New Project-34\\Door and Hardware.pdf",
+      "name": "Door and Hardware.pdf",
+      "pages": 1,
+      "size_mb": 0.78
+    },
+    {
+      "path": "data\\pdfs\\Project - 2\\A701-DOOR-SCHEDULE,-ELEVATIONS-&-DETAILS-Rev.0.pdf",
+      "rel": "Project - 2\\A701-DOOR-SCHEDULE,-ELEVATIONS-&-DETAILS-Rev.0.pdf",
+      "name": "A701-DOOR-SCHEDULE,-ELEVATIONS-&-DETAILS-Rev.0.pdf",
+      "pages": 1,
+      "size_mb": 0.38
+    },
+    {
+      "path": "data\\pdfs\\Project - 49\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 49\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.6
+    },
+    {
+      "path": "data\\pdfs\\Project - 11\\Hardware Schedule.pdf",
+      "rel": "Project - 11\\Hardware Schedule.pdf",
+      "name": "Hardware Schedule.pdf",
+      "pages": 2,
+      "size_mb": 0.01
+    },
+    {
+      "path": "data\\pdfs\\Project - 56\\A-614-DOOR-HARDWARE-SETS-Rev.1.pdf",
+      "rel": "Project - 56\\A-614-DOOR-HARDWARE-SETS-Rev.1.pdf",
+      "name": "A-614-DOOR-HARDWARE-SETS-Rev.1.pdf",
+      "pages": 1,
+      "size_mb": 0.18
+    },
+    {
+      "path": "data\\pdfs\\Project - 68\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 68\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.28
+    },
+    {
+      "path": "data\\pdfs\\Project - 51\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 51\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 1.11
+    },
+    {
+      "path": "data\\pdfs\\New Project-8\\New Project-30\\Door and Hardware.pdf",
+      "rel": "New Project-8\\New Project-30\\Door and Hardware.pdf",
+      "name": "Door and Hardware.pdf",
+      "pages": 1,
+      "size_mb": 0.29
+    },
+    {
+      "path": "data\\pdfs\\New Project-10\\Door Hardware.pdf",
+      "rel": "New Project-10\\Door Hardware.pdf",
+      "name": "Door Hardware.pdf",
+      "pages": 1,
+      "size_mb": 0.5
+    },
+    {
+      "path": "data\\pdfs\\Project - 35\\Hardware.pdf",
+      "rel": "Project - 35\\Hardware.pdf",
+      "name": "Hardware.pdf",
+      "pages": 7,
+      "size_mb": 0.48
+    },
+    {
+      "path": "data\\pdfs\\Project - 32\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 32\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.78
+    },
+    {
+      "path": "data\\pdfs\\Project - 52\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 52\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.38
+    },
+    {
+      "path": "data\\pdfs\\Project - 18\\Door Schedule.pdf",
+      "rel": "Project - 18\\Door Schedule.pdf",
+      "name": "Door Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.37
+    },
+    {
+      "path": "data\\pdfs\\Project - 67\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 67\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.49
+    },
+    {
+      "path": "data\\pdfs\\Project - 31\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 31\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.32
+    },
+    {
+      "path": "data\\pdfs\\Project - 53\\Hardware Schedule.pdf",
+      "rel": "Project - 53\\Hardware Schedule.pdf",
+      "name": "Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.32
+    },
+    {
+      "path": "data\\pdfs\\Project - 40\\Door & Hardware schedule.pdf",
+      "rel": "Project - 40\\Door & Hardware schedule.pdf",
+      "name": "Door & Hardware schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.45
+    },
+    {
+      "path": "data\\pdfs\\Project -33\\A610 - Door Schedule.pdf",
+      "rel": "Project -33\\A610 - Door Schedule.pdf",
+      "name": "A610 - Door Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.37
+    },
+    {
+      "path": "data\\pdfs\\Project - 20\\Hardware Sets.pdf",
+      "rel": "Project - 20\\Hardware Sets.pdf",
+      "name": "Hardware Sets.pdf",
+      "pages": 2,
+      "size_mb": 0.09
+    },
+    {
+      "path": "data\\pdfs\\Project - 38\\Door & Hardware schedule.pdf",
+      "rel": "Project - 38\\Door & Hardware schedule.pdf",
+      "name": "Door & Hardware schedule.pdf",
+      "pages": 1,
+      "size_mb": 1.4
+    },
+    {
+      "path": "data\\pdfs\\Project - 34\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 34\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.47
+    },
+    {
+      "path": "data\\pdfs\\New Project-2\\Door and Hardware.pdf",
+      "rel": "New Project-2\\Door and Hardware.pdf",
+      "name": "Door and Hardware.pdf",
+      "pages": 1,
+      "size_mb": 1.54
+    },
+    {
+      "path": "data\\pdfs\\Project - 1\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 1\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.45
+    },
+    {
+      "path": "data\\pdfs\\New Project-3\\Doors and Hardware.pdf",
+      "rel": "New Project-3\\Doors and Hardware.pdf",
+      "name": "Doors and Hardware.pdf",
+      "pages": 1,
+      "size_mb": 0.5
+    },
+    {
+      "path": "data\\pdfs\\Project - 75\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 75\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.5
+    },
+    {
+      "path": "data\\pdfs\\New Project-9\\DOOR HARDWARE.pdf",
+      "rel": "New Project-9\\DOOR HARDWARE.pdf",
+      "name": "DOOR HARDWARE.pdf",
+      "pages": 21,
+      "size_mb": 0.38
+    },
+    {
+      "path": "data\\pdfs\\Project - 55\\Door & Hardware Schedule.pdf",
+      "rel": "Project - 55\\Door & Hardware Schedule.pdf",
+      "name": "Door & Hardware Schedule.pdf",
+      "pages": 1,
+      "size_mb": 0.18
+    },
+    {
+      "path": "data\\pdfs\\Project - 5\\Division 08.pdf",
+      "rel": "Project - 5\\Division 08.pdf",
+      "name": "Division 08.pdf",
+      "pages": 6,
+      "size_mb": 0.96
+    }
+  ]
+}

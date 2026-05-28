@@ -1,0 +1,1748 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "DANCE STUDIO TI",
+      "project_number": null,
+      "architect": "KO DESIGN GROUP LLC",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 13,
+      "total_hardware_sets_referenced": 5,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 13,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 13 opening(s) and 5 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "101",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "1/4\" TEMP",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "102",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "103",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "104",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "105",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "106",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "107",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "1/4\" TEMP",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.76
+      },
+      {
+        "mark": "108",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.62
+      },
+      {
+        "mark": "109-110",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "113",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "1/4\" TEMP",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "114",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "5",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.62
+      },
+      {
+        "mark": "111-112",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "ALUM",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.78
+      },
+      {
+        "mark": "115",
+        "room_or_location": null,
+        "door_type": "c",
+        "opening_type": "c",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PAINTED",
+        "glazing": "-",
+        "frame_type": "STEEL",
+        "frame_material": null,
+        "frame_finish": "BLACK",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.76
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": "CORRIDOR TO STUDIO",
+        "referenced_by_doors": [
+          "101",
+          "102",
+          "107",
+          "108",
+          "113"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLASSROOM ADA LEVER HANDLE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "FLOOR STOP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "CORRIDOR TO RESTROOM",
+        "referenced_by_doors": [
+          "105",
+          "106"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1279 4 1/2\" X 4 1/2\"",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PRIVACY SET ADA LEVER HANDLE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "FLOOR STOP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": "EXTERIOR DOOR",
+        "referenced_by_doors": [
+          "115"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1279 4 1/2\" X 4 1/2\"",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ENTRANCE SET ADA LEVER HANDLE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DRIP EDGE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WEATHER GASKET",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": "CORRIDOR TO OFFICE",
+        "referenced_by_doors": [
+          "109-110",
+          "111-112"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1279 4 1/2\" X 4 1/2\"",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PRIVACY SET ADA LEVER HANDLE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": "CORRIDOR TO STORAGE",
+        "referenced_by_doors": [
+          "114"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "BB1279 4 1/2\" X 4 1/2\"",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STORAGE SET ADA LEVER HANDLE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "101",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109-110",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109-110",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109-110",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109-110",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\" X NRP",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "5",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "5",
+        "item_no": 2,
+        "qty": 1,
+        "description": "STORAGE SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "5",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "5",
+        "item_no": 4,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "111-112",
+        "hardware_set": "4",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "111-112",
+        "hardware_set": "4",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "111-112",
+        "hardware_set": "4",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "111-112",
+        "hardware_set": "4",
+        "item_no": 4,
+        "qty": 1,
+        "description": "GASKETING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4 1/2\" X 4 1/2\"",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 1,
+        "description": "ENTRANCE SET ADA LEVER HANDLE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DRIP EDGE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "WEATHER GASKET",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. ALUMINUM STORE FRONT DOORS AND HARDWARE TO MATCH STOREFRONT SYSTEM INCLUDING, BUT NOT LIMITED TO 4\" THRESHOLD, CLOSER, PIVOTS PUSH-PULL, AND CYLINDERS.",
+        "2. ALL DOOR HARDWARE SHALL BE MOUNTED TO MEET A.D.A. REQUIREMENTS.",
+        "3. EXIT DOOR LOCKS AND LATCHES SHALL COMPLY WITH 2021 IFC.",
+        "4. REQUIRED MEANS OF EGRESS SHALL BE MAINTAINED AT ALL TIMES DURING CONSTRUCTION, DEMOLITION, REMODELING OR ALTERATIONS AND ADDITIONS TO ANY BUILDING.",
+        "5. ALL WINDOW AND DOOR FRAMES TO BE EXTRUDED ALUMINUM RACO OR EQUAL"
+      ],
+      "hardware_preamble": [
+        "DOOR SCHEDULE NOTES 1. ALUMINUM STORE FRONT DOORS AND HARDWARE TO MATCH STOREFRONT SYSTEM INCLUDING, BUT NOT LIMITED TO 4\" THRESHOLD, CLOSER, PIVOTS PUSH-PULL, AND CYLINDERS.",
+        "2. ALL DOOR HARDWARE SHALL BE MOUNTED TO MEET A.D.A. REQUIREMENTS.",
+        "3. EXIT DOOR LOCKS AND LATCHES SHALL COMPLY WITH 2021 IFC.",
+        "4. REQUIRED MEANS OF EGRESS SHALL BE MAINTAINED AT ALL TIMES DURING CONSTRUCTION, DEMOLITION, REMODELING OR ALTERATIONS AND ADDITIONS TO ANY BUILDING.",
+        "5. ALL WINDOW AND DOOR FRAMES TO BE EXTRUDED ALUMINUM RACO OR EQUAL"
+      ],
+      "keying_notes": [],
+      "legend": {
+        "A": "NEW SOLID-CORE WOOD DOOR SIZE: 3'-0\"W x 7'-0\"H FINISH: PAINTED",
+        "B": "NEW SOLID CORE WOOD DOOR WITH TEMPERED GLASS INSET SIZE: 3'-0\"W x 7'-0\"H FINISH: TEMPERED GLASS",
+        "C": "NEW INSULATED 16 GA GALV METAL DOOR U.61 IN 16 GA PAINTED HOLLOW METAL FRAME SIZE: 3'-0\"W x 7'-0\"H FINISH: PAINTED"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "2 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "103",
+          "104"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 103, 104. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "103",
+          "104"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "13 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "5 hardware set(s) identified; 5 have a complete extracted item list.",
+      "5 general note(s) captured from the door-schedule sheet.",
+      "5 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 103 has no hardware set assigned.",
+        "Door 104 has no hardware set assigned."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 150,
+        "truncated": false,
+        "output_count": 13
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 67,
+        "truncated": false,
+        "output_count": 5
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 54
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 217,
+    "mapping_qa_issues": [
+      {
+        "kind": "no_hw_set",
+        "mark": "103",
+        "message": "Door 103 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "104",
+        "message": "Door 104 has no hardware set assigned."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "102"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "104"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109-110"
+        },
+        {
+          "mark": "113"
+        },
+        {
+          "mark": "114"
+        },
+        {
+          "mark": "111-112"
+        },
+        {
+          "mark": "115"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 5
+        },
+        {
+          "id": "2",
+          "item_count": 5
+        },
+        {
+          "id": "3",
+          "item_count": 5
+        },
+        {
+          "id": "4",
+          "item_count": 4
+        },
+        {
+          "id": "5",
+          "item_count": 4
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (513 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (513 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T21:12:21Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:12:21Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 150s.",
+      "message": "Door schedule review - completed in 150s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:14:51Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:14:51Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 67s.",
+      "message": "Hardware set review - completed in 67s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:15:58Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T21:15:58Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 13 doors - 5 sets - 23 items - 1 risks - 2 RFIs - 217s total.",
+      "message": "Secure analysis done - 13 doors - 5 sets - 23 items - 1 risks - 2 RFIs - 217s total.",
+      "stage": "done",
+      "ts": "2026-05-27T21:15:58Z"
+    }
+  ]
+}

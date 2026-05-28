@@ -1,0 +1,2555 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "teriyaki madness at kingwood",
+      "project_number": null,
+      "architect": null,
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 6,
+      "total_hardware_sets_referenced": 4,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 6,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 6 opening(s) and 5 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "D-100",
+        "room_or_location": "STOREFRONT ENTRY",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "ALUMINUM DOOR WITH BLACK SET GLAZING",
+        "door_finish": "FINISH TO MATCH EXISTING BLACK ANODIZED",
+        "glazing": "BLACK SET GLAZING",
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "FINISH TO MATCH EXISTING BLACK ANODIZED",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NEW DOOR SHALL BE MEDIUM STILE WITH 10\" BOTTOM RAIL WITH GLAZING BY KAWNEER WITH NEW HARDWARE LOCK SET. FINISH TO MATCH EXISTING STOREFRONT BLACK ANODIZED."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      },
+      {
+        "mark": "D-101",
+        "room_or_location": "SERVICE ENTRY",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HOLLOW METAL EXTERIOR DOOR",
+        "door_finish": "FINISH DOOR AND FRAME PER INSTRUCTIONS OF THE LANDLORD / PROPERTY MANGER.",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "FINISH DOOR AND FRAME PER INSTRUCTIONS OF THE LANDLORD / PROPERTY MANGER.",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NEW DOOR TO BE SOLID, GRADE II, HEAVY DUTY, MODEL I FULL FLUSH COLD ROLLED STEEL CONFORMING TO ASTM A366. THICKNESS SHALL BE A MINIMUM 16 GAUGE, EXTERIOR FACE SHEET TO BE A MINIMUM 16 GAUGE, ZINC-COATED. FRAMES SHALL BE COMMERCIAL QUALITY, COLD ROLLED STEEL MINIMUM 16 GAUGE. DOORS AND FRAMES SHALL BE FABRICATED WITH NO VISIBLE SEAMS. ALL JOINTS TO BE WELDED FULL, GROUND SMOOTH, SANDED AND PRIMED. CORE TO BE FOAMED-IN-PLACE POLYURETHANE WITH A MINIMUM R VALUE OF 12.0 REQUIRED. FRAME TO PRIME AND RECEIVE FRESH PAINTED. ADD PANIC HARDWARE."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "D-102",
+        "room_or_location": "WOMEN'S RESTROOM",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HOLLOW METAL DOOR",
+        "door_finish": "P-4",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "P-4",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NEW DOOR AND FRAME WITH NEW HARDWARE LOCK SET."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "D-103",
+        "room_or_location": "MEN'S RESTROOM",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "HOLLOW METAL DOOR",
+        "door_finish": "P-4",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "P-4",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NEW DOOR AND FRAME WITH NEW HARDWARE LOCK SET."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "D-104",
+        "room_or_location": "COOKLINE / SERVICE",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "4'-0\"",
+          "thickness": null
+        },
+        "door_material": "ELIASON DOUBLE ACTING IMPACT GATE",
+        "door_finish": "ANODIZED SATIN DOOR WITH BLACK WALL MOUNTED BRACKET",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "ANODIZED SATIN DOOR WITH BLACK WALL MOUNTED BRACKET",
+        "fire_rating": null,
+        "hardware_set": "BY MANUFACTURER",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ELIASON LWP GATES. TO BE INSTALLED 6\" AFF WITH WALL MOUNTED HINGES. NO FLOOR MOUNTED MODELS ACCEPTABLE."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.7
+      },
+      {
+        "mark": "D-105",
+        "room_or_location": "FOOD SERVICE",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "ELIASON DOUBLE ACTING IMPACT DOOR",
+        "door_finish": "ANODIZED SATIN WITH P-4 FRAME",
+        "glazing": "10\"X30\" ADA VIEW PANEL",
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": "ANODIZED SATIN WITH P-4 FRAME",
+        "fire_rating": null,
+        "hardware_set": "BY MANUFACTURER",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ELIASON MODEL G-11 WITH 10\"X30\" ADA VIEW PANEL CENTERED 57\" AFF."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": "ENTRY / PATIO / EXTERIOR",
+        "referenced_by_doors": [
+          "D-100"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "PER DOOR",
+            "desc": "HINGES",
+            "part": "BB1279 4.5x4.5",
+            "mfr": "HAGER",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PUSH HANDLE",
+            "part": "130S, 32D OR SIM.",
+            "mfr": "HAGER",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PULL HANDLE",
+            "part": null,
+            "mfr": "HAGER",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": "OR SIM.",
+            "confidence": 0.45
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "CLP7501R W/ 8148 DROP PANEL",
+            "mfr": "NORTON",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "ADA THRESHOLD",
+            "part": "273x292AFGPK",
+            "mfr": "PEMKO",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": "90041-NB",
+            "mfr": "PEMKO",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.87
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "WEATHER STRIP",
+            "part": "AM88BL",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.78
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "OUTSIDE CYLINDER",
+            "part": "KS 308 26D OR SIM",
+            "mfr": "KSP",
+            "finish": "MATCH EXISTING STOREFRONT",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": null,
+            "desc": "PEEL AND STICK BACKING EXIT DOOR SIGNAGE DECAL: \"THIS DOOR TO REMAIN UNLOCKED DURING BUSINESS HOURS\"",
+            "part": null,
+            "mfr": "ROCKWOOD",
+            "finish": "SILVER DECAL WITH BLACK LETTERING",
+            "notes": "BY G.C.",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "PER DOOR",
+            "desc": "HINGES",
+            "part": null,
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PUSH HANDLE",
+            "part": null,
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PULL HANDLE",
+            "part": null,
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "CLP8501T W/ 8148 DROP PANEL",
+            "mfr": "NORTON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "ADA THRESHOLD",
+            "part": "273x292AFGPK",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": "90041-NB",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "OUTSIDE CYLINDER",
+            "part": "KS 308 26D OR SIM",
+            "mfr": "KSP",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": null,
+            "desc": "PEEL AND STICK BACKING EXIT DOOR SIGNAGE DECAL: \"THIS DOOR TO REMAIN UNLOCKED DURING BUSINESS HOURS\"",
+            "part": null,
+            "mfr": "BY G.C.",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR SIGNAGE DECAL",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR PUSH",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": 2,
+            "qty": "1",
+            "unit": null,
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": "NORTON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": 3,
+            "qty": "1",
+            "unit": null,
+            "desc": "ADA THRESHOLD",
+            "part": null,
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": 4,
+            "qty": "1",
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": 5,
+            "qty": "1",
+            "unit": null,
+            "desc": "WEATHER STRIP",
+            "part": null,
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": 6,
+            "qty": "1",
+            "unit": null,
+            "desc": "OUTSIDE CYLINDER",
+            "part": null,
+            "mfr": "KSP",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.72
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "SERVICE / EXTERIOR",
+        "referenced_by_doors": [
+          "D-101"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "PER DOOR",
+            "desc": "HINGES",
+            "part": "BB1279 NRP 4.5x4.5",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "LEVER TRIM",
+            "part": "S-02BN",
+            "mfr": "DETEX",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PANIC HARDWARE",
+            "part": "V40 711",
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 4,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "1609",
+            "mfr": "DON-JO",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "KICKPLATE (INTERIOR)",
+            "part": "190S - 36\"H x 40\"W",
+            "mfr": "HAGER",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.83
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "4040 SERIES",
+            "mfr": "LCN",
+            "finish": "ALUM.",
+            "notes": null,
+            "confidence": 0.87
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "PEEPHOLE 180 DEG.",
+            "part": "1756",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DOORBELL",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "PER OWNER",
+            "confidence": 0.72
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": null,
+            "desc": "WEATHER STRIP",
+            "part": "AM88",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": null,
+            "desc": "ADA THRESHOLD",
+            "part": "273x292AFGPK",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": null,
+            "desc": "FLOOR DOOR STOP",
+            "part": "243F",
+            "mfr": "HAGER",
+            "finish": "US19",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": "90041-NB",
+            "mfr": "PEMKO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.87
+          },
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "PER DOOR",
+            "desc": "HINGES",
+            "part": "BB 1279 NPR 4.5x4.5",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "LEVER TRIM",
+            "part": "S-02BN",
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "PANIC HARDWARE",
+            "part": "V40",
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "1608",
+            "mfr": "DON-JO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "KICKPLATE (INTERIOR)",
+            "part": "190S - 36\"H x 40\"W",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "4040 SERIES",
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": null,
+            "desc": "PEEPHOLE 185 DEG.",
+            "part": "1756",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 8,
+            "qty": "PER OWNER",
+            "unit": null,
+            "desc": "DOORBELL",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": null,
+            "desc": "FLOOR DOOR STOP",
+            "part": "243F",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR VIEWER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC DEVICE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.84
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": "RESTROOM",
+        "referenced_by_doors": [
+          "D-102",
+          "D-103"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGES",
+            "part": "BB1279 4.5\" X 4.5\"",
+            "mfr": "HAGER",
+            "finish": "26D L1/693 FLAT BLACK",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PRIVACY LOCK",
+            "part": "RL-02-SR-26D-R62-R73",
+            "mfr": "ARROW",
+            "finish": null,
+            "notes": "LEVER NO CORE REQUIRED",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "MORTISE CYLINDER HOUSING",
+            "part": "C987-5622-IC-626",
+            "mfr": "FALCON",
+            "finish": "SATIN CHROME",
+            "notes": null,
+            "confidence": 0.83
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DEADLOCK",
+            "part": "MA541L QG 606",
+            "mfr": "FALCON",
+            "finish": "SATIN CHROME",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "P1601 X AL",
+            "mfr": "NORTON",
+            "finish": "-",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "SIGNAGE",
+            "part": "BY VENDOR",
+            "mfr": "BY VENDOR",
+            "finish": "-",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "190S",
+            "mfr": "HAGER",
+            "finish": "US26D SATIN CHROME",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR STOP",
+            "part": "262F",
+            "mfr": "HAGER",
+            "finish": "US19",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 9,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "1609",
+            "mfr": "DON-JO",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGES",
+            "part": "BB1279 4.5\" X 4.5\" 26D",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PRIVACY LOCK",
+            "part": "RL-02-SR-26D-R62-R73 - LEVER NO CORE REQUIRED",
+            "mfr": "ARROW",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "MORTISE CYLINDER HOUSING",
+            "part": "C987-5622-IC-626",
+            "mfr": "FALCON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DEADLOCK",
+            "part": "MA541L QG 606",
+            "mfr": "FALCON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": "P8501 X AL",
+            "mfr": "NORTON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "SIGNAGE",
+            "part": "BY VENDOR",
+            "mfr": "BY VENDOR",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "190S",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR STOP",
+            "part": "252F",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 9,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCERS",
+            "part": "1608",
+            "mfr": "DON-JO",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR LEVER SET",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": "OFFICE / IT CLOSET / INTERIOR",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGES",
+            "part": "BB1279 4.5\" X 4.5\"",
+            "mfr": "HAGER",
+            "finish": "26D L1/693 FLAT BLACK",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "OFFICE LOCK ENTRY",
+            "part": "RL-11-IC-SR-26D-R62-R71-LC",
+            "mfr": "ARROW",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.78
+          },
+          {
+            "item_no": 3,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "190S",
+            "mfr": "HAGER",
+            "finish": "US26D SATIN CHROME",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR STOP",
+            "part": "262F",
+            "mfr": "HAGER",
+            "finish": "US19",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGES",
+            "part": "BB1279 4.5\" X 4.5\" 26D",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": 2,
+            "unit": null,
+            "desc": "KICKPLATE",
+            "part": "190S",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR STOP",
+            "part": "252F",
+            "mfr": "HAGER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.92
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "BY MANUFACTURER",
+        "header_verbatim": "HARDWARE SET BY MANUFACTURER",
+        "referenced_by_doors": [
+          "D-104",
+          "D-105"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL MOUNTED HINGES, TYP.",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.78
+          }
+        ],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "HARDWARE SET BY MANUFACTURER",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 4.5x4.5",
+        "manufacturer": "HAGER",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PUSH HANDLE",
+        "catalog_number": "130S, 32D OR SIM.",
+        "manufacturer": "HAGER",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "PULL HANDLE",
+        "catalog_number": null,
+        "manufacturer": "HAGER",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": "OR SIM.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "CLP7501R W/ 8148 DROP PANEL",
+        "manufacturer": "NORTON",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "ADA THRESHOLD",
+        "catalog_number": "273x292AFGPK",
+        "manufacturer": "PEMKO",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": "90041-NB",
+        "manufacturer": "PEMKO",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 7,
+        "qty": 1,
+        "description": "WEATHER STRIP",
+        "catalog_number": "AM88BL",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 8,
+        "qty": 1,
+        "description": "OUTSIDE CYLINDER",
+        "catalog_number": "KS 308 26D OR SIM",
+        "manufacturer": "KSP",
+        "finish": "MATCH EXISTING STOREFRONT",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 9,
+        "qty": 1,
+        "description": "PEEL AND STICK BACKING EXIT DOOR SIGNAGE DECAL: \"THIS DOOR TO REMAIN UNLOCKED DURING BUSINESS HOURS\"",
+        "catalog_number": null,
+        "manufacturer": "ROCKWOOD",
+        "finish": "SILVER DECAL WITH BLACK LETTERING",
+        "notes": "BY G.C.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": null,
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PUSH HANDLE",
+        "catalog_number": null,
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": 1,
+        "description": "PULL HANDLE",
+        "catalog_number": null,
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "CLP8501T W/ 8148 DROP PANEL",
+        "manufacturer": "NORTON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": 1,
+        "description": "ADA THRESHOLD",
+        "catalog_number": "273x292AFGPK",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": "90041-NB",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 8,
+        "qty": 1,
+        "description": "OUTSIDE CYLINDER",
+        "catalog_number": "KS 308 26D OR SIM",
+        "manufacturer": "KSP",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 9,
+        "qty": 1,
+        "description": "PEEL AND STICK BACKING EXIT DOOR SIGNAGE DECAL: \"THIS DOOR TO REMAIN UNLOCKED DURING BUSINESS HOURS\"",
+        "catalog_number": null,
+        "manufacturer": "BY G.C.",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": null,
+        "description": "DOOR SIGNAGE DECAL",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": null,
+        "description": "DOOR PUSH",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": "1",
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": "NORTON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": "1",
+        "description": "ADA THRESHOLD",
+        "catalog_number": null,
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": "1",
+        "description": "DOOR SWEEP",
+        "catalog_number": null,
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": "1",
+        "description": "WEATHER STRIP",
+        "catalog_number": null,
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-100",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": "1",
+        "description": "OUTSIDE CYLINDER",
+        "catalog_number": null,
+        "manufacturer": "KSP",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 NRP 4.5x4.5",
+        "manufacturer": "HAGER",
+        "finish": "US26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LEVER TRIM",
+        "catalog_number": "S-02BN",
+        "manufacturer": "DETEX",
+        "finish": "US26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "PANIC HARDWARE",
+        "catalog_number": "V40 711",
+        "manufacturer": "DETEX",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1609",
+        "manufacturer": "DON-JO",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICKPLATE (INTERIOR)",
+        "catalog_number": "190S - 36\"H x 40\"W",
+        "manufacturer": "HAGER",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 6,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "4040 SERIES",
+        "manufacturer": "LCN",
+        "finish": "ALUM.",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": 1,
+        "description": "PEEPHOLE 180 DEG.",
+        "catalog_number": "1756",
+        "manufacturer": "HAGER",
+        "finish": "US26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 8,
+        "qty": null,
+        "description": "DOORBELL",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "PER OWNER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 9,
+        "qty": 1,
+        "description": "WEATHER STRIP",
+        "catalog_number": "AM88",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 10,
+        "qty": 1,
+        "description": "ADA THRESHOLD",
+        "catalog_number": "273x292AFGPK",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 11,
+        "qty": 1,
+        "description": "FLOOR DOOR STOP",
+        "catalog_number": "243F",
+        "manufacturer": "HAGER",
+        "finish": "US19",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 12,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": "90041-NB",
+        "manufacturer": "PEMKO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB 1279 NPR 4.5x4.5",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LEVER TRIM",
+        "catalog_number": "S-02BN",
+        "manufacturer": "DETEX",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": 1,
+        "description": "PANIC HARDWARE",
+        "catalog_number": "V40",
+        "manufacturer": "DETEX",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1608",
+        "manufacturer": "DON-JO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICKPLATE (INTERIOR)",
+        "catalog_number": "190S - 36\"H x 40\"W",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 6,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "4040 SERIES",
+        "manufacturer": "LCN",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": 1,
+        "description": "PEEPHOLE 185 DEG.",
+        "catalog_number": "1756",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 8,
+        "qty": "PER OWNER",
+        "description": "DOORBELL",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 11,
+        "qty": 1,
+        "description": "FLOOR DOOR STOP",
+        "catalog_number": "243F",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": null,
+        "description": "DOOR VIEWER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-101",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": null,
+        "description": "PANIC DEVICE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 4.5\" X 4.5\"",
+        "manufacturer": "HAGER",
+        "finish": "26D L1/693 FLAT BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY LOCK",
+        "catalog_number": "RL-02-SR-26D-R62-R73",
+        "manufacturer": "ARROW",
+        "finish": null,
+        "notes": "LEVER NO CORE REQUIRED",
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER HOUSING",
+        "catalog_number": "C987-5622-IC-626",
+        "manufacturer": "FALCON",
+        "finish": "SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DEADLOCK",
+        "catalog_number": "MA541L QG 606",
+        "manufacturer": "FALCON",
+        "finish": "SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "P1601 X AL",
+        "manufacturer": "NORTON",
+        "finish": "-",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SIGNAGE",
+        "catalog_number": "BY VENDOR",
+        "manufacturer": "BY VENDOR",
+        "finish": "-",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "190S",
+        "manufacturer": "HAGER",
+        "finish": "US26D SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 8,
+        "qty": 1,
+        "description": "DOOR STOP",
+        "catalog_number": "262F",
+        "manufacturer": "HAGER",
+        "finish": "US19",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 9,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1609",
+        "manufacturer": "DON-JO",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 4.5\" X 4.5\" 26D",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY LOCK",
+        "catalog_number": "RL-02-SR-26D-R62-R73 - LEVER NO CORE REQUIRED",
+        "manufacturer": "ARROW",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER HOUSING",
+        "catalog_number": "C987-5622-IC-626",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DEADLOCK",
+        "catalog_number": "MA541L QG 606",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "P8501 X AL",
+        "manufacturer": "NORTON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SIGNAGE",
+        "catalog_number": "BY VENDOR",
+        "manufacturer": "BY VENDOR",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "190S",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 8,
+        "qty": 1,
+        "description": "DOOR STOP",
+        "catalog_number": "252F",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 9,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1608",
+        "manufacturer": "DON-JO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-102",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": null,
+        "description": "DOOR LEVER SET",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 4.5\" X 4.5\"",
+        "manufacturer": "HAGER",
+        "finish": "26D L1/693 FLAT BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY LOCK",
+        "catalog_number": "RL-02-SR-26D-R62-R73",
+        "manufacturer": "ARROW",
+        "finish": null,
+        "notes": "LEVER NO CORE REQUIRED",
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER HOUSING",
+        "catalog_number": "C987-5622-IC-626",
+        "manufacturer": "FALCON",
+        "finish": "SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DEADLOCK",
+        "catalog_number": "MA541L QG 606",
+        "manufacturer": "FALCON",
+        "finish": "SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "P1601 X AL",
+        "manufacturer": "NORTON",
+        "finish": "-",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SIGNAGE",
+        "catalog_number": "BY VENDOR",
+        "manufacturer": "BY VENDOR",
+        "finish": "-",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "190S",
+        "manufacturer": "HAGER",
+        "finish": "US26D SATIN CHROME",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 8,
+        "qty": 1,
+        "description": "DOOR STOP",
+        "catalog_number": "262F",
+        "manufacturer": "HAGER",
+        "finish": "US19",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 9,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1609",
+        "manufacturer": "DON-JO",
+        "finish": "GREY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGES",
+        "catalog_number": "BB1279 4.5\" X 4.5\" 26D",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY LOCK",
+        "catalog_number": "RL-02-SR-26D-R62-R73 - LEVER NO CORE REQUIRED",
+        "manufacturer": "ARROW",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER HOUSING",
+        "catalog_number": "C987-5622-IC-626",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 4,
+        "qty": 1,
+        "description": "DEADLOCK",
+        "catalog_number": "MA541L QG 606",
+        "manufacturer": "FALCON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 5,
+        "qty": 1,
+        "description": "CLOSER",
+        "catalog_number": "P8501 X AL",
+        "manufacturer": "NORTON",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SIGNAGE",
+        "catalog_number": "BY VENDOR",
+        "manufacturer": "BY VENDOR",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICKPLATE",
+        "catalog_number": "190S",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 8,
+        "qty": 1,
+        "description": "DOOR STOP",
+        "catalog_number": "252F",
+        "manufacturer": "HAGER",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 9,
+        "qty": 3,
+        "description": "SILENCERS",
+        "catalog_number": "1608",
+        "manufacturer": "DON-JO",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-103",
+        "hardware_set": "3",
+        "item_no": 1,
+        "qty": null,
+        "description": "DOOR LEVER SET",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-104",
+        "hardware_set": "BY MANUFACTURER",
+        "item_no": 1,
+        "qty": null,
+        "description": "WALL MOUNTED HINGES, TYP.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "D-105",
+        "hardware_set": "BY MANUFACTURER",
+        "item_no": 1,
+        "qty": null,
+        "description": "WALL MOUNTED HINGES, TYP.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "EXISTING DOORS AND FRAMES ARE TO RECEIVE NEW FINISH AS SCHEDULED.",
+        "REFER TO DOOR TYPE AND HARDWARE SCHEDULE SET #.",
+        "VERIFY ALL OPENINGS PRIOR TO FABRICATION.",
+        "ALL DOOR OPERATION MUST CONFORM TO TEXAS ACCESSIBILITY STANDARDS AND HAVE OPEN FORCE OF LESS THAN 5 LB. REINFORCED DOORS TO RECEIVE CLOSERS.",
+        "THIS PROJECT SHALL COMPLY WITH ALL FEDERAL AMERICAN WITH DISABILITY ACT (ADA) REGULATION AND ALL LOCAL ACCESSIBILITY REGULATIONS.",
+        "A.D.A. COMPLIANT SIGNAGE SHALL BE PROVIDED AT MENS AND WOMEN'S TOILET ROOMS. SEE SHEET G1.1 FOR SIGNAGE REQUIREMENTS.",
+        "THRESHOLDS SHALL BE NO HIGHER THAN 1/2\" ABOVE THE FLOOR. EDGE TO BE BEVELED WITH A SLOPE NO GREATER THAN 1 IN 2.",
+        "PROVIDE 18\" CLEAR SPACE AT STRIKE/PULL SIDE ON INTERIOR DOORS AND 12\" CLEAR AT STRIKE/PUSH SIDE OF DOORS W/CLOSERS.",
+        "PROVIDE KICKPLATES ON KITCHEN SIDE OF REAR EXIT. KICKPLATES SHALL BE ON THE PUSH SIDE OF THE DOOR.",
+        "GENERAL CONTRACTOR (G.C.) SHALL VERIFY WITH SUPPLIER THAT ALL HARDWARE MEETS A.D.A. REQUIREMENTS.",
+        "GENERAL CONTRACTOR (G.C.) TO INSPECT EXISTING DOOR HARDWARE AND REPAIR AND/OR REPLACE HARDWARE AS REQUIRED TO ENSURE A PROPERLY OPERATING DOOR.",
+        "COORDINATE HARDWARE WITH SECURITY AND ELECTRICAL REQUIREMENTS FOR DOORS.",
+        "ALL DOOR HARDWARE SHALL BE LEVER TYPE - NOT REQUIRING TIGHT GRASPING OR EXCESSIVE WRIST MOVEMENT. ALL DOOR(S) SHALL OPERATE IN A SINGLE CONTINUOUS MOTION. ALL DOOR HARDWARE SHALL BE MOUNTED BETWEEN 34\"- 48\" AFF.",
+        "HARDWARE SCHEDULE HAS BEEN DEVELOPED FOR DESIGN INTENT ONLY. HARDWARE PROVIDER SHALL VERIFY THE FUNCTION AND COMPATIBILITY OF ALL COMPONENTS.",
+        "CLOSERS: DOOR CLOSERS TO BE MOUNTED ON ROOM SIDE OF DOORS. DOOR CLOSERS TO HAVE A MAXIMUM OPENING FORCES OF 5 LBF (INTERIOR HINGED DOORS). THE SWEEP PERIOD OF THE CLOSER SHALL BE ADJUSTED SO THAT FROM AN OPEN POSITION OF 70 DEGREES. THE DOOR SHALL TAKE AT LEAST 3 SECONDS TO MOVE TO A POINT 3 IN. FROM THE LATCH. MEASURED TO THE LEADING EDGE OF THE DOOR.",
+        "ALL DOOR HINGES TO BE STEEL BALL BEARING. FULL MORTISE TYPE.",
+        "ALL METAL DOOR FRAMES TO BE PROVIDED WITH SILENCERS.",
+        "GENERAL CONTRACTOR SHALL ENSURE ALL EXISTING DOORS TO REMAIN TO BE IN GOOD OPERATING ORDER AND MEET CURRENT BUILDING CODES AND ADA REQUIREMENTS. GENERAL CONTRACTOR TO RESTORE DOORS AND HARDWARE TO \"LIKE NEW\" CONDITION.",
+        "EXTERIOR HINGES TO HAVE NON-REMOVABLE PINS.",
+        "ALL GLASS SHALL BE CLEAR TEMPERED UNLESS OTHERWISE NOTED.",
+        "OWNER / CONTRACTOR TO COORDINATE DOOR HARDWARE PRIOR TO ORDERING.",
+        "SERVICE DOOR: NEW BACK DOORS SHALL SDI 100, GRADE II, HEAVY DUTY, MODEL I FULL FLUSH COLD ROLLED STEEL CONFORMING TO ASTM A366. INTERIOR FACE SHEETS SHALL BE MINIMUM 16 GAUGE. EXTERIOR FACE SHEETS SHALL BE MINIMUM 16 GAUGE, ZINC COATED. FRAMES SHALL BE COMMERCIAL QUALITY, COLD ROLLED STEEL MINIMUM 16 GAUGE. DOORS AND FRAMES SHALL BE FABRICATED WITH NO VISIBLE SEAMS. ALL JOINTS SHALL BE WELDED FULL, GROUND SMOOTH, SANDED AND PRIMED. CORE SHALL BE FOAMED-IN-PLACE POLYURETHANE. MINIMUM R VALUE OF 12.0 REQUIRED. DOOR OPERATION MUST CONFORM TO TEXAS ACCESSIBILITY STANDARDS AND HAVE AN OPENING FORCE OF LESS THAN 5LBS. REINFORCE DOORS TO RECEIVE CLOSERS. MORTISE FRAME FOR INSTALLATION OF (3) 4 1/2\" HINGES AND 4 7/8\" STRIKE PLATE. DOORS AND FRAMES SHALL BE PRIMED AND PAINTED.",
+        "HOLLOW METAL DOORS AND FRAMES, EXPOSED STRUCTURAL STEEL INCLUDING CANOPY FRAMES, UNDERSIDE OF METAL ROOF PANELS, CONCRETE: APPLY A SINGLE COAT OF PROCRYL UNIVERSAL PRIMER AND TWO COATS OF SHER-CRYL HPA ACRYLIC PAINT AS MANUFACTURED BY THE SHERWIN-WILLIAMS COMPANY.",
+        "NOTE: NEW STOREFRONT TO MATCH EXISTING STOREFRONT SPECIFICATIONS. REFER TO A504.1 FOR DETAILS."
+      ],
+      "hardware_preamble": [
+        "1 THIS PROJECT SHALL COMPLY WITH ALL FEDERAL AMERICAN WITH DISABILITY ACT (ADA) REGULATION AND ALL LOCAL ACCESSIBILITY REGULATIONS.",
+        "2 A.D.A. COMPLIANT SIGNAGE SHALL BE PROVIDED AT MENS AND WOMEN'S TOILET ROOMS. SEE SHEET G1.01 FOR SIGNAGE REQUIREMENTS.",
+        "3 THRESHOLDS SHALL BE NO HIGHER THAN 1/2\" ABOVE THE FLOOR. EDGE TO BE BEVELED WITH A SLOPE NO GREATER THAN 1 IN 2.",
+        "4 PROVIDE 18\" CLEAR SPACE AT STRIKE/PULL SIDE ON INTERIOR DOORS AND 12\" CLEAR AT STRIKE/PUSH SIDE OF DOORS W/CLOSERS.",
+        "5 PROVIDE KICKPLATES ON KITCHEN SIDE OF REAR EXIT. KICKPLATES SHALL BE ON THE PUSH SIDE OF THE DOOR.",
+        "6 GENERAL CONTRACTOR (G.C.) SHALL VERIFY WITH SUPPLIER THAT ALL HARDWARE MEETS A.D.A. REQUIREMENTS.",
+        "7 GENERAL CONTRACTOR (G.C.) TO INSPECT EXISTING DOOR HARDWARE AND REPAIR AND/OR REPLACE HARDWARE AS REQUIRED TO ENSURE A PROPERLY OPERATING DOOR.",
+        "8 COORDINATE HARDWARE WITH SECURITY AND ELECTRICAL REQUIREMENTS FOR DOORS.",
+        "9 ALL DOOR HARDWARE SHALL BE LEVER TYPE - NOT REQUIRING TIGHT GRASPING OR EXCESSIVE WRIST MOVEMENT. ALL DOOR(S) SHALL OPERATE IN A SINGLE CONTINUOUS MOTION. ALL DOOR HARDWARE SHALL BE MOUNTED BETWEEN 34\"-48\" AFF.",
+        "10 HARDWARE SCHEDULE HAS BEEN DEVELOPED FOR DESIGN INTENT ONLY. HARDWARE PROVIDER SHALL VERIFY THE FUNCTION AND COMPATIBILITY OF ALL COMPONENTS.",
+        "11 CLOSERS: DOOR CLOSERS TO BE MOUNTED ON ROOM SIDE OF DOORS. DOOR CLOSERS TO HAVE A MAXIMUM OPENING FORCES OF 5 LBF (INTERIOR HINGED DOORS). THE SWEEP PERIOD OF THE CLOSER SHALL BE ADJUSTED SO THAT FROM AN OPEN POSITION OF 70 DEGREES, THE DOOR SHALL TAKE AT LEAST 3 SECONDS TO MOVE TO A POINT 3 IN. FROM THE LATCH, MEASURED TO THE LEADING EDGE OF THE DOOR.",
+        "12 ALL DOOR HINGES TO BE STEEL BALL BEARING, FULL MORTISE TYPE.",
+        "13 ALL METAL DOOR FRAMES TO BE PROVIDED WITH SILENCERS.",
+        "14 GENERAL CONTRACTOR SHALL ENSURE ALL EXISTING DOORS TO REMAIN TO BE IN GOOD OPERATING ORDER AND MEET CURRENT BUILDING CODES AND ADA REQUIREMENTS. GENERAL CONTRACTOR TO RESTORE DOORS AND HARDWARE TO \"LIKE NEW\" CONDITION.",
+        "15 EXTERIOR HINGES TO HAVE NON-REMOVABLE PINS.",
+        "16 ALL GLASS SHALL BE CLEAR TEMPERED UNLESS OTHERWISE NOTED.",
+        "17 OWNER / CONTRACTOR TO COORDINATE DOOR HARDWARE PRIOR TO ORDERING.",
+        "18 SERVICE DOOR: NEW BACK DOORS SHALL SDI 100: GRADE II, HEAVY DUTY, MODEL I FULL FLUSH COLD ROLLED STEEL CONFORMING TO ASTM A-366. INTERIOR FACE SHEETS SHALL BE MINIMUM 16 GAUGE. EXTERIOR FACE SHEETS SHALL BE MINIMUM 16 GAUGE, ZINC COATED. FRAMES SHALL BE COMMERCIAL QUALITY, COLD ROLLED STEEL MINIMUM 16 GAUGE. DOORS AND FRAMES SHALL BE FABRICATED WITH NO VISIBLE SEAMS. ALL JOINTS SHALL BE WELDED FULLY, GROUND SMOOTH, SANDED AND PRIMED. CORE SHALL BE FOAMED-IN-PLACE POLYURETHANE. MINIMUM R VALUE OF 12.0 REQUIRED. DOOR OPERATION MUST CONFORM TO TEXAS ACCESSIBILITY STANDARDS AND HAVE AN OPENING FORCE OF LESS THAN 5 LBS. REINFORCE DOORS TO RECEIVE CLOSERS. MORTISE FOR INSTALLATION OF (3) 4 1/2\" HINGES AND 4 7/8\" STRIKE PLATE. DOORS AND FRAMES SHALL BE PRIMED AND PAINTED.",
+        "19 HOLLOW METAL DOORS AND FRAMES, EXPOSED STRUCTURAL STEEL INCLUDING CANOPY FRAMES, UNDERSIDE OF METAL ROOF PANELS, CONCRETE: APPLY A SINGLE COAT OF PROCRYL UNIVERSAL PRIMER AND TWO COATS OF SHER-CRYL HPA ACRYLIC PAINT AS MANUFACTURED BY THE SHERWIN-WILLIAMS COMPANY.",
+        "- EXISTING DOORS AND FRAMES ARE TO RECEIVE NEW FINISHES AS SCHEDULED.",
+        "- REFER TO DOOR TYPE AND HARDWARE SCHEDULE SET #.",
+        "- VERIFY ALL OPENINGS PRIOR TO FABRICATION.",
+        "- ALL DOOR OPERATION MUST CONFORM TO TEXAS ACCESSIBILITY STANDARDS AND HAVE OPEN FORCE OF LESS THAN 5 LB. REINFORCED DOORS TO RECEIVE CLOSERS."
+      ],
+      "keying_notes": [
+        "OUTSIDE CYLINDER KSP KS 308 26D OR SIM MATCH EXISTING STOREFRONT"
+      ],
+      "legend": {}
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Access control / electrified",
+        "issue": "2 opening(s) involve electrified or access-control hardware.",
+        "affected_openings": [
+          "D-101",
+          "D-104"
+        ],
+        "recommendation": "Confirm Div 08 / 26 / 27 / 28 scope split before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Access control / electrified",
+        "question": "For electrified openings (D-101, D-104), confirm responsibility for 120 V power, low-voltage cabling, readers/head-end, fire alarm release, commissioning and programming.",
+        "affected_openings": [
+          "D-101",
+          "D-104"
+        ],
+        "recommendation": "Carry Div 8 components only unless explicitly included.",
+        "status": "Open",
+        "reason": "Carry Div 8 components only unless explicitly included.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (1 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "6 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "5 hardware set(s) identified; 5 have a complete extracted item list.",
+      "24 general note(s) captured from the door-schedule sheet.",
+      "23 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Coordinate electrified hardware split: Div 08 hardware / Div 26 power / Div 27-28 low-voltage + head-end.",
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 281,
+        "truncated": false,
+        "output_count": 6
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 219,
+        "truncated": false,
+        "output_count": 5
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 404,
+        "output_count": 40
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 87
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 1
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 904,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "D-100"
+        },
+        {
+          "mark": "D-101"
+        },
+        {
+          "mark": "D-102"
+        },
+        {
+          "mark": "D-103"
+        },
+        {
+          "mark": "D-104"
+        },
+        {
+          "mark": "D-105"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 24
+        },
+        {
+          "id": "2",
+          "item_count": 23
+        },
+        {
+          "id": "3",
+          "item_count": 19
+        },
+        {
+          "id": "4",
+          "item_count": 7
+        },
+        {
+          "id": "BY MANUFACTURER",
+          "item_count": 1
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for A400_ DOOR WINDOW SCHEDULE Rev.1 markup.pdf (320 KB).",
+      "message": "Secure analysis started for A400_ DOOR WINDOW SCHEDULE Rev.1 markup.pdf (320 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T18:32:51Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:32:51Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 281s.",
+      "message": "Door schedule review - completed in 281s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:37:32Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:37:32Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 219s.",
+      "message": "Hardware set review - completed in 219s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:41:11Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:41:12Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:41:12Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 95s.",
+      "message": "Completeness check - completed in 95s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:42:46Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:42:46Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 60s.",
+      "message": "Completeness check - completed in 60s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:43:46Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:43:46Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 55s.",
+      "message": "Completeness check - completed in 55s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:44:41Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:44:41Z"
+    },
+    {
+      "kind": "warn",
+      "level": "warn",
+      "text": "Completeness check - temporary service error, retrying.",
+      "message": "Completeness check - temporary service error, retrying.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:46:00Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 194s.",
+      "message": "Completeness check - completed in 194s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:47:55Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 5 set(s) and 47 item row(s).",
+      "message": "Completeness check recovered 5 set(s) and 47 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:47:55Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 40 hardware item row(s).",
+      "message": "Completeness check added 40 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:47:55Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T18:47:55Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 6 doors - 5 sets - 74 items - 1 risks - 1 RFIs - 904s total.",
+      "message": "Secure analysis done - 6 doors - 5 sets - 74 items - 1 risks - 1 RFIs - 904s total.",
+      "stage": "done",
+      "ts": "2026-05-27T18:47:55Z"
+    }
+  ]
+}

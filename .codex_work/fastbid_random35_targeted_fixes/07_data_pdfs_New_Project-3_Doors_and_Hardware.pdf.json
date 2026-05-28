@@ -1,0 +1,1762 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "PERDUE KIDD",
+      "project_number": null,
+      "architect": "AMB architects",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 23,
+      "total_hardware_sets_referenced": 1,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 23,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 23 opening(s) and 2 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "750",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": "STAINLESS STEEL",
+        "door_finish": "STAINLESS STEEL",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": "YES",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.52
+      },
+      {
+        "mark": "751",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "752",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "753",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "754",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "755",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "756",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "757",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "758",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "759",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "760",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "761",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "762",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "763",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "764",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.66
+      },
+      {
+        "mark": "765",
+        "room_or_location": null,
+        "door_type": "SOLID-CORE WD W/ GLASS",
+        "opening_type": "SOLID-CORE WD W/ GLASS",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": "GLASS",
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.54
+      },
+      {
+        "mark": "766",
+        "room_or_location": null,
+        "door_type": "SOLID-CORE WD W/ GLASS",
+        "opening_type": "SOLID-CORE WD W/ GLASS",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": "GLASS",
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.54
+      },
+      {
+        "mark": "767",
+        "room_or_location": null,
+        "door_type": "SOLID-CORE WD W/ GLASS",
+        "opening_type": "SOLID-CORE WD W/ GLASS",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": "GLASS",
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.54
+      },
+      {
+        "mark": "768",
+        "room_or_location": null,
+        "door_type": "SOLID-CORE WD W/ GLASS",
+        "opening_type": "SOLID-CORE WD W/ GLASS",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": "GLASS",
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.54
+      },
+      {
+        "mark": "769",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.6
+      },
+      {
+        "mark": "770",
+        "room_or_location": null,
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.6
+      },
+      {
+        "mark": "771",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": "STAINLESS STEEL",
+        "door_finish": "STAINLESS STEEL",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.5
+      },
+      {
+        "mark": "772",
+        "room_or_location": null,
+        "door_type": "SOLID-CORE WD W/ GLASS",
+        "opening_type": "SOLID-CORE WD W/ GLASS",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "PLASTIC LAMINATE",
+        "glazing": "GLASS",
+        "frame_type": null,
+        "frame_material": "ALUMINUM",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "LATCHSET",
+        "closer": "NO",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.5
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "LOCKSET",
+        "header_verbatim": "SINGLE LOCKSET W/ CLOSER",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "review_required",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "HINGE (BALL BEARING)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "LOCKSET - ADA LEVER HARDWARE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "SINGLE LOCKSET",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "LATCHSET",
+        "header_verbatim": "SINGLE LATCHSET",
+        "referenced_by_doors": [
+          "751",
+          "752",
+          "753",
+          "754",
+          "755",
+          "756",
+          "757",
+          "758",
+          "759",
+          "760",
+          "761",
+          "762",
+          "763",
+          "764",
+          "765",
+          "766",
+          "767",
+          "768",
+          "769",
+          "770",
+          "772"
+        ],
+        "status": "complete",
+        "raw_status": "review_required",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 4,
+            "unit": "EA.",
+            "desc": "HINGE (BALL BEARING)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "LATCHSET - ADA LEVER HARDWARE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA.",
+            "desc": "FLOOR STOP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "750",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "751",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "752",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "753",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "754",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "755",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "756",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "757",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "758",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "759",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "760",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "761",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "762",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "763",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "764",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "765",
+        "hardware_set": "LATCHSET",
+        "item_no": 1,
+        "qty": 4,
+        "description": "HINGE (BALL BEARING)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "765",
+        "hardware_set": "LATCHSET",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LATCHSET - ADA LEVER HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "765",
+        "hardware_set": "LATCHSET",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "766",
+        "hardware_set": "LATCHSET",
+        "item_no": 1,
+        "qty": 4,
+        "description": "HINGE (BALL BEARING)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "766",
+        "hardware_set": "LATCHSET",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LATCHSET - ADA LEVER HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "766",
+        "hardware_set": "LATCHSET",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "767",
+        "hardware_set": "LATCHSET",
+        "item_no": 1,
+        "qty": 4,
+        "description": "HINGE (BALL BEARING)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "767",
+        "hardware_set": "LATCHSET",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LATCHSET - ADA LEVER HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "767",
+        "hardware_set": "LATCHSET",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "768",
+        "hardware_set": "LATCHSET",
+        "item_no": 1,
+        "qty": 4,
+        "description": "HINGE (BALL BEARING)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "768",
+        "hardware_set": "LATCHSET",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LATCHSET - ADA LEVER HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "768",
+        "hardware_set": "LATCHSET",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "769",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "770",
+        "hardware_set": "LATCHSET",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "771",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "772",
+        "hardware_set": "LATCHSET",
+        "item_no": 1,
+        "qty": 4,
+        "description": "HINGE (BALL BEARING)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "772",
+        "hardware_set": "LATCHSET",
+        "item_no": 2,
+        "qty": 1,
+        "description": "LATCHSET - ADA LEVER HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "772",
+        "hardware_set": "LATCHSET",
+        "item_no": 3,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "2 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "750",
+          "771"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 750, 771. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "750",
+          "771"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "23 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "2 hardware set(s) identified; 2 have a complete extracted item list."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 750 has no hardware set assigned.",
+        "Door 771 has no hardware set assigned."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 516,
+        "truncated": false,
+        "output_count": 23
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Door completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 138,
+        "truncated": false,
+        "output_count": 2
+      },
+      {
+        "step": 4,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 320,
+        "output_count": 6
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 33
+      },
+      {
+        "step": 6,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 7,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 974,
+    "mapping_qa_issues": [
+      {
+        "kind": "no_hw_set",
+        "mark": "750",
+        "message": "Door 750 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "771",
+        "message": "Door 771 has no hardware set assigned."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "750"
+        },
+        {
+          "mark": "751"
+        },
+        {
+          "mark": "752"
+        },
+        {
+          "mark": "753"
+        },
+        {
+          "mark": "754"
+        },
+        {
+          "mark": "755"
+        },
+        {
+          "mark": "756"
+        },
+        {
+          "mark": "757"
+        },
+        {
+          "mark": "758"
+        },
+        {
+          "mark": "759"
+        },
+        {
+          "mark": "760"
+        },
+        {
+          "mark": "761"
+        },
+        {
+          "mark": "762"
+        },
+        {
+          "mark": "763"
+        },
+        {
+          "mark": "764"
+        },
+        {
+          "mark": "765"
+        },
+        {
+          "mark": "766"
+        },
+        {
+          "mark": "767"
+        },
+        {
+          "mark": "768"
+        },
+        {
+          "mark": "769"
+        },
+        {
+          "mark": "770"
+        },
+        {
+          "mark": "771"
+        },
+        {
+          "mark": "772"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "LOCKSET",
+          "item_count": 3
+        },
+        {
+          "id": "LATCHSET",
+          "item_count": 3
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Doors and Hardware.pdf (510 KB).",
+      "message": "Secure analysis started for Doors and Hardware.pdf (510 KB).",
+      "stage": "start",
+      "ts": "2026-05-28T00:14:50Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-28T00:14:50Z"
+    },
+    {
+      "kind": "warn",
+      "level": "warn",
+      "text": "Door schedule review - network interruption, retrying.",
+      "message": "Door schedule review - network interruption, retrying.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-28T00:19:56Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 516s.",
+      "message": "Door schedule review - completed in 516s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-28T00:23:26Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-28T00:23:26Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 138s.",
+      "message": "Hardware set review - completed in 138s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-28T00:25:44Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:25:46Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:25:46Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 63s.",
+      "message": "Completeness check - completed in 63s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:26:49Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:26:49Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 89s.",
+      "message": "Completeness check - completed in 89s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:28:17Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:28:17Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 37s.",
+      "message": "Completeness check - completed in 37s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:28:54Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:28:54Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 6s.",
+      "message": "Completeness check - completed in 6s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:29:00Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:29:00Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 78s.",
+      "message": "Completeness check - completed in 78s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:30:18Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:30:18Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 47s.",
+      "message": "Completeness check - completed in 47s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:31:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 7 set(s) and 28 item row(s).",
+      "message": "Completeness check recovered 7 set(s) and 28 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:31:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 6 hardware item row(s).",
+      "message": "Completeness check added 6 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-28T00:31:05Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-28T00:31:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 23 doors - 2 sets - 6 items - 1 risks - 2 RFIs - 974s total.",
+      "message": "Secure analysis done - 23 doors - 2 sets - 6 items - 1 risks - 2 RFIs - 974s total.",
+      "stage": "done",
+      "ts": "2026-05-28T00:31:05Z"
+    }
+  ]
+}

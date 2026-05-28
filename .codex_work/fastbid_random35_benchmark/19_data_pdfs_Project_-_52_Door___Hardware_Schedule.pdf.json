@@ -1,0 +1,3208 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "PORTILLO'S RESTAURANT",
+      "project_number": null,
+      "architect": null,
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 17,
+      "total_hardware_sets_referenced": 9,
+      "hardware_sets_missing_or_unclear": 9,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 17,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 17 opening(s) and 19 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100.1",
+        "room_or_location": "ENTRY",
+        "door_type": "D11",
+        "opening_type": "D11",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7'-3\"",
+          "height": "7'-6\"",
+          "thickness": "1 5/8\""
+        },
+        "door_material": null,
+        "door_finish": "REMARKS",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "ALUM.",
+        "frame_finish": "REMARKS",
+        "fire_rating": null,
+        "hardware_set": "H-10",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "REVOLVING DOOR; BRONZE ALUMINUM, NOTES 1, 12, & 14"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "100.2",
+        "room_or_location": "ENTRY",
+        "door_type": "D1",
+        "opening_type": "D1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "REMARKS",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "ALUM.",
+        "frame_finish": "REMARKS",
+        "fire_rating": null,
+        "hardware_set": "H-2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "FACTORY FINISH - BRONZE ALUMINUM, NOTES 1 & 12"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "103",
+        "room_or_location": "TO GO",
+        "door_type": "D1",
+        "opening_type": "D1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "REMARKS",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "ALUM.",
+        "frame_finish": "REMARKS",
+        "fire_rating": null,
+        "hardware_set": "H-2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "FACTORY FINISH - BRONZE ALUMINUM, NOTES 1 & 12"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "105",
+        "room_or_location": "MENS TOILET",
+        "door_type": "D5",
+        "opening_type": "D5",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PREFIN.",
+        "glazing": null,
+        "frame_type": "F2",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 2, 4, 5, 7, & 11"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "106",
+        "room_or_location": "WOMENS TOILET",
+        "door_type": "D5",
+        "opening_type": "D5",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PREFIN.",
+        "glazing": null,
+        "frame_type": "F2",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 2, 4, 5, 7, & 11"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "107",
+        "room_or_location": "STORAGE",
+        "door_type": "D4",
+        "opening_type": "D4",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "F1",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 3, 4, & 16"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "110.1",
+        "room_or_location": "LOCKERS",
+        "door_type": "D3",
+        "opening_type": "D3",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "4'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "F1",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "21\n6"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.62
+      },
+      {
+        "mark": "110.2",
+        "room_or_location": "LOCKERS",
+        "door_type": "D7",
+        "opening_type": "D7",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 1/2\""
+        },
+        "door_material": null,
+        "door_finish": "LAM.",
+        "glazing": null,
+        "frame_type": "F3",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "MANUF.",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ELIASON OR EQUAL, NO STOPS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.92
+      },
+      {
+        "mark": "110.3",
+        "room_or_location": "LOCKERS",
+        "door_type": "D?",
+        "opening_type": "D?",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "1'-6\"",
+          "height": "1'-6\"",
+          "thickness": "2\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "MAINTENANCE DOOR ABOVE WIC/WIF"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.88
+      },
+      {
+        "mark": "111",
+        "room_or_location": "MOTHERS",
+        "door_type": "D6",
+        "opening_type": "D6",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "F2",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-5",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 2, 4, 5, 7, & 11"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "114",
+        "room_or_location": "CATERING",
+        "door_type": "D7",
+        "opening_type": "D7",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 1/2\""
+        },
+        "door_material": null,
+        "door_finish": "LAM.",
+        "glazing": null,
+        "frame_type": "F3",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "MANUF.",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ELIASON OR EQUAL, NO STOPS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.92
+      },
+      {
+        "mark": "115",
+        "room_or_location": "KITCHEN",
+        "door_type": "D10",
+        "opening_type": "D10",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "7'-0\"",
+          "height": "7'-8\"",
+          "thickness": "8\""
+        },
+        "door_material": null,
+        "door_finish": "REMARKS",
+        "glazing": null,
+        "frame_type": "F4",
+        "frame_material": "ALUM.",
+        "frame_finish": "REMARKS",
+        "fire_rating": null,
+        "hardware_set": "MANUF.",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "TORMAX DOUBLE BI-PARTING DRIVE THROUGH SLIDING DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.88
+      },
+      {
+        "mark": "117",
+        "room_or_location": "ELECTRICAL",
+        "door_type": "D4",
+        "opening_type": "D4",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "F1",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-7",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 3, 4, & 16"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "118",
+        "room_or_location": "RISER",
+        "door_type": "D4",
+        "opening_type": "D4",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": "F1",
+        "frame_material": "H.M.",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "H-4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NOTES 3, 4, & 16"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "119.1",
+        "room_or_location": "DINING",
+        "door_type": "D1",
+        "opening_type": "D1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": "REMARKS",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "ALUM.",
+        "frame_finish": "REMARKS",
+        "fire_rating": null,
+        "hardware_set": "H-2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "FACTORY FINISH - BRONZE ALUMINUM, NOTES 1 & 12"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93
+      },
+      {
+        "mark": "119.2",
+        "room_or_location": "PATIO",
+        "door_type": "D9",
+        "opening_type": "D9",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "3'-0\"",
+          "thickness": "1 1/2\""
+        },
+        "door_material": null,
+        "door_finish": "PAINTED COAT",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "-",
+        "frame_finish": "FENCE",
+        "fire_rating": null,
+        "hardware_set": "H-8",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GATE TO BE SELF-CLOSING WITH NO LATCH"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      },
+      {
+        "mark": "119.3",
+        "room_or_location": "PATIO",
+        "door_type": "D9",
+        "opening_type": "D9",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "3'-0\"",
+          "thickness": "1 1/2\""
+        },
+        "door_material": null,
+        "door_finish": "PAINTED COAT",
+        "glazing": null,
+        "frame_type": "N/A",
+        "frame_material": "-",
+        "frame_finish": "FENCE",
+        "fire_rating": null,
+        "hardware_set": "H-8",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "GATE TO BE SELF-CLOSING WITH NO LATCH"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "PR",
+            "desc": "1 1/2 PR BUTTS - NRP BALL BEARING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "NRP BALL BEARING",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040 XP- INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "part": "4040 XP",
+            "mfr": "LCN",
+            "finish": null,
+            "notes": "INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL BAR - KAWNEER CO12 PULL HANDLE",
+            "part": "CO12 PULL HANDLE",
+            "mfr": "KAWNEER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "part": "SERIES 88, 88NL TRIM",
+            "mfr": "VON DUPRIN",
+            "finish": null,
+            "notes": "INCLUDING STRIKE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "EXIT DEVICE PANIC BAR RETAINER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022",
+            "part": "20-022",
+            "mfr": "SCHLAGE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - H.C./FOR TILE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "H.C./FOR TILE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR WEATHERSTRIP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "ELECTRIC DOOR CLOSER - REFER TO ELEC.",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "REFER TO ELEC.",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "PR",
+            "desc": "BUTTS - NRP BALL BEARING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL BAR - KAWNEER CO12 PULL HANDLE",
+            "part": "CO12",
+            "mfr": "KAWNEER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040 XP- INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "part": "4040 XP- INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "part": "SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "mfr": "VON DUPRIN",
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - H.C./FOR TILE",
+            "part": "H.C./FOR TILE",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "PR",
+            "desc": "1 1/2 PR BUTTS - NRP BALL BEARING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "NRP BALL BEARING",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040 XP- INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "part": "4040 XP",
+            "mfr": "LCN",
+            "finish": null,
+            "notes": "INT SIDE W/ 90\u00b0 SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL BAR - KAWNEER CO12 PULL HANDLE",
+            "part": "CO12 PULL HANDLE",
+            "mfr": "KAWNEER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "part": "SERIES 88, 88NL TRIM",
+            "mfr": "VON DUPRIN",
+            "finish": null,
+            "notes": "INCLUDING STRIKE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "EXIT DEVICE PANIC BAR RETAINER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022",
+            "part": "20-022",
+            "mfr": "SCHLAGE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - H.C./FOR TILE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "H.C./FOR TILE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR WEATHERSTRIP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "PR",
+            "desc": "BUTTS - NRP BALL BEARING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL BAR - KAWNEER CO12 PULL HANDLE",
+            "part": "CO12",
+            "mfr": "KAWNEER",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.93
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040 XP- INT SIDE W/ 90\u00b0  SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "part": "4040 XP- INT SIDE W/ 90\u00b0  SWINGS, SPACER PLATE & CUSH SHOE SUPPORT",
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "part": "SERIES 88, 88NL TRIM INCLUDING STRIKE",
+            "mfr": "VON DUPRIN",
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - H.C./FOR TILE",
+            "part": "H.C./FOR TILE",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGE - ROTON/HAGER #780-210HD x 83\" CLEAR ALUMINUM (FULL SURFACE)",
+            "part": "#780-210HD x 83\"",
+            "mfr": "ROTON/HAGER",
+            "finish": "CLEAR ALUMINUM",
+            "notes": "(FULL SURFACE)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SHCUSH x US26D x TBSRT",
+            "part": "4040XP x SHCUSH x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC HARDWARE - VON DUPRIN SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT. x US26D",
+            "part": "SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT. x US26D",
+            "mfr": "VON DUPRIN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "MORTISE CYLINDER - SCHLAGE 20-001 x 1 1/4\" x 626 x 5-PIN x C KEYWAY",
+            "part": "20-001 x 1 1/4\" x 626 x 5-PIN x C KEYWAY",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022 x 626 HORIZONTAL TP",
+            "part": "20-022 x 626 HORIZONTAL TP",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": "HORIZONTAL TP",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - NATIONAL GUARD 425 x 52\"",
+            "part": "425 x 52\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR WEATHERSTRIP - NATIONAL GUARD 160V x 52\" x 84\" TEK(SET)",
+            "part": "160V x 52\" x 84\" TEK(SET)",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "SWEEP - NATIONAL GUARD 200NA x 52\"",
+            "part": "200NA x 52\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "DRIP CAP - NATIONAL GUARD 16A x 56\"",
+            "part": "16A x 56\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 x GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 11,
+            "qty": null,
+            "unit": null,
+            "desc": "EXIT ALARM - DETEX EAX-500 x GRAY x SK1",
+            "part": "EAX-500 x GRAY x SK1",
+            "mfr": "DETEX",
+            "finish": "GRAY",
+            "notes": "SK1",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 12,
+            "qty": null,
+            "unit": null,
+            "desc": "CYLINDER COLLAR - DETEX ECL-1595",
+            "part": "ECL-1595",
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 13,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 32\" x 50\" x B-CS",
+            "part": "8400 x US32D x 32\" x 50\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC HARDWARE - VON DUPRIN SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT. x SE",
+            "part": "SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT. x SE",
+            "mfr": "VON DUPRIN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SHCUSH x US26D x TBSRT",
+            "part": "4040XP x SHCUSH x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC HARDWARE - VON DUPRIN SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT. x US26D",
+            "part": "SERIES 99L-NL x 06 x 996L-NL x 299 x 4FT.",
+            "mfr": "VON DUPRIN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "MORTISE CYLINDER - SCHLAGE 20-001 x 1 1/4\" x 626 x 5-PIN x C KEYWAY",
+            "part": "20-001 x 1 1/4\" x 5-PIN x C KEYWAY",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022 x 626 HORIZONTAL TP",
+            "part": "20-022 x HORIZONTAL TP",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 11,
+            "qty": null,
+            "unit": null,
+            "desc": "EXIT ALARM - DETEX EAX-500 x GRAY x SK1",
+            "part": "EAX-500 x SK1",
+            "mfr": "DETEX",
+            "finish": "GRAY",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 13,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 32\" x 50\" x B-CS",
+            "part": "8400 x 32\" x 50\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES - HAGER BB1191 x 4-1/2\" x 4-1/2\" x US32D x NRP x AMS & 1/2\" WS",
+            "part": "BB1191 x 4-1/2\" x 4-1/2\" x US32D x NRP x AMS & 1/2\" WS",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": "NRP x AMS & 1/2\" WS",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SCUSH x US26D x TBSRT",
+            "part": "4040XP x SCUSH x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "CYLINDRICAL LOCKSET - STOREROOM FUNCTION - SCHLAGE ND80LD x 8RO x 626 KNURLED LEVER TYPE HANDLE",
+            "part": "ND80LD x 8RO x 626",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": "STOREROOM FUNCTION; KNURLED LEVER TYPE HANDLE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "KEY-IN-LEVER CYLINDER - SCHLAGE 23-065 x 262 x 5-PIN x KEYWAY",
+            "part": "23-065 x 262 x 5-PIN x KEYWAY",
+            "mfr": "SCHLAGE",
+            "finish": "262",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - NATIONAL GUARD 425 x 36\" (HANDICAP)",
+            "part": "425 x 36\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": "(HANDICAP)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR WEATHERSTRIP - NATIONAL GUARD 160V x 36\" x 84\" TEK(SET)",
+            "part": "160V x 36\" x 84\" TEK(SET)",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "SWEEP - NATIONAL GUARD 200NA x 36\"",
+            "part": "200NA x 36\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DRIP CAP - NATIONAL GUARD 16A x 40\"",
+            "part": "16A x 40\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 34\" x 34\" x B-CS",
+            "part": "8400 x US32D x 34\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - NATIONAL GUARD 425 x 36\"",
+            "part": "425 x 36\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 11,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 x GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES - HAGER BB1191 x 4-1/2\" x 4-1/2\" x US32D x NRP x AMS & 1/2\" WS",
+            "part": "BB1191 x 4-1/2\" x 4-1/2\" x NRP x AMS & 1/2\" WS",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SCUSH x US26D x TBSRT",
+            "part": "4040XP x SCUSH x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "CYLINDRICAL LOCKSET - STOREROOM FUNCTION - SCHLAGE ND80LD x 8RO x 626 KNURLED LEVER TYPE HANDLE",
+            "part": "ND80LD x 8RO",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": "STOREROOM FUNCTION; KNURLED LEVER TYPE HANDLE",
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "KEY-IN-LEVER CYLINDER - SCHLAGE 23-065 x 262 x 5-PIN x KEYWAY",
+            "part": "23-065 x 5-PIN x KEYWAY",
+            "mfr": "SCHLAGE",
+            "finish": "262",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 34\" x 34\" x B-CS",
+            "part": "8400 x 34\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGE - ROTON/HAGER #780-210HD x 83\" CLEAR ALUMINUM (FULL SURFACE)",
+            "part": "#780-210HD x 83\"",
+            "mfr": "ROTON/HAGER",
+            "finish": "CLEAR ALUMINUM",
+            "notes": "(FULL SURFACE)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x REG x US26D x TBSRT",
+            "part": "4040XP x REG x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH - HAGER 30S (4\" x 16\") US32D",
+            "part": "30S (4\" x 16\") US32D",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL - HAGER 36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "part": "36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x US26D x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "(CONVEX)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 x GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" B-CS",
+            "part": "8400 x US32D x 20\" x 34\" B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DEADLOCK - FALCON D271 x 626 (THUMBTURN x OCCUPANCY INDICATOR)",
+            "part": "D271 x 626",
+            "mfr": "FALCON",
+            "finish": "626",
+            "notes": "(THUMBTURN x OCCUPANCY INDICATOR)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x REG x US26D x TBSRT",
+            "part": "4040XP x REG x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH - HAGER 30S (4\" x 16\") US32D",
+            "part": "30S (4\" x 16\")",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL - HAGER 36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "part": "36N (4\" x 16\") x 5-1/2\" CTC",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "CONVEX",
+            "confidence": 1
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" B-CS",
+            "part": "8400 x 20\" x 34\" B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 1
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DEADLOCK - FALCON D271 x 626 (THUMBTURN x OCCUPANCY INDICATOR)",
+            "part": "D271",
+            "mfr": "FALCON",
+            "finish": "626",
+            "notes": "THUMBTURN x OCCUPANCY INDICATOR",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "6",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGE - ROTON/HAGER #780-210HD x 83\" CLEAR ALUMINUM (FULL SURFACE)",
+            "part": "#780-210HD x 83\"",
+            "mfr": "ROTON/HAGER",
+            "finish": "CLEAR ALUMINUM",
+            "notes": "(FULL SURFACE)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x REG x US26D x TBSRT",
+            "part": "4040XP x REG x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH - HAGER 30S (4\" x 16\") US32D",
+            "part": "30S (4\" x 16\") US32D",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL - HAGER 36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "part": "36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x US26D x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "(CONVEX)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 x GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" x B-CS",
+            "part": "8400 x US32D x 20\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x REG x US26D x TBSRT",
+            "part": "4040XP x REG x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH - HAGER 30S (4\" x 16\") US32D",
+            "part": "30S (4\" x 16\")",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "PULL - HAGER 36N (4\" x 16\") x 5-1/2\" CTC x US32D",
+            "part": "36N (4\" x 16\") x 5-1/2\" CTC",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "CONVEX",
+            "confidence": 1
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" x B-CS",
+            "part": "8400 x 20\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "7",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGE - HAGER BB1191 x 4-1/2\" x 4-1/2\" x US32D x AMS & 1/2 WS",
+            "part": "BB1191 x 4-1/2\" x 4-1/2\" x US32D x AMS & 1/2 WS",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": "AMS & 1/2 WS",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SCUSH x US26D x TBSRT",
+            "part": "4040XP x SCUSH x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 99L-NL-F x 06 x 299F x 3 FT x US26D EXTERIOR KNURLED LEVER TYPE HANDLE",
+            "part": "SERIES 99L-NL-F x 06 x 299F x 3 FT x US26D",
+            "mfr": "VON DUPRIN",
+            "finish": "US26D",
+            "notes": "EXTERIOR KNURLED LEVER TYPE HANDLE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022 x 626 x HORIZONTAL TP",
+            "part": "20-022 x 626 x HORIZONTAL TP",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": "HORIZONTAL TP",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 x GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "SWEEP - NATIONAL GUARD 200NA x 36\"",
+            "part": "200NA x 36\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR WEATHERSTRIP - NATIONAL GUARD 160V x 36\" x 84\" TEK(SET)",
+            "part": "160V x 36\" x 84\" TEK(SET)",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "DRIP CAP - NATIONAL GUARD 16A x 40\"",
+            "part": "16A x 40\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 34\" x 34\" x B-CS",
+            "part": "8400 x US32D x 34\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD - NATIONAL GUARD 425 x 36\"",
+            "part": "425 x 36\"",
+            "mfr": "NATIONAL GUARD",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGE - HAGER BB1191 x 4-1/2\" x 4-1/2\" x US32D x AMS & 1/2 WS",
+            "part": "BB1191 x 4-1/2\" x 4-1/2\" x AMS & 1/2 WS",
+            "mfr": "HAGER",
+            "finish": "US32D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4040XP x SCUSH x US26D x TBSRT",
+            "part": "4040XP x SCUSH x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC RIM EXIT DEVICE - VON DUPRIN SERIES 99L-NL-F x 06 x 299F x 3 FT x US26D EXTERIOR KNURLED LEVER TYPE HANDLE",
+            "part": "SERIES 99L-NL-F x 06 x 299F x 3 FT",
+            "mfr": "VON DUPRIN",
+            "finish": "US26D",
+            "notes": "EXTERIOR KNURLED LEVER TYPE HANDLE",
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "RIM CYLINDER - SCHLAGE 20-022 x 626 x HORIZONTAL TP",
+            "part": "20-022 x HORIZONTAL TP",
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 34\" x 34\" x B-CS",
+            "part": "8400 x 34\" x 34\" x B-CS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "8",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1",
+            "unit": "PAIR",
+            "desc": "HINGES - 1 PAIR SELF CLOSING HINGES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "SELF CLOSING HINGES",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR STOP - GATE STOP - NON LATCHING HARDWARE TO MATCH GATE COLOR AND FINISH",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "GATE STOP - NON LATCHING HARDWARE TO MATCH GATE COLOR AND FINISH",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR STOP - GATE STOP - NON LATCHING HARDWARE TO MATCH GATE COLOR AND FINISH",
+            "part": null,
+            "mfr": null,
+            "finish": "TO MATCH GATE COLOR AND FINISH",
+            "notes": "NON LATCHING HARDWARE",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "9",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES - HARGER BB1279 x 4-1/2\" x 4-1/2\" x US26D x AMS & AWS",
+            "part": "BB1279 x 4-1/2\" x 4-1/2\" x US26D x AMS & AWS",
+            "mfr": "HARGER",
+            "finish": "US26D",
+            "notes": "AMS & AWS",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4041XP x RW/PA x US26D x TBSRT",
+            "part": "4041XP x RW/PA x US26D x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "CYLINDRICAL LOCK - SCHLAGE 626 (PASSAGE) LEVER TYPE HANDLE",
+            "part": null,
+            "mfr": "SCHLAGE",
+            "finish": "626",
+            "notes": "(PASSAGE) LEVER TYPE HANDLE",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x US26D x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "(CONVEX)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "RUBBER MUTES - IVES SR64 GREY",
+            "part": "SR64",
+            "mfr": "IVES",
+            "finish": "GREY",
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" x SIMS (NO DIAMOND PL)",
+            "part": "8400 x US32D x 20\" x 34\" x SIMS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES; (NO DIAMOND PL)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES - HARGER BB1279 x 4-1/2\" x 4-1/2\" x US26D x AMS & AWS",
+            "part": "BB1279 x 4-1/2\" x 4-1/2\" x AMS & AWS",
+            "mfr": "HARGER",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER - LCN 4041XP x RW/PA x US26D x TBSRT",
+            "part": "4041XP x RW/PA x TBSRT",
+            "mfr": "LCN",
+            "finish": "US26D",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "WALL STOP - HAGER 230W x US26D x SMS x TOGGLER (CONVEX)",
+            "part": "230W x SMS x TOGGLER",
+            "mfr": "HAGER",
+            "finish": "US26D",
+            "notes": "CONVEX",
+            "confidence": 1
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "STAINLESS STEEL KICK PLATE - BOTH SIDES - IVES 8400 x US32D x 20\" x 34\" x SIMS (NO DIAMOND PL)",
+            "part": "8400 x 20\" x 34\" x SIMS",
+            "mfr": "IVES",
+            "finish": "US32D",
+            "notes": "BOTH SIDES; NO DIAMOND PL",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "10",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH BAR/PLATES - (FINISH TO MATCH DOOR)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "(FINISH TO MATCH DOOR)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "BUMPERS - RUBBER TIP (FINISH TO MATCH DOOR)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "RUBBER TIP (FINISH TO MATCH DOOR)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "LOCKING DEVICE - CONCEALED DEADBOLTS (TOP & BOTTOM)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "CONCEALED DEADBOLTS (TOP & BOTTOM)",
+            "confidence": 0.95
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "WEATHERTRIPPING - (FELT CONTACT AT CEILING & SIDEWALLS, RUBBER AT FLOOR)",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "(FELT CONTACT AT CEILING & SIDEWALLS, RUBBER AT FLOOR)",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH BAR/PLATES - (FINISH TO MATCH DOOR)",
+            "part": null,
+            "mfr": null,
+            "finish": "FINISH TO MATCH DOOR",
+            "notes": null,
+            "confidence": 1
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "BUMPERS - RUBBER TIP (FINISH TO MATCH DOOR)",
+            "part": null,
+            "mfr": null,
+            "finish": "FINISH TO MATCH DOOR",
+            "notes": "RUBBER TIP",
+            "confidence": 1
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-10",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100.1"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "REVOLVING DOOR; BRONZE ALUMIN",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-2",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100.2",
+          "103",
+          "119.1"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "FACTORY FINISH - BRONZE ALUMIN",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-6",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "105",
+          "106"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "NOTES 2, 4, 5, 7, & 11",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-4",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "107",
+          "118"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "NOTES 3, 4, & 16",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-3",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "110.1"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "216",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "MANUF.",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "110.2",
+          "114",
+          "115"
+        ],
+        "status": "incomplete",
+        "raw_status": "active",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "ELIASON OR EQUAL, NO STOPS",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H-5",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "111"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "H-7",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "117"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "H-8",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "119.2",
+          "119.3"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100.1",
+        "hardware_set": "H-10",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100.2",
+        "hardware_set": "H-2",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "H-2",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "H-6",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "H-6",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "H-4",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110.1",
+        "hardware_set": "H-3",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110.2",
+        "hardware_set": "MANUF.",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110.3",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "111",
+        "hardware_set": "H-5",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "MANUF.",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "MANUF.",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "H-7",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "118",
+        "hardware_set": "H-4",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "119.1",
+        "hardware_set": "H-2",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "119.2",
+        "hardware_set": "H-8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "119.3",
+        "hardware_set": "H-8",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. EXTERIOR DOORS REQUIRED TO BE ACCESSIBLE = 80% OF ALL PUBLIC ENTRANCES\nA. DOOR NO. 100, 103, & 110.1 TO BE ACCESSIBLE 32\" MIN CLEARANCE (SEE CODE PLANS)\nB. THRESHOLD - MAX 1/2\" AND MAX SLOPE OF 1:2\nC. DOOR HARDWARE AT MAX 48\" HEIGHT",
+        "2. APPROVED SIGNS, BASED ON THE APO SIGN BOOK SHALL BE UTILIZED. THIS SIGN BOOK WILL BE PROVIDED TO THE GC.",
+        "3. ALL EXTERIOR DOOR FRAMES TO BE CAULKED AT ENTIRE LENGHT OF HEAD AND JAMB - INTERIOR & EXTERIOR SIDES.",
+        "4. EXTERIOR H.M. TYPICAL : DOOR FRAME - 14 GA DOOR - 16GA INSULATED\nINTERIOR H.M. TYPICAL : DOOR FRAME - 16 GA DOOR - 18GA",
+        "5. OBSCURE GLASS, FROSTED FINISH TO WASHROOM INTERIOR.",
+        "6. PROVIDE SIGNAGE - \"SPRINKLER ROOM\"",
+        "7. PROVIDE SIGNAGE - \"MEN'S\" OR \"WOMEN'S\"",
+        "8. PROVIDE SIGNAGE - \"ELECTRICAL ROOM\"",
+        "9. PROVIDE SIGNAGE - \"MECHANICAL ROOM\"",
+        "10. PROVIDE PANIC HARDWARE ON INTERIOR SIDE OF DOOR.",
+        "11. PROVIDE PROMINENT TOILET ROOM IDENTIFICATION SIGNAGE AND THE INTERNATIONAL SYMBOL FOR ACCESSIBLITY, MOUNTING HEIGHT TO BE 60\" A.F.F. TO THE CENTERLINE OF THE SIGN AND 2\" OFF THE DOOR FRAME (REFER TO SHEET T3.0)",
+        "12. PROVIDE TACTILE \"EXIT\" SIGNAGE ADJACENT TO EACH EXIT PASSAGEWAY AND EXIT DISCHARGE DOOR.",
+        "13. ALL DOORS SUPPLIED AND INSTALLED BY GC.",
+        "14. STANLEY RUSH 500 SERIES REVOLVING DOOR, FOUR WING, EXPOSED LOWER COLLAPSING MECH., OVERHEAD MANUAL SPEED CONTROL, DEADBOLT SLIDER, 3\" HEAD ENCLOSURE TO MATCH DOOR.\nPROVIDE EXTENDED CANOPY TO INFILL REMAINDER SPACE WITHIN STOREFRONT SYSTEM.",
+        "15. TORMAX TX9200SM AUTOMATIC SERVICE SLIDING DOOR",
+        "16. PAINT EXTERIOR DOORS - PT.07 - SW9183 - DARK CLOVE",
+        "17. OPENING PROTECTIVES IN FIRE-RESISTANCE RATED ASSEMBLIES SHALL BE INSPECTED AND MAINTAINED IN ACCORDANCE WITH NFPA 80 AND NFPA 105. OPENINGS IN SMOKE PARTITIONS SHALL BE INSPECTED AND MAINTAINED IN ACCORDANCE WITH NFPA 105. FIRE DOORS AND SMOKE AND DRAFT CONTROL DOOR SHALL NOT BE BLOCKED, OBSTRUCTED, OR OTHERWISE MADE INOPERABLE. FUSIBLE LINKS SHALL BE REPLACED PROMPTLY WHENEVER FUSED OR DAMAGED. OPENING PROTECTTIVES AND SMOKE AND DRAFT CONTROL DOORS SHALL NOT BE MODIFIED.\n\"A COMPREHENSIVE REPORT FROM CERTIFIED THIRD PARTY CONTRACTOR IS REQUIRED PRIOR TO A FINAL FIRE INSPECTION. THIS REPORT SHALL STATE THAT ALL AFOREMENTIONED PROTECTIVE OPENINGS COMPLY WITH THE APPROPRIATE STANDARD.\"",
+        "NOTE: T.G. INDICATES TEMPERED GLASS PER IBC 2406"
+      ],
+      "hardware_preamble": [
+        "1. EXTERIOR DOORS REQUIRED TO BE ACCESSIBLE = 80% OF ALL PUBLIC ENTRANCES\nA. DOOR NO. 100, 103, & 110.1 TO BE ACCESSIBLE 32\" MIN CLEARANCE (SEE CODE PLANS)\nB. THRESHOLD - MAX 1/2\" AND MAX SLOPE OF 1:2\nC. DOOR HARDWARE AT MAX 48\" HEIGHT",
+        "2. APPROVED SIGNS, BASED ON THE APO SIGN BOOK SHALL BE UTILIZED. THIS SIGN BOOK WILL BE PROVIDED TO THE GC.",
+        "3. ALL EXTERIOR DOOR FRAMES TO BE CAULKED AT ENTIRE LENGHT OF HEAD AND JAMB - INTERIOR & EXTERIOR SIDES.",
+        "4. EXTERIOR H.M. TYPICAL : DOOR FRAME - 14 GA DOOR - 16GA INSULATED\nINTERIOR H.M. TYPICAL : DOOR FRAME - 16 GA DOOR - 18GA",
+        "5. OBSCURE GLASS, FROSTED FINISH TO WASHROOM INTERIOR.",
+        "6. PROVIDE SIGNAGE - \"SPRINKLER ROOM\"",
+        "7. PROVIDE SIGNAGE - \"MEN'S\" OR \"WOMEN'S\"",
+        "8. PROVIDE SIGNAGE - \"ELECTRICAL ROOM\"",
+        "9. PROVIDE SIGNAGE - \"MECHANICAL ROOM\"",
+        "10. PROVIDE PANIC HARDWARE ON INTERIOR SIDE OF DOOR.",
+        "11. PROVIDE PROMINENT TOILET ROOM IDENTIFICATION SIGNAGE AND THE INTERNATIONAL SYMBOL FOR ACCESSIBLITY, MOUNTING HEIGHT TO BE 60\" A.F.F. TO THE CENTERLINE OF THE SIGN AND 2\" OFF THE DOOR FRAME (REFER TO SHEET T3.0)",
+        "12. PROVIDE TACTILE \"EXIT\" SIGNAGE ADJACENT TO EACH EXIT PASSAGEWAY AND EXIT DISCHARGE DOOR.",
+        "13. ALL DOORS SUPPLIED AND INSTALLED BY GC.",
+        "14. STANLEY RUSH 500 SERIES REVOLVING DOOR, FOUR WING, EXPOSED LOWER COLLAPSING MECH., OVERHEAD MANUAL SPEED CONTROL, DEADBOLT SLIDER, 3\" HEAD ENCLOSURE TO MATCH DOOR.\nPROVIDE EXTENDED CANOPY TO INFILL REMAINDER SPACE WITHIN STOREFRONT SYSTEM.",
+        "15. TORMAX TX9200SM AUTOMATIC SERVICE SLIDING DOOR",
+        "16. PAINT EXTERIOR DOORS - PT.07 - SW9183 - DARK CLOVE",
+        "17. OPENING PROTECTIVES IN FIRE-RESISTANCE RATED ASSEMBLIES SHALL BE INSPECTED AND MAINTAINED IN ACCORDANCE WITH NFPA 80 AND NFPA 105. OPENINGS IN SMOKE PARTITIONS SHALL BE INSPECTED AND MAINTAINED IN ACCORDANCE WITH NFPA 105. FIRE DOORS AND SMOKE AND DRAFT CONTROL DOOR SHALL NOT BE BLOCKED, OBSTRUCTED, OR OTHERWISE MADE INOPERABLE. FUSIBLE LINKS SHALL BE REPLACED PROMPTLY WHENEVER FUSED OR DAMAGED. OPENING PROTECTTIVES AND SMOKE AND DRAFT CONTROL DOORS SHALL NOT BE MODIFIED.\n\"A COMPREHENSIVE REPORT FROM CERTIFIED THIRD PARTY CONTRACTOR IS REQUIRED PRIOR TO A FINAL FIRE INSPECTION. THIS REPORT SHALL STATE THAT ALL AFOREMENTIONED PROTECTIVE OPENINGS COMPLY WITH THE APPROPRIATE STANDARD.\""
+      ],
+      "keying_notes": [
+        "SET 1\n\u2022 RIM CYLINDER - SCHLAGE 20-022",
+        "SET 3\n\u2022 MORTISE CYLINDER - SCHLAGE 20-001 x 1 1/4\" x 626 x 5-PIN x C KEYWAY",
+        "SET 3\n\u2022 RIM CYLINDER - SCHLAGE 20-022 x 626 HORIZONTAL TP",
+        "SET 3\n\u2022 CYLINDER COLLAR - DETEX ECL-1595",
+        "SET 4\n\u2022 KEY-IN-LEVER CYLINDER - SCHLAGE 23-065 x 262 x 5-PIN x KEYWAY",
+        "SET 7\n\u2022 RIM CYLINDER - SCHLAGE 20-022 x 626 x HORIZONTAL TP",
+        "SET 2\n\u2022 RIM CYLINDER - SCHLAGE 20-022"
+      ],
+      "legend": {
+        "T.G.": "TEMPERED GLASS PER IBC 2406",
+        "D1": "STOREFRONT ENTRY DOOR",
+        "D2": "STOREFRONT DOUBLE ENTRY DOOR",
+        "D3": "WOOD STILE & RAIL W/ GLASS INTERIOR",
+        "D5": "HOLLOW METAL DOOR INSULATED - EXTERIOR",
+        "D6": "HOLLOW METAL DOOR INTERIOR",
+        "D7": "ELIASON DOUBLE SWING DOOR",
+        "D8": "HOLLOW METAL DOOR INTERIOR",
+        "D9": "GATE - EXTERIOR",
+        "D10": "SLIDING DOOR EXTERIOR",
+        "D11": "REVOLVING DOOR EXTERIOR",
+        "F1": "HOLLOW METAL - EXTERIOR",
+        "F2": "HOLLOW METAL - INTERIOR",
+        "F3": "KNOCKDOWN METAL FRAME - @ IMPACT DOORS",
+        "F4": "ALUMINUM STOREFRONT - SLIDING DOOR EXTERIOR"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "1 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "110.3"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "high",
+        "category": "Hardware set definitions",
+        "issue": "9 hardware set(s) referenced by 16 door(s) have no extracted line items.",
+        "affected_openings": [
+          "100.1",
+          "100.2",
+          "103",
+          "105",
+          "106",
+          "107",
+          "110.1",
+          "110.2",
+          "111",
+          "114",
+          "115",
+          "117",
+          "118",
+          "119.1",
+          "119.2",
+          "119.3"
+        ],
+        "recommendation": "Locate full hardware set definitions; carry as allowance until confirmed.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 110.3. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "110.3"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "high",
+        "category": "Hardware set definitions",
+        "question": "Provide the complete line-item list for hardware set(s): H-10, H-2, H-3, H-4, H-5, H-6, H-7, H-8, MANUF..",
+        "affected_openings": [
+          "100.1",
+          "100.2",
+          "103",
+          "105",
+          "106",
+          "107",
+          "110.1",
+          "110.2",
+          "111",
+          "114",
+          "115",
+          "117",
+          "118",
+          "119.1",
+          "119.2",
+          "119.3"
+        ],
+        "recommendation": "Carry as allowance until confirmed.",
+        "status": "Open",
+        "reason": "Carry as allowance until confirmed.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (7 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "17 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "19 hardware set(s) identified; 10 have a complete extracted item list.",
+      "18 general note(s) captured from the door-schedule sheet.",
+      "17 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 111 references hardware set H-5 but the set was not extracted.",
+        "Door 117 references hardware set H-7 but the set was not extracted.",
+        "Door 119.2 references hardware set H-8 but the set was not extracted.",
+        "Door 100.1: hardware set H-10 has zero items.",
+        "Door 100.2: hardware set H-2 has zero items.",
+        "Door 103: hardware set H-2 has zero items.",
+        "Door 105: hardware set H-6 has zero items.",
+        "Door 106: hardware set H-6 has zero items.",
+        "Door 107: hardware set H-4 has zero items.",
+        "Door 110.1: hardware set H-3 has zero items.",
+        "Door 110.2: hardware set MANUF. has zero items.",
+        "Door 110.3 has no hardware set assigned.",
+        "Door 111: hardware set H-5 has zero items.",
+        "Door 114: hardware set MANUF. has zero items.",
+        "Door 115: hardware set MANUF. has zero items.",
+        "Door 117: hardware set H-7 has zero items.",
+        "Door 118: hardware set H-4 has zero items.",
+        "Door 119.1: hardware set H-2 has zero items.",
+        "Door 119.2: hardware set H-8 has zero items.",
+        "Door 119.3: hardware set H-8 has zero items."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 158,
+        "truncated": false,
+        "output_count": 17
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 172,
+        "truncated": false,
+        "output_count": 19
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 191,
+        "output_count": 45
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 17
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 521,
+    "mapping_qa_issues": [
+      {
+        "kind": "missing_set",
+        "set": "H-5",
+        "mark": "111",
+        "message": "Door 111 references hardware set H-5 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "H-7",
+        "mark": "117",
+        "message": "Door 117 references hardware set H-7 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "H-8",
+        "mark": "119.2",
+        "message": "Door 119.2 references hardware set H-8 but the set was not extracted."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-10",
+        "mark": "100.1",
+        "message": "Door 100.1: hardware set H-10 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-2",
+        "mark": "100.2",
+        "message": "Door 100.2: hardware set H-2 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-2",
+        "mark": "103",
+        "message": "Door 103: hardware set H-2 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-6",
+        "mark": "105",
+        "message": "Door 105: hardware set H-6 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-6",
+        "mark": "106",
+        "message": "Door 106: hardware set H-6 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-4",
+        "mark": "107",
+        "message": "Door 107: hardware set H-4 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-3",
+        "mark": "110.1",
+        "message": "Door 110.1: hardware set H-3 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "MANUF.",
+        "mark": "110.2",
+        "message": "Door 110.2: hardware set MANUF. has zero items."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "110.3",
+        "message": "Door 110.3 has no hardware set assigned."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-5",
+        "mark": "111",
+        "message": "Door 111: hardware set H-5 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "MANUF.",
+        "mark": "114",
+        "message": "Door 114: hardware set MANUF. has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "MANUF.",
+        "mark": "115",
+        "message": "Door 115: hardware set MANUF. has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-7",
+        "mark": "117",
+        "message": "Door 117: hardware set H-7 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-4",
+        "mark": "118",
+        "message": "Door 118: hardware set H-4 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-2",
+        "mark": "119.1",
+        "message": "Door 119.1: hardware set H-2 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-8",
+        "mark": "119.2",
+        "message": "Door 119.2: hardware set H-8 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "H-8",
+        "mark": "119.3",
+        "message": "Door 119.3: hardware set H-8 has zero items."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100.1"
+        },
+        {
+          "mark": "100.2"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "110.1"
+        },
+        {
+          "mark": "110.2"
+        },
+        {
+          "mark": "110.3"
+        },
+        {
+          "mark": "111"
+        },
+        {
+          "mark": "114"
+        },
+        {
+          "mark": "115"
+        },
+        {
+          "mark": "117"
+        },
+        {
+          "mark": "118"
+        },
+        {
+          "mark": "119.1"
+        },
+        {
+          "mark": "119.2"
+        },
+        {
+          "mark": "119.3"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 15
+        },
+        {
+          "id": "2",
+          "item_count": 14
+        },
+        {
+          "id": "3",
+          "item_count": 20
+        },
+        {
+          "id": "4",
+          "item_count": 16
+        },
+        {
+          "id": "5",
+          "item_count": 14
+        },
+        {
+          "id": "6",
+          "item_count": 12
+        },
+        {
+          "id": "7",
+          "item_count": 15
+        },
+        {
+          "id": "8",
+          "item_count": 3
+        },
+        {
+          "id": "9",
+          "item_count": 10
+        },
+        {
+          "id": "10",
+          "item_count": 6
+        },
+        {
+          "id": "H-10",
+          "item_count": 0
+        },
+        {
+          "id": "H-2",
+          "item_count": 0
+        },
+        {
+          "id": "H-6",
+          "item_count": 0
+        },
+        {
+          "id": "H-4",
+          "item_count": 0
+        },
+        {
+          "id": "H-3",
+          "item_count": 0
+        },
+        {
+          "id": "MANUF.",
+          "item_count": 0
+        },
+        {
+          "id": "H-5",
+          "item_count": 0
+        },
+        {
+          "id": "H-7",
+          "item_count": 0
+        },
+        {
+          "id": "H-8",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (393 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (393 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T20:12:05Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:12:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 158s.",
+      "message": "Door schedule review - completed in 158s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:14:43Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:14:43Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 172s.",
+      "message": "Hardware set review - completed in 172s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:17:36Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:17:37Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:17:37Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 9s.",
+      "message": "Completeness check - completed in 9s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:17:46Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:17:46Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 38s.",
+      "message": "Completeness check - completed in 38s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:24Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:24Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 16s.",
+      "message": "Completeness check - completed in 16s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:40Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:40Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 15s.",
+      "message": "Completeness check - completed in 15s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:54Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:18:54Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 25s.",
+      "message": "Completeness check - completed in 25s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:19:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 9 set(s) and 9 item row(s).",
+      "message": "Completeness check recovered 9 set(s) and 9 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:19:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 5 hardware item row(s).",
+      "message": "Completeness check added 5 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T20:19:19Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Text completeness check - processing document data.",
+      "message": "Text completeness check - processing document data.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:19:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check - completed in 88s.",
+      "message": "Text completeness check - completed in 88s.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:20:47Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check recovered 10 set(s) and 80 item row(s).",
+      "message": "Text completeness check recovered 10 set(s) and 80 item row(s).",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T20:20:47Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T20:20:47Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 17 doors - 19 sets - 125 items - 2 risks - 2 RFIs - 521s total.",
+      "message": "Secure analysis done - 17 doors - 19 sets - 125 items - 2 risks - 2 RFIs - 521s total.",
+      "stage": "done",
+      "ts": "2026-05-27T20:20:47Z"
+    }
+  ]
+}

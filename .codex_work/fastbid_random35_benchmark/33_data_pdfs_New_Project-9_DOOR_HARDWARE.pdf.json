@@ -1,0 +1,1686 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "Keating Toyota Service Shop Expansion",
+      "project_number": null,
+      "architect": "LOMA Architecture",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 8,
+      "total_hardware_sets_referenced": 6,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 8,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 8 opening(s) and 6 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100",
+        "room_or_location": null,
+        "door_type": "RU",
+        "opening_type": "RU",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ALL HARDWARE BY OVERHEAD DOOR MFR\n- GC TO COORDINATE REQUIREMENT WITH OVERHEAD DOOR MFR."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "19, 21",
+        "source_crop_id": null,
+        "confidence": 0.88
+      },
+      {
+        "mark": "100A",
+        "room_or_location": null,
+        "door_type": "SGL",
+        "opening_type": "SGL",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "715",
+        "closer": "SURFACE CLOSER SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [
+          "RAIN DRIP 142A DW + 4\" (OMIT @ COVERED AREAS)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 21,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "100B",
+        "room_or_location": null,
+        "door_type": "SGL",
+        "opening_type": "SGL",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "205",
+        "closer": "SURFACE CLOSER SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "19, 21",
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "100C",
+        "room_or_location": null,
+        "door_type": "PR",
+        "opening_type": "PR",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "214",
+        "closer": "SURFACE CLOSER SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "20, 21",
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "100D",
+        "room_or_location": null,
+        "door_type": "SGL",
+        "opening_type": "SGL",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "715",
+        "closer": "SURFACE CLOSER SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [
+          "RAIN DRIP 142A DW + 4\" (OMIT @ COVERED AREAS)"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 21,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "100E",
+        "room_or_location": null,
+        "door_type": "RU",
+        "opening_type": "RU",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "ALL HARDWARE BY OVERHEAD DOOR MFR\n- GC TO COORDINATE REQUIREMENT WITH OVERHEAD DOOR MFR."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "19, 21",
+        "source_crop_id": null,
+        "confidence": 0.88
+      },
+      {
+        "mark": "100F",
+        "room_or_location": null,
+        "door_type": "SGL",
+        "opening_type": "SGL",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "507",
+        "closer": "SURFACE CLOSER SC81A RW/PA X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "20, 21",
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "100G",
+        "room_or_location": null,
+        "door_type": "PR",
+        "opening_type": "PR",
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "510",
+        "closer": "SURFACE CLOSER SC81A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": "20, 21",
+        "source_crop_id": null,
+        "confidence": 0.9
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "001",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100",
+          "100E"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "ALL HARDWARE BY OVERHEAD DOOR MFR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH RU DOOR(S) TO HAVE: - GC TO COORDINATE REQUIREMENT WITH OVERHEAD DOOR MFR.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "205",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100B"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "5BB1HW 4.5 X 4.5 NRP",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STOREROOM LOCK",
+            "part": "T581H7 DAN",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SFIC CORE",
+            "part": "C607",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SURFACE CLOSER",
+            "part": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+            "mfr": "FAL",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW B-CS",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH SGL DOOR(S) TO HAVE:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "214",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100C"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 6,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "5BB1HW 4.5 X 4.5 NRP",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "MANUAL FLUSH BOLT",
+            "part": "FB458 (1 EA TOP/BOTTOM) X EXT AS REQ",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DUST PROOF STRIKE",
+            "part": "DP1",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STOREROOM LOCK",
+            "part": "T581H7 DAN",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SFIC CORE",
+            "part": "C607",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SURFACE CLOSER",
+            "part": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+            "mfr": "FAL",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 1\" LDW B-CS",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "FLOOR STOP",
+            "part": "FS18L",
+            "mfr": "IVE",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH PR DOOR(S) TO HAVE:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "507",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100F"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "5BB1 4.5 X 4.5",
+            "mfr": "IVE",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLASSROOM LOCK",
+            "part": "T561H7 DAN",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DUST PROOF STRIKE",
+            "part": "DP2",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "OH STOP",
+            "part": "900S SERIES X SIZE & MOUNTING AS REQ",
+            "mfr": "GLY",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SURFACE CLOSER",
+            "part": "SC81A RW/PA X MTG PLT/BRKT/SPCR AS REQ",
+            "mfr": "FAL",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW B-CS",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING SET",
+            "part": "488S PSA H & J",
+            "mfr": "ZER",
+            "finish": "BK",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH SGL DOOR(S) TO HAVE:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "510",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100G"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 6,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "5BB1HW 4.5 X 4.5",
+            "mfr": "IVE",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "MANUAL FLUSH BOLT",
+            "part": "FB458 (1 EA TOP/BOTTOM) X EXT AS REQ",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DUST PROOF STRIKE",
+            "part": "DP2",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLASSROOM LOCK",
+            "part": "T561H7 DAN",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SFIC CORE",
+            "part": "C607",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SURFACE CLOSER",
+            "part": "SC81A SS X MTG PLT/BRKT/SPCR AS REQ",
+            "mfr": "FAL",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 7,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 1\" LDW B-CS",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 8,
+            "qty": 2,
+            "unit": "EA",
+            "desc": "FLOOR/WALL STOP",
+            "part": "FS436/WS406CCV AS REQ",
+            "mfr": "IVE",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH PR DOOR(S) TO HAVE:",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "715",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100A",
+          "100D"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": "5BB1HW 4.5 X 4.5 NRP",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PANIC HARDWARE",
+            "part": "25-R-L-NL-DANE",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "MORTISE CYLINDER",
+            "part": "C987 W/CONST. CORE",
+            "mfr": "FAL",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SFIC CORE",
+            "part": "C607",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "SURFACE CLOSER",
+            "part": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+            "mfr": "FAL",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW B-CS",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "RAIN DRIP",
+            "part": "142A DW + 4\"",
+            "mfr": "ZER",
+            "finish": "AA",
+            "notes": "(OMIT @ COVERED AREAS)",
+            "confidence": 0.99
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "GASKETING SET",
+            "part": "488S PSA H & J",
+            "mfr": "ZER",
+            "finish": "BK",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR SWEEP",
+            "part": "39A",
+            "mfr": "ZER",
+            "finish": "A",
+            "notes": null,
+            "confidence": 0.99
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "EA",
+            "desc": "THRESHOLD",
+            "part": "65A",
+            "mfr": "ZER",
+            "finish": "A",
+            "notes": null,
+            "confidence": 0.99
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EACH SGL DOOR(S) TO HAVE:",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100",
+        "hardware_set": "001",
+        "item_no": 1,
+        "qty": 1,
+        "description": "ALL HARDWARE BY OVERHEAD DOOR MFR",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "5BB1HW 4.5 X 4.5 NRP",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PANIC HARDWARE",
+        "catalog_number": "25-R-L-NL-DANE",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER",
+        "catalog_number": "C987 W/CONST. CORE",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 4,
+        "qty": 1,
+        "description": "SFIC CORE",
+        "catalog_number": "C607",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 5,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 7,
+        "qty": 1,
+        "description": "RAIN DRIP",
+        "catalog_number": "142A DW + 4\"",
+        "manufacturer": "ZER",
+        "finish": "AA",
+        "notes": "(OMIT @ COVERED AREAS)",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 8,
+        "qty": 1,
+        "description": "GASKETING SET",
+        "catalog_number": "488S PSA H & J",
+        "manufacturer": "ZER",
+        "finish": "BK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 9,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": "39A",
+        "manufacturer": "ZER",
+        "finish": "A",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "715",
+        "item_no": 10,
+        "qty": 1,
+        "description": "THRESHOLD",
+        "catalog_number": "65A",
+        "manufacturer": "ZER",
+        "finish": "A",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "205",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "5BB1HW 4.5 X 4.5 NRP",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "205",
+        "item_no": 2,
+        "qty": 1,
+        "description": "STOREROOM LOCK",
+        "catalog_number": "T581H7 DAN",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "205",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SFIC CORE",
+        "catalog_number": "C607",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "205",
+        "item_no": 4,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "205",
+        "item_no": 5,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 1,
+        "qty": 6,
+        "description": "HINGE",
+        "catalog_number": "5BB1HW 4.5 X 4.5 NRP",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 2,
+        "qty": 2,
+        "description": "MANUAL FLUSH BOLT",
+        "catalog_number": "FB458 (1 EA TOP/BOTTOM) X EXT AS REQ",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 3,
+        "qty": 1,
+        "description": "DUST PROOF STRIKE",
+        "catalog_number": "DP1",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 4,
+        "qty": 1,
+        "description": "STOREROOM LOCK",
+        "catalog_number": "T581H7 DAN",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 5,
+        "qty": 1,
+        "description": "SFIC CORE",
+        "catalog_number": "C607",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 1\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "214",
+        "item_no": 8,
+        "qty": 1,
+        "description": "FLOOR STOP",
+        "catalog_number": "FS18L",
+        "manufacturer": "IVE",
+        "finish": "BLK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "5BB1HW 4.5 X 4.5 NRP",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PANIC HARDWARE",
+        "catalog_number": "25-R-L-NL-DANE",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 3,
+        "qty": 1,
+        "description": "MORTISE CYLINDER",
+        "catalog_number": "C987 W/CONST. CORE",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 4,
+        "qty": 1,
+        "description": "SFIC CORE",
+        "catalog_number": "C607",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 5,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC71A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 7,
+        "qty": 1,
+        "description": "RAIN DRIP",
+        "catalog_number": "142A DW + 4\"",
+        "manufacturer": "ZER",
+        "finish": "AA",
+        "notes": "(OMIT @ COVERED AREAS)",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 8,
+        "qty": 1,
+        "description": "GASKETING SET",
+        "catalog_number": "488S PSA H & J",
+        "manufacturer": "ZER",
+        "finish": "BK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 9,
+        "qty": 1,
+        "description": "DOOR SWEEP",
+        "catalog_number": "39A",
+        "manufacturer": "ZER",
+        "finish": "A",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "715",
+        "item_no": 10,
+        "qty": 1,
+        "description": "THRESHOLD",
+        "catalog_number": "65A",
+        "manufacturer": "ZER",
+        "finish": "A",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100E",
+        "hardware_set": "001",
+        "item_no": 1,
+        "qty": 1,
+        "description": "ALL HARDWARE BY OVERHEAD DOOR MFR",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "5BB1 4.5 X 4.5",
+        "manufacturer": "IVE",
+        "finish": "652",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 2,
+        "qty": 1,
+        "description": "CLASSROOM LOCK",
+        "catalog_number": "T561H7 DAN",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 3,
+        "qty": 1,
+        "description": "DUST PROOF STRIKE",
+        "catalog_number": "DP2",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 4,
+        "qty": 1,
+        "description": "OH STOP",
+        "catalog_number": "900S SERIES X SIZE & MOUNTING AS REQ",
+        "manufacturer": "GLY",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 5,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC81A RW/PA X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 6,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100F",
+        "hardware_set": "507",
+        "item_no": 7,
+        "qty": 1,
+        "description": "GASKETING SET",
+        "catalog_number": "488S PSA H & J",
+        "manufacturer": "ZER",
+        "finish": "BK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 1,
+        "qty": 6,
+        "description": "HINGE",
+        "catalog_number": "5BB1HW 4.5 X 4.5",
+        "manufacturer": "IVE",
+        "finish": "652",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 2,
+        "qty": 2,
+        "description": "MANUAL FLUSH BOLT",
+        "catalog_number": "FB458 (1 EA TOP/BOTTOM) X EXT AS REQ",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 3,
+        "qty": 1,
+        "description": "DUST PROOF STRIKE",
+        "catalog_number": "DP2",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 4,
+        "qty": 1,
+        "description": "CLASSROOM LOCK",
+        "catalog_number": "T561H7 DAN",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 5,
+        "qty": 1,
+        "description": "SFIC CORE",
+        "catalog_number": "C607",
+        "manufacturer": "FAL",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "SC81A SS X MTG PLT/BRKT/SPCR AS REQ",
+        "manufacturer": "FAL",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 7,
+        "qty": 2,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 1\" LDW B-CS",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100G",
+        "hardware_set": "510",
+        "item_no": 8,
+        "qty": 2,
+        "description": "FLOOR/WALL STOP",
+        "catalog_number": "FS436/WS406CCV AS REQ",
+        "manufacturer": "IVE",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "A. Section includes:\n1. Mechanical door hardware",
+        "B. Section excludes:\n1. Windows\n2. Cabinets (casework), including locks in cabinets\n3. Signage\n4. Toilet accessories\n5. Overhead doors",
+        "1. Division 01 Section ''Alternates'' for alternates affecting this section.",
+        "A. FINISH: As Scheduled.",
+        "A. The intent of the hardware specification is to specify the hardware for interior and exterior doors, and to establish a type, continuity, and standard of quality. However, it is the door hardware supplier's responsibility to thoroughly review existing conditions, schedules, specifications, drawings, and other Contract Documents to verify the suitability of the hardware specified.",
+        "B. Discrepancies, conflicting hardware, and missing items are to be brought to the attention of the architect with corrections made prior to the bidding process. Omitted items not included in a hardware set should be scheduled with the appropriate additional hardware required for proper application.",
+        "C. Hardware items are referenced in the following hardware schedule. Refer to the above specifications for special features, options, cylinders/keying, and other requirements.",
+        "GC TO COORDINATE REQUIREMENT WITH OVERHEAD DOOR MFR."
+      ],
+      "hardware_preamble": [
+        "3.05 DOOR HARDWARE SCHEDULE",
+        "A. The intent of the hardware specification is to specify the hardware for interior and exterior doors, and to establish a type, continuity, and standard of quality. However, it is the door hardware supplier's responsibility to thoroughly review existing conditions, schedules, specifications, drawings, and other Contract Documents to verify the suitability of the hardware specified.",
+        "B. Discrepancies, conflicting hardware, and missing items are to be brought to the attention of the architect with corrections made prior to the bidding process. Omitted items not included in a hardware set should be scheduled with the appropriate additional hardware required for proper application.",
+        "C. Hardware items are referenced in the following hardware schedule. Refer to the above specifications for special features, options, cylinders/keying, and other requirements.",
+        "D. Hardware Sets:",
+        "131570 OPT0421755-V1"
+      ],
+      "keying_notes": [
+        "Key Schedule:\na. After Keying Conference, provide keying schedule that includes levels of keying, explanations of key system's function, key symbols used, and door numbers controlled.\nb. Use ANSI/BHMA A156.28 ''Recommended Practices for Keying Systems'' as guideline for nomenclature, definitions, and approach for selecting optimal keying system.\nc. Provide 3 copies of keying schedule for review prepared and detailed in accordance with referenced DHI publication. Include schematic keying diagram and index each key to unique door designations.\nd. Index keying schedule by door number, keyset, hardware heading number, cross keying instructions, and special key stamping instructions.\ne. Provide one complete bitting list of key cuts and one key system schematic illustrating system usage and expansion. Forward bitting list, key cuts and key system schematic directly to Owner, by means as directed by Owner.\nf. Prepare key schedule by or under supervision of supplier, detailing Owner's final keying instructions for locks.",
+        "Keying Conference\na. Incorporate keying conference decisions into final keying schedule after reviewing door hardware keying system including:\n1) Function of building, flow of traffic, purpose of each area, degree of security required, and plans for future expansion.\n2) Preliminary key system schematic diagram.\n3) Requirements for key control system.\n4) Address for delivery of keys.",
+        "Provide cylinders/cores compliant with ANSI/BHMA A156.5; latest revision; cylinder face finished to match lockset; manufacturer\u2019s series as indicated. Refer to \u201cKEYING\u201d article, herein.",
+        "Provide cylinders in the below-listed configuration(s), distributed throughout the Project as indicated.\na. Conventional Open: cylinder with small format interchangeable core (SFIC) core with open keyway",
+        "Scheduled System:\n1. New factory registered system:\na. Provide a factory registered keying system, complying with guidelines in ANSI/BHMA A156.28, incorporating decisions made at keying conference.",
+        "Construction Keying:\na. Replaceable Construction Cores.\n1) Provide temporary construction cores replaceable by permanent cores, furnished in accordance with the following requirements.\na) 3 construction control keys\nb) 12 construction change (day) keys.\n2) Owner or Owner\u2019s Representative will replace temporary construction cores with permanent cores.",
+        "Permanent Keying:\na. Provide permanent cylinders/cores keyed by the manufacturer according to the following key system.\n1) Master Keying system as directed by the Owner.\nb. Forward bitting list and keys separately from cylinders, by means as directed by Owner. Failure to comply with forwarding requirements will be cause for replacement of cylinders/cores involved at no additional cost to Owner.\nc. Provide keys with the following features:\n1) Material: Nickel silver; minimum thickness of .107-inch (2.3mm)\n2) Patent Protection: Keys and blanks protected by one or more utility patent(s).\n3) Geographically Exclusive: Where High Security or Security cylinders/cores are indicated, provide nationwide, geographically exclusive key system complying with the following restrictions.",
+        "Identification:\n1) Mark permanent cylinders/cores and keys with applicable blind code for identification. Do not provide blind code marks with actual key cuts.\n2) Identification stamping provisions must be approved by the Architect and Owner.\n3) Stamp cylinders/cores and keys with Owner\u2019s unique key system facility code as established by the manufacturer; key symbol and embossed or stamped with \u201cDO NOT DUPLICATE\u201d along with the \u201cPATENTED\u201d or patent number to enforce the patent protection.\n4) Failure to comply with stamping requirements will be cause for replacement of keys involved at no additional cost to Owner.\n5) Forward permanent cylinders/cores to Owner, separately from keys, by means as directed by Owner.",
+        "Quantity: Furnish in the following quantities.\n1) Change (Day) Keys: 3 per cylinder/core.\n2) Permanent Control Keys: 3.\n3) Master Keys: 6.",
+        "Provide key control system, including envelopes, labels, tags with self-locking key clips, receipt forms, 3-way visible card index, temporary markers, permanent markers, and standard metal cabinet, all as recommended by system manufacturer, with capacity for 150% of number of locks required for Project.\na. Provide complete cross index system set up by hardware supplier, and place keys on markers and hooks in cabinet as determined by final key schedule.\nb. Provide hinged-panel type cabinet for wall mounting.",
+        "Lock Cylinders:\n1. Install construction cores to secure building and areas during construction period.\n2. Replace construction cores with permanent cores as indicated in keying section.\n3. Furnish permanent cores to Owner for installation.",
+        "Key Control System: Tag keys and place them on markers and hooks in key control system cabinet, as determined by final keying schedule.",
+        "4. Key Schedule: a. After Keying Conference, provide keying schedule that includes levels of keying, explanations of key system's function, key symbols used, and door numbers controlled. b. Use ANSI/BHMA A156.28 ''Recommended Practices for Keying Systems'' as guideline for nomenclature, definitions, and approach for selecting optimal keying system. c. Provide 3 copies of keying schedule for review prepared and detailed in accordance with referenced DHI publication. Include schematic keying diagram and index each key to unique door designations. d. Index keying schedule by door number, keyset, hardware heading number, cross keying instructions, and special key stamping instructions. e. Provide one complete bitting list of key cuts and one key system schematic illustrating system usage and expansion. Forward bitting list, key cuts and key system schematic directly to Owner, by means as directed by Owner. f. Prepare key schedule by or under supervision of supplier, detailing Owner's final keying instructions for locks.",
+        "1. Keying Conference a. Incorporate keying conference decisions into final keying schedule after reviewing door hardware keying system including: 1) Function of building, flow of traffic, purpose of each area, degree of security required, and plans for future expansion. 2) Preliminary key system schematic diagram. 3) Requirements for key control system. 4) Address for delivery of keys.",
+        "F. Deliver keys to manufacturer of key control system for subsequent delivery to Owner.",
+        "2.08 CYLINDRICAL LOCKS B. Requirements: 2. Cylinders: Refer to ''KEYING'' article, herein.",
+        "2.09 EXIT DEVICES B. Requirements: 2. Cylinders: Refer to ''KEYING'' article, herein.",
+        "2.10 CYLINDERS A. Manufacturers and Products: 1. Scheduled Manufacturer: a. Falcon B. Requirements: 1. Provide cylinders/cores compliant with ANSI/BHMA A156.5; latest revision; cylinder face finished to match lockset; manufacturer\u2019s series as indicated. Refer to \u201cKEYING\u201d article, herein. 2. Provide cylinders in the below-listed configuration(s), distributed throughout the Project as indicated. a. Conventional Open: cylinder with small format interchangeable core (SFIC) core with open keyway",
+        "2.11 KEYING A. Scheduled System: 1. New factory registered system: a. Provide a factory registered keying system, complying with guidelines in ANSI/BHMA A156.28, incorporating decisions made at keying conference.",
+        "B. Requirements: 1. Construction Keying: a. Replaceable Construction Cores. 1) Provide temporary construction cores replaceable by permanent cores, furnished in accordance with the following requirements. a) 3 construction control keys b) 12 construction change (day) keys. 2) Owner or Owner\u2019s Representative will replace temporary construction cores with permanent cores.",
+        "2. Permanent Keying: a. Provide permanent cylinders/cores keyed by the manufacturer according to the following key system. 1) Master Keying system as directed by the Owner. b. Forward bitting list and keys separately from cylinders, by means as directed by Owner. Failure to comply with forwarding requirements will be cause for replacement of cylinders/cores involved at no additional cost to Owner.",
+        "c. Provide keys with the following features: 1) Material: Nickel silver; minimum thickness of .107-inch (2.3mm) 2) Patent Protection: Keys and blanks protected by one or more utility patent(s). 3) Geographically Exclusive: Where High Security or Security cylinders/cores are indicated, provide nationwide, geographically exclusive key system complying with the following restrictions.",
+        "d. Identification: 1) Mark permanent cylinders/cores and keys with applicable blind code for identification. Do not provide blind code marks with actual key cuts. 2) Identification stamping provisions must be approved by the Architect and Owner. 3) Stamp cylinders/cores and keys with Owner\u2019s unique key system facility code as established by the manufacturer; key symbol and embossed or stamped with \u201cDO NOT DUPLICATE\u201d along with the \u201cPATENTED\u201d or patent number to enforce the patent protection. 4) Failure to comply with stamping requirements will be cause for replacement of keys involved at no additional cost to Owner. 5) Forward permanent cylinders/cores to Owner, separately from keys, by means as directed by Owner.",
+        "e. Quantity: Furnish in the following quantities. 1) Change (Day) Keys: 3 per cylinder/core. 2) Permanent Control Keys: 3. 3) Master Keys: 6.",
+        "2.12 KEY CONTROL SYSTEM A. Requirements: 1. Provide key control system, including envelopes, labels, tags with self-locking key clips, receipt forms, 3-way visible card index, temporary markers, permanent markers, and standard metal cabinet, all as recommended by system manufacturer, with capacity for 150% of number of locks required for Project. a. Provide complete cross index system set up by hardware supplier, and place keys on markers and hooks in cabinet as determined by final key schedule. b. Provide hinged-panel type cabinet for wall mounting.",
+        "I. Lock Cylinders: 1. Install construction cores to secure building and areas during construction period. 2. Replace construction cores with permanent cores as indicated in keying section. 3. Furnish permanent cores to Owner for installation.",
+        "J. Key Control System: Tag keys and place them on markers and hooks in key control system cabinet, as determined by final keying schedule."
+      ],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (27 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "8 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "6 hardware set(s) identified; 6 have a complete extracted item list.",
+      "8 general note(s) captured from the door-schedule sheet.",
+      "6 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 169,
+        "truncated": false,
+        "output_count": 8
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 129,
+        "truncated": false,
+        "output_count": 6
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 50
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 298,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100"
+        },
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "100C"
+        },
+        {
+          "mark": "100D"
+        },
+        {
+          "mark": "100E"
+        },
+        {
+          "mark": "100F"
+        },
+        {
+          "mark": "100G"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "001",
+          "item_count": 1
+        },
+        {
+          "id": "205",
+          "item_count": 5
+        },
+        {
+          "id": "214",
+          "item_count": 8
+        },
+        {
+          "id": "507",
+          "item_count": 7
+        },
+        {
+          "id": "510",
+          "item_count": 8
+        },
+        {
+          "id": "715",
+          "item_count": 10
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for DOOR HARDWARE.pdf (385 KB).",
+      "message": "Secure analysis started for DOOR HARDWARE.pdf (385 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T21:15:58Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:15:58Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 169s.",
+      "message": "Door schedule review - completed in 169s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:18:47Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:18:47Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 129s.",
+      "message": "Hardware set review - completed in 129s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:20:55Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T21:20:55Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 8 doors - 6 sets - 39 items - 0 risks - 0 RFIs - 298s total.",
+      "message": "Secure analysis done - 8 doors - 6 sets - 39 items - 0 risks - 0 RFIs - 298s total.",
+      "stage": "done",
+      "ts": "2026-05-27T21:20:55Z"
+    }
+  ]
+}

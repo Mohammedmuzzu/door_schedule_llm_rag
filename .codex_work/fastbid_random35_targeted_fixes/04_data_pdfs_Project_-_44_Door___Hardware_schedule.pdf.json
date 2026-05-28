@@ -1,0 +1,3736 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "Nandes - Monteros",
+      "project_number": null,
+      "architect": "H.L. Hill Office Of Architecture",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 17,
+      "total_hardware_sets_referenced": 6,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 17,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 17 opening(s) and 7 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": null,
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_door_schedule",
+        "confidence": 0.1
+      },
+      {
+        "mark": "101",
+        "room_or_location": "Bar - Point of Sale",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "N/A",
+        "door_finish": "PL-01 & GL-01",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Solid Wood",
+        "frame_finish": "WD-01",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 4/A510.1; Head 8/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.92
+      },
+      {
+        "mark": "102",
+        "room_or_location": "Corridor - RR Vestibule",
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "N/A",
+        "door_finish": "PL-01 & GL-01",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Solid Wood",
+        "frame_finish": "WD-01",
+        "fire_rating": null,
+        "hardware_set": "3",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 4/A510.1; Head 8/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.92
+      },
+      {
+        "mark": "105",
+        "room_or_location": "Office",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "MDF",
+        "door_finish": "PT-04",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Solid Wood",
+        "frame_finish": "WD-01",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 2/A510.1; Head 6/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.92
+      },
+      {
+        "mark": "106",
+        "room_or_location": "ADA RR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "MDF",
+        "door_finish": "PT-04",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Solid Wood",
+        "frame_finish": "WD-01",
+        "fire_rating": null,
+        "hardware_set": "4",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 2/A510.1; Head 6/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.92
+      },
+      {
+        "mark": "107",
+        "room_or_location": "RR",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "MDF",
+        "door_finish": "PT-04",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Solid Wood",
+        "frame_finish": "WD-01",
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 2/A510.1; Head 6/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.92
+      },
+      {
+        "mark": "108",
+        "room_or_location": "Corridor - Dish",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 6\"",
+          "thickness": null
+        },
+        "door_material": "MDF",
+        "door_finish": "PT-01",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HM",
+        "frame_finish": "Varies: REF Type Elev.",
+        "fire_rating": null,
+        "hardware_set": "6",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 3/A510.1; Head 7/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.9
+      },
+      {
+        "mark": "109",
+        "room_or_location": "Corridor - Dish",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 11 7/16\"",
+          "thickness": null
+        },
+        "door_material": "MDF",
+        "door_finish": "PT-01",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HM",
+        "frame_finish": "Varies: REF Type Elev.",
+        "fire_rating": null,
+        "hardware_set": "5",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 3/A510.1; Head 7/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.9
+      },
+      {
+        "mark": "110",
+        "room_or_location": "Dry Storage",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": null
+        },
+        "door_material": "Alum. & Glass",
+        "door_finish": "PT-01",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Alum.",
+        "frame_finish": "PT-01",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 1/A510.1; Head 5/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.9
+      },
+      {
+        "mark": "EX-01",
+        "room_or_location": "Exterior - Rear Entry",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 0 7/16\"",
+          "thickness": null
+        },
+        "door_material": "Alum. & Glass",
+        "door_finish": "EX-04",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "Alum.",
+        "frame_finish": "EX-04",
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "Jamb 1/A510.1; Head 5/A510.1"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "tile_top_right",
+        "confidence": 0.82
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "Hardware Schedule",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "review_required",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "Hinge",
+            "part": "TB1168",
+            "mfr": "McKinney",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": "1.5",
+            "unit": "Pair",
+            "desc": "Hinge",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "Offset Pivot",
+            "part": null,
+            "mfr": "Rixson",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "Hinge",
+            "part": "Mo No. 7020",
+            "mfr": "CR Laurence",
+            "finish": "Black",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "Continuous",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "HD double Swing",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "Hinge",
+            "part": "FBB168",
+            "mfr": null,
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": "Mo No. 7020",
+            "mfr": "CR Laurence",
+            "finish": "Black",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": null,
+            "mfr": null,
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": "Mo No. 7020",
+            "mfr": "CR Laurence",
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": 11,
+            "qty": null,
+            "unit": null,
+            "desc": "Threshold",
+            "part": "TBD 158",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": "Offset Saddle",
+            "confidence": 0.9
+          },
+          {
+            "item_no": 12,
+            "qty": null,
+            "unit": null,
+            "desc": "Weatherstrip",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "GC to Submit Specification",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 13,
+            "qty": null,
+            "unit": null,
+            "desc": "Silencer",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "GC to Submit Specification",
+            "confidence": 0.92
+          },
+          {
+            "item_no": 14,
+            "qty": null,
+            "unit": null,
+            "desc": "Door Stop",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 15,
+            "qty": null,
+            "unit": null,
+            "desc": "Kickplate",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Dual Shield",
+            "confidence": 0.82
+          },
+          {
+            "item_no": 16,
+            "qty": null,
+            "unit": null,
+            "desc": "Kick Plate",
+            "part": "K0050",
+            "mfr": "Trimco",
+            "finish": "630/US32D Satin Stainless Steel",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Double a Boutique",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Estate BackDoor handle",
+            "mfr": "Baldwin",
+            "finish": null,
+            "notes": "Double a Boutique",
+            "confidence": 0.7
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Handle, 260mm",
+            "mfr": "Baldwin",
+            "finish": null,
+            "notes": "Double a Boutique",
+            "confidence": 0.7
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "Stainless Steel Push Plate",
+            "part": null,
+            "mfr": null,
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "8200 Evolved",
+            "mfr": "Baldwin",
+            "finish": "Bronze",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "L9444P",
+            "mfr": "Schlage",
+            "finish": "Black",
+            "notes": "Occupancy Indicator with ADA thumbturn",
+            "confidence": 0.8
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "Exit Device",
+            "part": "TBD, BackDoor",
+            "mfr": "Iron Doors, Inc.",
+            "finish": "US19 (Flat Black)",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "Hinge",
+            "part": "NRP SS BB1168",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "Hinge",
+            "part": "BB1168",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 11,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": "M0-No. 7020",
+            "mfr": "CR Laurence",
+            "finish": "Black",
+            "notes": null,
+            "confidence": 0.7
+          },
+          {
+            "item_no": 12,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": "M0-No. 7020",
+            "mfr": "CR Laurence",
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.7
+          },
+          {
+            "item_no": 13,
+            "qty": null,
+            "unit": null,
+            "desc": "Closer",
+            "part": "Double Swing",
+            "mfr": "Ellison",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.6
+          },
+          {
+            "item_no": 14,
+            "qty": null,
+            "unit": null,
+            "desc": "Threshold",
+            "part": "171D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": "Sloped Saddle",
+            "confidence": 0.55
+          },
+          {
+            "item_no": 18,
+            "qty": null,
+            "unit": null,
+            "desc": "Door Stop",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Polished Chrome",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 19,
+            "qty": null,
+            "unit": null,
+            "desc": "Kick Plate",
+            "part": "CS3050",
+            "mfr": "Ives",
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 20,
+            "qty": null,
+            "unit": null,
+            "desc": "Kick Plate",
+            "part": "3050",
+            "mfr": "Rockwood",
+            "finish": "US10B (Oil Rubbed Bronze)",
+            "notes": null,
+            "confidence": 0.65
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Hardware schedule table is visible in the sheet image, but the hardware set identifiers and item-row text are not legible at the supplied resolution.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "1",
+        "header_verbatim": "Exterior (Storefront)",
+        "referenced_by_doors": [
+          "110",
+          "EX-01"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "nce, Mo No.: 7020, Black",
+            "part": "7020",
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Left side of cell is cropped.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Threshold",
+            "qty": null,
+            "unit": null,
+            "desc": "Pemko TBD 158 Offset Saddle",
+            "part": "TBD 158 Offset Saddle",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Oil Rubbed Bronze",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": "Exterior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+            "part": null,
+            "mfr": null,
+            "finish": "Bronze",
+            "notes": "Text partially unclear.",
+            "confidence": 0.42
+          },
+          {
+            "item_no": "Interior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Bronze & Bronze Door Pull Door Hardware, Square ... 200mm, Antique Brass",
+            "part": null,
+            "mfr": null,
+            "finish": "Antique Brass",
+            "notes": "Text partially unclear.",
+            "confidence": 0.38
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.32
+          },
+          {
+            "item_no": "Keying",
+            "qty": null,
+            "unit": null,
+            "desc": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+            "part": "7020",
+            "mfr": "Kaba Peaks",
+            "finish": "Black",
+            "notes": "Pinned 70R",
+            "confidence": 0.52
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "Sir Kennedy Black Door Handle, 500mm, Oak",
+            "mfr": "Douglas & Douglas",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Sir Kennedy Black Door Handle, 500mm, Oak",
+            "mfr": "Douglas & Douglas",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "8200",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Exit Device",
+            "qty": null,
+            "unit": null,
+            "desc": "Exit Device",
+            "part": "Model 8827 LBR",
+            "mfr": "Von Duprin",
+            "finish": "US10B (Oil Rubbed Bronze) Attitude, Finish: US10B (Flat Black)",
+            "notes": null,
+            "confidence": 0.78
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "Entry Vestibule",
+        "referenced_by_doors": [
+          "105",
+          "107"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "nce, Mo No.: 7020, Black",
+            "part": "7020",
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Left side of cell is cropped.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Oil Rubbed Bronze",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": "Exterior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+            "part": null,
+            "mfr": null,
+            "finish": "Bronze",
+            "notes": "Text partially unclear.",
+            "confidence": 0.4
+          },
+          {
+            "item_no": "Interior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Bronze & Bronze Door Pull Door Hardware, Round ... 200mm, Antique Brass",
+            "part": null,
+            "mfr": null,
+            "finish": "Antique Brass",
+            "notes": "Text partially unclear.",
+            "confidence": 0.38
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.32
+          },
+          {
+            "item_no": "Keying",
+            "qty": null,
+            "unit": null,
+            "desc": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+            "part": "7020",
+            "mfr": "Kaba Peaks",
+            "finish": "Black",
+            "notes": "Pinned 70R",
+            "confidence": 0.52
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+            "mfr": null,
+            "finish": "Antique Brass",
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+            "mfr": null,
+            "finish": "Antique Brass",
+            "notes": null,
+            "confidence": 0.72
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "ND53PD RHO 626",
+            "mfr": "Schlage",
+            "finish": "626",
+            "notes": "Office/Entry Lock Occupancy Indicator with ADA Thumbturn",
+            "confidence": 0.86
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "3",
+        "header_verbatim": "Office",
+        "referenced_by_doors": [
+          "101",
+          "102"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "nce, Mo No.: 7020, Steel",
+            "part": "7020",
+            "mfr": null,
+            "finish": "Steel",
+            "notes": "Left side of cell is cropped.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Polished Chrome",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Polished Chrome",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": "Exterior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Cell text visible but not readable in crop.",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "Interior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Cell text visible but not readable in crop.",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.32
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Oil Rubbed Bronze",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.58
+          },
+          {
+            "item_no": "Keying",
+            "qty": null,
+            "unit": null,
+            "desc": "Schlage Saturn Knob, No. 7020, Satin Chrome, Pinned 70R",
+            "part": "Saturn Knob, No. 7020",
+            "mfr": "Schlage",
+            "finish": "Satin Chrome",
+            "notes": "Pinned 70R",
+            "confidence": 0.5
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "Stainless Steel Push Plate",
+            "mfr": null,
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Stainless Steel Push Plate",
+            "mfr": null,
+            "finish": "Stainless Steel",
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "N/A",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "4",
+        "header_verbatim": "Interior (Glazed)",
+        "referenced_by_doors": [
+          "106"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Polished Chrome",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Polished Chrome",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.32
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "J Mechanical Series, 01 Standard",
+            "mfr": "Schlage",
+            "finish": "Satin Chrome",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "J Mechanical Series, 01 Standard",
+            "mfr": "Schlage",
+            "finish": "Satin Chrome",
+            "notes": null,
+            "confidence": 0.88
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "ND50PD V/W Athens US 32 D",
+            "mfr": "Schlage",
+            "finish": "US 32 D",
+            "notes": "Lockset Schlage ND50PD V/W Athens US 32 D",
+            "confidence": 0.82
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "5",
+        "header_verbatim": "Storage (Flush)",
+        "referenced_by_doors": [
+          "109"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "nce, Mo No.: 7020, Steel",
+            "part": "7020",
+            "mfr": null,
+            "finish": "Steel",
+            "notes": "Left side of cell is cropped.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Polished Chrome",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Polished Chrome",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": "Interior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Sliding Door Panic Bolt ... 200mm, Antique Brass",
+            "part": null,
+            "mfr": null,
+            "finish": "Antique Brass",
+            "notes": "Text partially unclear.",
+            "confidence": 0.3
+          },
+          {
+            "item_no": "Bolt Guides",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager 282D 8\" Extension Flush Bolt",
+            "part": "282D 8\"",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.32
+          },
+          {
+            "item_no": "Keying",
+            "qty": null,
+            "unit": null,
+            "desc": "Schlage Saturn Knob, No. 7020, Satin Chrome, Pinned 70R",
+            "part": "Saturn Knob, No. 7020",
+            "mfr": "Schlage",
+            "finish": "Satin Chrome",
+            "notes": "Pinned 70R",
+            "confidence": 0.5
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "Scala Push Plate 4\" x 16\"",
+            "mfr": "Pomdor",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.86
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": "Single Slide Door C1083 Pull Plate - 4\" x 16\" with 10mm dia. \"C\" CTC",
+            "mfr": "Horton",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.82
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": "N/A",
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "6",
+        "header_verbatim": "Keyed Lock (Utility)",
+        "referenced_by_doors": [
+          "108"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "Weatherstrip",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Silencer",
+            "qty": null,
+            "unit": null,
+            "desc": "GC to Submit Specification",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          },
+          {
+            "item_no": "Door Stop",
+            "qty": null,
+            "unit": null,
+            "desc": "Baldwin 4010 Oil Rubbed Bronze",
+            "part": "4010",
+            "mfr": "Baldwin",
+            "finish": "Oil Rubbed Bronze",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": "Exterior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Cell text visible but not readable in crop.",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "Interior Door Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Cell text visible but not readable in crop.",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "Hinge",
+            "qty": null,
+            "unit": null,
+            "desc": "Hager BB1168 5x5 US10B",
+            "part": "BB1168 5x5",
+            "mfr": "Hager",
+            "finish": "US10B",
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": "Closer",
+            "qty": null,
+            "unit": null,
+            "desc": "... No: 7020, Black",
+            "part": null,
+            "mfr": null,
+            "finish": "Black",
+            "notes": "Beginning of cell is unclear.",
+            "confidence": 0.3
+          },
+          {
+            "item_no": "Exterior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Exterior Lever / Pull",
+            "part": "ALX50PD LAT (Latitude) Entrance/Office Lever Lock",
+            "mfr": "Schlage",
+            "finish": "626 Matte Black",
+            "notes": null,
+            "confidence": 0.78
+          },
+          {
+            "item_no": "Interior Lever / Pull",
+            "qty": null,
+            "unit": null,
+            "desc": "Interior Lever / Pull",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "\"Part of listed set\"",
+            "confidence": 0.9
+          },
+          {
+            "item_no": "Lockset",
+            "qty": null,
+            "unit": null,
+            "desc": "Lockset",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "\"Part of listed set\"",
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Door function text is unclear in crop.",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": null,
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Steel",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Steel",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Polished Chrome",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Polished Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Schlage Saturn Knob, No. 7020, Satin Chrome, Pinned 70R",
+        "catalog_number": "Saturn Knob, No. 7020",
+        "manufacturer": "Schlage",
+        "finish": "Satin Chrome",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Stainless Steel Push Plate",
+        "manufacturer": null,
+        "finish": "Stainless Steel",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Stainless Steel Push Plate",
+        "manufacturer": null,
+        "finish": "Stainless Steel",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "3",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "N/A",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Steel",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Steel",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Polished Chrome",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Polished Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Schlage Saturn Knob, No. 7020, Satin Chrome, Pinned 70R",
+        "catalog_number": "Saturn Knob, No. 7020",
+        "manufacturer": "Schlage",
+        "finish": "Satin Chrome",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Stainless Steel Push Plate",
+        "manufacturer": null,
+        "finish": "Stainless Steel",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Stainless Steel Push Plate",
+        "manufacturer": null,
+        "finish": "Stainless Steel",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "3",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "N/A",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Black",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Bronze",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round ... 200mm, Antique Brass",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+        "catalog_number": "7020",
+        "manufacturer": "Kaba Peaks",
+        "finish": "Black",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "2",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "ND53PD RHO 626",
+        "manufacturer": "Schlage",
+        "finish": "626",
+        "notes": "Office/Entry Lock Occupancy Indicator with ADA Thumbturn",
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Polished Chrome",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Polished Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "J Mechanical Series, 01 Standard",
+        "manufacturer": "Schlage",
+        "finish": "Satin Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "J Mechanical Series, 01 Standard",
+        "manufacturer": "Schlage",
+        "finish": "Satin Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "4",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "ND50PD V/W Athens US 32 D",
+        "manufacturer": "Schlage",
+        "finish": "US 32 D",
+        "notes": "Lockset Schlage ND50PD V/W Athens US 32 D",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Black",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Bronze",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round ... 200mm, Antique Brass",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+        "catalog_number": "7020",
+        "manufacturer": "Kaba Peaks",
+        "finish": "Black",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Balaustte Door Black Balaustrade Handle, 250mm, Antique Brass",
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "2",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "ND53PD RHO 626",
+        "manufacturer": "Schlage",
+        "finish": "626",
+        "notes": "Office/Entry Lock Occupancy Indicator with ADA Thumbturn",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Cell text visible but not readable in crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "ALX50PD LAT (Latitude) Entrance/Office Lever Lock",
+        "manufacturer": "Schlage",
+        "finish": "626 Matte Black",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "\"Part of listed set\"",
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "6",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "\"Part of listed set\"",
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Steel",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Steel",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Polished Chrome",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Polished Chrome",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "Sliding Door Panic Bolt ... 200mm, Antique Brass",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Bolt Guides",
+        "qty": null,
+        "description": "Hager 282D 8\" Extension Flush Bolt",
+        "catalog_number": "282D 8\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Schlage Saturn Knob, No. 7020, Satin Chrome, Pinned 70R",
+        "catalog_number": "Saturn Knob, No. 7020",
+        "manufacturer": "Schlage",
+        "finish": "Satin Chrome",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Scala Push Plate 4\" x 16\"",
+        "manufacturer": "Pomdor",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Single Slide Door C1083 Pull Plate - 4\" x 16\" with 10mm dia. \"C\" CTC",
+        "manufacturer": "Horton",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "5",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "N/A",
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Black",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Threshold",
+        "qty": null,
+        "description": "Pemko TBD 158 Offset Saddle",
+        "catalog_number": "TBD 158 Offset Saddle",
+        "manufacturer": "Pemko",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Bronze",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Square ... 200mm, Antique Brass",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+        "catalog_number": "7020",
+        "manufacturer": "Kaba Peaks",
+        "finish": "Black",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Sir Kennedy Black Door Handle, 500mm, Oak",
+        "manufacturer": "Douglas & Douglas",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Sir Kennedy Black Door Handle, 500mm, Oak",
+        "manufacturer": "Douglas & Douglas",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "8200",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "1",
+        "item_no": "Exit Device",
+        "qty": null,
+        "description": "Exit Device",
+        "catalog_number": "Model 8827 LBR",
+        "manufacturer": "Von Duprin",
+        "finish": "US10B (Oil Rubbed Bronze) Attitude, Finish: US10B (Flat Black)",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "nce, Mo No.: 7020, Black",
+        "catalog_number": "7020",
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Left side of cell is cropped.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Threshold",
+        "qty": null,
+        "description": "Pemko TBD 158 Offset Saddle",
+        "catalog_number": "TBD 158 Offset Saddle",
+        "manufacturer": "Pemko",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Weatherstrip",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Silencer",
+        "qty": null,
+        "description": "GC to Submit Specification",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Door Stop",
+        "qty": null,
+        "description": "Baldwin 4010 Oil Rubbed Bronze",
+        "catalog_number": "4010",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Exterior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Round: 6\" Dia.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Bronze",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Interior Door Pull",
+        "qty": null,
+        "description": "Bronze & Bronze Door Pull Door Hardware, Square ... 200mm, Antique Brass",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Antique Brass",
+        "notes": "Text partially unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Hinge",
+        "qty": null,
+        "description": "Hager BB1168 5x5 US10B",
+        "catalog_number": "BB1168 5x5",
+        "manufacturer": "Hager",
+        "finish": "US10B",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Closer",
+        "qty": null,
+        "description": "... No: 7020, Black",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "Black",
+        "notes": "Beginning of cell is unclear.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Keying",
+        "qty": null,
+        "description": "Cylinder: Kaba Peaks, 7020, Black, Pinned 70R",
+        "catalog_number": "7020",
+        "manufacturer": "Kaba Peaks",
+        "finish": "Black",
+        "notes": "Pinned 70R",
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Exterior Lever / Pull",
+        "qty": null,
+        "description": "Exterior Lever / Pull",
+        "catalog_number": "Sir Kennedy Black Door Handle, 500mm, Oak",
+        "manufacturer": "Douglas & Douglas",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Interior Lever / Pull",
+        "qty": null,
+        "description": "Interior Lever / Pull",
+        "catalog_number": "Sir Kennedy Black Door Handle, 500mm, Oak",
+        "manufacturer": "Douglas & Douglas",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Lockset",
+        "qty": null,
+        "description": "Lockset",
+        "catalog_number": "8200",
+        "manufacturer": "Baldwin",
+        "finish": "Oil Rubbed Bronze",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "EX-01",
+        "hardware_set": "1",
+        "item_no": "Exit Device",
+        "qty": null,
+        "description": "Exit Device",
+        "catalog_number": "Model 8827 LBR",
+        "manufacturer": "Von Duprin",
+        "finish": "US10B (Oil Rubbed Bronze) Attitude, Finish: US10B (Flat Black)",
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "8 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: . Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "17 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "7 hardware set(s) identified; 7 have a complete extracted item list."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door None has no hardware set assigned."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 149,
+        "truncated": false,
+        "output_count": 17
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Door completeness check",
+        "skipped": false,
+        "elapsed_seconds": 74,
+        "output_count": 0
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 104,
+        "truncated": false,
+        "output_count": 7
+      },
+      {
+        "step": 4,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 428,
+        "output_count": 101
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 116
+      },
+      {
+        "step": 6,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 7,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 755,
+    "mapping_qa_issues": [
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": null,
+        "message": "Door None has no hardware set assigned."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": null
+        },
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "102"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        },
+        {
+          "mark": "EX-01"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "Hardware Schedule",
+          "item_count": 32
+        },
+        {
+          "id": "1",
+          "item_count": 14
+        },
+        {
+          "id": "2",
+          "item_count": 12
+        },
+        {
+          "id": "3",
+          "item_count": 13
+        },
+        {
+          "id": "4",
+          "item_count": 8
+        },
+        {
+          "id": "5",
+          "item_count": 12
+        },
+        {
+          "id": "6",
+          "item_count": 10
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware schedule.pdf (703 KB).",
+      "message": "Secure analysis started for Door & Hardware schedule.pdf (703 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T23:41:57Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T23:41:57Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 149s.",
+      "message": "Door schedule review - completed in 149s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T23:44:26Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door completeness check - processing document data.",
+      "message": "Door completeness check - processing document data.",
+      "stage": "Door completeness check",
+      "ts": "2026-05-27T23:44:29Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door completeness check - completed in 74s.",
+      "message": "Door completeness check - completed in 74s.",
+      "stage": "Door completeness check",
+      "ts": "2026-05-27T23:45:43Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door completeness check recovered 10 candidate row(s).",
+      "message": "Door completeness check recovered 10 candidate row(s).",
+      "stage": "Door completeness check",
+      "ts": "2026-05-27T23:45:43Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door completeness check filled 0 hardware set value(s).",
+      "message": "Door completeness check filled 0 hardware set value(s).",
+      "stage": "Door completeness check",
+      "ts": "2026-05-27T23:45:43Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T23:45:43Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 104s.",
+      "message": "Hardware set review - completed in 104s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T23:47:27Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:47:30Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:47:30Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 92s.",
+      "message": "Completeness check - completed in 92s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:49:01Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:49:01Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 120s.",
+      "message": "Completeness check - completed in 120s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:51:02Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:51:02Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 19s.",
+      "message": "Completeness check - completed in 19s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:51:21Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:51:21Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 66s.",
+      "message": "Completeness check - completed in 66s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:52:27Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:52:27Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 67s.",
+      "message": "Completeness check - completed in 67s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:53:34Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:53:34Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 64s.",
+      "message": "Completeness check - completed in 64s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:54:38Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 7 set(s) and 106 item row(s).",
+      "message": "Completeness check recovered 7 set(s) and 106 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:54:38Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 101 hardware item row(s).",
+      "message": "Completeness check added 101 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T23:54:38Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T23:54:38Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 17 doors - 7 sets - 101 items - 1 risks - 2 RFIs - 755s total.",
+      "message": "Secure analysis done - 17 doors - 7 sets - 101 items - 1 risks - 2 RFIs - 755s total.",
+      "stage": "done",
+      "ts": "2026-05-27T23:54:38Z"
+    }
+  ]
+}

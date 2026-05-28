@@ -1,0 +1,1903 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "SKECHERS #1666 WESTHEIMER VILLAGE",
+      "project_number": null,
+      "architect": "A.R.C.VISION",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 10,
+      "total_hardware_sets_referenced": 8,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 10,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 3,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 10 opening(s) and 8 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "101",
+        "room_or_location": "ENTRY",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "(2) 3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "EXISTING"
+        },
+        "door_material": "EXISTING",
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": "EXISTING",
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "A",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "102",
+        "room_or_location": "RESTROOM",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "S.C. WOOD",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "D",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "103",
+        "room_or_location": "RESTROOM",
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "S.C. WOOD",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "D",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "104",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "S.C. WOOD",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "F",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "105",
+        "room_or_location": "FITTING ROOM",
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "5' - 0\"",
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "E",
+        "frame_material": null,
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "E",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "DOOR & FRAME IS SUPPLIED BY SILVERSTAR AND INSTALLED BY GC."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.74
+      },
+      {
+        "mark": "106",
+        "room_or_location": null,
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "3/4\""
+        },
+        "door_material": "BY DOOR MFR.",
+        "door_finish": null,
+        "glazing": "WINDOW",
+        "frame_type": "C",
+        "frame_material": "BY DOOR MFR.",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "C",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "NEW ELIASON DOOR W/ FRAME, WINDOW, KICK PLATES AND PUSH PLATES PROVIDED & INSTALLED BY GC. GC TO PAINT FRAME."
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.7
+      },
+      {
+        "mark": "107",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": "S.C. WOOD",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "B",
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "B",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.74
+      },
+      {
+        "mark": "108",
+        "room_or_location": "SERVICE DOOR",
+        "door_type": "G",
+        "opening_type": "G",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "EXISTING"
+        },
+        "door_material": "EXISTING",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "G",
+        "frame_material": "EXISTING",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "G",
+        "closer": null,
+        "electric_or_access_control": "DETEX",
+        "remarks": [
+          "GC TO VERIFY DOOR & HARDWARE IS IN PROPER WORKING CONDITION. PROVIDE HARDWARE & DETEX TO MATCH HARDWARE LEGEND"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "109",
+        "room_or_location": "SERVICE DOOR",
+        "door_type": "G",
+        "opening_type": "G",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "EXISTING"
+        },
+        "door_material": "EXISTING",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "G",
+        "frame_material": "EXISTING",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "G",
+        "closer": null,
+        "electric_or_access_control": "DETEX",
+        "remarks": [
+          "GC TO VERIFY DOOR & HARDWARE IS IN PROPER WORKING CONDITION. PROVIDE HARDWARE & DETEX TO MATCH HARDWARE LEGEND"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "110",
+        "room_or_location": "SERVICE DOOR",
+        "door_type": "H",
+        "opening_type": "H",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "(2) 3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "EXISTING"
+        },
+        "door_material": "EXISTING",
+        "door_finish": "P7",
+        "glazing": null,
+        "frame_type": "H",
+        "frame_material": "EXISTING",
+        "frame_finish": "P7",
+        "fire_rating": null,
+        "hardware_set": "H",
+        "closer": null,
+        "electric_or_access_control": "DETEX",
+        "remarks": [
+          "GC TO VERIFY DOOR & HARDWARE IS IN PROPER WORKING CONDITION. PROVIDE HARDWARE & DETEX TO MATCH HARDWARE LEGEND"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "A",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "101"
+        ],
+        "status": "complete",
+        "raw_status": "existing",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "BODY: EXISTING TEMPERED GLASS DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER: EXISTING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULLS: EXISTING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "LOCK: GC TO PROVIDE 1-3/8\", 6 PIN KSP 307-601-26D MORTISE HOUSING WITH ADAM RITE CAM (SATIN CHROME FINISH). SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS.",
+            "part": "KSP 307-601-26D",
+            "mfr": null,
+            "finish": "SATIN CHROME",
+            "notes": "SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "DETEX: PROVIDE DETEX HARDWARE",
+            "part": null,
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.7
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "KICKDOWN: IVES",
+            "part": null,
+            "mfr": "IVES",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: PROVIDE SIGN STATING \"THIS DOOR TO REMAIN UNLOCKED WHILE THIS SPACE IS OCCUPIED.\"",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "EXISTING HARDWARE TO REMAIN. REPLACE ALL DAMAGED, WORN OR MISSING HARDWARE AS NEEDED.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "B",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "107"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES: 4-1/2\" BUTT HINGES. STANLEY - CB1900 SERIES-STD. WT.",
+            "part": "CB1900 SERIES",
+            "mfr": "STANLEY",
+            "finish": null,
+            "notes": "STD. WT.",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+            "part": "#W302 OR #331ES",
+            "mfr": "QUALITY",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "#107 LEVER: CORBIN RUSSWIN - PRINCETON DESIGN STOREROOM FUNCTION",
+            "part": "PRINCETON DESIGN",
+            "mfr": "CORBIN RUSSWIN",
+            "finish": null,
+            "notes": "STOREROOM FUNCTION",
+            "confidence": 0.8
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/ FULL COVER",
+            "part": "2700 SERIES",
+            "mfr": "YALE",
+            "finish": null,
+            "notes": "W/ FULL COVER",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+            "part": "#193",
+            "mfr": "HAGER",
+            "finish": "S-STAIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: PROVIDE \"EMPLOYEE ONLY\" SIGN AT DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "C",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "106"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "MODEL: ELIASON \"P-11 PLUS\" - COLOR: BLACK (108)",
+            "part": "P-11 PLUS",
+            "mfr": "ELIASON",
+            "finish": "BLACK (108)",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "FRAME: 3 PIECE KNOCKDOWN H.M. FRAME",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "BODY: POLYMER CELL CORE WITH 1/2\" SOLID ABS FRAME, 3/4\" TOTAL THICKNESS",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "BODY: 0.125\" THICK HIGH IMPACT THERMOPLASTIC EXTERIOR.",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "WINDOW: 9\" X 30\" CLEAR ACRYLIC SET IN BLACK RUBBER MOLDING.",
+            "part": null,
+            "mfr": null,
+            "finish": "BLACK",
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "BACK CHANNEL: 14 GAUGE GALVANNEALED, POWDER COATED SATIN BLACK.",
+            "part": null,
+            "mfr": null,
+            "finish": "SATIN BLACK",
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: PROVIDE \"EMPLOYEE ONLY\" SIGN",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "PUSH PLATES: 24\" H ABS PLATE, BOTH SIDES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 9,
+            "qty": null,
+            "unit": null,
+            "desc": "KICK PLATE: BRUSHED STAINLESS STEEL, BOTH SIDE",
+            "part": null,
+            "mfr": null,
+            "finish": "BRUSHED STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": null,
+            "desc": "ACCESSORY: \"SKECHERS\" VINYL ON EXTERIOR SIDE OF DOOR IS SUP'D BY VENDOR INSTL'D BY GC",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "NEW ELIASON DOOR W/ FRAME, WINDOW, KICK PLATES AND PUSH PLATES PROVIDED & INSTALLED BY GC. GC TO PAINT FRAME.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "D",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "102",
+          "103"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES: 4-1/2\" BUTT HINGES. STANLEY-CB1900 SERIES-STD. WT.",
+            "part": "CB1900 SERIES",
+            "mfr": "STANLEY",
+            "finish": null,
+            "notes": "STD. WT.",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+            "part": "#W302 OR #331ES",
+            "mfr": "QUALITY",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PRIVACY: VIZILOK ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER, LEVER FINISH: 26D SATIN CHROME",
+            "part": null,
+            "mfr": "VIZILOK",
+            "finish": "26D SATIN CHROME",
+            "notes": "ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER",
+            "confidence": 0.8
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/FULL COVER",
+            "part": "2700 SERIES",
+            "mfr": "YALE",
+            "finish": null,
+            "notes": "W/FULL COVER",
+            "confidence": 0.85
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+            "part": "#193",
+            "mfr": "HAGER",
+            "finish": "S-STAIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.8
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: ADA SIGNAGE AS REQUIRED",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "E",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "105"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "MODEL: DOOR & FRAME IS SUPPLIED BY SILVERSTAR & INSTALLED BY GC",
+            "part": null,
+            "mfr": "SILVERSTAR",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "LOCK: KEYED PRIVACY TYPE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.75
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "FRAME: \"TIMELY\"",
+            "part": null,
+            "mfr": "TIMELY",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES: 4-1/2\" BUTT HINGES. STANLEY-CB1900 SERIES-STD. WT.",
+            "part": "CB1900 SERIES",
+            "mfr": "STANLEY",
+            "finish": null,
+            "notes": "STD. WT.",
+            "confidence": 0.8
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "FLOOR STOP: QUALITY #W302 OR #331ES BY GC",
+            "part": "#W302 OR #331ES",
+            "mfr": "QUALITY",
+            "finish": null,
+            "notes": "BY GC",
+            "confidence": 0.75
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "PEEP HOLE: IVES #698 WIDE-ANGLE B3-B26 FINISH. INSTALL AT 5'-0\" AFF.",
+            "part": "#698",
+            "mfr": "IVES",
+            "finish": "B3-B26",
+            "notes": "WIDE-ANGLE; INSTALL AT 5'-0\" AFF.",
+            "confidence": 0.55
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "ACCESSORY: MIRROR ON INSIDE OF DOOR BY GC.",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "BY GC",
+            "confidence": 0.75
+          },
+          {
+            "item_no": 8,
+            "qty": null,
+            "unit": null,
+            "desc": "ALUM. ANGLE: 1\" X 1\" ALUM. ANGLE PAINTED BLACK ON TOP OF DOOR.",
+            "part": null,
+            "mfr": null,
+            "finish": "PAINTED BLACK",
+            "notes": null,
+            "confidence": 0.75
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "DOOR & FRAME IS SUPPLIED BY SILVERSTAR AND INSTALLED BY GC.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "F",
+        "header_verbatim": "ELECTRIC CLOSET",
+        "referenced_by_doors": [
+          "104"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES: 4-1/2\" BUTT HINGES. STANLEY - CB1900 SERIES - STD. WT.",
+            "part": "CB1900 SERIES",
+            "mfr": "STANLEY",
+            "finish": null,
+            "notes": "STD. WT.",
+            "confidence": 0.75
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+            "part": "#W302 OR #331ES",
+            "mfr": "QUALITY",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "#106 LOCKSET: CORBIN RUSSWIN - PRINCETON DESIGN PASSAGE FUNCTION",
+            "part": "PRINCETON DESIGN",
+            "mfr": "CORBIN RUSSWIN",
+            "finish": null,
+            "notes": "PASSAGE FUNCTION",
+            "confidence": 0.55
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/ FULL COVER",
+            "part": "2700 SERIES",
+            "mfr": "YALE",
+            "finish": null,
+            "notes": "W/ FULL COVER",
+            "confidence": 0.7
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+            "part": "#193",
+            "mfr": "HAGER",
+            "finish": "S-STAIN STAINLESS STEEL",
+            "notes": null,
+            "confidence": 0.65
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "G",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "108",
+          "109"
+        ],
+        "status": "complete",
+        "raw_status": "existing",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "BODY: EXISTING TEMPERED GLASS DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER: EXISTING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "PULLS: EXISTING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.85
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "LOCK: GC TO PROVIDE 1-3/8\", 6 PIN KSP 307-601-26D MORTISE HOUSING WITH ADAM RITE CAM (SATIN CHROME FINISH). SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS.",
+            "part": "KSP 307-601-26D",
+            "mfr": null,
+            "finish": "SATIN CHROME",
+            "notes": "SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS.",
+            "confidence": 0.5
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "DETEX: PROVIDE DETEX HARDWARE",
+            "part": null,
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.7
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "KICKDOWN: IVES",
+            "part": null,
+            "mfr": "IVES",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: PROVIDE SIGN STATING \"THIS DOOR TO REMAIN UNLOCKED WHILE THIS SPACE IS OCCUPIED.\"",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.7
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "GC TO VERIFY DOOR & HARDWARE IS IN PROPER WORKING CONDITION. PROVIDE HARDWARE & DETEX TO MATCH HARDWARE LEGEND",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "110"
+        ],
+        "status": "complete",
+        "raw_status": "existing",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "LATCH GUARD: KEYLESS PLATE ON EXTERIOR SIDE, PAINTED W/ DOOR",
+            "part": null,
+            "mfr": null,
+            "finish": "PAINTED W/ DOOR",
+            "notes": null,
+            "confidence": 0.7
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "EXIT HARDWARE: NEW DETEX ECL - 600 FIRE RATED EXIT CONTROL",
+            "part": "ECL - 600",
+            "mfr": "DETEX",
+            "finish": null,
+            "notes": "FIRE RATED EXIT CONTROL",
+            "confidence": 0.75
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "KICK PLATE: NEW 10\" S.S. KICKPLATE BY GC",
+            "part": null,
+            "mfr": null,
+            "finish": "S.S.",
+            "notes": "BY GC",
+            "confidence": 0.55
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "SIGNAGE: TACTILE \"EXIT\" OR \"EXIT ROUTE\" SIGN PER PLAN",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.65
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "GC TO VERIFY DOOR & HARDWARE IS IN PROPER WORKING CONDITION. PROVIDE HARDWARE & DETEX TO MATCH HARDWARE LEGEND",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "101",
+        "hardware_set": "A",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES: 4-1/2\" BUTT HINGES. STANLEY-CB1900 SERIES-STD. WT.",
+        "catalog_number": "CB1900 SERIES",
+        "manufacturer": "STANLEY",
+        "finish": null,
+        "notes": "STD. WT.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 2,
+        "qty": null,
+        "description": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+        "catalog_number": "#W302 OR #331ES",
+        "manufacturer": "QUALITY",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 3,
+        "qty": null,
+        "description": "PRIVACY: VIZILOK ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER, LEVER FINISH: 26D SATIN CHROME",
+        "catalog_number": null,
+        "manufacturer": "VIZILOK",
+        "finish": "26D SATIN CHROME",
+        "notes": "ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 4,
+        "qty": null,
+        "description": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/FULL COVER",
+        "catalog_number": "2700 SERIES",
+        "manufacturer": "YALE",
+        "finish": null,
+        "notes": "W/FULL COVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 5,
+        "qty": null,
+        "description": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+        "catalog_number": "#193",
+        "manufacturer": "HAGER",
+        "finish": "S-STAIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "D",
+        "item_no": 6,
+        "qty": null,
+        "description": "SIGNAGE: ADA SIGNAGE AS REQUIRED",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES: 4-1/2\" BUTT HINGES. STANLEY-CB1900 SERIES-STD. WT.",
+        "catalog_number": "CB1900 SERIES",
+        "manufacturer": "STANLEY",
+        "finish": null,
+        "notes": "STD. WT.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 2,
+        "qty": null,
+        "description": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+        "catalog_number": "#W302 OR #331ES",
+        "manufacturer": "QUALITY",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 3,
+        "qty": null,
+        "description": "PRIVACY: VIZILOK ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER, LEVER FINISH: 26D SATIN CHROME",
+        "catalog_number": null,
+        "manufacturer": "VIZILOK",
+        "finish": "26D SATIN CHROME",
+        "notes": "ADA COMPLIANT COMMERCIAL GRADE PRIVACY INDICATOR LOCK AND LEVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 4,
+        "qty": null,
+        "description": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/FULL COVER",
+        "catalog_number": "2700 SERIES",
+        "manufacturer": "YALE",
+        "finish": null,
+        "notes": "W/FULL COVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 5,
+        "qty": null,
+        "description": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+        "catalog_number": "#193",
+        "manufacturer": "HAGER",
+        "finish": "S-STAIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "D",
+        "item_no": 6,
+        "qty": null,
+        "description": "SIGNAGE: ADA SIGNAGE AS REQUIRED",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "F",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES: 4-1/2\" BUTT HINGES. STANLEY - CB1900 SERIES - STD. WT.",
+        "catalog_number": "CB1900 SERIES",
+        "manufacturer": "STANLEY",
+        "finish": null,
+        "notes": "STD. WT.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "F",
+        "item_no": 2,
+        "qty": null,
+        "description": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+        "catalog_number": "#W302 OR #331ES",
+        "manufacturer": "QUALITY",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "F",
+        "item_no": 3,
+        "qty": null,
+        "description": "#106 LOCKSET: CORBIN RUSSWIN - PRINCETON DESIGN PASSAGE FUNCTION",
+        "catalog_number": "PRINCETON DESIGN",
+        "manufacturer": "CORBIN RUSSWIN",
+        "finish": null,
+        "notes": "PASSAGE FUNCTION",
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "F",
+        "item_no": 4,
+        "qty": null,
+        "description": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/ FULL COVER",
+        "catalog_number": "2700 SERIES",
+        "manufacturer": "YALE",
+        "finish": null,
+        "notes": "W/ FULL COVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "F",
+        "item_no": 5,
+        "qty": null,
+        "description": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+        "catalog_number": "#193",
+        "manufacturer": "HAGER",
+        "finish": "S-STAIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 1,
+        "qty": null,
+        "description": "MODEL: DOOR & FRAME IS SUPPLIED BY SILVERSTAR & INSTALLED BY GC",
+        "catalog_number": null,
+        "manufacturer": "SILVERSTAR",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 2,
+        "qty": null,
+        "description": "LOCK: KEYED PRIVACY TYPE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 3,
+        "qty": null,
+        "description": "FRAME: \"TIMELY\"",
+        "catalog_number": null,
+        "manufacturer": "TIMELY",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 4,
+        "qty": null,
+        "description": "HINGES: 4-1/2\" BUTT HINGES. STANLEY-CB1900 SERIES-STD. WT.",
+        "catalog_number": "CB1900 SERIES",
+        "manufacturer": "STANLEY",
+        "finish": null,
+        "notes": "STD. WT.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 5,
+        "qty": null,
+        "description": "FLOOR STOP: QUALITY #W302 OR #331ES BY GC",
+        "catalog_number": "#W302 OR #331ES",
+        "manufacturer": "QUALITY",
+        "finish": null,
+        "notes": "BY GC",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 6,
+        "qty": null,
+        "description": "PEEP HOLE: IVES #698 WIDE-ANGLE B3-B26 FINISH. INSTALL AT 5'-0\" AFF.",
+        "catalog_number": "#698",
+        "manufacturer": "IVES",
+        "finish": "B3-B26",
+        "notes": "WIDE-ANGLE; INSTALL AT 5'-0\" AFF.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 7,
+        "qty": null,
+        "description": "ACCESSORY: MIRROR ON INSIDE OF DOOR BY GC.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "BY GC",
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "E",
+        "item_no": 8,
+        "qty": null,
+        "description": "ALUM. ANGLE: 1\" X 1\" ALUM. ANGLE PAINTED BLACK ON TOP OF DOOR.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "PAINTED BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 1,
+        "qty": null,
+        "description": "MODEL: ELIASON \"P-11 PLUS\" - COLOR: BLACK (108)",
+        "catalog_number": "P-11 PLUS",
+        "manufacturer": "ELIASON",
+        "finish": "BLACK (108)",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 2,
+        "qty": null,
+        "description": "FRAME: 3 PIECE KNOCKDOWN H.M. FRAME",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 3,
+        "qty": null,
+        "description": "BODY: POLYMER CELL CORE WITH 1/2\" SOLID ABS FRAME, 3/4\" TOTAL THICKNESS",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 4,
+        "qty": null,
+        "description": "BODY: 0.125\" THICK HIGH IMPACT THERMOPLASTIC EXTERIOR.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 5,
+        "qty": null,
+        "description": "WINDOW: 9\" X 30\" CLEAR ACRYLIC SET IN BLACK RUBBER MOLDING.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 6,
+        "qty": null,
+        "description": "BACK CHANNEL: 14 GAUGE GALVANNEALED, POWDER COATED SATIN BLACK.",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "SATIN BLACK",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 7,
+        "qty": null,
+        "description": "SIGNAGE: PROVIDE \"EMPLOYEE ONLY\" SIGN",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 8,
+        "qty": null,
+        "description": "PUSH PLATES: 24\" H ABS PLATE, BOTH SIDES",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 9,
+        "qty": null,
+        "description": "KICK PLATE: BRUSHED STAINLESS STEEL, BOTH SIDE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": "BRUSHED STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "C",
+        "item_no": 10,
+        "qty": null,
+        "description": "ACCESSORY: \"SKECHERS\" VINYL ON EXTERIOR SIDE OF DOOR IS SUP'D BY VENDOR INSTL'D BY GC",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES: 4-1/2\" BUTT HINGES. STANLEY - CB1900 SERIES-STD. WT.",
+        "catalog_number": "CB1900 SERIES",
+        "manufacturer": "STANLEY",
+        "finish": null,
+        "notes": "STD. WT.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 2,
+        "qty": null,
+        "description": "FLOOR STOP: QUALITY - #W302 OR #331ES",
+        "catalog_number": "#W302 OR #331ES",
+        "manufacturer": "QUALITY",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 3,
+        "qty": null,
+        "description": "#107 LEVER: CORBIN RUSSWIN - PRINCETON DESIGN STOREROOM FUNCTION",
+        "catalog_number": "PRINCETON DESIGN",
+        "manufacturer": "CORBIN RUSSWIN",
+        "finish": null,
+        "notes": "STOREROOM FUNCTION",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 4,
+        "qty": null,
+        "description": "CLOSER: YALE 2700 SERIES DOOR CLOSER W/ FULL COVER",
+        "catalog_number": "2700 SERIES",
+        "manufacturer": "YALE",
+        "finish": null,
+        "notes": "W/ FULL COVER",
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 5,
+        "qty": null,
+        "description": "KICK PLATE: HAGER #193. FINISH: S-STAIN STAINLESS STEEL",
+        "catalog_number": "#193",
+        "manufacturer": "HAGER",
+        "finish": "S-STAIN STAINLESS STEEL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "B",
+        "item_no": 6,
+        "qty": null,
+        "description": "SIGNAGE: PROVIDE \"EMPLOYEE ONLY\" SIGN AT DOOR",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "G",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "G",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "H",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "UNDER CUT DOORS 3/4\" UNLESS OTHERWISE NOTED.",
+        "AT TURNOVER, CONTRACTOR IS TO GIVE NOTICE FOR REKEY TO SKECHERS LOSS PREVENTION DEPT. CONTRACTOR IS TO SUPPLY ALL KEYS TO SPACE TO TENANT OR TENANT'S LOCKSMITH. CONTACT SKECHERS LOSS PREVENTION DEPT. FOR TURNOVER AND SECURITY REQUIREMENTS.",
+        "EXISTING HARDWARE TO REMAIN. REPLACE ALL DAMAGED, WORN OR MISSING HARDWARE AS NEEDED.",
+        "MAXIMUM FORCE TO OPERATE DOORS SHALL NOT EXCEED 8.5 LBS FOR EXTERIOR DOORS AND 5 LBS. FOR INTERIOR DOORS.",
+        "EXTERIOR DOORS (EXCEPT DOOR 101) ARE NOT TO HAVE A KEYED ENTRY, BOLT OR DOOR HANDLE ON OUTSIDE. AT EXISTING DOORS REMOVE ANY EXISTING ENTRY HARDWARE. SUPPLY COVER PLATE TO CONCEAL HOLES OR CORES. SUPPLY STRIKE COVER PLATE PER HARDWARE SCHEDULE. STORE ENTRY IS TO ONLY BE THROUGH FRONT DOOR.",
+        "DOORS SHALL BE OPERABLE FROM THE INSIDE WITHOUT THE USE OF A KEY OR ANY SPECIAL KNOWLEDGE.",
+        "HAND ACTIVATED DOOR OPENING HARDWARE TO BE MOUNTED 34\" ABOVE FLOOR AND OPERATED WITH A SINGLE EFFORT BY LEVER TYPE HARDWARE.",
+        "ALIGNMENT OF DOOR HEADS AND OTHER CRITICAL ELEMENTS SHALL BE MAINTAINED AT A CONSTANT LEVELAND SHALL NOT FOLLOW VARIATIONS IN FLOOR PLANE.",
+        "GC TO VERIFY DOOR IS IN PROPER WORKING CONDITION & PROVIDE HARDWARE PER SCHEDULE.",
+        "CONTRACTOR TO PROVIDE SIGN \"THIS DOOR TO REMAIN UNLOCKED WHILE THIS SPACE IS OCCUPIED\" PER IBC 1010.1.9.3"
+      ],
+      "hardware_preamble": [
+        "UNDER CUT DOORS 3/4\" UNLESS OTHERWISE NOTED.",
+        "NOTE: EXISTING HARDWARE TO REMAIN. REPLACE ALL DAMAGED, WORN OR MISSING HARDWARE AS NEEDED.",
+        "MAXIMUM FORCE TO OPERATE DOORS SHALL NOT EXCEED 8.5 LBS FOR EXTERIOR DOORS AND 5 LBS. FOR INTERIOR DOORS.",
+        "EXTERIOR DOORS (EXCEPT DOOR 101) ARE NOT TO HAVE A KEYED ENTRY, BOLT OR DOOR HANDLE ON OUTSIDE. AT EXISTING DOORS REMOVE ANY EXISTING ENTRY HARDWARE. SUPPLY COVER PLATE TO CONCEAL HOLES OR CORES. SUPPLY STRIKE COVER PLATE PER HARDWARE SCHEDULE. STORE ENTRY IS TO ONLY BE THROUGH FRONT DOOR.",
+        "DOORS SHALL BE OPERABLE FROM THE INSIDE WITHOUT THE USE OF A KEY OR ANY SPECIAL KNOWLEDGE.",
+        "HAND ACTIVATED DOOR OPENING HARDWARE TO BE MOUNTED 34\" ABOVE FLOOR AND OPERATED WITH A SINGLE EFFORT BY LEVER TYPE HARDWARE.",
+        "ALIGNMENT OF DOOR HEADS AND OTHER CRITICAL ELEMENTS SHALL BE MAINTAINED AT A CONSTANT LEVELAND SHALL NOT FOLLOW VARIATIONS IN FLOOR PLANE.",
+        "GC TO VERIFY DOOR IS IN PROPER WORKING CONDITION & PROVIDE HARDWARE PER SCHEDULE.",
+        "CONTRACTOR TO PROVIDE SIGN \"THIS DOOR TO REMAIN UNLOCKED WHILE THIS SPACE IS OCCUPIED\" PER IBC 1010.1.9.3",
+        "LETTERS SHALL BE RAISED 1/32\", UPPER CASE SANS SERIF TYPE AND SHALL BE ACCOMPANIED WITH CONTRACTED GRADE 2 BRAILLE. CONTRACTED GRADE 2 BRAILLE DOTS SHALL BE 1/10\" ON CENTER IN EACH CELL. THERE SHALL BE 2/10\" SPACE BETWEEN CELLS. DOTS SHALL BE RAISED A MINIMUM OF 1/40\" ABOVE BACKGROUND. BRAILLE DOTS SHALL BE DOMED OR ROUNDED.",
+        "SIGN SHALL HAVE A MATTE FINISH WITH WHITE LETTERS ON A BLACK BACKGROUND.",
+        "TACTILE \"EXIT\" OR \"EXIT ROUTE\" SIGN PER PLAN"
+      ],
+      "keying_notes": [
+        "AT TURNOVER, CONTRACTOR IS TO GIVE NOTICE FOR REKEY TO SKECHERS LOSS PREVENTION DEPT. CONTRACTOR IS TO SUPPLY ALL KEYS TO SPACE TO TENANT OR TENANT'S LOCKSMITH. CONTACT SKECHERS LOSS PREVENTION DEPT. FOR TURNOVER AND SECURITY REQUIREMENTS.",
+        "EXTERIOR DOORS (EXCEPT DOOR 101) ARE NOT TO HAVE A KEYED ENTRY, BOLT OR DOOR HANDLE ON OUTSIDE. AT EXISTING DOORS REMOVE ANY EXISTING ENTRY HARDWARE. SUPPLY COVER PLATE TO CONCEAL HOLES OR CORES. SUPPLY STRIKE COVER PLATE PER HARDWARE SCHEDULE. STORE ENTRY IS TO ONLY BE THROUGH FRONT DOOR.",
+        "DOORS SHALL BE OPERABLE FROM THE INSIDE WITHOUT THE USE OF A KEY OR ANY SPECIAL KNOWLEDGE.",
+        "GC TO PROVIDE 1 -3 8\", % PIN KSP 307-601-26D MORTISE HOUSING WITH ADAM RITE CAM (SATIN CHROME FINISH). SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS.",
+        "GC TO PROVIDE 1 % PIN KSP 307-601-26D MORTISE HOUSING WITH ADAM RITE CAM (SATIN CHROME FINISH). SEE NOTE ON COVER SHEET REGARDING TURNOVER REQUIREMENTS."
+      ],
+      "legend": {
+        "F1": "QUESTMARK",
+        "F2": "MOHAWK GROUP GLUE DOWN FLOORING - MOHAWK - MEDELLA HUES H5301 \"GRAY LIGHT\". SIZE 6'-6\" X 6'-6\"",
+        "F3": "MOHAWK GROUP FLOATING LVT - 936 CONVERSE BASIN, HOT AND HEAVY COLLECTION. SIZE 9\" X 59\" X 0.2 SECOYA",
+        "B1": "ROPPE 100-BLACK",
+        "B2": "MOHAWK GROUP MOHAWK - MEDELLA HUES - H5301 \"GRAY LIGHT\" SHEET VINYL ROLLED-UP BASE",
+        "P1": "SHERWIN WILLIAMS COMMODORE BLUESW 6524 LATEX EGG SHELL LOW GLOSS",
+        "P2": "SHERWIN WILLIAMS TOQUE WHITE SW 7003 LATEX FLAT",
+        "P3": "SHERWIN WILLIAMS TOQUE WHITE SW 7003 LATEX EGG SHELL LOW GLOSS",
+        "P4": "SHERWIN WILLIAMS TOQUE WHITEP4 SW 7003 SEMI-GLOSS",
+        "P6": "SHERWIN WILLIAMS TOQUE WHITEP6 SW 7003 LATEX EGG SHELL LOW GLOSS",
+        "P7": "SHERWIN WILLIAMS CAVIAR SW 6990 SEMI-GLOSS - DOORS AND FRAMES",
+        "P8": "SHERWIN WILLIAMS IRON ORE SW 7069 LATEX FLAT",
+        "P9": "SHERWIN WILLIAMS DORIAN GRAY SW 7017 LATEX EGG SHELL LOW GLOSS",
+        "P10": "SHERWIN WILLIAMS IRON ORE SW 7069 LATEX EGG SHELL LOW GLOSS",
+        "W1": "CONTRACTOR WHITE WHITE PEBBLE TEXTURED FRP TO 48\" AFF WITH \"J\" MOLD TRIM AT TOP",
+        "W2": "CONTRACTOR UNFINISHED",
+        "W3": "MILTON & KING",
+        "W4": "CONTRACTOR STAINLESS STEEL .036\" SHEETING",
+        "C1": "CONTRACTOR CONTRACTOR PAINTED OPEN TO DECK CEILING. SEE RCP SHEET A3 FOR FINISH TYPE.",
+        "C2": "CONTRACTOR CONTRACTOR NEW\" 5/8\" DRYWALL CEILING - PAINT P2."
+      }
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (5 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "10 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "8 hardware set(s) identified; 8 have a complete extracted item list.",
+      "10 general note(s) captured from the door-schedule sheet.",
+      "12 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 230,
+        "truncated": false,
+        "output_count": 10
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 202,
+        "truncated": false,
+        "output_count": 8
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 45
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 432,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "102"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "104"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "A",
+          "item_count": 7
+        },
+        {
+          "id": "B",
+          "item_count": 6
+        },
+        {
+          "id": "C",
+          "item_count": 10
+        },
+        {
+          "id": "D",
+          "item_count": 6
+        },
+        {
+          "id": "E",
+          "item_count": 8
+        },
+        {
+          "id": "F",
+          "item_count": 5
+        },
+        {
+          "id": "G",
+          "item_count": 7
+        },
+        {
+          "id": "H",
+          "item_count": 4
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door Schedule & Hardware.pdf (755 KB).",
+      "message": "Secure analysis started for Door Schedule & Hardware.pdf (755 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T18:51:34Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:51:34Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 230s.",
+      "message": "Door schedule review - completed in 230s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:55:24Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:55:24Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 202s.",
+      "message": "Hardware set review - completed in 202s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:58:46Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T18:58:46Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 10 doors - 8 sets - 53 items - 0 risks - 0 RFIs - 432s total.",
+      "message": "Secure analysis done - 10 doors - 8 sets - 53 items - 0 risks - 0 RFIs - 432s total.",
+      "stage": "done",
+      "ts": "2026-05-27T18:58:46Z"
+    }
+  ]
+}

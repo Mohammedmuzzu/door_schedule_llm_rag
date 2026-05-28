@@ -1,0 +1,196 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "BANK OF AMERICA",
+      "project_number": null,
+      "architect": null,
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 0,
+      "total_hardware_sets_referenced": 0,
+      "hardware_sets_missing_or_unclear": 1,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 0,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 0 opening(s) and 1 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [],
+    "hardware_set_review": [
+      {
+        "hardware_set": "DOOR HARDWARE",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "Door hardware table is visible, but the hardware set identifiers and item text are not legible in the provided image.",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "1 hardware set(s) identified; 0 have a complete extracted item list."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 84,
+        "truncated": false,
+        "output_count": 0
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 81,
+        "truncated": false,
+        "output_count": 1
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 0
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 165,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [],
+      "hardware_sets": [
+        {
+          "id": "DOOR HARDWARE",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware schedule.pdf (460 KB).",
+      "message": "Secure analysis started for Door & Hardware schedule.pdf (460 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T20:40:44Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:40:44Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 84s.",
+      "message": "Door schedule review - completed in 84s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:42:08Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:42:08Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 81s.",
+      "message": "Hardware set review - completed in 81s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:43:30Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T20:43:30Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 0 doors - 1 sets - 0 items - 0 risks - 0 RFIs - 165s total.",
+      "message": "Secure analysis done - 0 doors - 1 sets - 0 items - 0 risks - 0 RFIs - 165s total.",
+      "stage": "done",
+      "ts": "2026-05-27T20:43:30Z"
+    }
+  ]
+}

@@ -1,0 +1,2560 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "NORTHEAST COMMUNITY CLINIC",
+      "project_number": null,
+      "architect": "RDLR Architects",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 0,
+      "total_hardware_sets_referenced": 0,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 0,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 0 opening(s) and 22 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [],
+    "hardware_set_review": [
+      {
+        "hardware_set": "#01",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Continuous Hinges",
+            "part": "FM-SLF-HD1-PT",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Electric CVR Exit Device",
+            "part": "PED4801-MELR-M92",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Electric CVR Exit Device",
+            "part": "PED4847-MELR-M92 x Cylinder only",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Cylinder",
+            "part": "As required",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Offset Pull",
+            "part": "BF158",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Automatic Operator",
+            "part": "6300",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "1ADJ series",
+            "mfr": "Rixson",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Threshold",
+            "part": "1715",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 11,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Sweep",
+            "part": "315N",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Perimeter Gasketing",
+            "part": null,
+            "mfr": "By Aluminum Door Manufacturer",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 13,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Meeting Stile Gasketing",
+            "part": null,
+            "mfr": "By Aluminum Door Manufacturer",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 14,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Exterior Switch Post",
+            "part": "500",
+            "mfr": "Norton",
+            "finish": "690",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 15,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Frame Mount Vestibule Switch",
+            "part": "503 x 559",
+            "mfr": "Norton",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 16,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Presence Detector",
+            "part": "585",
+            "mfr": "Norton",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 17,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 18,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 19,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation, unlocked hours: Doors closed and electrically dogged via access control system for push/pull operation. Exterior and vestibule actuators both enabled. Pressing either actuator signals automatic operator to one leaf. Free ingress and egress. Operation, locked hours: Doors closed and locked. Exterior actuator disabled. Presenting valid credential to reader momentarily retracts latches allowing entry and enabling exterior actuator. Interior actuator enabled at all times. Pressing interior actuator retracts latch and signals automatic operator to open one leaf. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#02",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Continuous Hinge",
+            "part": "FM-SLF-HD1",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Push/Pull Bar Set",
+            "part": "BF15847",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Automatic Operator",
+            "part": "6300",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "1ADJ series",
+            "mfr": "Rixson",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Exterior Switch Post",
+            "part": "500",
+            "mfr": "Norton",
+            "finish": "690",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Frame Mount Vestibule Switch",
+            "part": "503 x 559",
+            "mfr": "Norton",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Frame Mount Interior Swith",
+            "part": "503 x 559",
+            "mfr": "Norton",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Presence Detector",
+            "part": "585",
+            "mfr": "Norton",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Both actuators enabled. Pressing either actuator signals automatic operator to open one leaf. Free egress at all times.",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#03",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#04",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Continuous Hinge",
+            "part": "FM-SLF-HD1",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Push/Pull Bar Set",
+            "part": "BF15847",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "1ADJ series",
+            "mfr": "Rixson",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#05",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Passage Set",
+            "part": "CLX3310",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Acoustic Seal Set",
+            "part": "PEMKOSTCSET-1D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.97
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#06",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#07",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Continuous Hinge",
+            "part": "FM-SLF-HD1-PT",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Electric Rim Exit Device",
+            "part": "PED4247-MELR-M92 x Cylinder only",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Cylinder",
+            "part": "As required",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Offset Pull",
+            "part": "BF158",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "1ADJ series",
+            "mfr": "Rixson",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Threshold",
+            "part": "1715",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Sweep",
+            "part": "315N",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Perimeter Gasketing",
+            "part": null,
+            "mfr": "By Aluminum Door Manufacturer",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 13,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential to reader momentarily retracts latch allowing entry. During designated open hours door may be electrically dogged for free ingress. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#08",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Passage Set",
+            "part": "CLX3310",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Acoustic Seal Set",
+            "part": "PEMKOSTCSET-1D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.97
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#09",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#10",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Ligature Resistant Hinge",
+            "part": "AC500-HT",
+            "mfr": "ABH",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Privacy Trim",
+            "part": "ML2030-BLSS",
+            "mfr": "Corbin Russwin",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Concealed Closer",
+            "part": "268-OB",
+            "mfr": "Sargent",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW x Torx",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "1841",
+            "mfr": "ABH",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#11",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Continuous Hinge",
+            "part": "FM-SLF-HD1-PT",
+            "mfr": "Pemko",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Push/Pull Bar Set",
+            "part": "BF15847",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Electrified Deadlatch",
+            "part": "4300M",
+            "mfr": "Adams Rite",
+            "finish": "335",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Deadlatch Paddle",
+            "part": "4591",
+            "mfr": "Adams Rite",
+            "finish": "335",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Cylinder",
+            "part": "As required",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases latch for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#12",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Continuous Hinge",
+            "part": "FM-HD1-PT",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Electric Rim Exit Device",
+            "part": "PED5257-MELR-M92 x 957PT",
+            "mfr": "Corbin Russwin",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Cylinder",
+            "part": "As required",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential to reader momentarily retracts latch allowing entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#13",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#14",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Passage Set",
+            "part": "CLX3310",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#15",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Ligature Resistant Hinge",
+            "part": "AC500-HT",
+            "mfr": "ABH",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Passage Trim",
+            "part": "CLX3310-BHSS",
+            "mfr": "Corbin Russwin",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "1841",
+            "mfr": "ABH",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Acoustic Seal Set",
+            "part": "PEMKOSTCSET-1D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.97
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#16",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Office Lock",
+            "part": "CLX3351",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Acoustic Seal Set",
+            "part": "PEMKOSTCSET-1D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.97
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#17",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Push Plate",
+            "part": "70C",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Pull Plate",
+            "part": "110 x 70C",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer",
+            "part": "7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Wall Stop",
+            "part": "406/409 as req\u2019d",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#18",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Passage Set",
+            "part": "CLX3310",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Acoustic Seal Set",
+            "part": "PEMKOSTCSET-1D",
+            "mfr": "Pemko",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.97
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#19",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Manual Flush Bolt",
+            "part": "555",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Dust Proof Strike",
+            "part": "570",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "55 series",
+            "mfr": "Rixson",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 10,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#20",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Push Plate",
+            "part": "70C",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Pull Plate",
+            "part": "110 x 70C",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "BSP",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#21",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Manual Flush Bolt",
+            "part": "555",
+            "mfr": "Rockwood",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Dust Proof Strike",
+            "part": "570",
+            "mfr": "Rockwood",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Overhead Stop",
+            "part": "55 series",
+            "mfr": "Rixson",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 1 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Threshold",
+            "part": "2005AT",
+            "mfr": "Pemko",
+            "finish": "719",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 10,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Sweep",
+            "part": "315CN",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Perimeter Gasketing",
+            "part": "303CS",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 12,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Meeting Stile Gasketing",
+            "part": "305CN",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 13,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Rain Drip",
+            "part": "346C",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 14,
+            "qty": 2,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 15,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 16,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "#22",
+        "header_verbatim": null,
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Hinge",
+            "part": "As specified above",
+            "mfr": "McKinney",
+            "finish": "652",
+            "notes": null,
+            "confidence": 0.92
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Transfer",
+            "part": "CEPT-10",
+            "mfr": "Securitron",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Fail Secure Lock",
+            "part": "CLX33905",
+            "mfr": "Corbin Russwin",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Closer w/ Stop",
+            "part": "CPS-7500",
+            "mfr": "Norton",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Kickplate",
+            "part": "K1050 8 x 2 LDW",
+            "mfr": "Rockwood",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Threshold",
+            "part": "2005AT",
+            "mfr": "Pemko",
+            "finish": "719",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Sweep",
+            "part": "315CN",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 8,
+            "qty": 1,
+            "unit": "set",
+            "desc": "Perimeter Gasketing",
+            "part": "303CS",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 9,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Rain Drip",
+            "part": "346C",
+            "mfr": "Pemko",
+            "finish": "628",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 10,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Door Position Switch",
+            "part": "DPS (-M/-W as req\u2019d)",
+            "mfr": "Securitron",
+            "finish": "BLK",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 11,
+            "qty": 1,
+            "unit": "ea",
+            "desc": "Power Supply",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.96
+          },
+          {
+            "item_no": 12,
+            "qty": null,
+            "unit": "ea",
+            "desc": "Credential Reader",
+            "part": null,
+            "mfr": "By Security Provider",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.9
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": "Operation: Door normally closed and locked. Valid credential presentation releases lock for entry. Free egress at all times. Upon loss of power door remains locked (fail-secure).",
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [],
+    "sheet_context": {
+      "general_notes": [
+        "REFER TO SPECIFICATIONS FOR FULL HARDWARE SETS AND REQUIREMENTS."
+      ],
+      "hardware_preamble": [
+        "REFER TO SPECIFICATIONS FOR FULL HARDWARE SETS AND REQUIREMENTS."
+      ],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "22 hardware set(s) identified; 22 have a complete extracted item list.",
+      "1 general note(s) captured from the door-schedule sheet.",
+      "1 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 16,
+        "truncated": false,
+        "output_count": 0
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 175,
+        "truncated": false,
+        "output_count": 22
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 0
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 191,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [],
+      "hardware_sets": [
+        {
+          "id": "#01",
+          "item_count": 19
+        },
+        {
+          "id": "#02",
+          "item_count": 9
+        },
+        {
+          "id": "#03",
+          "item_count": 8
+        },
+        {
+          "id": "#04",
+          "item_count": 4
+        },
+        {
+          "id": "#05",
+          "item_count": 6
+        },
+        {
+          "id": "#06",
+          "item_count": 9
+        },
+        {
+          "id": "#07",
+          "item_count": 13
+        },
+        {
+          "id": "#08",
+          "item_count": 6
+        },
+        {
+          "id": "#09",
+          "item_count": 9
+        },
+        {
+          "id": "#10",
+          "item_count": 5
+        },
+        {
+          "id": "#11",
+          "item_count": 8
+        },
+        {
+          "id": "#12",
+          "item_count": 9
+        },
+        {
+          "id": "#13",
+          "item_count": 8
+        },
+        {
+          "id": "#14",
+          "item_count": 5
+        },
+        {
+          "id": "#15",
+          "item_count": 4
+        },
+        {
+          "id": "#16",
+          "item_count": 6
+        },
+        {
+          "id": "#17",
+          "item_count": 6
+        },
+        {
+          "id": "#18",
+          "item_count": 5
+        },
+        {
+          "id": "#19",
+          "item_count": 10
+        },
+        {
+          "id": "#20",
+          "item_count": 5
+        },
+        {
+          "id": "#21",
+          "item_count": 16
+        },
+        {
+          "id": "#22",
+          "item_count": 12
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for A-614-DOOR-HARDWARE-SETS-Rev.1.pdf (182 KB).",
+      "message": "Secure analysis started for A-614-DOOR-HARDWARE-SETS-Rev.1.pdf (182 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T19:26:49Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T19:26:49Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 16s.",
+      "message": "Door schedule review - completed in 16s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T19:27:05Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T19:27:05Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 175s.",
+      "message": "Hardware set review - completed in 175s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T19:30:00Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T19:30:00Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 0 doors - 22 sets - 182 items - 0 risks - 0 RFIs - 191s total.",
+      "message": "Secure analysis done - 0 doors - 22 sets - 182 items - 0 risks - 0 RFIs - 191s total.",
+      "stage": "done",
+      "ts": "2026-05-27T19:30:00Z"
+    }
+  ]
+}

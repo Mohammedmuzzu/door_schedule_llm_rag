@@ -1,0 +1,2312 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "6232163200 KINGWOOD | TX5-214",
+      "project_number": null,
+      "architect": "LiTTLE",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 24,
+      "total_hardware_sets_referenced": 5,
+      "hardware_sets_missing_or_unclear": 1,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 24,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 24 opening(s) and 5 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100A",
+        "room_or_location": "VESTIBULE",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 4\"",
+          "height": "6' - 9 1/2\"",
+          "thickness": null
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "PROVIDE NEW WHEEL CHAIR PUSH PLATE"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "100B",
+        "room_or_location": "VESTIBULE",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0 1/2\"",
+          "height": "6' - 11\"",
+          "thickness": null
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "PROVIDE NEW WHEEL CHAIR PUSH PLATE"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "100C",
+        "room_or_location": "SERVER",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "5' - 4\"",
+          "height": "6' - 8\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "100D",
+        "room_or_location": "CLOSET",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "5' - 4\"",
+          "height": "6' - 8\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "103",
+        "room_or_location": "ATM ROOM",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.86
+      },
+      {
+        "mark": "104",
+        "room_or_location": "OFFICE/CB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "105",
+        "room_or_location": "OFFICE/CB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "106",
+        "room_or_location": "OFFICE/CB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "107",
+        "room_or_location": "OFFICE/CB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 1\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "108",
+        "room_or_location": "OFFICE/CB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "2' - 10\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "109",
+        "room_or_location": "OFFICE/SB",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "110",
+        "room_or_location": "OFFICE/ME",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 9 1/2\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "(E)",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.84
+      },
+      {
+        "mark": "112",
+        "room_or_location": "WELLNESS",
+        "door_type": "A1",
+        "opening_type": "A1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "16",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "PROVIDE PRIVACY TYPE LOCK, PROVIDE 3/4\" UNDERCUT AT DLOOR LEAF. REFER TO MECHANICAL DRAWINGS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "113",
+        "room_or_location": "BREAK ROOM",
+        "door_type": "A1",
+        "opening_type": "A1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "11",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "115",
+        "room_or_location": "WOMEN'S RESTROOM",
+        "door_type": "A1",
+        "opening_type": "A1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "08",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "PROVIDE PRIVACY TYPE LOCK, PROVIDE 3/4\" UNDERCUT AT DLOOR LEAF. REFER TO MECHANICAL DRAWINGS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "116",
+        "room_or_location": "MEN'S RESTROOM",
+        "door_type": "A1",
+        "opening_type": "A1",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "08",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "PROVIDE PRIVACY TYPE LOCK, PROVIDE 3/4\" UNDERCUT AT DLOOR LEAF. REFER TO MECHANICAL DRAWINGS"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.9
+      },
+      {
+        "mark": "117",
+        "room_or_location": "HALLWAY",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 1 3/4\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "12",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "EXISTING DOOR, TO RECEIVED NEW HARDWARE"
+        ],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.74
+      },
+      {
+        "mark": "119",
+        "room_or_location": "SD LOBBY",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "2' - 9 1/2\"",
+          "height": "7' - 8\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "EXISTING",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) ALUMIMUM",
+        "frame_finish": "EXISTING",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "120",
+        "room_or_location": "CPN",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "123",
+        "room_or_location": "UCC",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "124A",
+        "room_or_location": "HALLWAY",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "124B",
+        "room_or_location": "HALLWAY",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.82
+      },
+      {
+        "mark": "125",
+        "room_or_location": "CSR",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      },
+      {
+        "mark": "127",
+        "room_or_location": "WORK ROOM",
+        "door_type": "EXISTING",
+        "opening_type": "EXISTING",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": "EXISTING",
+        "door_finish": "PAINT",
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": "(E) HOLLOW METAL",
+        "frame_finish": "PAINT",
+        "fire_rating": "-",
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": true,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.8
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "08",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "115",
+          "116"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "BB1279 4.5 X 4.5",
+            "mfr": "HAG",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PRIVACY SET",
+            "part": "ND40S SPA",
+            "mfr": "SCH",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "SURFACE CLOSER",
+            "part": "4011",
+            "mfr": "LCN",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "KICK PLATE",
+            "part": "8400 10\" X 2\" LDW",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "WALL STOP",
+            "part": "WS407CCV",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "SEALS",
+            "part": "188S",
+            "mfr": "ZER",
+            "finish": "CL",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "11",
+        "header_verbatim": "IFO",
+        "referenced_by_doors": [
+          "113"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "BB1279 4.5 X 4.5",
+            "mfr": "HAG",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PUSH BUTTON LOCK",
+            "part": "5031B WL",
+            "mfr": "SIM",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "SFIC EV B CORE ONLY",
+            "part": "80-037",
+            "mfr": "SCH",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "SURFACE CLOSER",
+            "part": "4011",
+            "mfr": "LCN",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "WALL STOP",
+            "part": "WS407CCV",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SCOPE",
+            "part": "DS/2000-ALS",
+            "mfr": "MIS",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCER",
+            "part": "SR64",
+            "mfr": "IVE",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": null,
+            "desc": "SI",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.25
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "12",
+        "header_verbatim": "IFO",
+        "referenced_by_doors": [
+          "117"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "BB1279 4.5 X 4.5 NRP",
+            "mfr": "HAG",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PUSH BUTTON LOCK",
+            "part": "5031B WL",
+            "mfr": "SIM",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "SFIC EV B CORE ONLY",
+            "part": "80-037",
+            "mfr": "SCH",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "SURFACE CLOSER",
+            "part": "4111 EDA",
+            "mfr": "LCN",
+            "finish": "689",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 1,
+            "unit": null,
+            "desc": "DOOR SCOPE",
+            "part": "DS/2000-ALS",
+            "mfr": "MIS",
+            "finish": "AL",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 6,
+            "qty": 1,
+            "unit": null,
+            "desc": "OVERHEAD STOP",
+            "part": "100S",
+            "mfr": "GLY",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 7,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCER",
+            "part": "SR64",
+            "mfr": "IVE",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "16",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "112"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": 3,
+            "unit": null,
+            "desc": "HINGE",
+            "part": "BB1279 4.5X4.5",
+            "mfr": "HAG",
+            "finish": "26D",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": 1,
+            "unit": null,
+            "desc": "PRIVACY SET",
+            "part": "L9456HD 17A 09-544 OS-OCC",
+            "mfr": "SCH",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": 1,
+            "unit": null,
+            "desc": "SFIC EV B CORE ONLY",
+            "part": "80-037",
+            "mfr": "SCH",
+            "finish": "626",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 4,
+            "qty": 1,
+            "unit": null,
+            "desc": "WALL STOP",
+            "part": "WS407CCV",
+            "mfr": "IVE",
+            "finish": "630",
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 5,
+            "qty": 3,
+            "unit": null,
+            "desc": "SILENCER",
+            "part": "SR64",
+            "mfr": "IVE",
+            "finish": "GRY",
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "(E)",
+        "header_verbatim": "EXISTING",
+        "referenced_by_doors": [
+          "100A",
+          "100B",
+          "100C",
+          "100D",
+          "103",
+          "104",
+          "105",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110"
+        ],
+        "status": "incomplete",
+        "raw_status": "existing",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100A",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "100D",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "(E)",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "16",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4.5X4.5",
+        "manufacturer": "HAG",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "16",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET",
+        "catalog_number": "L9456HD 17A 09-544 OS-OCC",
+        "manufacturer": "SCH",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "16",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SFIC EV B CORE ONLY",
+        "catalog_number": "80-037",
+        "manufacturer": "SCH",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "16",
+        "item_no": 4,
+        "qty": 1,
+        "description": "WALL STOP",
+        "catalog_number": "WS407CCV",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "112",
+        "hardware_set": "16",
+        "item_no": 5,
+        "qty": 3,
+        "description": "SILENCER",
+        "catalog_number": "SR64",
+        "manufacturer": "IVE",
+        "finish": "GRY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4.5 X 4.5",
+        "manufacturer": "HAG",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PUSH BUTTON LOCK",
+        "catalog_number": "5031B WL",
+        "manufacturer": "SIM",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SFIC EV B CORE ONLY",
+        "catalog_number": "80-037",
+        "manufacturer": "SCH",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 4,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "4011",
+        "manufacturer": "LCN",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 5,
+        "qty": 1,
+        "description": "WALL STOP",
+        "catalog_number": "WS407CCV",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 6,
+        "qty": 1,
+        "description": "DOOR SCOPE",
+        "catalog_number": "DS/2000-ALS",
+        "manufacturer": "MIS",
+        "finish": "AL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SILENCER",
+        "catalog_number": "SR64",
+        "manufacturer": "IVE",
+        "finish": "GRY",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "113",
+        "hardware_set": "11",
+        "item_no": 7,
+        "qty": 3,
+        "description": "SI",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4.5 X 4.5",
+        "manufacturer": "HAG",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET",
+        "catalog_number": "ND40S SPA",
+        "manufacturer": "SCH",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "4011",
+        "manufacturer": "LCN",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 4,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 5,
+        "qty": 1,
+        "description": "WALL STOP",
+        "catalog_number": "WS407CCV",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "08",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SEALS",
+        "catalog_number": "188S",
+        "manufacturer": "ZER",
+        "finish": "CL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 1,
+        "qty": 3,
+        "description": "HINGE",
+        "catalog_number": "BB1279 4.5 X 4.5",
+        "manufacturer": "HAG",
+        "finish": "26D",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 2,
+        "qty": 1,
+        "description": "PRIVACY SET",
+        "catalog_number": "ND40S SPA",
+        "manufacturer": "SCH",
+        "finish": "626",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 3,
+        "qty": 1,
+        "description": "SURFACE CLOSER",
+        "catalog_number": "4011",
+        "manufacturer": "LCN",
+        "finish": "689",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 4,
+        "qty": 1,
+        "description": "KICK PLATE",
+        "catalog_number": "8400 10\" X 2\" LDW",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 5,
+        "qty": 1,
+        "description": "WALL STOP",
+        "catalog_number": "WS407CCV",
+        "manufacturer": "IVE",
+        "finish": "630",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "08",
+        "item_no": 6,
+        "qty": 1,
+        "description": "SEALS",
+        "catalog_number": "188S",
+        "manufacturer": "ZER",
+        "finish": "CL",
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "12",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "119",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "120",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "123",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "124A",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "124B",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "125",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      },
+      {
+        "door_mark": "127",
+        "hardware_set": "",
+        "item_no": null,
+        "qty": null,
+        "description": "(existing door - hardware to remain; not mapped per rule)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "EXISTING_TO_REMAIN"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "A. PAINT DOORS AND DOOR FRAMES TO MATCH ADJACENT PARTITION UNLESS NOTED OTHERWISE.",
+        "B. ALL DOOR HARDWARE SHALL BE LEVER TYPE MEETING ACCESSIBILITY DESIGN REQUIREMENTS.",
+        "C. COORDINATE ALL HARDWARE KEYING WITH THE OWNER AND OBTAIN OWNER'S APPROVAL PRIOR TO PLACING HARDWARE ORDER.",
+        "FROM EXTERIOR - LOCKED CONDITION AFTER HOURS: ATM DOORS: ACCESS VIA VALID CARD WHICH UNLOCKS EXIT DEVICE ON ATM DOORS. CUSTOMERS PULL TRIM FOR [ELECTRICAL] ENTRANCE.",
+        "FROM EXTERIOR - UNLOCKED CONDITION DURING BUSINESS HOURS: ATM DOORS: PARABIT CONTROLLER HOLDS DOORS UNLOCKED ON A TIME SCHEDULE. CUSTOMERS PULL TRIM FOR [ELECTRICAL] ENTRANCE.",
+        "FROM INTERIOR: ATM DOORS: FREE EGRESS AT ALL TIMES VIA THE INSIDE DUMMY TOUCH BAR OR BY DEPRESSING THE PUSH TO EXIT BUTTON.",
+        "SECURE LOCKDOWN FROM INTERIOR DURING BUSINESS HOURS: ATM DOORS: IN THE EVENT OF AN EMERGENCY, BANK ASSOCIATE USES A KEY TO OPERATE THE INTERIOR KEYSWITCH WHICH WILL OVERRIDE THE ACCESS SYSTEM AND SECURE TEH DOOR (RED LED). EGRESS WILL STILL BE ALLOWED. AFTER THE EVENT, ASSOCIATE USES A KEY TO OPERATE THE KEYSWITCH AND THE DOOR WILL RESUME OPERATION UNDER PARABIT CONTROLLER SYSTEM (GREEN LED).",
+        "EVACUATION LOCKDOWN FROM EXTERIOR DURING BUSINESS HOURS: ATM DOORS: IN THE EVENT OF AN EMERGENCY, BANK ASSOCIATE TO USE INTERIOR KEYSWITCH WHICH WILL OVERRIDE THE ACCESS SYSTEM AND SECURE THE DOORS (RED LED). EGRESS WILL STILL BE ALLOWED AND ASSOCIATE WILL EXIT THROUGH SINGLE DOOR. AFTER EVENT, ASSOCIATE WILL ENTER THE BANK BY OPERATING THE EXTERIOR KEYSWITCH WHICH UNLOCKS THE DOORS FOR 10 SECONDS. AFTER ENTERING THE BANK, ASSOCIATE TO OPERATE THE INTERIOR KEYSWITCH AND DOORS WILL RESUME OPERATION UNDER PARABIT CONTROLLER SYSTEM (GREEN LED).",
+        "PEEP SCOPE WHERE NOTED IN SCHEDULE AND REQUIRED BY CODE",
+        "USED WHERE NO WALL AREA IS PROVIDED, INSTALLED ON STOREFRONT MULLION",
+        "PREFERRED OPTION FOR WALL MOUNTED",
+        "SPECIFY THIS MODEL IF STATE CODE REQUIRES IT"
+      ],
+      "hardware_preamble": [
+        "SECURITY AT EXTERIOR ENTRY DOORS",
+        "FUNCTION STATEMENTS",
+        "FROM EXTERIOR - LOCKED CONDITION AFTER HOURS:\nATM DOORS: ACCESS VIA VALID CARD WHICH UNLOCKS EXIT DEVICE ON ATM DOORS. CUSTOMERS PULL TRIM FOR [ELECTRICAL] ENTRANCE.",
+        "FROM EXTERIOR - UNLOCKED CONDITION DURING BUSINESS HOURS:\nATM DOORS: PARABIT CONTROLLER HOLDS DOORS UNLOCKED ON A TIME SCHEDULE. CUSTOMERS PULL TRIM FOR [ELECTRICAL] ENTRANCE.",
+        "FROM INTERIOR:\nATM DOORS: FREE EGRESS AT ALL TIMES VIA THE INSIDE DUMMY TOUCH BAR OR BY DEPRESSING THE PUSH TO EXIT BUTTON.",
+        "SECURE LOCKDOWN FROM INTERIOR DURING BUSINESS HOURS:\nATM DOORS: IN THE EVENT OF AN EMERGENCY, BANK ASSOCIATE USES A KEY TO OPERATE THE INTERIOR KEYSWITCH WHICH WILL OVERRIDE THE ACCESS SYSTEM AND SECURE TEH DOOR (RED LED). EGRESS WILL STILL BE ALLOWED. AFTER THE EVENT, ASSOCIATE USES A KEY TO OPERATE THE KEYSWITCH AND THE DOOR WILL RESUME OPERATION UNDER PARABIT CONTROLLER SYSTEM (GREEN LED).",
+        "EVACUATION LOCKDOWN FROM EXTERIOR DURING BUSINESS HOURS:\nATM DOORS: IN THE EVENT OF AN EMERGENCY, BANK ASSOCIATE TO USE INTERIOR KEYSWITCH WHICH WILL OVERRIDE THE ACCESS SYSTEM AND SECURE THE DOORS (RED LED). EGRESS WILL STILL BE ALLOWED AND ASSOCIATE WILL EXIT THROUGH SINGLE DOOR. AFTER EVENT, ASSOCIATE WILL ENTER THE BANK BY OPERATING THE EXTERIOR KEYSWITCH WHICH UNLOCKS THE DOORS FOR 10 SECONDS. AFTER ENTERING THE BANK, ASSOCIATE TO OPERATE THE INTERIOR KEYSWITCH AND DOORS WILL RESUME OPERATION UNDER PARABIT CONTROLLER SYSTEM (GREEN LED).",
+        "B. ALL DOOR HARDWARE SHALL BE LEVER TYPE MEETING ACCESSIBILITY DESIGN REQUIREMENTS."
+      ],
+      "keying_notes": [
+        "C. COORDINATE ALL HARDWARE KEYING WITH THE OWNER AND OBTAIN OWNER'S APPROVAL PRIOR TO PLACING HARDWARE ORDER.",
+        "F CYLINDER: (TEMPORARY CYLINDER USED DURING CONSTRUCTION; TO BE REPLACED WITH ITEM \"O\" AFTER CONSTRUCTION)",
+        "O PERMANENT CYLINDER",
+        "1 SFIC EV B CORE ONLY 80-037 626 SCH",
+        "CYLINDER: (TEMPORARY CYLINDER USED DURING CONSTRUCTION; TO BE REPLACED WITH ITEM \"O\" AFTER CONSTRUCTION)"
+      ],
+      "legend": {
+        "A": "HINGE",
+        "B": "TRANSFER: ELECTRICAL POWER TRANSFER",
+        "C": "PANIC HARDWARE",
+        "E": "KEY SWITCH: (RECESS MOUNTED ON INTERIOR JAMB FRAME)",
+        "F": "CYLINDER: (TEMPORARY CYLINDER USED DURING CONSTRUCTION; TO BE REPLACED WITH ITEM \"O\" AFTER CONSTRUCTION)",
+        "G": "CLOSER",
+        "H": "PULL HANDLE",
+        "I": "SWEEP",
+        "J": "WEATHERSTRIP",
+        "K": "THRESHOLD",
+        "O": "PERMANENT CYLINDER",
+        "Q": "CARD READER (SURFACE MOUNTED ON EXTERIOR JAMB FRAME)",
+        "R": "ELECTRIC STRIKE",
+        "P": "PUSH PLATE"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "7 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "119",
+          "120",
+          "123",
+          "124A",
+          "124B",
+          "125",
+          "127"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "high",
+        "category": "Hardware set definitions",
+        "issue": "1 hardware set(s) referenced by 12 door(s) have no extracted line items.",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "100C",
+          "100D",
+          "103",
+          "104",
+          "105",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110"
+        ],
+        "recommendation": "Locate full hardware set definitions; carry as allowance until confirmed.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 119, 120, 123, 124A, 124B, 125, 127. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "119",
+          "120",
+          "123",
+          "124A",
+          "124B",
+          "125",
+          "127"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "high",
+        "category": "Hardware set definitions",
+        "question": "Provide the complete line-item list for hardware set(s): (E).",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "100C",
+          "100D",
+          "103",
+          "104",
+          "105",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110"
+        ],
+        "recommendation": "Carry as allowance until confirmed.",
+        "status": "Open",
+        "reason": "Carry as allowance until confirmed.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "Keying notes captured from the drawings (5 line(s)); verify keyway, master structure, cylinder format and key counts.",
+      "24 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "5 hardware set(s) identified; 4 have a complete extracted item list.",
+      "12 general note(s) captured from the door-schedule sheet.",
+      "8 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 196,
+        "truncated": false,
+        "output_count": 24
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 122,
+        "truncated": false,
+        "output_count": 5
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 244,
+        "output_count": 1
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 45
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 562,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "100C"
+        },
+        {
+          "mark": "100D"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "104"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        },
+        {
+          "mark": "112"
+        },
+        {
+          "mark": "113"
+        },
+        {
+          "mark": "115"
+        },
+        {
+          "mark": "116"
+        },
+        {
+          "mark": "117"
+        },
+        {
+          "mark": "119"
+        },
+        {
+          "mark": "120"
+        },
+        {
+          "mark": "123"
+        },
+        {
+          "mark": "124A"
+        },
+        {
+          "mark": "124B"
+        },
+        {
+          "mark": "125"
+        },
+        {
+          "mark": "127"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "08",
+          "item_count": 6
+        },
+        {
+          "id": "11",
+          "item_count": 8
+        },
+        {
+          "id": "12",
+          "item_count": 7
+        },
+        {
+          "id": "16",
+          "item_count": 5
+        },
+        {
+          "id": "(E)",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (180 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (180 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T21:20:55Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:20:55Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 196s.",
+      "message": "Door schedule review - completed in 196s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:24:11Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:24:11Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 122s.",
+      "message": "Hardware set review - completed in 122s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:26:13Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:26:15Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:26:15Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 49s.",
+      "message": "Completeness check - completed in 49s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:27:04Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:27:04Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 57s.",
+      "message": "Completeness check - completed in 57s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:01Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:01Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 13s.",
+      "message": "Completeness check - completed in 13s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:13Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:13Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 12s.",
+      "message": "Completeness check - completed in 12s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:25Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:25Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 31s.",
+      "message": "Completeness check - completed in 31s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:56Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:28:56Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 23s.",
+      "message": "Completeness check - completed in 23s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:29:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 4 set(s) and 24 item row(s).",
+      "message": "Completeness check recovered 4 set(s) and 24 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:29:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check added 1 hardware item row(s).",
+      "message": "Completeness check added 1 hardware item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T21:29:19Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Text completeness check - processing document data.",
+      "message": "Text completeness check - processing document data.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T21:29:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check - completed in 59s.",
+      "message": "Text completeness check - completed in 59s.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T21:30:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check recovered 5 set(s) and 25 item row(s).",
+      "message": "Text completeness check recovered 5 set(s) and 25 item row(s).",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T21:30:19Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T21:30:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 24 doors - 5 sets - 26 items - 2 risks - 2 RFIs - 562s total.",
+      "message": "Secure analysis done - 24 doors - 5 sets - 26 items - 2 risks - 2 RFIs - 562s total.",
+      "stage": "done",
+      "ts": "2026-05-27T21:30:19Z"
+    }
+  ]
+}

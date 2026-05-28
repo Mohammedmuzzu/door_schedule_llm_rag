@@ -1,0 +1,741 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "OFFICE SHELL BUILDING",
+      "project_number": null,
+      "architect": "ARCHITECTURAL DESIGN & CONSULT",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 3,
+      "total_hardware_sets_referenced": 2,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 3,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 3 opening(s) and 2 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100A",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "1",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.42
+      },
+      {
+        "mark": "100B",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.4
+      },
+      {
+        "mark": "100C",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": null,
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "2",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.4
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "1",
+        "header_verbatim": "ALUMINUM EXTERIOR DOORS/FRAMES",
+        "referenced_by_doors": [
+          "100A"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.25
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "PANIC HARDWARE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.25
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "CYLINDER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.22
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.25
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.2
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "WEATHERSTRIPPING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.2
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.18
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "2",
+        "header_verbatim": "HOLLOW METAL DOORS/FRAMES",
+        "referenced_by_doors": [
+          "100B",
+          "100C"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "HINGES",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.25
+          },
+          {
+            "item_no": 2,
+            "qty": null,
+            "unit": null,
+            "desc": "LOCKSET",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.2
+          },
+          {
+            "item_no": 3,
+            "qty": null,
+            "unit": null,
+            "desc": "CLOSER",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.22
+          },
+          {
+            "item_no": 4,
+            "qty": null,
+            "unit": null,
+            "desc": "STOP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.18
+          },
+          {
+            "item_no": 5,
+            "qty": null,
+            "unit": null,
+            "desc": "THRESHOLD",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.18
+          },
+          {
+            "item_no": 6,
+            "qty": null,
+            "unit": null,
+            "desc": "WEATHERSTRIPPING",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.18
+          },
+          {
+            "item_no": 7,
+            "qty": null,
+            "unit": null,
+            "desc": "DOOR SWEEP",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "Item row visible but not fully legible in provided crop.",
+            "confidence": 0.16
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 2,
+        "qty": null,
+        "description": "PANIC HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 3,
+        "qty": null,
+        "description": "CYLINDER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 4,
+        "qty": null,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 5,
+        "qty": null,
+        "description": "THRESHOLD",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 6,
+        "qty": null,
+        "description": "WEATHERSTRIPPING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "1",
+        "item_no": 7,
+        "qty": null,
+        "description": "DOOR SWEEP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": null,
+        "description": "LOCKSET",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": null,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": null,
+        "description": "STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": null,
+        "description": "THRESHOLD",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 6,
+        "qty": null,
+        "description": "WEATHERSTRIPPING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": null,
+        "description": "DOOR SWEEP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 1,
+        "qty": null,
+        "description": "HINGES",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 2,
+        "qty": null,
+        "description": "LOCKSET",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 3,
+        "qty": null,
+        "description": "CLOSER",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 4,
+        "qty": null,
+        "description": "STOP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 5,
+        "qty": null,
+        "description": "THRESHOLD",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 6,
+        "qty": null,
+        "description": "WEATHERSTRIPPING",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      },
+      {
+        "door_mark": "100C",
+        "hardware_set": "2",
+        "item_no": 7,
+        "qty": null,
+        "description": "DOOR SWEEP",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": "Item row visible but not fully legible in provided crop.",
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [],
+    "estimator_notes": [
+      "3 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "2 hardware set(s) identified; 2 have a complete extracted item list."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 188,
+        "truncated": false,
+        "output_count": 3
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 123,
+        "truncated": false,
+        "output_count": 2
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 21
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 311,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "100C"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "1",
+          "item_count": 7
+        },
+        {
+          "id": "2",
+          "item_count": 7
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware schedule.pdf (1432 KB).",
+      "message": "Secure analysis started for Door & Hardware schedule.pdf (1432 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T20:49:33Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:49:33Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 188s.",
+      "message": "Door schedule review - completed in 188s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T20:52:41Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:52:41Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 123s.",
+      "message": "Hardware set review - completed in 123s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T20:54:44Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T20:54:44Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 3 doors - 2 sets - 14 items - 0 risks - 0 RFIs - 311s total.",
+      "message": "Secure analysis done - 3 doors - 2 sets - 14 items - 0 risks - 0 RFIs - 311s total.",
+      "stage": "done",
+      "ts": "2026-05-27T20:54:44Z"
+    }
+  ]
+}

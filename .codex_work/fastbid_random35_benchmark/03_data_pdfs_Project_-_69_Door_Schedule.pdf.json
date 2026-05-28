@@ -1,0 +1,3595 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "LBJ HOSPITAL EXPANSION NEW VISITORS PARKING GARAGE",
+      "project_number": null,
+      "architect": "HKS, INC.",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 42,
+      "total_hardware_sets_referenced": 22,
+      "hardware_sets_missing_or_unclear": 22,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 42,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 11,
+      "exterior_openings": 0,
+      "fire_rated_openings": 13,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 42 opening(s) and 22 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "9' - 0\"",
+          "thickness": "0' - 1\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100B",
+        "room_or_location": null,
+        "door_type": "G",
+        "opening_type": "G",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "15' - 0\"",
+          "height": "9' - 0\"",
+          "thickness": "0' - 1\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "G",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "102",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "C201CG",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "103",
+        "room_or_location": null,
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "C214I",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "105A",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "C201CG",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "105B",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "503",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "105C",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "C201C",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "106",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "IRA",
+        "glazing": null,
+        "frame_type": "B",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "201",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "107",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "IRA",
+        "glazing": null,
+        "frame_type": "B",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "343",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "108",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "IRA",
+        "glazing": null,
+        "frame_type": "B",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "343",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "109",
+        "room_or_location": null,
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "C714A",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "110",
+        "room_or_location": null,
+        "door_type": "C",
+        "opening_type": "C",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "C",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "503",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "111",
+        "room_or_location": null,
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "IRA",
+        "glazing": null,
+        "frame_type": "B",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "103",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "113A",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "C201",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "113B",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "C205",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "113C",
+        "room_or_location": null,
+        "door_type": "H",
+        "opening_type": "H",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "8' - 0\"",
+          "height": "9' - 0\"",
+          "thickness": "1' - 9\""
+        },
+        "door_material": null,
+        "door_finish": "AL",
+        "glazing": null,
+        "frame_type": "H",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "D001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "114",
+        "room_or_location": null,
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "E",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "D794M",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "115",
+        "room_or_location": null,
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "E",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "214",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "116",
+        "room_or_location": null,
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "8' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "E",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "200CG",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "117",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "201CG",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120A",
+        "room_or_location": null,
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "AL",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "804AL",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120B",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "711CGR",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120C",
+        "room_or_location": null,
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "AL",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "804AL",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120D",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "711CGR",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120E",
+        "room_or_location": null,
+        "door_type": "D",
+        "opening_type": "D",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "AL",
+        "glazing": null,
+        "frame_type": "D",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "804AL",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120F",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "711CGR",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120G",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "C710CR",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "120I",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 10\"",
+          "thickness": "0' - 1\""
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.68
+      },
+      {
+        "mark": "200A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "202",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": null,
+        "hardware_set": "C201C",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "203",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "D201CG",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "204",
+        "room_or_location": null,
+        "door_type": "E",
+        "opening_type": "E",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "E",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "D790CGMR",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "300A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "302",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "201C",
+        "closer": null,
+        "electric_or_access_control": "CARD READER",
+        "remarks": [
+          "CARD READER / 90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "317",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "201CG",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "400A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "402",
+        "room_or_location": null,
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3' - 0\"",
+          "height": "7' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "P",
+        "glazing": null,
+        "frame_type": "A",
+        "frame_material": null,
+        "frame_finish": "P",
+        "fire_rating": "90 MINUTE RATED",
+        "hardware_set": "201C",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "90 MINUTE RATED"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95
+      },
+      {
+        "mark": "100A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "9' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 2,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "100B",
+        "room_or_location": null,
+        "door_type": "G",
+        "opening_type": "G",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "15' - 0\"",
+          "height": "9' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "G",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 2,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "200A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 2,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "300A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 2,
+        "source_crop_id": null,
+        "confidence": 0.72
+      },
+      {
+        "mark": "400A",
+        "room_or_location": null,
+        "door_type": "F",
+        "opening_type": "F",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "9' - 0\"",
+          "height": "8' - 0\"",
+          "thickness": "0' - 2\""
+        },
+        "door_material": null,
+        "door_finish": "GL/AL",
+        "glazing": null,
+        "frame_type": "F",
+        "frame_material": null,
+        "frame_finish": "AL",
+        "fire_rating": null,
+        "hardware_set": "A001",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [
+          "W/ BREAKAWAY DOOR"
+        ],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 2,
+        "source_crop_id": null,
+        "confidence": 0.72
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "A001",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "100A",
+          "100B",
+          "200A",
+          "300A",
+          "400A",
+          "100A",
+          "100B",
+          "200A",
+          "300A",
+          "400A"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C201CG",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "102",
+          "105A"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C214I",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "103"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "503",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "105B",
+          "110"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C201C",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "105C",
+          "202"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "201",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "106"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "343",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "107",
+          "108"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C714A",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "109"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "103",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "111"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C201",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "113A"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C205",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "113B"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "D001",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "113C"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "D794M",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "114"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "214",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "115"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "200CG",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "116"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "201CG",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "117",
+          "317"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "804AL",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "120A",
+          "120C",
+          "120E"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "711CGR",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "120B",
+          "120D",
+          "120F"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "C710CR",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "120G"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "D201CG",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "203"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "D790CGMR",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "204"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      },
+      {
+        "hardware_set": "201C",
+        "header_verbatim": null,
+        "referenced_by_doors": [
+          "302",
+          "402"
+        ],
+        "status": "missing",
+        "raw_status": null,
+        "items": [],
+        "missing_or_unclear_items": [
+          "hardware set referenced by doors but not found in spec"
+        ],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.3
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "C201CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "C214I",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "105A",
+        "hardware_set": "C201CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "105B",
+        "hardware_set": "503",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "105C",
+        "hardware_set": "C201C",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "201",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "107",
+        "hardware_set": "343",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "108",
+        "hardware_set": "343",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "109",
+        "hardware_set": "C714A",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "110",
+        "hardware_set": "503",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "111",
+        "hardware_set": "103",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "113A",
+        "hardware_set": "C201",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "113B",
+        "hardware_set": "C205",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "113C",
+        "hardware_set": "D001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "114",
+        "hardware_set": "D794M",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "115",
+        "hardware_set": "214",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "116",
+        "hardware_set": "200CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "117",
+        "hardware_set": "201CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120A",
+        "hardware_set": "804AL",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120B",
+        "hardware_set": "711CGR",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120C",
+        "hardware_set": "804AL",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120D",
+        "hardware_set": "711CGR",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120E",
+        "hardware_set": "804AL",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120F",
+        "hardware_set": "711CGR",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120G",
+        "hardware_set": "C710CR",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "120I",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "200A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "202",
+        "hardware_set": "C201C",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "203",
+        "hardware_set": "D201CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "204",
+        "hardware_set": "D790CGMR",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "300A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "302",
+        "hardware_set": "201C",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "317",
+        "hardware_set": "201CG",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "400A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "402",
+        "hardware_set": "201C",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "100B",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "200A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "300A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      },
+      {
+        "door_mark": "400A",
+        "hardware_set": "A001",
+        "item_no": null,
+        "qty": null,
+        "description": "(hardware set has no extracted items)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "1. REFER SPECIFICATIONS FOR HARDWARE SETS AND PRODUCT DATA",
+        "2. REF. SHT. GA4.03 FOR ADDITIONAL GLAZING REQUIREMENTS"
+      ],
+      "hardware_preamble": [
+        "1. REFER SPECIFICATIONS FOR HARDWARE SETS AND PRODUCT DATA",
+        "2. REF. SHT. GA4.03 FOR ADDITIONAL GLAZING REQUIREMENTS"
+      ],
+      "keying_notes": [],
+      "legend": {
+        "IRA": "IMPACT RESISTANT ACROVYN",
+        "GL": "GLASS",
+        "AL": "ANODIZED ALUMINUM",
+        "P": "PAINT"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "1 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "120I"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "high",
+        "category": "Hardware set definitions",
+        "issue": "22 hardware set(s) referenced by 41 door(s) have no extracted line items.",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "102",
+          "103",
+          "105A",
+          "105B",
+          "105C",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111",
+          "113A",
+          "113B",
+          "113C",
+          "114",
+          "115",
+          "116",
+          "117",
+          "120A",
+          "120B",
+          "120C",
+          "120D",
+          "120E",
+          "120F",
+          "120G",
+          "200A",
+          "202",
+          "203",
+          "204",
+          "300A",
+          "302",
+          "317",
+          "400A",
+          "402",
+          "100A",
+          "100B",
+          "200A",
+          "300A",
+          "400A"
+        ],
+        "recommendation": "Locate full hardware set definitions; carry as allowance until confirmed.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "medium",
+        "category": "Fire-rated openings",
+        "issue": "13 fire-rated opening(s) require coordinated UL-listed door, frame and hardware assemblies.",
+        "affected_openings": [
+          "102",
+          "105A",
+          "113A",
+          "117",
+          "120B",
+          "120D",
+          "120F",
+          "120G",
+          "203",
+          "204",
+          "302",
+          "317",
+          "402"
+        ],
+        "recommendation": "Confirm labels, positive latching, closers and gasketing requirements.",
+        "status": "Open",
+        "source": "heuristic"
+      },
+      {
+        "severity": "high",
+        "category": "Access control / electrified",
+        "issue": "11 opening(s) involve electrified or access-control hardware.",
+        "affected_openings": [
+          "102",
+          "103",
+          "105A",
+          "105C",
+          "109",
+          "113A",
+          "113B",
+          "120G",
+          "203",
+          "204",
+          "302"
+        ],
+        "recommendation": "Confirm Div 08 / 26 / 27 / 28 scope split before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 120I. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "120I"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "high",
+        "category": "Hardware set definitions",
+        "question": "Provide the complete line-item list for hardware set(s): 103, 200CG, 201, 201C, 201CG, 214, 343, 503, 711CGR, 804AL, A001, C201, C201C, C201CG, C205, C214I, C710CR, C714A, D001, D201CG, D790CGMR, D794M.",
+        "affected_openings": [
+          "100A",
+          "100B",
+          "102",
+          "103",
+          "105A",
+          "105B",
+          "105C",
+          "106",
+          "107",
+          "108",
+          "109",
+          "110",
+          "111",
+          "113A",
+          "113B",
+          "113C",
+          "114",
+          "115",
+          "116",
+          "117",
+          "120A",
+          "120B",
+          "120C",
+          "120D",
+          "120E",
+          "120F",
+          "120G",
+          "200A",
+          "202",
+          "203",
+          "204",
+          "300A",
+          "302",
+          "317",
+          "400A",
+          "402",
+          "100A",
+          "100B",
+          "200A",
+          "300A",
+          "400A"
+        ],
+        "recommendation": "Carry as allowance until confirmed.",
+        "status": "Open",
+        "reason": "Carry as allowance until confirmed.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "high",
+        "category": "Access control / electrified",
+        "question": "For electrified openings (102, 103, 105A, 105C, 109, 113A, 113B, 120G, ...+3 more), confirm responsibility for 120 V power, low-voltage cabling, readers/head-end, fire alarm release, commissioning and programming.",
+        "affected_openings": [
+          "102",
+          "103",
+          "105A",
+          "105C",
+          "109",
+          "113A",
+          "113B",
+          "120G",
+          "203",
+          "204",
+          "302"
+        ],
+        "recommendation": "Carry Div 8 components only unless explicitly included.",
+        "status": "Open",
+        "reason": "Carry Div 8 components only unless explicitly included.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "42 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "22 hardware set(s) identified; 0 have a complete extracted item list.",
+      "2 general note(s) captured from the door-schedule sheet.",
+      "2 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for fire-rated assembly coordination, S-label gasketing and any UL field-modification charges.",
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Coordinate electrified hardware split: Div 08 hardware / Div 26 power / Div 27-28 low-voltage + head-end.",
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 100A references hardware set A001 but the set was not extracted.",
+        "Door 102 references hardware set C201CG but the set was not extracted.",
+        "Door 103 references hardware set C214I but the set was not extracted.",
+        "Door 105B references hardware set 503 but the set was not extracted.",
+        "Door 105C references hardware set C201C but the set was not extracted.",
+        "Door 106 references hardware set 201 but the set was not extracted.",
+        "Door 107 references hardware set 343 but the set was not extracted.",
+        "Door 109 references hardware set C714A but the set was not extracted.",
+        "Door 111 references hardware set 103 but the set was not extracted.",
+        "Door 113A references hardware set C201 but the set was not extracted.",
+        "Door 113B references hardware set C205 but the set was not extracted.",
+        "Door 113C references hardware set D001 but the set was not extracted.",
+        "Door 114 references hardware set D794M but the set was not extracted.",
+        "Door 115 references hardware set 214 but the set was not extracted.",
+        "Door 116 references hardware set 200CG but the set was not extracted.",
+        "Door 117 references hardware set 201CG but the set was not extracted.",
+        "Door 120A references hardware set 804AL but the set was not extracted.",
+        "Door 120B references hardware set 711CGR but the set was not extracted.",
+        "Door 120G references hardware set C710CR but the set was not extracted.",
+        "Door 203 references hardware set D201CG but the set was not extracted.",
+        "Door 204 references hardware set D790CGMR but the set was not extracted.",
+        "Door 302 references hardware set 201C but the set was not extracted.",
+        "Door 100A: hardware set A001 has zero items.",
+        "Door 100B: hardware set A001 has zero items.",
+        "Door 102: hardware set C201CG has zero items.",
+        "Door 103: hardware set C214I has zero items.",
+        "Door 105A: hardware set C201CG has zero items.",
+        "Door 105B: hardware set 503 has zero items.",
+        "Door 105C: hardware set C201C has zero items.",
+        "Door 106: hardware set 201 has zero items.",
+        "Door 107: hardware set 343 has zero items.",
+        "Door 108: hardware set 343 has zero items.",
+        "Door 109: hardware set C714A has zero items.",
+        "Door 110: hardware set 503 has zero items.",
+        "Door 111: hardware set 103 has zero items.",
+        "Door 113A: hardware set C201 has zero items.",
+        "Door 113B: hardware set C205 has zero items.",
+        "Door 113C: hardware set D001 has zero items.",
+        "Door 114: hardware set D794M has zero items.",
+        "Door 115: hardware set 214 has zero items.",
+        "Door 116: hardware set 200CG has zero items.",
+        "Door 117: hardware set 201CG has zero items.",
+        "Door 120A: hardware set 804AL has zero items.",
+        "Door 120B: hardware set 711CGR has zero items.",
+        "Door 120C: hardware set 804AL has zero items.",
+        "Door 120D: hardware set 711CGR has zero items.",
+        "Door 120E: hardware set 804AL has zero items.",
+        "Door 120F: hardware set 711CGR has zero items.",
+        "Door 120G: hardware set C710CR has zero items.",
+        "Door 120I has no hardware set assigned.",
+        "Door 200A: hardware set A001 has zero items.",
+        "Door 202: hardware set C201C has zero items.",
+        "Door 203: hardware set D201CG has zero items.",
+        "Door 204: hardware set D790CGMR has zero items.",
+        "Door 300A: hardware set A001 has zero items.",
+        "Door 302: hardware set 201C has zero items.",
+        "Door 317: hardware set 201CG has zero items.",
+        "Door 400A: hardware set A001 has zero items.",
+        "Door 402: hardware set 201C has zero items."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 185,
+        "truncated": false,
+        "output_count": 42
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 33,
+        "truncated": false,
+        "output_count": 22
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": false,
+        "elapsed_seconds": 52,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 42
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 4
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 270,
+    "mapping_qa_issues": [
+      {
+        "kind": "missing_set",
+        "set": "A001",
+        "mark": "100A",
+        "message": "Door 100A references hardware set A001 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C201CG",
+        "mark": "102",
+        "message": "Door 102 references hardware set C201CG but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C214I",
+        "mark": "103",
+        "message": "Door 103 references hardware set C214I but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "503",
+        "mark": "105B",
+        "message": "Door 105B references hardware set 503 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C201C",
+        "mark": "105C",
+        "message": "Door 105C references hardware set C201C but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "201",
+        "mark": "106",
+        "message": "Door 106 references hardware set 201 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "343",
+        "mark": "107",
+        "message": "Door 107 references hardware set 343 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C714A",
+        "mark": "109",
+        "message": "Door 109 references hardware set C714A but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "103",
+        "mark": "111",
+        "message": "Door 111 references hardware set 103 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C201",
+        "mark": "113A",
+        "message": "Door 113A references hardware set C201 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C205",
+        "mark": "113B",
+        "message": "Door 113B references hardware set C205 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "D001",
+        "mark": "113C",
+        "message": "Door 113C references hardware set D001 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "D794M",
+        "mark": "114",
+        "message": "Door 114 references hardware set D794M but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "214",
+        "mark": "115",
+        "message": "Door 115 references hardware set 214 but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "200CG",
+        "mark": "116",
+        "message": "Door 116 references hardware set 200CG but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "201CG",
+        "mark": "117",
+        "message": "Door 117 references hardware set 201CG but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "804AL",
+        "mark": "120A",
+        "message": "Door 120A references hardware set 804AL but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "711CGR",
+        "mark": "120B",
+        "message": "Door 120B references hardware set 711CGR but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "C710CR",
+        "mark": "120G",
+        "message": "Door 120G references hardware set C710CR but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "D201CG",
+        "mark": "203",
+        "message": "Door 203 references hardware set D201CG but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "D790CGMR",
+        "mark": "204",
+        "message": "Door 204 references hardware set D790CGMR but the set was not extracted."
+      },
+      {
+        "kind": "missing_set",
+        "set": "201C",
+        "mark": "302",
+        "message": "Door 302 references hardware set 201C but the set was not extracted."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "100A",
+        "message": "Door 100A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "100B",
+        "message": "Door 100B: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C201CG",
+        "mark": "102",
+        "message": "Door 102: hardware set C201CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C214I",
+        "mark": "103",
+        "message": "Door 103: hardware set C214I has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C201CG",
+        "mark": "105A",
+        "message": "Door 105A: hardware set C201CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "503",
+        "mark": "105B",
+        "message": "Door 105B: hardware set 503 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C201C",
+        "mark": "105C",
+        "message": "Door 105C: hardware set C201C has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "201",
+        "mark": "106",
+        "message": "Door 106: hardware set 201 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "343",
+        "mark": "107",
+        "message": "Door 107: hardware set 343 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "343",
+        "mark": "108",
+        "message": "Door 108: hardware set 343 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C714A",
+        "mark": "109",
+        "message": "Door 109: hardware set C714A has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "503",
+        "mark": "110",
+        "message": "Door 110: hardware set 503 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "103",
+        "mark": "111",
+        "message": "Door 111: hardware set 103 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C201",
+        "mark": "113A",
+        "message": "Door 113A: hardware set C201 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C205",
+        "mark": "113B",
+        "message": "Door 113B: hardware set C205 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "D001",
+        "mark": "113C",
+        "message": "Door 113C: hardware set D001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "D794M",
+        "mark": "114",
+        "message": "Door 114: hardware set D794M has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "214",
+        "mark": "115",
+        "message": "Door 115: hardware set 214 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "200CG",
+        "mark": "116",
+        "message": "Door 116: hardware set 200CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "201CG",
+        "mark": "117",
+        "message": "Door 117: hardware set 201CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "804AL",
+        "mark": "120A",
+        "message": "Door 120A: hardware set 804AL has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "711CGR",
+        "mark": "120B",
+        "message": "Door 120B: hardware set 711CGR has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "804AL",
+        "mark": "120C",
+        "message": "Door 120C: hardware set 804AL has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "711CGR",
+        "mark": "120D",
+        "message": "Door 120D: hardware set 711CGR has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "804AL",
+        "mark": "120E",
+        "message": "Door 120E: hardware set 804AL has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "711CGR",
+        "mark": "120F",
+        "message": "Door 120F: hardware set 711CGR has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C710CR",
+        "mark": "120G",
+        "message": "Door 120G: hardware set C710CR has zero items."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "120I",
+        "message": "Door 120I has no hardware set assigned."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "200A",
+        "message": "Door 200A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "C201C",
+        "mark": "202",
+        "message": "Door 202: hardware set C201C has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "D201CG",
+        "mark": "203",
+        "message": "Door 203: hardware set D201CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "D790CGMR",
+        "mark": "204",
+        "message": "Door 204: hardware set D790CGMR has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "300A",
+        "message": "Door 300A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "201C",
+        "mark": "302",
+        "message": "Door 302: hardware set 201C has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "201CG",
+        "mark": "317",
+        "message": "Door 317: hardware set 201CG has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "400A",
+        "message": "Door 400A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "201C",
+        "mark": "402",
+        "message": "Door 402: hardware set 201C has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "100A",
+        "message": "Door 100A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "100B",
+        "message": "Door 100B: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "200A",
+        "message": "Door 200A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "300A",
+        "message": "Door 300A: hardware set A001 has zero items."
+      },
+      {
+        "kind": "set_empty",
+        "set": "A001",
+        "mark": "400A",
+        "message": "Door 400A: hardware set A001 has zero items."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "102"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "105A"
+        },
+        {
+          "mark": "105B"
+        },
+        {
+          "mark": "105C"
+        },
+        {
+          "mark": "106"
+        },
+        {
+          "mark": "107"
+        },
+        {
+          "mark": "108"
+        },
+        {
+          "mark": "109"
+        },
+        {
+          "mark": "110"
+        },
+        {
+          "mark": "111"
+        },
+        {
+          "mark": "113A"
+        },
+        {
+          "mark": "113B"
+        },
+        {
+          "mark": "113C"
+        },
+        {
+          "mark": "114"
+        },
+        {
+          "mark": "115"
+        },
+        {
+          "mark": "116"
+        },
+        {
+          "mark": "117"
+        },
+        {
+          "mark": "120A"
+        },
+        {
+          "mark": "120B"
+        },
+        {
+          "mark": "120C"
+        },
+        {
+          "mark": "120D"
+        },
+        {
+          "mark": "120E"
+        },
+        {
+          "mark": "120F"
+        },
+        {
+          "mark": "120G"
+        },
+        {
+          "mark": "120I"
+        },
+        {
+          "mark": "200A"
+        },
+        {
+          "mark": "202"
+        },
+        {
+          "mark": "203"
+        },
+        {
+          "mark": "204"
+        },
+        {
+          "mark": "300A"
+        },
+        {
+          "mark": "302"
+        },
+        {
+          "mark": "317"
+        },
+        {
+          "mark": "400A"
+        },
+        {
+          "mark": "402"
+        },
+        {
+          "mark": "100A"
+        },
+        {
+          "mark": "100B"
+        },
+        {
+          "mark": "200A"
+        },
+        {
+          "mark": "300A"
+        },
+        {
+          "mark": "400A"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "A001",
+          "item_count": 0
+        },
+        {
+          "id": "C201CG",
+          "item_count": 0
+        },
+        {
+          "id": "C214I",
+          "item_count": 0
+        },
+        {
+          "id": "503",
+          "item_count": 0
+        },
+        {
+          "id": "C201C",
+          "item_count": 0
+        },
+        {
+          "id": "201",
+          "item_count": 0
+        },
+        {
+          "id": "343",
+          "item_count": 0
+        },
+        {
+          "id": "C714A",
+          "item_count": 0
+        },
+        {
+          "id": "103",
+          "item_count": 0
+        },
+        {
+          "id": "C201",
+          "item_count": 0
+        },
+        {
+          "id": "C205",
+          "item_count": 0
+        },
+        {
+          "id": "D001",
+          "item_count": 0
+        },
+        {
+          "id": "D794M",
+          "item_count": 0
+        },
+        {
+          "id": "214",
+          "item_count": 0
+        },
+        {
+          "id": "200CG",
+          "item_count": 0
+        },
+        {
+          "id": "201CG",
+          "item_count": 0
+        },
+        {
+          "id": "804AL",
+          "item_count": 0
+        },
+        {
+          "id": "711CGR",
+          "item_count": 0
+        },
+        {
+          "id": "C710CR",
+          "item_count": 0
+        },
+        {
+          "id": "D201CG",
+          "item_count": 0
+        },
+        {
+          "id": "D790CGMR",
+          "item_count": 0
+        },
+        {
+          "id": "201C",
+          "item_count": 0
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door Schedule.pdf (602 KB).",
+      "message": "Secure analysis started for Door Schedule.pdf (602 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T18:28:17Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:28:17Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 185s.",
+      "message": "Door schedule review - completed in 185s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T18:31:22Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:31:22Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 33s.",
+      "message": "Hardware set review - completed in 33s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T18:31:55Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check started.",
+      "message": "Completeness check started.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:31:59Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:31:59Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 5s.",
+      "message": "Completeness check - completed in 5s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:04Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:04Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 5s.",
+      "message": "Completeness check - completed in 5s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:09Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:09Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 14s.",
+      "message": "Completeness check - completed in 14s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:24Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:24Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 4s.",
+      "message": "Completeness check - completed in 4s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:27Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:27Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 4s.",
+      "message": "Completeness check - completed in 4s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:31Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Completeness check - processing document data.",
+      "message": "Completeness check - processing document data.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:31Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check - completed in 9s.",
+      "message": "Completeness check - completed in 9s.",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:40Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Completeness check recovered 0 set(s) and 0 item row(s).",
+      "message": "Completeness check recovered 0 set(s) and 0 item row(s).",
+      "stage": "Completeness check",
+      "ts": "2026-05-27T18:32:40Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Text completeness check - processing document data.",
+      "message": "Text completeness check - processing document data.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T18:32:40Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check - completed in 11s.",
+      "message": "Text completeness check - completed in 11s.",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T18:32:51Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Text completeness check recovered 0 set(s) and 0 item row(s).",
+      "message": "Text completeness check recovered 0 set(s) and 0 item row(s).",
+      "stage": "Text completeness check",
+      "ts": "2026-05-27T18:32:51Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T18:32:51Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 42 doors - 22 sets - 0 items - 4 risks - 4 RFIs - 270s total.",
+      "message": "Secure analysis done - 42 doors - 22 sets - 0 items - 4 risks - 4 RFIs - 270s total.",
+      "stage": "done",
+      "ts": "2026-05-27T18:32:51Z"
+    }
+  ]
+}

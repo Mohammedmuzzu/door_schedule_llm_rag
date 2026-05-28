@@ -1,4 +1,5 @@
 import base64
+import http.client
 import json
 import re
 import time
@@ -201,12 +202,13 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
                 else:
                     public_message = f"Analysis service returned an error (HTTP {exc.code})."
                 raise ExtractionProviderError(public_message, raw_message) from exc
-            except urllib.error.URLError as exc:
+            except (urllib.error.URLError, http.client.RemoteDisconnected, ConnectionError, TimeoutError) as exc:
                 if attempt < 2:
                     _log(logs, "warn", f"{label} - network interruption, retrying.", label)
                     time.sleep(2 * (attempt + 1))
                     continue
-                raise ExtractionError(f"Network error contacting analysis service: {exc.reason}") from exc
+                reason = getattr(exc, "reason", None) or str(exc)
+                raise ExtractionError(f"Network error contacting analysis service: {reason}") from exc
         raise ExtractionError("Analysis service did not return a response.")
 
     _log(logs, "info", f"{label} - processing document data.", label)
@@ -272,6 +274,7 @@ def clean_hardware_set_label(value: Any) -> str:
         return ""
     s = re.sub(r"^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)", "", s, flags=re.I)
     s = re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r"-{2,}", "-", s)
     numeric = re.fullmatch(r"(\d+)\.0+", s)
     if numeric:
         return numeric.group(1)
@@ -279,6 +282,18 @@ def clean_hardware_set_label(value: Any) -> str:
     if dotted_numeric:
         return dotted_numeric.group(1)
     return s
+
+
+def is_placeholder_set_label(value: Any) -> bool:
+    label = clean_hardware_set_label(value)
+    if not label:
+        return True
+    compact = re.sub(r"[\s._:/\\|()-]+", "", label).upper()
+    text = re.sub(r"\s+", " ", label).strip().upper()
+    return (
+        compact in {"", "-", "NA", "N/A", "NONE", "NULL", "NO", "NIC", "TBD", "VARIES", "EVARIES", "EXIST", "EXISTING"}
+        or text in {"-", "--", "—", "<VARIES>", "(E)", "E", "DOOR HARDWARE", "HARDWARE", "HARDWARE SET", "HARDWARE SETS", "MANUF.", "MANUFACTURER", "TWO ACCESSORIES"}
+    )
 
 
 def _normalize_set_label_text(value: str) -> str:
@@ -349,6 +364,11 @@ def _as_string_list(value: Any) -> list[str]:
     return []
 
 
+def _can_fallback_after_error(exc: ExtractionError) -> bool:
+    message = str(exc).lower()
+    return not any(token in message for token in ("rejected this account key", "quota-limited", "not configured"))
+
+
 def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
     remarks = _as_string_list(d.get("remarks"))
     remarks_text = " ".join(remarks)
@@ -366,7 +386,7 @@ def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
         "frame_material": d.get("frame_material"),
         "frame_finish": d.get("frame_finish"),
         "fire_rating": d.get("fire_rating"),
-        "hardware_set": clean_hardware_set_label(d.get("hardware_set")),
+        "hardware_set": None if is_placeholder_set_label(d.get("hardware_set")) else clean_hardware_set_label(d.get("hardware_set")),
         "closer": d.get("closer"),
         "electric_or_access_control": d.get("electric_or_access_control"),
         "remarks": remarks,
@@ -386,6 +406,7 @@ def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
 
 
 def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
+    label = clean_hardware_set_label(s.get("hardware_set") or s.get("id"))
     raw_items = s.get("items") if isinstance(s.get("items"), list) else []
     seen: set[str] = set()
     items: list[dict[str, Any]] = []
@@ -424,7 +445,7 @@ def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
         status = "complete" if items else "incomplete"
     missing = [] if items or raw_status in {"not_used", "void"} else ["no hardware items extracted"]
     return {
-        "hardware_set": clean_hardware_set_label(s.get("hardware_set") or s.get("id")),
+        "hardware_set": label,
         "header_verbatim": s.get("set_title"),
         "referenced_by_doors": s.get("referenced_doors") if isinstance(s.get("referenced_doors"), list) else [],
         "status": status,
@@ -440,6 +461,8 @@ def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
 def dedupe_sets(sets: list[dict[str, Any]]) -> list[dict[str, Any]]:
     by_key: dict[str, dict[str, Any]] = {}
     for s in sets:
+        if is_placeholder_set_label(s.get("hardware_set")):
+            continue
         key = canonical_set_key(s.get("hardware_set")) or f"__unkeyed_{len(by_key)}"
         existing = by_key.get(key)
         if not existing:
@@ -484,6 +507,8 @@ def should_run_hardware_rescue(doors: list[dict[str, Any]], sets: list[dict[str,
         if not set_by_key.get(key) or not (set_by_key.get(key) or {}).get("items")
     ]
     if truncated and empty_referenced:
+        return True
+    if empty_referenced and total_items == 0:
         return True
     if len(referenced) >= 3 and total_items < max(4, len(referenced) // 2):
         return True
@@ -656,6 +681,88 @@ def rescue_hardware_sets_from_text(file_bytes: bytes, known_ids: list[str], focu
     item_count = sum(len(s.get("items") or []) for s in rescued)
     _log(logs, "ok", f"Text completeness check recovered {len(rescued)} set(s) and {item_count} item row(s).", "Text completeness check")
     return rescued, int(call["elapsed"])
+
+
+def rescue_door_hardware_fields_from_crops(file_bytes: bytes, logs: list[dict[str, Any]], api_key: str | None) -> tuple[list[dict[str, Any]], int]:
+    try:
+        crops = detect_hardware_crops(file_bytes, max_candidates=8, dpi=260)
+    except Exception as exc:
+        _log(logs, "warn", f"Door schedule completeness check unavailable: {exc}", "Door completeness check")
+        return [], 0
+    if not crops:
+        return [], 0
+
+    content: list[dict[str, Any]] = [
+        {
+            "type": "input_text",
+            "text": (
+                "These are high-resolution excerpts from an image-heavy door schedule. "
+                "Extract visible door schedule rows. Focus on door mark and hardware_set / hardware group columns. "
+                "Do not infer missing values."
+            ),
+        }
+    ]
+    for idx, crop in enumerate(crops, start=1):
+        content.append({"type": "input_text", "text": f"Excerpt {idx}. Page {crop.get('page')}. Source: {crop.get('source')}"})
+        content.append({"type": "input_image", "image_url": "data:image/jpeg;base64," + crop["base64_image"], "detail": "high"})
+
+    try:
+        call = _openai_json_call(
+            "Door completeness check",
+            [
+                {"role": "system", "content": STAGED_DOOR_SYSTEM},
+                {"role": "user", "content": content},
+            ],
+            24000,
+            "medium",
+            logs,
+            api_key=api_key,
+        )
+    except ExtractionError as exc:
+        _log(logs, "warn", f"Door completeness check skipped: {exc}", "Door completeness check")
+        return [], 0
+
+    raw_doors = call["parsed"].get("doors") or call["parsed"].get("rows") or []
+    rescued = [normalize_door(d) for d in raw_doors if isinstance(d, dict)]
+    _log(logs, "ok", f"Door completeness check recovered {len(rescued)} candidate row(s).", "Door completeness check")
+    return rescued, int(call["elapsed"])
+
+
+def should_run_door_field_rescue(file_bytes: bytes, doors: list[dict[str, Any]]) -> bool:
+    if len(doors) < 3:
+        return False
+    missing = [d for d in doors if not d.get("hardware_set")]
+    if len(missing) < max(3, len(doors) // 2):
+        return False
+    text = extract_pdf_text(file_bytes, max_chars=8000)
+    if len(text.strip()) < 200:
+        return True
+    upper = text.upper()
+    return any(token in upper for token in ("HARDWARE SET", "HW SET", "HARDWARE GROUP", "HDWR SET"))
+
+
+def merge_rescued_door_fields(doors: list[dict[str, Any]], rescued_doors: list[dict[str, Any]]) -> dict[str, int]:
+    by_mark = {str(d.get("mark") or "").strip().upper(): d for d in doors if d.get("mark")}
+    filled = 0
+    added = 0
+    for rescued in rescued_doors:
+        mark = str(rescued.get("mark") or "").strip()
+        if not mark:
+            continue
+        target = by_mark.get(mark.upper())
+        if not target:
+            if rescued.get("hardware_set"):
+                doors.append(rescued)
+                by_mark[mark.upper()] = rescued
+                added += 1
+            continue
+        if not target.get("hardware_set") and rescued.get("hardware_set"):
+            target["hardware_set"] = rescued.get("hardware_set")
+            filled += 1
+        for field in ("room_or_location", "door_type", "door_material", "frame_type", "fire_rating", "remarks"):
+            if not target.get(field) and rescued.get(field):
+                target[field] = rescued.get(field)
+    return {"doors_added": added, "hardware_sets_filled": filled}
 
 
 def referenced_empty_set_ids(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) -> list[str]:
@@ -832,24 +939,57 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
 
     scope = scope or "Supply & Installation"
     data_url = "data:application/pdf;base64," + base64.b64encode(file_bytes).decode("ascii")
+    native_text_cache: str | None = None
+
+    def native_text() -> str:
+        nonlocal native_text_cache
+        if native_text_cache is None:
+            native_text_cache = extract_pdf_text(file_bytes, max_chars=45000)
+        return native_text_cache
+
     _log(logs, "info", f"Secure analysis started for {filename} ({len(file_bytes) / 1024:.0f} KB).", "start")
 
-    call1 = _openai_json_call(
-        "Door schedule review",
-        [
-            {"role": "system", "content": STAGED_DOOR_SYSTEM},
-            {"role": "user", "content": [
-                {"type": "input_file", "filename": filename, "file_data": data_url},
-                {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nReturn JSON: {{ \"doors\": [...] }}"},
-            ]},
-        ],
-        32000,
-        "high",
-        logs,
-        api_key=api_key,
-    )
+    try:
+        call1 = _openai_json_call(
+            "Door schedule review",
+            [
+                {"role": "system", "content": STAGED_DOOR_SYSTEM},
+                {"role": "user", "content": [
+                    {"type": "input_file", "filename": filename, "file_data": data_url},
+                    {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nReturn JSON: {{ \"doors\": [...] }}"},
+                ]},
+            ],
+            32000,
+            "high",
+            logs,
+            api_key=api_key,
+        )
+    except ExtractionError as exc:
+        text = native_text()
+        if not text.strip() or not _can_fallback_after_error(exc):
+            raise
+        _log(logs, "warn", "Door schedule review switched to native text fallback.", "Door schedule review")
+        call1 = _openai_json_call(
+            "Door schedule text fallback",
+            [
+                {"role": "system", "content": STAGED_DOOR_SYSTEM},
+                {"role": "user", "content": [{"type": "input_text", "text": f"Project scope: {scope}\n\nThe full PDF request could not complete. Extract every visible door schedule row from this native PDF text. Preserve text exactly and do not infer.\n\nPDF_TEXT:\n{text}\n\nReturn JSON: {{ \"doors\": [...] }}"}]},
+            ],
+            32000,
+            "medium",
+            logs,
+            api_key=api_key,
+        )
     raw_doors = call1["parsed"].get("doors") or call1["parsed"].get("rows") or call1["parsed"].get("door_analysis") or []
     doors = [normalize_door(d) for d in raw_doors if isinstance(d, dict)]
+    door_rescue_elapsed = 0
+    door_rescue_stats = {"doors_added": 0, "hardware_sets_filled": 0}
+    if should_run_door_field_rescue(file_bytes, doors):
+        rescued_doors, door_rescue_elapsed = rescue_door_hardware_fields_from_crops(file_bytes, logs, api_key)
+        if rescued_doors:
+            door_rescue_stats = merge_rescued_door_fields(doors, rescued_doors)
+            if door_rescue_stats["hardware_sets_filled"] or door_rescue_stats["doors_added"]:
+                _log(logs, "ok", f"Door completeness check filled {door_rescue_stats['hardware_sets_filled']} hardware set value(s).", "Door completeness check")
     project_meta = {
         "project_name": call1["parsed"].get("project_name") or (call1["parsed"].get("project") or {}).get("name"),
         "architect": call1["parsed"].get("architect") or (call1["parsed"].get("project") or {}).get("architect"),
@@ -860,20 +1000,37 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         "keying_notes": [x for x in call1["parsed"].get("keying_notes") or [] if isinstance(x, str) and x.strip()],
     }
 
-    call2 = _openai_json_call(
-        "Hardware set review",
-        [
-            {"role": "system", "content": STAGED_HW_SYSTEM},
-            {"role": "user", "content": [
-                {"type": "input_file", "filename": filename, "file_data": data_url},
-                {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"},
-            ]},
-        ],
-        48000,
-        "high",
-        logs,
-        api_key=api_key,
-    )
+    try:
+        call2 = _openai_json_call(
+            "Hardware set review",
+            [
+                {"role": "system", "content": STAGED_HW_SYSTEM},
+                {"role": "user", "content": [
+                    {"type": "input_file", "filename": filename, "file_data": data_url},
+                    {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"},
+                ]},
+            ],
+            48000,
+            "high",
+            logs,
+            api_key=api_key,
+        )
+    except ExtractionError as exc:
+        text = native_text()
+        if not text.strip() or not _can_fallback_after_error(exc):
+            raise
+        _log(logs, "warn", "Hardware set review switched to native text fallback.", "Hardware set review")
+        call2 = _openai_json_call(
+            "Hardware set text fallback",
+            [
+                {"role": "system", "content": STAGED_HW_SYSTEM},
+                {"role": "user", "content": [{"type": "input_text", "text": f"Project scope: {scope}\n\nThe full PDF request could not complete. Extract every visible hardware set / hardware group and line item from this native PDF text. Do not map doors.\n\nPDF_TEXT:\n{text}\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"}]},
+            ],
+            32000,
+            "medium",
+            logs,
+            api_key=api_key,
+        )
     raw_sets = call2["parsed"].get("hardware_sets") or call2["parsed"].get("sets") or []
     sets = dedupe_sets([normalize_set(s) for s in raw_sets if isinstance(s, dict)])
     hw_ctx = {
@@ -931,7 +1088,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         "legend": legend,
     }
     mapping, qa_issues = map_doors_hardware(doors, sets)
-    elapsed_core = int(call1["elapsed"] + call2["elapsed"] + rescue_elapsed)
+    elapsed_core = int(call1["elapsed"] + door_rescue_elapsed + call2["elapsed"] + rescue_elapsed)
     project_summary = rollup_summary(doors, sets, scope, elapsed_core, project_meta)
 
     project_risks: list[dict[str, Any]] = []
@@ -1001,11 +1158,12 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
             "pipeline": "secure-backend-staged",
             "pipeline_steps": [
                 {"step": 1, "kind": "llm", "label": "Door schedule extraction", "elapsed_seconds": call1["elapsed"], "truncated": call1["truncated"], "output_count": len(doors)},
-                {"step": 2, "kind": "llm", "label": "Hardware set extraction", "elapsed_seconds": call2["elapsed"], "truncated": call2["truncated"], "output_count": len(sets)},
-                {"step": 3, "kind": "llm", "label": "Completeness check", "skipped": not rescue_attempted, "elapsed_seconds": rescue_elapsed, "output_count": rescue_stats["items_added"]},
-                {"step": 4, "kind": "code", "label": "Door -> hardware mapping", "output_count": len(mapping)},
-                {"step": 5, "kind": "code", "label": "Rollup"},
-                {"step": 6, "kind": "llm", "label": "RFI / coordination review", "skipped": call3_skipped, "elapsed_seconds": call3_elapsed, "output_count": len(rfi_log)},
+                {"step": 2, "kind": "llm", "label": "Door completeness check", "skipped": not bool(door_rescue_elapsed), "elapsed_seconds": door_rescue_elapsed, "output_count": door_rescue_stats["hardware_sets_filled"]},
+                {"step": 3, "kind": "llm", "label": "Hardware set extraction", "elapsed_seconds": call2["elapsed"], "truncated": call2["truncated"], "output_count": len(sets)},
+                {"step": 4, "kind": "llm", "label": "Completeness check", "skipped": not rescue_attempted, "elapsed_seconds": rescue_elapsed, "output_count": rescue_stats["items_added"]},
+                {"step": 5, "kind": "code", "label": "Door -> hardware mapping", "output_count": len(mapping)},
+                {"step": 6, "kind": "code", "label": "Rollup"},
+                {"step": 7, "kind": "llm", "label": "RFI / coordination review", "skipped": call3_skipped, "elapsed_seconds": call3_elapsed, "output_count": len(rfi_log)},
             ],
             "model": settings.openai_model,
             "elapsed_seconds": total_elapsed,

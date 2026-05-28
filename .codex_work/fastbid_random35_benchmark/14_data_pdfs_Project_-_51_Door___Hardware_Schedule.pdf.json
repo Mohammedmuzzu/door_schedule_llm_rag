@@ -1,0 +1,1489 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "A-Team A/C AND HEATING",
+      "project_number": null,
+      "architect": "STELLA MARS ARCHITECTURE",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 12,
+      "total_hardware_sets_referenced": 0,
+      "hardware_sets_missing_or_unclear": 3,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 12,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 12 opening(s) and 7 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "130",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "130A",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.42
+      },
+      {
+        "mark": "140",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "150",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "160",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "170",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "190",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "200",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      },
+      {
+        "mark": "200A",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.42
+      },
+      {
+        "mark": "200B",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.42
+      },
+      {
+        "mark": "300",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "30",
+          "height": null,
+          "thickness": null
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": "",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.45
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "TWO ACCESSORIES",
+        "header_verbatim": "GROUP TWO ACCESSORIES",
+        "referenced_by_doors": [],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [],
+        "missing_or_unclear_items": [
+          "no hardware items extracted"
+        ],
+        "special_coordination": [],
+        "estimator_note": "ACCESSORY GROUP 10 (ITEMS NOTED OTHERWISE)",
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H1",
+        "header_verbatim": "OFFICE LOCKSET",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "2.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "OFFICE LOCKSET",
+            "part": null,
+            "mfr": "SCH",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "3.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": "4.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": "5.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "6.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.47
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H3",
+        "header_verbatim": "STOREROOM LOCKSET",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "2.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "STOREROOM LOCKSET",
+            "part": null,
+            "mfr": "SCH",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.63
+          },
+          {
+            "item_no": "3.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": "4.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": "5.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "6.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.47
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H4",
+        "header_verbatim": "PRIVACY BATHROOM LOCKSET",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "2.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "PRIVACY BATHROOM LOCKSET",
+            "part": null,
+            "mfr": "SCH",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "3.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": "4.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.48
+          },
+          {
+            "item_no": "5.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.48
+          },
+          {
+            "item_no": "6.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.45
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "H5",
+        "header_verbatim": "CLASSROOM LOCKSET",
+        "referenced_by_doors": [],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.62
+          },
+          {
+            "item_no": "2.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "CLASSROOM LOCKSET",
+            "part": null,
+            "mfr": "SCH",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.63
+          },
+          {
+            "item_no": "3.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.55
+          },
+          {
+            "item_no": "4.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "KICK PLATE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.52
+          },
+          {
+            "item_no": "5.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "WALL STOP",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.5
+          },
+          {
+            "item_no": "6.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "SILENCERS",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.47
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "E1",
+        "header_verbatim": "PRIMARY ENTRY DOOR TO WALL MOUNTED RIM READER",
+        "referenced_by_doors": [],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": 3,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.42
+          },
+          {
+            "item_no": "2.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "EXIT DEVICE",
+            "part": null,
+            "mfr": "VON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.28
+          },
+          {
+            "item_no": "3.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "4.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "5.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.32
+          },
+          {
+            "item_no": "6.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "7.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "8.0",
+            "qty": 1,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "X2",
+        "header_verbatim": "EXIT DEVICE / EXIT EXIT",
+        "referenced_by_doors": [],
+        "status": "incomplete",
+        "raw_status": "review_required",
+        "items": [
+          {
+            "item_no": "1.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "HINGE",
+            "part": null,
+            "mfr": "IVE",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.35
+          },
+          {
+            "item_no": "2.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "EXIT DEVICE",
+            "part": null,
+            "mfr": "VON",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.3
+          },
+          {
+            "item_no": "3.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "4.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "DOOR CLOSER",
+            "part": null,
+            "mfr": "LCN",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.27
+          },
+          {
+            "item_no": "5.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "6.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "7.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          },
+          {
+            "item_no": "8.0",
+            "qty": null,
+            "unit": "EA",
+            "desc": "",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": "line item text illegible in crop",
+            "confidence": 0.12
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "130",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "130A",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "140",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "150",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "160",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "170",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "190",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "200",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "200A",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "200B",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "300",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [
+        "DOOR HARDWARE SPECIFICATIONS",
+        "Section 0870 00",
+        "HARDWARE SCHEDULE: As indicated on the drawings.",
+        "PROVIDE all listed finish hardware throughout the Work as needed for a complete installation and as indicated on Drawings.",
+        "EXIT NOTES",
+        "EXIT DOORS SHALL BE OPERABLE FROM THE INSIDE WITHOUT USE OF A KEY OR SPECIAL KNOWLEDGE OR EFFORT."
+      ],
+      "keying_notes": [],
+      "legend": {
+        "IVE": "Ives",
+        "LCN": "LCN",
+        "SCH": "Schlage",
+        "VON": "Von Duprin",
+        "NGP": "National Guard Products",
+        "PEM": "Pemko"
+      }
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "12 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "100",
+          "130",
+          "130A",
+          "140",
+          "150",
+          "160",
+          "170",
+          "190",
+          "200",
+          "200A",
+          "200B",
+          "300"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 100, 130, 130A, 140, 150, 160, 170, 190, ...+4 more. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "100",
+          "130",
+          "130A",
+          "140",
+          "150",
+          "160",
+          "170",
+          "190",
+          "200",
+          "200A",
+          "200B",
+          "300"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      },
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "12 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "7 hardware set(s) identified; 6 have a complete extracted item list.",
+      "6 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 100 has no hardware set assigned.",
+        "Door 130 has no hardware set assigned.",
+        "Door 130A has no hardware set assigned.",
+        "Door 140 has no hardware set assigned.",
+        "Door 150 has no hardware set assigned.",
+        "Door 160 has no hardware set assigned.",
+        "Door 170 has no hardware set assigned.",
+        "Door 190 has no hardware set assigned.",
+        "Door 200 has no hardware set assigned.",
+        "Door 200A has no hardware set assigned.",
+        "Door 200B has no hardware set assigned.",
+        "Door 300 has no hardware set assigned."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 111,
+        "truncated": false,
+        "output_count": 12
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 231,
+        "truncated": false,
+        "output_count": 7
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 12
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 2
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 342,
+    "mapping_qa_issues": [
+      {
+        "kind": "no_hw_set",
+        "mark": "100",
+        "message": "Door 100 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "130",
+        "message": "Door 130 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "130A",
+        "message": "Door 130A has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "140",
+        "message": "Door 140 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "150",
+        "message": "Door 150 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "160",
+        "message": "Door 160 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "170",
+        "message": "Door 170 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "190",
+        "message": "Door 190 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "200",
+        "message": "Door 200 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "200A",
+        "message": "Door 200A has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "200B",
+        "message": "Door 200B has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "300",
+        "message": "Door 300 has no hardware set assigned."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100"
+        },
+        {
+          "mark": "130"
+        },
+        {
+          "mark": "130A"
+        },
+        {
+          "mark": "140"
+        },
+        {
+          "mark": "150"
+        },
+        {
+          "mark": "160"
+        },
+        {
+          "mark": "170"
+        },
+        {
+          "mark": "190"
+        },
+        {
+          "mark": "200"
+        },
+        {
+          "mark": "200A"
+        },
+        {
+          "mark": "200B"
+        },
+        {
+          "mark": "300"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "TWO ACCESSORIES",
+          "item_count": 0
+        },
+        {
+          "id": "H1",
+          "item_count": 6
+        },
+        {
+          "id": "H3",
+          "item_count": 6
+        },
+        {
+          "id": "H4",
+          "item_count": 6
+        },
+        {
+          "id": "H5",
+          "item_count": 6
+        },
+        {
+          "id": "E1",
+          "item_count": 8
+        },
+        {
+          "id": "X2",
+          "item_count": 8
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (1136 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (1136 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T19:36:01Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T19:36:01Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 111s.",
+      "message": "Door schedule review - completed in 111s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T19:37:52Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T19:37:52Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 231s.",
+      "message": "Hardware set review - completed in 231s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T19:41:42Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T19:41:42Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 12 doors - 7 sets - 40 items - 1 risks - 2 RFIs - 342s total.",
+      "message": "Secure analysis done - 12 doors - 7 sets - 40 items - 1 risks - 2 RFIs - 342s total.",
+      "stage": "done",
+      "ts": "2026-05-27T19:41:42Z"
+    }
+  ]
+}

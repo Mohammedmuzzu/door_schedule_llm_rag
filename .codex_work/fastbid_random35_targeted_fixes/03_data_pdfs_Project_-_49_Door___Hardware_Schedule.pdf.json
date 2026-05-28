@@ -1,0 +1,327 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": null,
+      "project_number": null,
+      "architect": null,
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 2,
+      "total_hardware_sets_referenced": 0,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 2,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 2 opening(s) and 0 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_top_door_schedule",
+        "confidence": 0.58
+      },
+      {
+        "mark": "101",
+        "room_or_location": null,
+        "door_type": null,
+        "opening_type": null,
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": "1 3/4\""
+        },
+        "door_material": null,
+        "door_finish": null,
+        "glazing": null,
+        "frame_type": null,
+        "frame_material": null,
+        "frame_finish": null,
+        "fire_rating": null,
+        "hardware_set": null,
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": "page_1_top_door_schedule",
+        "confidence": 0.58
+      }
+    ],
+    "hardware_set_review": [],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": null,
+        "item_no": null,
+        "qty": null,
+        "description": "(no hardware set assigned)",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "NO_HW_SET"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [],
+      "hardware_preamble": [],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [
+      {
+        "severity": "high",
+        "category": "Hardware mapping",
+        "issue": "2 opening(s) have no hardware set assigned in the schedule.",
+        "affected_openings": [
+          "100",
+          "101"
+        ],
+        "recommendation": "Issue RFI to confirm hardware set assignments before bidding.",
+        "status": "Open",
+        "source": "heuristic"
+      }
+    ],
+    "rfi_log": [
+      {
+        "priority": "high",
+        "category": "Hardware mapping",
+        "question": "The door schedule does not show a hardware set for: 100, 101. Please confirm the intended hardware set for each.",
+        "affected_openings": [
+          "100",
+          "101"
+        ],
+        "recommendation": "Confirm assignments before bid close.",
+        "status": "Open",
+        "reason": "Confirm assignments before bid close.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "2 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication.",
+        "Door 100 has no hardware set assigned.",
+        "Door 101 has no hardware set assigned."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 130,
+        "truncated": false,
+        "output_count": 2
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Door completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 25,
+        "truncated": false,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 2
+      },
+      {
+        "step": 6,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 7,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 1
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 155,
+    "mapping_qa_issues": [
+      {
+        "kind": "no_hw_set",
+        "mark": "100",
+        "message": "Door 100 has no hardware set assigned."
+      },
+      {
+        "kind": "no_hw_set",
+        "mark": "101",
+        "message": "Door 101 has no hardware set assigned."
+      }
+    ],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100"
+        },
+        {
+          "mark": "101"
+        }
+      ],
+      "hardware_sets": []
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (618 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (618 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T23:39:22Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T23:39:22Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 130s.",
+      "message": "Door schedule review - completed in 130s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T23:41:32Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T23:41:32Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 25s.",
+      "message": "Hardware set review - completed in 25s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T23:41:57Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T23:41:57Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 2 doors - 0 sets - 0 items - 1 risks - 1 RFIs - 155s total.",
+      "message": "Secure analysis done - 2 doors - 0 sets - 0 items - 1 risks - 1 RFIs - 155s total.",
+      "stage": "done",
+      "ts": "2026-05-27T23:41:57Z"
+    }
+  ]
+}

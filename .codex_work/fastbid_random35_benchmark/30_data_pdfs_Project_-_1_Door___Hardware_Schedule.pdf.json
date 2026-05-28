@@ -1,0 +1,905 @@
+{
+  "analysis": {
+    "project_summary": {
+      "scope_type": "Supply & Installation",
+      "project_name": "Downtown Tyler 2025",
+      "project_number": null,
+      "architect": "SLI Design, Inc.",
+      "address": null,
+      "drawing": null,
+      "date": null,
+      "total_openings_found": 7,
+      "total_hardware_sets_referenced": 4,
+      "hardware_sets_missing_or_unclear": 0,
+      "high_risk_openings": 0,
+      "medium_risk_openings": 7,
+      "low_risk_openings": 0,
+      "complex_installations": 0,
+      "access_control_openings": 0,
+      "exterior_openings": 0,
+      "fire_rated_openings": 0,
+      "overall_bid_risk": "Medium",
+      "estimator_summary": "Secure analysis extracted 7 opening(s) and 4 hardware set(s). Verify against source PDF before bidding."
+    },
+    "door_analysis": [
+      {
+        "mark": "100",
+        "room_or_location": "LOBBY 100 UNIVERSAL BANKERS 117",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D00",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "01",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "1"
+      },
+      {
+        "mark": "101",
+        "room_or_location": "LOBBY 100 OFFICE 116",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D01",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "02",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "2"
+      },
+      {
+        "mark": "102",
+        "room_or_location": "ASSISTANTS 105 OFFICE 104",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D02",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "02",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "2"
+      },
+      {
+        "mark": "103",
+        "room_or_location": "ASSISTANTS 105 OFFICE 106",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D03",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "02",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "2"
+      },
+      {
+        "mark": "104",
+        "room_or_location": "CORRIDOR 110 CONFERENCE 108",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D04",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "01",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "1"
+      },
+      {
+        "mark": "105",
+        "room_or_location": "CONFERENCE 108 ELECTRICAL 107",
+        "door_type": "A",
+        "opening_type": "A",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "3'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "D05",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "03",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.95,
+        "raw_hardware_set": "3"
+      },
+      {
+        "mark": "106",
+        "room_or_location": "BREAK ROOM 115 PANTRY 115A",
+        "door_type": "B",
+        "opening_type": "B",
+        "interior_or_exterior": null,
+        "size": {
+          "width": "6'-0\"",
+          "height": "7'-0\"",
+          "thickness": null
+        },
+        "door_material": "WOOD",
+        "door_finish": "PAINTED",
+        "glazing": null,
+        "frame_type": "NEW",
+        "frame_material": "WOOD",
+        "frame_finish": "PAINTED",
+        "fire_rating": null,
+        "hardware_set": "04",
+        "closer": null,
+        "electric_or_access_control": null,
+        "remarks": [],
+        "existing_to_remain": false,
+        "hardware_status": "review required",
+        "install_complexity": "medium",
+        "risk_level": "medium",
+        "special_conditions": [],
+        "issues": [],
+        "recommendations": [],
+        "rfi_required": false,
+        "rfi_questions": [],
+        "source_page": 1,
+        "source_crop_id": null,
+        "confidence": 0.93,
+        "raw_hardware_set": "4"
+      }
+    ],
+    "hardware_set_review": [
+      {
+        "hardware_set": "01",
+        "header_verbatim": "Passage Set",
+        "referenced_by_doors": [
+          "100",
+          "104"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "pr.",
+            "desc": "Butts",
+            "part": "BB1279 4 1/2\" x 4\"",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Passage Set",
+            "part": "2510",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Floor Stop",
+            "part": "242F",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "02",
+        "header_verbatim": "Office Lockset",
+        "referenced_by_doors": [
+          "101",
+          "102",
+          "103"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "pr.",
+            "desc": "Butts",
+            "part": "BB1279 4 1/2\" x 4\"",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Office Lockset",
+            "part": "2550",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Floor Stop",
+            "part": "242F",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "03",
+        "header_verbatim": "Storeroom",
+        "referenced_by_doors": [
+          "105"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": "1 1/2",
+            "unit": "pr.",
+            "desc": "Butts",
+            "part": "BB1279 4 1/2\" x 4\"",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 2,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Storeroom Lockset",
+            "part": "2580",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          },
+          {
+            "item_no": 3,
+            "qty": "1",
+            "unit": "ea.",
+            "desc": "Floor Stop",
+            "part": "242F",
+            "mfr": "Hager",
+            "finish": null,
+            "notes": null,
+            "confidence": 0.98
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      },
+      {
+        "hardware_set": "04",
+        "header_verbatim": "Bi-fold Door",
+        "referenced_by_doors": [
+          "106"
+        ],
+        "status": "complete",
+        "raw_status": "active",
+        "items": [
+          {
+            "item_no": 1,
+            "qty": null,
+            "unit": null,
+            "desc": "A.D.A. COMPLIANT BI-FOLD DOOR HARDWARE",
+            "part": null,
+            "mfr": null,
+            "finish": null,
+            "notes": null,
+            "confidence": 0.95
+          }
+        ],
+        "missing_or_unclear_items": [],
+        "special_coordination": [],
+        "estimator_note": null,
+        "confidence": 0.7
+      }
+    ],
+    "door_hardware_mapping": [
+      {
+        "door_mark": "100",
+        "hardware_set": "01",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100",
+        "hardware_set": "01",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Passage Set",
+        "catalog_number": "2510",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "100",
+        "hardware_set": "01",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "02",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "02",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Office Lockset",
+        "catalog_number": "2550",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "101",
+        "hardware_set": "02",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "02",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "02",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Office Lockset",
+        "catalog_number": "2550",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "102",
+        "hardware_set": "02",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "02",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "02",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Office Lockset",
+        "catalog_number": "2550",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "103",
+        "hardware_set": "02",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "01",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "01",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Passage Set",
+        "catalog_number": "2510",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "104",
+        "hardware_set": "01",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "03",
+        "item_no": 1,
+        "qty": "1 1/2",
+        "description": "Butts",
+        "catalog_number": "BB1279 4 1/2\" x 4\"",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "03",
+        "item_no": 2,
+        "qty": "1",
+        "description": "Storeroom Lockset",
+        "catalog_number": "2580",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "105",
+        "hardware_set": "03",
+        "item_no": 3,
+        "qty": "1",
+        "description": "Floor Stop",
+        "catalog_number": "242F",
+        "manufacturer": "Hager",
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      },
+      {
+        "door_mark": "106",
+        "hardware_set": "04",
+        "item_no": 1,
+        "qty": null,
+        "description": "A.D.A. COMPLIANT BI-FOLD DOOR HARDWARE",
+        "catalog_number": null,
+        "manufacturer": null,
+        "finish": null,
+        "notes": null,
+        "status": "OK"
+      }
+    ],
+    "sheet_context": {
+      "general_notes": [
+        "HW SET #01 (Passage Set)\n1 1/2 pr. Butts - Hager BB1279 4 1/2\" x 4\"\n1 ea. Passage Set - Hager 2510\n1 ea. Floor Stop - Hager 242F",
+        "HW SET #02 (Office Lockset)\n1 1/2 pr. Butts - Hager BB1279 4 1/2\" x 4\"\n1 ea. Office Lockset - Hager 2550\n1 ea. Floor Stop - Hager 242F",
+        "HW SET #03 (Storeroom)\n1 1/2 pr. Butts - Hager BB1279 4 1/2\" x 4\"\n1 ea. Storeroom Lockset - Hager 2580\n1 ea. Floor Stop - Hager 242F",
+        "HW SET #04 (Bi-fold Door)\nA.D.A. COMPLIANT BI-FOLD DOOR HARDWARE",
+        "NOTE:\nNEW WINDOWS SHALL MATCH EXISTING WINDOWS TO REMAIN.",
+        "NOTE:\nEXISTING DOORS AND FRAMES TO BE REUSED AS POSSIBLE.\nPROVIDE NEW TO MATCH IF EXISTING IS DAMAGED.",
+        "THE ALPHANUMERIC DESIGNATION IN EACH PARTITION TYPE SYMBOL DESCRIBES THE PARTITION CONSTRUCTION, THICKNESS, AND FIRE RATING, IF REQUIRED.",
+        "WHERE FIRE RESISTIVE GYPSUM WALLBOARD CONSTRUCTION IS INDICATED. PROVIDE \"TYPE X\" GYPSUM WALLBOARD AND PROVIDE SEALANT AT PERIMETER AND ALL PENETRATIONS, TYPICAL BOTH SIDES OF PARTITION.",
+        "UNDERWRITERS LABORATORY AND OTHER TESTING AGENCY DESIGNATIONS INDICATED FOR FIRE RESISTIVE CONSTRUCTION ARE GIVEN FOR PURPOSES OF DESCRIBING CONSTRUCTION REQUIREMENTS ONLY AND ARE NOT INTENDED TO LIMIT MANUFACTURERS OF MATERIALS. COMPLY WITH THE CONSTRUCTION REQUIREMENTS OF THE INDICATED DESIGN.",
+        "LIMITING HEIGHTS GIVE THE MAXIMUM UNSUPPORTED HEIGHT FOR THAT PARTITION TYPE BASED ON A DEFLECTION CRITERIA RATIO OF L/240. WHERE FLOOR TO STRUCTURE HEIGHT OF PARTITION EXCEEDS THE INDICATED LIMITING HEIGHT, PROVIDE SUPPLEMENTAL BRACING TO THE STRUCTURE OVERHEAD AS REQUIRED TO MAINTAIN DEFLECTION RATIO WITHIN L/240.",
+        "FOR PARTITION WITH \"BRITTLE\" FINISHES SUCH AS PLASTER AND CERAMIC TILE, DESIGN PARTITION SYSTEM TO MAINTAIN DEFLECTION RATIO WITHIN L/360.",
+        "SUSPENDED CEILING SHALL NOT BE CONSIDERED AS BRACING.",
+        "PROVIDE DUROCK CEMENT BOARD AS SUBSTRATE FOR APPLICATION OF CERAMIC TILE.",
+        "PROVIDE GREENBOARD IN ALL RESTROOMS, JANITOR CLOSETS AND BEHIND WATER FOUNTAINS.",
+        "STC RATINGS FOR SOUND WALLS ARE BASED ON LABORATORY TESTED ASSEMBLIES AND DO NOT NECESSARILY INDICATE THE ACTUAL STC RATING OF THE COMPLETED WORK."
+      ],
+      "hardware_preamble": [
+        "NOTE: EXISTING DOORS AND FRAMES TO BE REUSED AS POSSIBLE. PROVIDE NEW TO MATCH IF EXISTING IS DAMAGED."
+      ],
+      "keying_notes": [],
+      "legend": {}
+    },
+    "project_risks": [],
+    "rfi_log": [
+      {
+        "priority": "medium",
+        "category": "Keying / cylinders",
+        "question": "Please provide the complete keying schedule, keyway, cylinder format, construction core requirement and key counts.",
+        "affected_openings": [],
+        "recommendation": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "status": "Open",
+        "reason": "Carry construction cylinders as an allowance until keying meeting is held.",
+        "source": "heuristic"
+      }
+    ],
+    "estimator_notes": [
+      "7 opening(s) extracted from the schedule. Verify all marks against the source PDF before submitting bid.",
+      "4 hardware set(s) identified; 4 have a complete extracted item list.",
+      "15 general note(s) captured from the door-schedule sheet.",
+      "1 hardware-preamble note(s) captured from hardware-set sheet(s)."
+    ],
+    "bid_recommendations": {
+      "supply_only_notes": [
+        "Submittal package: door, frame and hardware schedules with manufacturer cut sheets, keying schedule, electrified hardware riser, anchor templates."
+      ],
+      "installation_only_notes": [
+        "Field-measure all openings before fabrication release. Verify rough-opening size, frame anchor type, and floor condition.",
+        "Storage and protection of doors / frames / hardware on site is by GC unless otherwise noted."
+      ],
+      "supply_and_installation_notes": [],
+      "exclusions_to_consider": [
+        "Exclude 120 V power, low-voltage cabling, access-control head-end, intrusion detection programming, fire-alarm tie-in (NIC).",
+        "Exclude permits, demolition, painting, drywall patching at frame anchors, floor preparation at thresholds."
+      ],
+      "allowances_to_consider": [
+        "Allowance for construction cylinders and final keying meeting attendance."
+      ],
+      "coordination_items": [
+        "Attend pre-installation meeting with GC, EC, low-voltage, fire alarm and security trades.",
+        "Hold formal keying meeting with owner before cylinder fabrication."
+      ]
+    }
+  },
+  "qa": {
+    "pdf_type": "SECURE_BACKEND_STAGED_PIPELINE",
+    "pipeline": "secure-backend-staged",
+    "pipeline_steps": [
+      {
+        "step": 1,
+        "kind": "llm",
+        "label": "Door schedule extraction",
+        "elapsed_seconds": 129,
+        "truncated": false,
+        "output_count": 7
+      },
+      {
+        "step": 2,
+        "kind": "llm",
+        "label": "Hardware set extraction",
+        "elapsed_seconds": 26,
+        "truncated": false,
+        "output_count": 4
+      },
+      {
+        "step": 3,
+        "kind": "llm",
+        "label": "Completeness check",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 0
+      },
+      {
+        "step": 4,
+        "kind": "code",
+        "label": "Door -> hardware mapping",
+        "output_count": 19
+      },
+      {
+        "step": 5,
+        "kind": "code",
+        "label": "Rollup"
+      },
+      {
+        "step": 6,
+        "kind": "llm",
+        "label": "RFI / coordination review",
+        "skipped": true,
+        "elapsed_seconds": 0,
+        "output_count": 1
+      }
+    ],
+    "model": "gpt-5.5",
+    "elapsed_seconds": 155,
+    "mapping_qa_issues": [],
+    "raw_transcription": {
+      "doors": [
+        {
+          "mark": "100"
+        },
+        {
+          "mark": "101"
+        },
+        {
+          "mark": "102"
+        },
+        {
+          "mark": "103"
+        },
+        {
+          "mark": "104"
+        },
+        {
+          "mark": "105"
+        },
+        {
+          "mark": "106"
+        }
+      ],
+      "hardware_sets": [
+        {
+          "id": "01",
+          "item_count": 3
+        },
+        {
+          "id": "02",
+          "item_count": 3
+        },
+        {
+          "id": "03",
+          "item_count": 3
+        },
+        {
+          "id": "04",
+          "item_count": 1
+        }
+      ]
+    },
+    "truncated": false,
+    "reasoning_succeeded": true,
+    "extraction_complete": true,
+    "extraction_failures": []
+  },
+  "logs": [
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Secure analysis started for Door & Hardware Schedule.pdf (463 KB).",
+      "message": "Secure analysis started for Door & Hardware Schedule.pdf (463 KB).",
+      "stage": "start",
+      "ts": "2026-05-27T21:04:45Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Door schedule review - processing document data.",
+      "message": "Door schedule review - processing document data.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:04:45Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Door schedule review - completed in 129s.",
+      "message": "Door schedule review - completed in 129s.",
+      "stage": "Door schedule review",
+      "ts": "2026-05-27T21:06:53Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Hardware set review - processing document data.",
+      "message": "Hardware set review - processing document data.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:06:53Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Hardware set review - completed in 26s.",
+      "message": "Hardware set review - completed in 26s.",
+      "stage": "Hardware set review",
+      "ts": "2026-05-27T21:07:19Z"
+    },
+    {
+      "kind": "info",
+      "level": "info",
+      "text": "Bid review skipped.",
+      "message": "Bid review skipped.",
+      "stage": "Bid review",
+      "ts": "2026-05-27T21:07:19Z"
+    },
+    {
+      "kind": "ok",
+      "level": "ok",
+      "text": "Secure analysis done - 7 doors - 4 sets - 10 items - 0 risks - 1 RFIs - 155s total.",
+      "message": "Secure analysis done - 7 doors - 4 sets - 10 items - 0 risks - 1 RFIs - 155s total.",
+      "stage": "done",
+      "ts": "2026-05-27T21:07:19Z"
+    }
+  ]
+}
