@@ -369,6 +369,15 @@ def _can_fallback_after_error(exc: ExtractionError) -> bool:
     return not any(token in message for token in ("rejected this account key", "quota-limited", "not configured"))
 
 
+def should_use_native_text_primary(file_bytes: bytes) -> bool:
+    text = extract_pdf_text(file_bytes, max_chars=12000)
+    if len(text.strip()) < 2500:
+        return False
+    has_door_signal = re.search(r"\bdoor\s+schedule\b|\bopening\s+(?:no|number|mark)\b|\bdoor\s+(?:no|number|mark)\b", text, re.I)
+    has_hardware_signal = re.search(r"\bhardware\s+(?:set|sets|group|groups)\b|\bhw\s+set\b", text, re.I)
+    return bool(has_door_signal and has_hardware_signal)
+
+
 def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
     remarks = _as_string_list(d.get("remarks"))
     remarks_text = " ".join(remarks)
@@ -581,6 +590,27 @@ def rescue_hardware_sets_from_crops(file_bytes: bytes, filename: str, known_ids:
     if not crops:
         _log(logs, "warn", "Completeness check could not find readable hardware excerpts.", "Completeness check")
         return [], 0
+    definition_pattern = re.compile(
+        r"\b(?:SET|HW\s*SET|HARDWARE\s*SET)\s*#?\s*[A-Z]?\d+[A-Z]?\b|"
+        r"\b(EXIT\s+DEVICE|CONTINUOUS\s+HINGE|LOCKSET|LATCHSET|CLOSER|THRESHOLD|WEATHERSTRIP|GASKET)\b",
+        re.I,
+    )
+    strong_definition_crops = [
+        crop for crop in crops
+        if definition_pattern.search(crop.get("text") or "")
+        and str(crop.get("source") or "").startswith("text:")
+        and "column" not in str(crop.get("source") or "").lower()
+        and "middle" not in str(crop.get("source") or "").lower()
+    ]
+    definition_crops = [
+        crop for crop in crops
+        if definition_pattern.search(crop.get("text") or "")
+        and not str(crop.get("source") or "").lower().startswith("tile_")
+    ]
+    if strong_definition_crops:
+        crops = strong_definition_crops[:4]
+    elif definition_crops:
+        crops = definition_crops[:6]
 
     _log(logs, "info", "Completeness check started.", "Completeness check")
     rescued_raw: list[dict[str, Any]] = []
@@ -948,19 +978,25 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         return native_text_cache
 
     _log(logs, "info", f"Secure analysis started for {filename} ({len(file_bytes) / 1024:.0f} KB).", "start")
+    use_native_text_primary = should_use_native_text_primary(file_bytes)
 
     try:
+        door_content = (
+            [{"type": "input_text", "text": f"Project scope: {scope}\n\nRead this native PDF text end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nPDF_TEXT:\n{native_text()}\n\nReturn JSON: {{ \"doors\": [...] }}"}]
+            if use_native_text_primary
+            else [
+                {"type": "input_file", "filename": filename, "file_data": data_url},
+                {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nReturn JSON: {{ \"doors\": [...] }}"},
+            ]
+        )
         call1 = _openai_json_call(
             "Door schedule review",
             [
                 {"role": "system", "content": STAGED_DOOR_SYSTEM},
-                {"role": "user", "content": [
-                    {"type": "input_file", "filename": filename, "file_data": data_url},
-                    {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible door schedule row per your system instructions. Preserve text exactly as shown - do not infer. Use null for unclear values.\n\nReturn JSON: {{ \"doors\": [...] }}"},
-                ]},
+                {"role": "user", "content": door_content},
             ],
             32000,
-            "high",
+            "medium" if use_native_text_primary else "high",
             logs,
             api_key=api_key,
         )
@@ -1001,17 +1037,22 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
     }
 
     try:
+        hw_content = (
+            [{"type": "input_text", "text": f"Project scope: {scope}\n\nRead this native PDF text end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every visible line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nPDF_TEXT:\n{native_text()}\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"}]
+            if use_native_text_primary
+            else [
+                {"type": "input_file", "filename": filename, "file_data": data_url},
+                {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"},
+            ]
+        )
         call2 = _openai_json_call(
             "Hardware set review",
             [
                 {"role": "system", "content": STAGED_HW_SYSTEM},
-                {"role": "user", "content": [
-                    {"type": "input_file", "filename": filename, "file_data": data_url},
-                    {"type": "input_text", "text": f"Project scope: {scope}\n\nRead the attached PDF end-to-end. Extract every visible hardware set / hardware group per your system instructions, with every line item. Do not map doors and do not create RFIs in this step.\n\nAlso capture sheet-level context: hardware_preamble, keying_notes, and hardware_legend.\n\nReturn JSON: {{ \"hardware_preamble\": [...], \"keying_notes\": [...], \"hardware_legend\": {{...}}, \"hardware_sets\": [...] }}"},
-                ]},
+                {"role": "user", "content": hw_content},
             ],
             48000,
-            "high",
+            "medium" if use_native_text_primary else "high",
             logs,
             api_key=api_key,
         )

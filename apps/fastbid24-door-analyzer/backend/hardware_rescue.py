@@ -62,8 +62,7 @@ def detect_hardware_crops(file_bytes: bytes, *, max_candidates: int = 8, dpi: in
                 if len(page_candidates) >= per_page_limit:
                     break
             candidates.extend(page_candidates)
-    if page_count_total > 2:
-        candidates.sort(key=lambda crop: (_crop_priority(crop.get("source") or "", crop.get("text") or ""), crop.get("confidence") or 0), reverse=True)
+    candidates.sort(key=lambda crop: (_crop_priority(crop.get("source") or "", crop.get("text") or ""), crop.get("confidence") or 0), reverse=True)
     return candidates[:max_candidates]
 
 
@@ -111,6 +110,17 @@ def _keyword_crop_type(keyword: str) -> str:
 def _crop_priority(source: str, text: str) -> int:
     source_upper = source.upper()
     text_upper = text.upper()
+    has_set_header = bool(re.search(r"\b(?:SET|HW\s*SET|HARDWARE\s*SET)\s*#?\s*[A-Z]?\d+[A-Z]?\b", text_upper))
+    has_item_terms = bool(re.search(r"\b(EXIT\s+DEVICE|CONTINUOUS\s+HINGE|HINGE|CLOSER|LOCKSET|LATCHSET|CYLINDER|THRESHOLD|WEATHERSTRIP|GASKET|SWEEP|PUSH\s+PLATE|PULL)\b", text_upper))
+    looks_like_door_schedule = bool(re.search(r"\bDOOR\s+NUMBER\b|\bTYPE\s+WIDTH\b|\bWINDOW\s+NOTES\b|\bWINDOW\s+TYPES\b", text_upper))
+    if has_set_header and has_item_terms:
+        return 9
+    if has_set_header:
+        return 8
+    if has_item_terms and "HARDWARE" in text_upper:
+        return 7
+    if looks_like_door_schedule and not has_set_header:
+        return 0
     if "DOOR HARDWARE" in source_upper:
         return 5
     if any(token in source_upper for token in ("HARDWARE SET", "HARDWARE SCHEDULE", "HDWR SET", "HW SET")):
