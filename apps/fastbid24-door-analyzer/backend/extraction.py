@@ -1,6 +1,7 @@
 import base64
 import http.client
 import json
+import random
 import re
 import time
 import urllib.error
@@ -193,7 +194,8 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
                 raw_message = error_payload.get("error", {}).get("message") or f"Analysis service HTTP {exc.code}"
                 if exc.code in {500, 502, 503, 504} and attempt < 2:
                     _log(logs, "warn", f"{label} - temporary service error, retrying.", label)
-                    time.sleep(2 * (attempt + 1))
+                    backoff = (2 ** (attempt + 1)) + random.uniform(0.5, 2.0)
+                    time.sleep(backoff)
                     continue
                 if exc.code in {401, 403}:
                     public_message = "Analysis service rejected this account key. Ask an admin to replace it."
@@ -205,7 +207,8 @@ def _openai_json_call(label: str, input_payload: list[dict[str, Any]], max_token
             except (urllib.error.URLError, http.client.RemoteDisconnected, ConnectionError, TimeoutError) as exc:
                 if attempt < 2:
                     _log(logs, "warn", f"{label} - network interruption, retrying.", label)
-                    time.sleep(2 * (attempt + 1))
+                    backoff = (2 ** (attempt + 1)) + random.uniform(0.5, 2.0)
+                    time.sleep(backoff)
                     continue
                 reason = getattr(exc, "reason", None) or str(exc)
                 raise ExtractionError(f"Network error contacting analysis service: {reason}") from exc
@@ -272,7 +275,30 @@ def clean_hardware_set_label(value: Any) -> str:
     s = str(value or "").strip()
     if not s:
         return ""
-    s = re.sub(r"^(hardware\s+group\s+(?:no\.?\s*)?|hardware\s+set\s*(?:#|no\.?)?\s*|hw\s*set\s*(?:#|no\.?)?\s*|set\s+(?:no\.?\s*)?|group\s+(?:no\.?\s*)?|fhw[-\s]?|hw[-\s]?|#)", "", s, flags=re.I)
+    prefixes = [
+        r"hardware\s+group\s+(?:no\.?\s*|#)?",
+        r"hardware\s+set\s*(?:#|no\.?)?\s*",
+        r"hw\s*set\s*(?:#|no\.?)?\s*",
+        r"hw\s*group\s*(?:#|no\.?)?\s*",
+        r"door\s+schedule\s+id\s*",
+        r"door\s+schedule\s+set\s*",
+        r"door\s+schedule\s+group\s*",
+        r"door\s+schedule\s*",
+        r"door\s+set\s*",
+        r"door\s+group\s*",
+        r"door\s+id\s*",
+        r"opening\s+id\s*",
+        r"opening\s+set\s*",
+        r"opening\s+group\s*",
+        r"opening\s+no\.?\s*",
+        r"set\s+(?:no\.?\s*|#)?",
+        r"group\s+(?:no\.?\s*|#)?",
+        r"fhw[-\s]?",
+        r"hw[-\s]?",
+        r"#"
+    ]
+    pattern = "^(" + "|".join(prefixes) + ")"
+    s = re.sub(pattern, "", s, flags=re.I)
     s = re.sub(r"\s+", " ", s).strip()
     s = re.sub(r"-{2,}", "-", s)
     numeric = re.fullmatch(r"(\d+)\.0+", s)
@@ -321,7 +347,7 @@ def alias_set_keys(value: Any) -> set[str]:
     keys = {canonical_set_key(normalized)}
     for part in re.split(r"\s*[|/]\s*", normalized):
         part = part.strip()
-        if len(part) >= 3:
+        if len(part) >= 3 or part.isdigit():
             keys.add(canonical_set_key(part))
     loose_tokens = sorted(re.findall(r"[A-Z0-9]+", _normalize_set_label_text(normalized).upper()))
     if loose_tokens:
@@ -369,13 +395,92 @@ def _can_fallback_after_error(exc: ExtractionError) -> bool:
     return not any(token in message for token in ("rejected this account key", "quota-limited", "not configured"))
 
 
+def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf", max_chars: int = 45000) -> str:
+    # 1. Try IBM Docling (visual AI layout-aware table parser)
+    try:
+        import tempfile
+        import os
+        from pathlib import Path
+        from docling.document_converter import DocumentConverter
+
+        suffix = ".pdf"
+        if filename:
+            ext = Path(filename).suffix
+            if ext:
+                suffix = ext
+
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+            tmp.write(file_bytes)
+            tmp_path = tmp.name
+
+        try:
+            converter = DocumentConverter()
+            result = converter.convert(tmp_path)
+            if hasattr(result, "document") and hasattr(result.document, "export_to_markdown"):
+                text = result.document.export_to_markdown()
+            elif hasattr(result, "export_to_markdown"):
+                text = result.export_to_markdown()
+            else:
+                text = str(result)
+            if text and text.strip():
+                return text.strip()[:max_chars]
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+    except Exception:
+        # Fall through to MarkItDown if Docling fails
+        pass
+
+    # 2. Try Microsoft MarkItDown
+    try:
+        from markitdown import MarkItDown
+        import tempfile
+        import os
+        from pathlib import Path
+        
+        suffix = ".pdf"
+        if filename:
+            ext = Path(filename).suffix
+            if ext:
+                suffix = ext
+                
+        with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+            tmp.write(file_bytes)
+            tmp_path = tmp.name
+            
+        try:
+            md = MarkItDown()
+            result = md.convert(tmp_path)
+            text = result.text_content or ""
+            return text.strip()[:max_chars]
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+    except Exception:
+        # 3. Fallback to standard plain text extraction
+        try:
+            res = extract_pdf_text(file_bytes, max_chars=max_chars)
+            if not res:
+                return file_bytes.decode("utf-8", errors="ignore")[:max_chars]
+            return res
+        except Exception:
+            return file_bytes.decode("utf-8", errors="ignore")[:max_chars]
+
+
 def should_use_native_text_primary(file_bytes: bytes) -> bool:
     text = extract_pdf_text(file_bytes, max_chars=12000)
     if len(text.strip()) < 2500:
         return False
+    
+    # Check for garbled/corrupted font text by counting architectural keywords
+    keywords = ["door", "frame", "schedule", "hardware", "width", "height", "thickness", "type", "material", "finish", "opening", "closer", "lock", "latch", "hinge", "set", "mark", "room"]
+    keyword_hits = sum(1 for kw in keywords if re.search(r'\b' + kw + r'\b', text, re.I))
+    if keyword_hits < 3:
+        return False
+        
     has_door_signal = re.search(r"\bdoor\s+schedule\b|\bopening\s+(?:no|number|mark)\b|\bdoor\s+(?:no|number|mark)\b", text, re.I)
-    has_hardware_signal = re.search(r"\bhardware\s+(?:set|sets|group|groups)\b|\bhw\s+set\b", text, re.I)
-    return bool(has_door_signal and has_hardware_signal)
+    has_hardware_signal = re.search(r"\bhardware\s+(?:set|sets|group|groups)\b|\bhw\s+set\b|\bhw\s+group\b|\bhardware\s+specification\b", text, re.I)
+    return bool(has_door_signal or has_hardware_signal)
 
 
 def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
@@ -615,7 +720,7 @@ def rescue_hardware_sets_from_crops(file_bytes: bytes, filename: str, known_ids:
     _log(logs, "info", "Completeness check started.", "Completeness check")
     rescued_raw: list[dict[str, Any]] = []
     elapsed = 0
-    batch_size = 2
+    batch_size = 3
     known_text = ", ".join(known_ids) if known_ids else "not known"
 
     for batch_start in range(0, len(crops), batch_size):
@@ -808,9 +913,89 @@ def referenced_empty_set_ids(doors: list[dict[str, Any]], sets: list[dict[str, A
     return sorted(missing, key=_set_sort_key)
 
 
-def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]], general_notes: list[str] = None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     qa: list[dict[str, Any]] = []
     set_by_canon, set_aliases = _build_set_lookup(sets)
+    
+    # 1. Resolve existing_to_remain from general notes referenced in remarks
+    if general_notes:
+        note_map = {}
+        for note in general_notes:
+            match = re.match(r"^\s*(\d+)[\.\s\-]+(.*)$", note)
+            if match:
+                num = match.group(1)
+                text = match.group(2).strip()
+                note_map[num] = text
+                
+        for d in doors:
+            if d.get("existing_to_remain"):
+                continue
+            remarks_list = d.get("remarks") or []
+            is_existing = False
+            for r in remarks_list:
+                tokens = re.findall(r"\d+", str(r))
+                for t in tokens:
+                    note_text = note_map.get(t)
+                    if note_text:
+                        note_upper = note_text.upper()
+                        if "EXISTING" in note_upper and ("REMAIN" in note_upper or "HARDWARE" in note_upper):
+                            is_existing = True
+                            break
+                        if "ETR" in note_upper:
+                            is_existing = True
+                            break
+                if is_existing:
+                    break
+            if is_existing:
+                d["existing_to_remain"] = True
+
+    # 2. Try resolving implicit hardware sets for doors where hardware_set is empty
+    for d in doors:
+        if not d.get("hardware_set"):
+            resolved = None
+            
+            # Fallback 1: Match door_type (e.g. Type 'A' -> Group 'A')
+            dt = str(d.get("door_type") or "").strip()
+            if dt and len(dt) <= 15:
+                matched = resolve_set(dt, set_by_canon, set_aliases)
+                if matched:
+                    resolved = matched.get("hardware_set")
+                    d["hardware_set"] = resolved
+                    d["raw_hardware_set"] = f"(resolved from door_type '{dt}')"
+                    
+            # Fallback 2: Match frame_type (e.g. Type 'A' -> Group 'A')
+            if not resolved:
+                ft = str(d.get("frame_type") or "").strip()
+                if ft and len(ft) <= 15:
+                    matched = resolve_set(ft, set_by_canon, set_aliases)
+                    if matched:
+                        resolved = matched.get("hardware_set")
+                        d["hardware_set"] = resolved
+                        d["raw_hardware_set"] = f"(resolved from frame_type '{ft}')"
+                        
+            # Fallback 3: Parse remarks for explicit group reference
+            if not resolved:
+                remarks_list = d.get("remarks")
+                remarks_text = " ".join(str(x) for x in remarks_list) if isinstance(remarks_list, list) else str(remarks_list or "")
+                match = re.search(r"\b(?:group|set|hw(?:\s*set)?|type|spec)\s*#?\s*([a-z0-9]+)\b", remarks_text, re.I)
+                if match:
+                    group_ref = match.group(1)
+                    matched = resolve_set(group_ref, set_by_canon, set_aliases)
+                    if matched:
+                        resolved = matched.get("hardware_set")
+                        d["hardware_set"] = resolved
+                        d["raw_hardware_set"] = f"(resolved from remarks: '{match.group(0)}')"
+
+            # Fallback 4: Match door mark (e.g. Mark '101A' -> Group '101A')
+            if not resolved:
+                mark = str(d.get("mark") or "").strip()
+                if mark:
+                    matched = resolve_set(mark, set_by_canon, set_aliases)
+                    if matched:
+                        resolved = matched.get("hardware_set")
+                        d["hardware_set"] = resolved
+                        d["raw_hardware_set"] = f"(resolved from door mark '{mark}')"
+
     for d in doors:
         if not d.get("hardware_set"):
             continue
@@ -818,8 +1003,10 @@ def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) 
         if matched and matched.get("hardware_set") != d.get("hardware_set"):
             d["raw_hardware_set"] = d.get("hardware_set")
             d["hardware_set"] = matched.get("hardware_set")
+            
     for s in sets:
         s["referenced_by_doors"] = [d.get("mark") for d in doors if d.get("hardware_set") == s.get("hardware_set")]
+        
     have = {s.get("hardware_set") for s in sets}
     for d in doors:
         if d.get("hardware_set") and d.get("hardware_set") not in have:
@@ -841,20 +1028,80 @@ def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]]) 
     set_by_id = {s.get("hardware_set"): s for s in sets}
     mapping: list[dict[str, Any]] = []
     for d in doors:
+        by_others_text = " ".join([
+            str(d.get("door_material") or ""),
+            str(d.get("door_type") or ""),
+            str(d.get("frame_material") or ""),
+            str(d.get("frame_type") or ""),
+            " ".join(d.get("remarks") or [])
+        ]).upper()
+        
+        if "BY OTHERS" in by_others_text or "N.I.C." in by_others_text or "NIC" in by_others_text:
+            mapping.append({
+                "door_mark": d.get("mark"),
+                "hardware_set": None,
+                "item_no": None,
+                "qty": None,
+                "description": "(opening is by others / not in contract; not mapped)",
+                "catalog_number": None,
+                "manufacturer": None,
+                "finish": None,
+                "notes": None,
+                "status": "BY_OTHERS"
+            })
+            continue
+
         if d.get("existing_to_remain"):
             mapping.append({"door_mark": d.get("mark"), "hardware_set": d.get("hardware_set"), "item_no": None, "qty": None, "description": "(existing door - hardware to remain; not mapped per rule)", "catalog_number": None, "manufacturer": None, "finish": None, "notes": None, "status": "EXISTING_TO_REMAIN"})
             continue
+            
         if not d.get("hardware_set"):
             mapping.append({"door_mark": d.get("mark"), "hardware_set": None, "item_no": None, "qty": None, "description": "(no hardware set assigned)", "catalog_number": None, "manufacturer": None, "finish": None, "notes": None, "status": "NO_HW_SET"})
             qa.append({"kind": "no_hw_set", "mark": d.get("mark"), "message": f"Door {d.get('mark')} has no hardware set assigned."})
             continue
+            
+        # Check for compound hardware sets (e.g. "1, 2" or "1 & 2")
+        hw_val = d.get("hardware_set")
+        parts = [p.strip() for p in re.split(r"\s*(?:,|&|\band\b)\s*", str(hw_val), flags=re.I) if p.strip()]
+        if len(parts) > 1:
+            resolved_sets = []
+            all_resolved = True
+            for part in parts:
+                matched_part = resolve_set(part, set_by_canon, set_aliases)
+                if matched_part and matched_part.get("items"):
+                    resolved_sets.append(matched_part)
+                else:
+                    all_resolved = False
+                    break
+            
+            if all_resolved:
+                combined_items = []
+                for r_set in resolved_sets:
+                    combined_items.extend(r_set.get("items") or [])
+                for i, it in enumerate(combined_items):
+                    mapping.append({
+                        "door_mark": d.get("mark"),
+                        "hardware_set": hw_val,
+                        "item_no": it.get("item_no") or i + 1,
+                        "qty": it.get("qty"),
+                        "description": it.get("desc") or "",
+                        "catalog_number": it.get("part"),
+                        "manufacturer": it.get("mfr"),
+                        "finish": it.get("finish"),
+                        "notes": it.get("notes"),
+                        "status": "OK"
+                    })
+                continue
+
         s = set_by_id.get(d.get("hardware_set"))
         if not s or not s.get("items"):
             mapping.append({"door_mark": d.get("mark"), "hardware_set": d.get("hardware_set"), "item_no": None, "qty": None, "description": "(hardware set has no extracted items)" if s else "(hardware set not found in spec)", "catalog_number": None, "manufacturer": None, "finish": None, "notes": None, "status": "FAILED_EXTRACTION_REVIEW_REQUIRED"})
             qa.append({"kind": "set_empty" if s else "missing_set", "set": d.get("hardware_set"), "mark": d.get("mark"), "message": f"Door {d.get('mark')}: hardware set {d.get('hardware_set')} has zero items." if s else f"Door {d.get('mark')} references missing set {d.get('hardware_set')}."})
             continue
+            
         for i, it in enumerate(s.get("items") or []):
             mapping.append({"door_mark": d.get("mark"), "hardware_set": d.get("hardware_set"), "item_no": it.get("item_no") or i + 1, "qty": it.get("qty"), "description": it.get("desc") or "", "catalog_number": it.get("part"), "manufacturer": it.get("mfr"), "finish": it.get("finish"), "notes": it.get("notes"), "status": "OK"})
+            
     return mapping, qa
 
 
@@ -974,7 +1221,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
     def native_text() -> str:
         nonlocal native_text_cache
         if native_text_cache is None:
-            native_text_cache = extract_pdf_text(file_bytes, max_chars=45000)
+            native_text_cache = extract_pdf_text_markdown(file_bytes, filename, max_chars=45000)
         return native_text_cache
 
     def pdf_data_url() -> str:
@@ -1134,7 +1381,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
         "keying_notes": dedupe_strings([*door_ctx["keying_notes"], *hw_ctx["keying_notes"]]),
         "legend": legend,
     }
-    mapping, qa_issues = map_doors_hardware(doors, sets)
+    mapping, qa_issues = map_doors_hardware(doors, sets, general_notes=sheet_context.get("general_notes"))
     elapsed_core = int(call1["elapsed"] + door_rescue_elapsed + call2["elapsed"] + rescue_elapsed)
     project_summary = rollup_summary(doors, sets, scope, elapsed_core, project_meta)
 

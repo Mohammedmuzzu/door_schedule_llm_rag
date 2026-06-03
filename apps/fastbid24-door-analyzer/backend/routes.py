@@ -15,7 +15,15 @@ from werkzeug.exceptions import HTTPException
 
 from config import allowed_origin, settings
 from db import session_scope
-from extraction import ExtractionError, extract_pdf_secure
+from extraction import (
+    ExtractionError,
+    extract_pdf_secure,
+    map_doors_hardware,
+    rollup_summary,
+    synthesize,
+    _openai_json_call,
+    STAGED_RFI_SYSTEM,
+)
 from models import (
     AuditEvent,
     ExtractedDoor,
@@ -628,6 +636,27 @@ def register_routes(app: Flask) -> None:
                             "responses": {"201": {"description": "Run stored"}},
                         },
                     },
+                    "/runs/merge": {
+                        "post": {
+                            "summary": "Merge two runs (e.g. doors and hardware sets)",
+                            "requestBody": {
+                                "required": True,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "required": ["run_id_doors", "run_id_hw"],
+                                            "properties": {
+                                                "run_id_doors": {"type": "string", "format": "uuid"},
+                                                "run_id_hw": {"type": "string", "format": "uuid"},
+                                            },
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {"201": {"description": "Run merged successfully"}},
+                        }
+                    },
                     "/runs/{run_id}": {
                         "get": {
                             "summary": "Get one PDF run",
@@ -1092,6 +1121,368 @@ def register_routes(app: Flask) -> None:
             {"source_filename": run.source_filename, "s3_url": run.s3_url},
         )
         return jsonify({"run": serialize_run(run, include_analysis=True)}), 201
+
+    @app.post("/api/v1/runs/merge")
+    @require_user
+    def merge_runs(db, user):
+        body = request.get_json(silent=True) or {}
+        run_id_doors = body.get("run_id_doors")
+        run_id_hw = body.get("run_id_hw")
+        
+        if not run_id_doors or not run_id_hw:
+            return api_error(422, "ValidationError", "Both run_id_doors and run_id_hw are required.")
+            
+        run_doors = db.query(PdfRun).filter(PdfRun.id == run_id_doors, PdfRun.organization_id == user.organization_id).first()
+        run_hw = db.query(PdfRun).filter(PdfRun.id == run_id_hw, PdfRun.organization_id == user.organization_id).first()
+        
+        if not run_doors or not run_hw:
+            return api_error(404, "NotFound", "One or both runs not found.")
+            
+        if user.role != "admin":
+            if run_doors.user_id != user.id or run_hw.user_id != user.id:
+                return api_error(403, "Forbidden", "You can only merge runs that you own.")
+                
+        # Define logs list
+        logs = []
+        def log_info(text, stage=None):
+            logs.append({
+                "kind": "info",
+                "level": "info",
+                "text": text,
+                "message": text,
+                "stage": stage,
+                "ts": datetime.now(timezone.utc).isoformat() + "Z"
+            })
+        def log_ok(text, stage=None):
+            logs.append({
+                "kind": "ok",
+                "level": "ok",
+                "text": text,
+                "message": text,
+                "stage": stage,
+                "ts": datetime.now(timezone.utc).isoformat() + "Z"
+            })
+            
+        log_info(f"Initiating cross-run merge: Doors from '{run_doors.source_filename}' ({run_doors.id}) and Hardware from '{run_hw.source_filename}' ({run_hw.id})", "Initialization")
+        
+        # Merge doors and sets
+        doors = (run_doors.analysis_json.get("door_analysis") or []) + (run_hw.analysis_json.get("door_analysis") or [])
+        sets = (run_doors.analysis_json.get("hardware_set_review") or []) + (run_hw.analysis_json.get("hardware_set_review") or [])
+        
+        # Deduplicate doors by mark (case-insensitive)
+        seen_marks = set()
+        deduped_doors = []
+        for d in doors:
+            mark = str(d.get("mark") or "").strip().upper()
+            if not mark:
+                continue
+            if mark not in seen_marks:
+                seen_marks.add(mark)
+                deduped_doors.append(d)
+                
+        # Deduplicate hardware sets by name (case-insensitive)
+        seen_sets = set()
+        deduped_sets = []
+        for s in sets:
+            set_name = str(s.get("hardware_set") or "").strip().upper()
+            if not set_name:
+                continue
+            if set_name not in seen_sets:
+                seen_sets.add(set_name)
+                deduped_sets.append(s)
+                
+        log_info(f"Loaded {len(deduped_doors)} unique doors and {len(deduped_sets)} unique hardware sets.", "Deduplication")
+        
+        # Merge sheet contexts
+        sc1 = run_doors.project_json.get("sheet_context") or {}
+        sc2 = run_hw.project_json.get("sheet_context") or {}
+        
+        def merge_lists(l1, l2):
+            seen = set()
+            out = []
+            for x in (l1 or []) + (l2 or []):
+                val = str(x).strip()
+                if val and val.lower() not in seen:
+                    seen.add(val.lower())
+                    out.append(val)
+            return out
+            
+        general_notes = merge_lists(sc1.get("general_notes"), sc2.get("general_notes"))
+        hardware_preamble = merge_lists(sc1.get("hardware_preamble"), sc2.get("hardware_preamble"))
+        keying_notes = merge_lists(sc1.get("keying_notes"), sc2.get("keying_notes"))
+        
+        legend = {}
+        for k, v in {**(sc1.get("legend") or {}), **(sc2.get("legend") or {})}.items():
+            if str(v).strip():
+                legend[str(k).strip().upper()] = str(v).strip()
+                
+        sheet_context = {
+            "general_notes": general_notes,
+            "hardware_preamble": hardware_preamble,
+            "keying_notes": keying_notes,
+            "legend": legend,
+        }
+        
+        # Map doors to hardware sets
+        log_info("Mapping doors to hardware sets...", "Mapping")
+        mapping, qa_issues = map_doors_hardware(deduped_doors, deduped_sets, general_notes=sheet_context.get("general_notes"))
+        log_info(f"Mapping complete. Generated {len(mapping)} door-hardware mapping rows.", "Mapping")
+        
+        # Synthesize RFIs and coordination items using heuristic checks
+        log_info("Running coordination review and heuristic RFI synthesis...", "Review")
+        scope = run_doors.scope or run_hw.scope or "Supply & Installation"
+        synth = synthesize(deduped_doors, deduped_sets, scope, sheet_context)
+        recs = synth["recs"]
+        
+        # Keep track of generated RFI/risk keys to avoid duplicates
+        seen_rfis = set()
+        seen_risks = set()
+        
+        project_risks = []
+        rfi_log = []
+        
+        # 1. Merge existing RFIs/risks from the source runs
+        for rfi in (run_doors.analysis_json.get("rfi_log") or []) + (run_hw.analysis_json.get("rfi_log") or []):
+            q_key = str(rfi.get("question") or rfi.get("issue") or "").strip().lower()
+            if q_key and q_key not in seen_rfis:
+                seen_rfis.add(q_key)
+                rfi_log.append(rfi)
+                
+        for risk in (run_doors.analysis_json.get("project_risks") or []) + (run_hw.analysis_json.get("project_risks") or []):
+            issue_key = str(risk.get("issue") or "").strip().lower()
+            if issue_key and issue_key not in seen_risks:
+                seen_risks.add(issue_key)
+                project_risks.append(risk)
+                
+        # 2. Merge heuristic RFI/risks from synthesis
+        for r in synth["risks"]:
+            key = str(r.get("issue") or "").strip().lower()
+            if key and key not in seen_risks:
+                seen_risks.add(key)
+                project_risks.append(r)
+                
+        for r in synth["rfis"]:
+            key = str(r.get("question") or r.get("issue") or "").strip().lower()
+            if key and key not in seen_rfis:
+                seen_rfis.add(key)
+                rfi_log.append(r)
+                
+        for issue in qa_issues:
+            msg = issue.get("message")
+            if msg and msg not in recs["coordination_items"]:
+                recs["coordination_items"].append(msg)
+                
+        # 3. Try LLM Bid Review if analysis key is available
+        analysis_key = get_account_analysis_key(db, user)
+        if analysis_key:
+            try:
+                log_info("Running cross-run LLM bid review & coordination analysis...", "LLM Review")
+                payload = {
+                    "scope": scope,
+                    "sheet_context": sheet_context,
+                    "doors": [{"mark": d.get("mark"), "room_or_location": d.get("room_or_location"), "door_type": d.get("door_type"), "size": d.get("size"), "door_material": d.get("door_material"), "fire_rating": d.get("fire_rating"), "hardware_set": d.get("hardware_set"), "closer": d.get("closer"), "electric_or_access_control": d.get("electric_or_access_control"), "remarks": d.get("remarks"), "existing_to_remain": d.get("existing_to_remain")} for d in deduped_doors],
+                    "hardware_sets": [{"hardware_set": s.get("hardware_set"), "status": s.get("status"), "raw_status": s.get("raw_status"), "item_count": len(s.get("items") or []), "item_descriptions": [it.get("desc") for it in s.get("items") or [] if it.get("desc")]} for s in deduped_sets],
+                    "mapping_qa": qa_issues,
+                }
+                call_logs = []
+                call3 = _openai_json_call(
+                    "Bid review",
+                    [
+                        {"role": "system", "content": STAGED_RFI_SYSTEM},
+                        {"role": "user", "content": [{"type": "input_text", "text": "Review the following extracted data (already in canonical form). Produce only real-issue RFIs and coordination notes per your system instructions. Do not invent issues for clean rows.\n\nEXTRACTED_DATA:\n" + json.dumps(payload) + '\n\nReturn JSON: { "rfis": [...] }'}]},
+                    ],
+                    16000,
+                    "medium",
+                    call_logs,
+                    api_key=analysis_key,
+                )
+                rfis = call3["parsed"].get("rfis") if isinstance(call3["parsed"].get("rfis"), list) else []
+                log_info(f"LLM review completed. Found {len(rfis)} issues.", "LLM Review")
+                for item in rfis:
+                    if not isinstance(item, dict):
+                        continue
+                    issue_text = item.get("issue") or ""
+                    q_key = str(issue_text).strip().lower()
+                    if q_key and q_key not in seen_rfis:
+                        seen_rfis.add(q_key)
+                        rfi_log.append({
+                            "priority": str(item.get("severity") or "medium").lower(),
+                            "category": item.get("category") or "General",
+                            "question": issue_text,
+                            "affected_openings": item.get("affected_doors") if isinstance(item.get("affected_doors"), list) else [],
+                            "recommendation": item.get("recommendation") or "",
+                            "status": "Open",
+                            "reason": issue_text
+                        })
+                    if q_key and q_key not in seen_risks:
+                        seen_risks.add(q_key)
+                        project_risks.append({
+                            "severity": str(item.get("severity") or "medium").lower(),
+                            "category": item.get("category") or "General",
+                            "issue": issue_text,
+                            "affected_openings": item.get("affected_doors") if isinstance(item.get("affected_doors"), list) else [],
+                            "recommendation": item.get("recommendation") or "",
+                            "status": "Open"
+                        })
+            except Exception as e:
+                log_info(f"LLM bid review could not complete: {e}. Falling back to heuristic/cached review.", "LLM Review")
+        else:
+            log_info("LLM analysis key not available. Using heuristic and cached reviews only.", "LLM Review")
+            
+        elapsed_core = int((run_doors.metrics_json or {}).get("elapsed_seconds") or 0) + int((run_hw.metrics_json or {}).get("elapsed_seconds") or 0)
+        project_meta = {
+            "project_name": run_doors.project_name or run_hw.project_name or "Merged Project",
+            "project_number": run_doors.project_number or run_hw.project_number,
+            "architect": run_doors.architect or run_hw.architect,
+            "address": (run_doors.project_json.get("address") or run_hw.project_json.get("address")),
+            "drawing": (run_doors.project_json.get("drawing") or run_hw.project_json.get("drawing")),
+            "date": (run_doors.project_json.get("date") or run_hw.project_json.get("date")),
+        }
+        
+        project_summary = rollup_summary(deduped_doors, deduped_sets, scope, elapsed_core, project_meta)
+        
+        run_id = uuid.uuid4()
+        analysis_json = {
+            "project_summary": project_summary,
+            "door_analysis": deduped_doors,
+            "hardware_set_review": deduped_sets,
+            "project_risks": project_risks,
+            "rfi_log": rfi_log,
+            "qa": {"coordination_items": recs["coordination_items"]},
+            "status": "COMPLETED",
+        }
+        project_json = {
+            "name": project_summary.get("project_name"),
+            "number": project_summary.get("project_number"),
+            "architect": project_summary.get("architect"),
+            "address": project_meta.get("address"),
+            "drawing": project_meta.get("drawing"),
+            "date": project_meta.get("date"),
+            "sheet_context": sheet_context,
+        }
+        
+        source_filename = f"Merged: {run_doors.source_filename} + {run_hw.source_filename}"
+        
+        merged_run = PdfRun(
+            id=run_id,
+            organization_id=user.organization_id,
+            user_id=user.id,
+            proposal_id=run_doors.proposal_id or run_hw.proposal_id,
+            status="completed",
+            scope=scope,
+            source_filename=source_filename,
+            source_size=(run_doors.source_size or 0) + (run_hw.source_size or 0),
+            source_sha256=None,
+            s3_bucket=run_doors.s3_bucket or run_hw.s3_bucket,
+            s3_key=None,
+            s3_url=None,
+            project_name=project_summary.get("project_name"),
+            project_number=project_summary.get("project_number"),
+            architect=project_summary.get("architect"),
+            pdf_type="merged",
+            model="heuristic-merge" if not analysis_key else settings.openai_model,
+            analysis_json=analysis_json,
+            project_json=project_json,
+            summary_json={"project_summary": project_summary},
+            metrics_json={
+                "elapsed_seconds": elapsed_core,
+                "merged_from": [str(run_doors.id), str(run_hw.id)],
+                "steps": [
+                    {"step": 1, "kind": "code", "label": "Retrieve original runs"},
+                    {"step": 2, "kind": "code", "label": "Deduplicate & merge items"},
+                    {"step": 3, "kind": "code", "label": "Cross-run mapping", "output_count": len(mapping)},
+                    {"step": 4, "kind": "code", "label": "Heuristic synthesis"},
+                    {"step": 5, "kind": "llm" if analysis_key else "code", "label": "RFI review", "output_count": len(rfi_log)},
+                ]
+            },
+            completed_at=datetime.now(timezone.utc),
+        )
+        db.add(merged_run)
+        db.flush()
+        
+        log_ok(f"Merged run successfully created. Doors: {len(deduped_doors)}, Sets: {len(deduped_sets)}, RFIs: {len(rfi_log)}.", "done")
+        
+        for item in logs:
+            level = item.get("kind") or item.get("level") or "info"
+            if level not in {"info", "ok", "warn", "error"}:
+                level = "info"
+            db.add(
+                PdfRunLog(
+                    run_id=merged_run.id,
+                    user_id=user.id,
+                    level=level,
+                    stage=item.get("stage"),
+                    message=str(item.get("text") or item.get("message") or ""),
+                    payload=item,
+                )
+            )
+            
+        for door in deduped_doors:
+            if isinstance(door, dict):
+                db.add(
+                    ExtractedDoor(
+                        run_id=merged_run.id,
+                        door_mark=door.get("mark"),
+                        hardware_set=door.get("hardware_set"),
+                        risk_level=door.get("risk_level"),
+                        confidence=str(door.get("confidence")) if door.get("confidence") is not None else None,
+                        payload=door,
+                    )
+                )
+                
+        for hw_set in deduped_sets:
+            if not isinstance(hw_set, dict):
+                continue
+            items = hw_set.get("items") if isinstance(hw_set.get("items"), list) else []
+            set_row = HardwareSet(
+                run_id=merged_run.id,
+                hardware_set=hw_set.get("hardware_set"),
+                status=hw_set.get("status"),
+                item_count=len(items),
+                payload=hw_set,
+            )
+            db.add(set_row)
+            db.flush()
+            for hw_item in items:
+                if not isinstance(hw_item, dict):
+                    continue
+                db.add(
+                    HardwareItem(
+                        run_id=merged_run.id,
+                        hardware_set_id=set_row.id,
+                        item_no=str(hw_item.get("item_no") or hw_item.get("item") or ""),
+                        qty=str(hw_item.get("qty") or ""),
+                        description=hw_item.get("desc") or hw_item.get("description"),
+                        catalog_number=hw_item.get("part") or hw_item.get("catalog_number"),
+                        manufacturer=hw_item.get("mfr") or hw_item.get("manufacturer"),
+                        finish=hw_item.get("finish"),
+                        payload=hw_item,
+                    )
+                )
+                
+        for rfi in rfi_log:
+            if isinstance(rfi, dict):
+                db.add(
+                    RfiItem(
+                        run_id=merged_run.id,
+                        priority=rfi.get("priority") or rfi.get("severity"),
+                        category=rfi.get("category"),
+                        question=rfi.get("question") or rfi.get("issue"),
+                        source=rfi.get("source") or rfi.get("where"),
+                        payload=rfi,
+                    )
+                )
+                
+        add_audit(
+            db,
+            user,
+            "runs.merge",
+            "pdf_run",
+            str(merged_run.id),
+            {"run_id_doors": str(run_doors.id), "run_id_hw": str(run_hw.id)},
+        )
+        
+        return jsonify({"run": serialize_run(merged_run, include_analysis=True)}), 201
 
     @app.get("/api/v1/runs/<run_id>")
     @require_user
