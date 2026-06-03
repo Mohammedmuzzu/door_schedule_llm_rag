@@ -504,7 +504,20 @@ def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
         "closer": d.get("closer"),
         "electric_or_access_control": d.get("electric_or_access_control"),
         "remarks": remarks,
-        "existing_to_remain": bool(d.get("existing_to_remain")) or bool(re.search(r"existing[\s_-]*to[\s_-]*remain|\bETR\b", remarks_text, re.I)),
+        "existing_to_remain": (
+            bool(d.get("existing_to_remain"))
+            or bool(re.search(
+                r"existing[\s_-]*to[\s_-]*remain|\bETR\b|e\.t\.r\.",
+                " ".join([
+                    remarks_text,
+                    str(d.get("door_material") or ""),
+                    str(d.get("door_type") or ""),
+                    str(d.get("frame_material") or ""),
+                    str(d.get("room_or_location") or "")
+                ]),
+                re.I
+            ))
+        ),
         "hardware_status": "review required",
         "install_complexity": "medium",
         "risk_level": "medium",
@@ -1053,6 +1066,27 @@ def map_doors_hardware(doors: list[dict[str, Any]], sets: list[dict[str, Any]], 
 
         if d.get("existing_to_remain"):
             mapping.append({"door_mark": d.get("mark"), "hardware_set": d.get("hardware_set"), "item_no": None, "qty": None, "description": "(existing door - hardware to remain; not mapped per rule)", "catalog_number": None, "manufacturer": None, "finish": None, "notes": None, "status": "EXISTING_TO_REMAIN"})
+            continue
+            
+        # Check for coiling, overhead, sectional doors or roll-up security shutters
+        coiling_text = " ".join([
+            str(d.get("door_material") or ""),
+            str(d.get("door_type") or ""),
+            " ".join(d.get("remarks") or [])
+        ]).upper()
+        if not d.get("hardware_set") and any(token in coiling_text for token in ("COILING", "ROLL-UP", "ROLL UP", "ROLLING", "SHUTTER", "OVERHEAD", "SECTIONAL", "ASTA", "QMI")):
+            mapping.append({
+                "door_mark": d.get("mark"),
+                "hardware_set": None,
+                "item_no": None,
+                "qty": None,
+                "description": "(coiling/overhead door - hardware supplied by door manufacturer; not mapped)",
+                "catalog_number": None,
+                "manufacturer": None,
+                "finish": None,
+                "notes": None,
+                "status": "COILING_SYSTEM"
+            })
             continue
             
         if not d.get("hardware_set"):
