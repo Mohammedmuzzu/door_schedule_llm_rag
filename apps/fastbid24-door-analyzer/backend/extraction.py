@@ -395,7 +395,93 @@ def _can_fallback_after_error(exc: ExtractionError) -> bool:
     return not any(token in message for token in ("rejected this account key", "quota-limited", "not configured"))
 
 
-def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf", max_chars: int = 45000) -> str:
+def compress_markdown_table_spaces(text: str) -> str:
+    lines = []
+    for line in text.splitlines():
+        if "|" in line:
+            cleaned = re.sub(r' {2,}', ' ', line)
+            lines.append(cleaned)
+        else:
+            lines.append(line)
+    return "\n".join(lines)
+
+
+def _extract_single_page_markdown(page_bytes: bytes, filename: str, page_num: int, max_chars: int) -> str:
+    # Get fitz text for signals
+    fitz_text = extract_pdf_text(page_bytes, max_chars=max_chars)
+    
+    door_signal_pat = r"\bdoor\s+schedule\b|\bopening\s+(?:no|number|mark)\b|\bdoor\s+(?:no|number|mark)\b"
+    hw_signal_pat = r"\bhardware\s+(?:set|sets|group|groups)\b|\bhw\s+set\b|\bhw\s+group\b|\bhardware\s+specification\b"
+    
+    fitz_has_door = bool(re.search(door_signal_pat, fitz_text, re.I))
+    fitz_has_hw = bool(re.search(hw_signal_pat, fitz_text, re.I))
+    
+    # 1. Try IBM Docling
+    docling_text = ""
+    try:
+        import tempfile
+        import os
+        from docling.document_converter import DocumentConverter
+        
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+            tmp.write(page_bytes)
+            tmp_path = tmp.name
+        try:
+            converter = DocumentConverter()
+            result = converter.convert(tmp_path)
+            if hasattr(result, "document") and hasattr(result.document, "export_to_markdown"):
+                text = result.document.export_to_markdown()
+            elif hasattr(result, "export_to_markdown"):
+                text = result.export_to_markdown()
+            else:
+                text = str(result)
+            if text and text.strip():
+                docling_text = text.strip()
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+    except Exception:
+        pass
+        
+    if docling_text:
+        docling_has_door = bool(re.search(door_signal_pat, docling_text, re.I))
+        docling_has_hw = bool(re.search(hw_signal_pat, docling_text, re.I))
+        
+        rejected = False
+        if fitz_has_door and not docling_has_door:
+            rejected = True
+        if fitz_has_hw and not docling_has_hw:
+            rejected = True
+            
+        if not rejected:
+            return compress_markdown_table_spaces(docling_text)
+
+    # 2. Try Microsoft MarkItDown
+    try:
+        from markitdown import MarkItDown
+        import tempfile
+        import os
+        
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+            tmp.write(page_bytes)
+            tmp_path = tmp.name
+        try:
+            md = MarkItDown()
+            result = md.convert(tmp_path)
+            text = result.text_content or ""
+            if text and text.strip():
+                return compress_markdown_table_spaces(text)
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+    except Exception:
+        pass
+        
+    # 3. Fallback to standard plain text extraction
+    return fitz_text
+
+
+def _extract_whole_document_markdown(file_bytes: bytes, filename: str, max_chars: int) -> str:
     # 1. Try IBM Docling (visual AI layout-aware table parser)
     try:
         import tempfile
@@ -423,12 +509,11 @@ def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf",
             else:
                 text = str(result)
             if text and text.strip():
-                return text.strip()[:max_chars]
+                return compress_markdown_table_spaces(text.strip())[:max_chars]
         finally:
             if os.path.exists(tmp_path):
                 os.remove(tmp_path)
     except Exception:
-        # Fall through to MarkItDown if Docling fails
         pass
 
     # 2. Try Microsoft MarkItDown
@@ -452,7 +537,7 @@ def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf",
             md = MarkItDown()
             result = md.convert(tmp_path)
             text = result.text_content or ""
-            return text.strip()[:max_chars]
+            return compress_markdown_table_spaces(text.strip())[:max_chars]
         finally:
             if os.path.exists(tmp_path):
                 os.remove(tmp_path)
@@ -465,6 +550,35 @@ def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf",
             return res
         except Exception:
             return file_bytes.decode("utf-8", errors="ignore")[:max_chars]
+
+
+def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf", max_chars: int = 120000) -> str:
+    if file_bytes.startswith(b"%PDF-"):
+        try:
+            import fitz
+            doc = fitz.open(stream=file_bytes, filetype="pdf")
+            num_pages = len(doc)
+            
+            extracted_pages = []
+            for i in range(num_pages):
+                # Extract single page bytes
+                page_doc = fitz.open()
+                page_doc.insert_pdf(doc, from_page=i, to_page=i)
+                page_bytes = page_doc.write()
+                page_doc.close()
+                
+                # Extract text for this page
+                page_text = _extract_single_page_markdown(page_bytes, filename, i + 1, max_chars)
+                extracted_pages.append(page_text)
+            
+            doc.close()
+            combined = "\n\n--- PAGE BREAK ---\n\n".join(extracted_pages)
+            return combined[:max_chars]
+        except Exception:
+            pass
+            
+    # Fallback to whole-document extraction
+    return _extract_whole_document_markdown(file_bytes, filename, max_chars)
 
 
 def should_use_native_text_primary(file_bytes: bytes) -> bool:
@@ -1255,7 +1369,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
     def native_text() -> str:
         nonlocal native_text_cache
         if native_text_cache is None:
-            native_text_cache = extract_pdf_text_markdown(file_bytes, filename, max_chars=45000)
+            native_text_cache = extract_pdf_text_markdown(file_bytes, filename, max_chars=120000)
         return native_text_cache
 
     def pdf_data_url() -> str:
