@@ -7,3 +7,5 @@ cryptography
 gunicorn
 PyMuPDF
 Pillow
+docling==2.103.0
+markitdown==0.1.6

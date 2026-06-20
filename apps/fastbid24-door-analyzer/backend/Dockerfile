@@ -10,7 +10,12 @@ ENV FASTBID24_API_PORT=10000
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
+    && apt-get install -y --no-install-recommends \
+        curl \
+        libgl1 \
+        libglib2.0-0 \
+        libgomp1 \
+        poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
