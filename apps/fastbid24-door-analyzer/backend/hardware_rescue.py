@@ -15,6 +15,61 @@ SCHEDULE_KEYWORDS = (
 
 HARDWARE_ANCHORS = frozenset({"DOOR HARDWARE", "HARDWARE SET", "HARDWARE SCHEDULE", "HDWR SET", "HW SET"})
 
+_REVERSED_FIXES = {
+    "EPYT ROOD": "DOOR TYPE",
+    "TES ERAWDRAH": "HARDWARE SET",
+    "ERAWDRAH": "HARDWARE",
+    "SSENKCIHT ROOD": "DOOR THICKNESS",
+    "SSENKCIHT": "THICKNESS",
+    "WOLLOH LATEM": "HOLLOW METAL",
+    "MUNIMULA": "ALUMINUM",
+    "SSALG": "GLASS",
+    "LATEM": "METAL",
+    "STNEMMOC": "COMMENTS",
+    "SELUDEHCS": "SCHEDULES",
+    "TNORFEROTS": "STOREFRONT",
+    "SEPYT ROOD": "DOOR TYPES",
+    "SEPYT": "TYPES",
+    "ECNEREFER": "REFERENCE",
+    "ELUDEHCS": "SCHEDULE",
+    "ROTCAF-U": "U-FACTOR",
+    "CGHS": "SHGC",
+    "ETIL ROODTUO": "OUTDOOR LITE",
+    "ETIL ROODNI": "INDOOR LITE",
+    "ECAPS RIA": "AIR SPACE",
+    "ROIRETXE": "EXTERIOR",
+    "ROIRETNI": "INTERIOR",
+    "ECAFRUS": "SURFACE",
+    "KCALB": "BLACK",
+    "NOITATNEIRO": "ORIENTATION",
+    "REENWAK": "WAKEENER",
+    "RETNEC": "CENTER",
+    "DEZALG": "GLAZED",
+    "LEDOM": "MODEL",
+    "noitpircseD": "Description",
+    "etaD": "Date",
+    "TNEILC": "CLIENT",
+    "SETADPU": "UPDATES",
+    "XENOCA": "ACONEX",
+    "NOITACOL": "LOCATION",
+    ".ON": "NO.",
+    "SKRAMER": "REMARKS",
+    "EZIS": "SIZE",
+    "THGIEH": "HEIGHT",
+    "DAEH": "HEAD",
+    "BMAJ": "JAMB",
+    "DLOHSERHT": "THRESHOLD",
+    "NOITAVELE": "ELEVATION",
+    "TES ERAWDRAH": "HARDWARE SET",
+    "SETON": "NOTES",
+}
+
+def _fix_reversed_text(text: str) -> str:
+    """Fix reversed/mirrored vertical CAD text."""
+    for reversed_str, correct_str in _REVERSED_FIXES.items():
+        text = text.replace(reversed_str, correct_str)
+    return text
+
 
 def detect_hardware_crops(file_bytes: bytes, *, max_candidates: int = 8, dpi: int = 260) -> list[dict[str, Any]]:
     """
@@ -101,7 +156,7 @@ def extract_pdf_text(file_bytes: bytes, *, max_chars: int = 45000) -> str:
                     break
                 chunks.append(chunk[:remaining])
                 total += len(chunks[-1])
-        return "\n".join(chunks).strip()[:max_chars]
+        return _fix_reversed_text("\n".join(chunks).strip())[:max_chars]
     except Exception:
         return ""
 

@@ -646,6 +646,11 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
         if mark_idx is None or not normalized_mark:
             continue
 
+        # Skip if row looks like a hardware component row to prevent false matching hinge sizes as door dimensions
+        row_text = " ".join(str(c or "") for c in cells).upper()
+        if any(term in row_text for term in ("HINGE", "LOCK", "CLOSER", "KICKPLATE", "KICK PLATE", "SWEEP", "THRESHOLD", "SILENCER")):
+            continue
+
         tail = cells[mark_idx:]
         dims = dim_re.findall(line)
         combined_dims = next((pair for cell in tail if (pair := _split_combined_dimensions(cell))), None)
@@ -692,6 +697,10 @@ def _parse_door_table_fallback(text: str) -> List[dict]:
         for line in text.splitlines():
             cells = _split_markdown_row(line)
             if len(cells) < 4:
+                continue
+            # Skip if row looks like a hardware component row to prevent false matching hinge sizes as door dimensions
+            row_text = " ".join(str(c or "") for c in cells).upper()
+            if any(term in row_text for term in ("HINGE", "LOCK", "CLOSER", "KICKPLATE", "KICK PLATE", "SWEEP", "THRESHOLD", "SILENCER")):
                 continue
             door_number, embedded_room = _extract_door_mark_and_room(cells[0])
             if not door_number:

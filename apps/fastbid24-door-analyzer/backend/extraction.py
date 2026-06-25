@@ -9,7 +9,7 @@ import urllib.request
 from typing import Any
 
 from config import settings
-from hardware_rescue import detect_hardware_crops, extract_pdf_text
+from hardware_rescue import detect_hardware_crops, extract_pdf_text, _fix_reversed_text
 
 
 class ExtractionError(Exception):
@@ -573,12 +573,12 @@ def extract_pdf_text_markdown(file_bytes: bytes, filename: str = "document.pdf",
             
             doc.close()
             combined = "\n\n--- PAGE BREAK ---\n\n".join(extracted_pages)
-            return combined[:max_chars]
+            return _fix_reversed_text(combined)[:max_chars]
         except Exception:
             pass
             
     # Fallback to whole-document extraction
-    return _extract_whole_document_markdown(file_bytes, filename, max_chars)
+    return _fix_reversed_text(_extract_whole_document_markdown(file_bytes, filename, max_chars))
 
 
 def should_use_native_text_primary(file_bytes: bytes) -> bool:
@@ -597,26 +597,94 @@ def should_use_native_text_primary(file_bytes: bytes) -> bool:
     return bool(has_door_signal or has_hardware_signal)
 
 
-def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
+def is_probable_hardware_dimension(val: Any) -> bool:
+    if not val:
+        return False
+    val_str = str(val).strip()
+    m = re.search(r"(\d+)\s*['\u2019]", val_str)
+    if m:
+        return False
+    m2 = re.match(r"^(\d+(?:\s+\d+/\d+)?|\d+\.\d+)\s*\"?$", val_str)
+    if m2:
+        try:
+            val_num = m2.group(1)
+            if "/" in val_num:
+                parts = val_num.split()
+                if len(parts) == 2:
+                    whole = float(parts[0])
+                    frac = parts[1].split("/")
+                    val_float = whole + float(frac[0]) / float(frac[1])
+                else:
+                    frac = parts[0].split("/")
+                    val_float = float(frac[0]) / float(frac[1])
+            else:
+                val_float = float(val_num)
+            if val_float < 12.0:
+                return True
+        except (ValueError, ZeroDivisionError):
+            pass
+    return False
+
+def normalize_door(d: dict[str, Any]) -> dict[str, Any] | None:
+    mark = str(d.get("mark") or d.get("door_number") or "").strip()
+    if not mark:
+        return None
+        
+    mark_upper = mark.upper()
+    if mark_upper in {"", "-", "--", "---", "----", "—", "N/A", "NA", "NONE", "NULL", "UNKNOWN", "NOT SHOWN", "NOT PROVIDED", "TBD", "?", "DOOR NUMBER", "DOOR NO", "DOOR NO.", "NO.", "MARK", "TAG", "OPENING", "#"}:
+        return None
+        
+    # Ignore if mark looks like a hardware component keyword
+    if any(term in mark_upper for term in ("HINGE", "LOCK", "CLOSER", "KICKPLATE", "KICK PLATE", "SWEEP", "THRESHOLD", "SILENCER")):
+        return None
+        
+    if len(mark) > 15:
+        return None
+        
+    room_name_noise = {"RESTROOM", "KITCHEN", "OFFICE", "BREAKRM", "BREAK ROOM", "BREAKRM", "STORAGE", "CORRIDOR", "HALL", "LOBBY", "VESTIBULE", "TOILET", "MECH", "MECHANICAL", "ELECTRICAL", "JANITOR", "CLOSET"}
+    if mark_upper in room_name_noise:
+        return None
+
+    # Check for probable hardware dimensions in size to filter out hinge/component rows
+    width = d.get("width")
+    height = d.get("height")
+    if is_probable_hardware_dimension(width) or is_probable_hardware_dimension(height):
+        return None
+
+    room = str(d.get("room_or_location") or "").strip()
+    width_str = str(width or "").strip()
+    height_str = str(height or "").strip()
+
+    # If it is a single-letter mark (like A, B, C indicating a legend type drawing) and has no room name or size dimensions, it is legend noise
+    if re.fullmatch(r"[A-Z]", mark_upper):
+        if not room and not width_str and not height_str:
+            return None
+
+    # If all primary fields are missing, discard as noise
+    if not room and not width_str and not height_str:
+        meaningful = any(str(d.get(f) or "").strip() for f in ("door_material", "door_type", "frame_type", "hardware_set", "fire_rating", "remarks"))
+        if not meaningful:
+            return None
+
     remarks = _as_string_list(d.get("remarks"))
     remarks_text = " ".join(remarks)
     return {
-        "mark": d.get("mark"),
-        "room_or_location": d.get("room_or_location"),
-        "door_type": d.get("door_type"),
-        "opening_type": d.get("door_type"),
+        "mark": mark,
+        "room_or_location": d.get("room_or_location") or None,
+        "door_type": d.get("door_type") or None,
+        "opening_type": d.get("door_type") or None,
         "interior_or_exterior": None,
-        "size": {"width": d.get("width"), "height": d.get("height"), "thickness": d.get("thickness")},
-        "door_material": d.get("door_material"),
-        "door_finish": d.get("door_finish"),
-        "glazing": d.get("glazing"),
-        "frame_type": d.get("frame_type"),
-        "frame_material": d.get("frame_material"),
-        "frame_finish": d.get("frame_finish"),
-        "fire_rating": d.get("fire_rating"),
+        "size": {"width": width or None, "height": height or None, "thickness": d.get("thickness") or None},
+        "door_material": d.get("door_material") or None,
+        "door_finish": d.get("door_finish") or None,
+        "glazing": d.get("glazing") or None,
+        "frame_type": d.get("frame_type") or None,
+        "frame_material": d.get("frame_material") or None,
+        "frame_finish": d.get("frame_finish") or None,
+        "fire_rating": d.get("fire_rating") or None,
         "hardware_set": None if is_placeholder_set_label(d.get("hardware_set")) else clean_hardware_set_label(d.get("hardware_set")),
-        "closer": d.get("closer"),
-        "electric_or_access_control": d.get("electric_or_access_control"),
+        "closer": d.get("closer") or None,
+        "electric_or_access_control": d.get("electric_or_access_control") or None,
         "remarks": remarks,
         "existing_to_remain": (
             bool(d.get("existing_to_remain"))
@@ -646,6 +714,155 @@ def normalize_door(d: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+_HW_COMPONENT_TERMS = re.compile(
+    r"\b(?:HINGE|BUTT|PIVOT|CLOSER|LOCK|LOCKSET|LATCH|LATCHSET|MORTISE|CYLINDER|"
+    r"DEADBOLT|DEADLOCK|STRIKE|THRESHOLD|WEATHER\s*STRIP|WEATHERSTRIP|SEAL|GASKET|"
+    r"KICK\s*PLATE|KICKPLATE|PUSH\s*PLATE|PULL\s*PLATE|STOP|SILENCER|PANIC|EXIT\s*DEVICE|"
+    r"COORDINATOR|FLUSH\s*BOLT|SURFACE\s*BOLT|BOLT|OVERHEAD\s*STOP|POWER\s*TRANSFER|"
+    r"ELECTRIC\s*STRIKE|ASTRAGAL|HOLDER|VIEWER|OPERATOR|CLOSING\s*DEVICE)\b",
+    re.IGNORECASE,
+)
+_HW_NOISE_TERMS = re.compile(
+    r"\b(?:DOOR\s+SCHEDULE|WINDOW\s+SCHEDULE|HARDWARE\s+SCHEDULE|SEE\s+HARDWARE|"
+    r"REFER\s+TO\s+HARDWARE|PROJECT\s+NO|DRAWN\s+BY|CHECKED\s+BY|SHEET\s+NO|"
+    r"REVISION|GENERAL\s+NOTES?|TITLE\s+BLOCK|ARCHITECT|ENGINEER|SCALE|DATE|"
+    r"ROOM\s+NAME|DOOR\s+NO|DOOR\s+NUMBER|FRAME\s+TYPE|FIRE\s+RATING|FINISH\s+TAG|"
+    r"EQUIPMENT\s*/\s*FIXTURE|LEGEND|GLASS\s+PANEL|SALVAGED\s+DOOR|"
+    r"HOLLOW\s+METAL\s+DOOR\s*/\s*FRAME|DOOR\s*&\s*FRAME\s+TO\s+BE\s+PAINTED|"
+    r"PRIME\s*&\s*PAINT\s+DOOR\s*&\s*FRAME|FIELD\s+VERIFY|WINDOW\s+ALTERNATES?)\b",
+    re.IGNORECASE,
+)
+_EQUIPMENT_NOISE_TERMS = re.compile(
+    r"\b(?:TV|TELEVISION|ORGANIZER|TRASH\s+CAN|GLOVE\s+BOX|SHARPS|HEIGHT\s+MEASURER|"
+    r"GRAB\s+BARS?|HAND\s+SANITIZER|SOAP\s+DISPENSER|PAPER\s+TOWEL|TOILET\s+PAPER|"
+    r"CORK\s+BOARD|UTILITY\s+PLASTIC\s+CART|OTOSCOPE|SPECULA|MIRROR|ADA\s+SIGNAGE|"
+    r"HIGH\s+TABLE|WATER\s+DISPENSER|REFRIGERATOR|FREEZER|UNDER\s+CABINET|CHAIR|"
+    r"EQUIPMENT|FIXTURE|FURNITURE|APPLIANCE)\b",
+    re.IGNORECASE,
+)
+_ACCESS_CONTROL_SCHEDULE_NOISE_TERMS = re.compile(
+    r"\b(?:CARD\s+READER(?:\s+ACCESS)?|ACCESS\s+CONTROL|A\.?\s*C\.?\s+(?:CONTROL|MONITOR)|"
+    r"KEY\s*CARD|DOOR\s+CONTACT|REX\s+SENSOR)\b",
+    re.IGNORECASE,
+)
+_FINISH_SCHEDULE_NOISE_TERMS = re.compile(
+    r"\b(?:ROOM\s+FINISH\s+SCHEDULE|FINISH\s+SCHEDULE|FLOOR\s+FINISH|WALL\s+FINISH|"
+    r"CEILING\s+FINISH|FINISH\s+PLAN)\b|"
+    r"^(?:CPT|CT|PNT|PT|RWB|RB|VCT|LVT|ACT|GWB)(?:\s*/\s*(?:CPT|CT|PNT|PT|RWB|RB|VCT|LVT|ACT|GWB))*$",
+    re.IGNORECASE,
+)
+_FAKE_MANUFACTURER_PLACEHOLDERS = re.compile(
+    r"^(?:ABC|XYZ|DEF|GHI|JKL|MNO|PQR|STU)(?:\s+(?:CORP|INC|LTD|LLC|CO))?$",
+    re.IGNORECASE,
+)
+_NULL_LIKE = {
+    "",
+    "-",
+    "--",
+    "---",
+    "----",
+    "—",
+    "N/A",
+    "NA",
+    "NONE",
+    "NULL",
+    "UNKNOWN",
+    "NOT SHOWN",
+    "NOT PROVIDED",
+    "TBD",
+    "?",
+}
+
+_HW_HEADER_ONLY = {
+    "DESCRIPTION",
+    "COMPONENT",
+    "ITEM",
+    "QTY",
+    "QUANTITY",
+    "UNIT",
+    "FINISH",
+    "MFR",
+    "MANUFACTURER",
+    "CATALOG",
+    "CATALOG NUMBER",
+    "HARDWARE",
+    "HARDWARE SET",
+    "HARDWARE GROUP",
+    "SEE HARDWARE SCHED",
+    "SEE HARDWARE SCHEDULE",
+}
+_ROOM_NAME_DOOR_MARK_NOISE = {
+    "RESTROOM",
+    "KITCHEN",
+    "OFFICE",
+    "BREAK",
+    "BREAKROOM",
+    "BREAK RM",
+    "STORAGE",
+    "CORRIDOR",
+    "HALL",
+    "LOBBY",
+    "VESTIBULE",
+    "TOILET",
+    "MECH",
+    "MECHANICAL",
+    "ELECTRICAL",
+    "JANITOR",
+    "CLOSET",
+    "EXTERIOR DOORS",
+    "INTERIOR DOORS",
+}
+
+def is_probable_hardware_component(row: dict) -> bool:
+    """Return False for obvious title/header/note rows hallucinated as hardware."""
+    desc = str(row.get("desc") or "").strip()
+    hw_id = str(row.get("hardware_set_id") or "").strip()
+    catalog = str(row.get("part") or "").strip()
+    manufacturer = str(row.get("mfr") or "").strip()
+    qty = row.get("qty")
+    qty_raw = row.get("qty_raw")
+    desc_upper = re.sub(r"\s+", " ", desc.upper()).strip(" .:-")
+    hw_upper = re.sub(r"\s+", " ", hw_id.upper()).strip(" .:-")
+    combined_upper = " ".join(
+        str(row.get(field) or "").upper()
+        for field in ("desc", "part", "mfr", "notes")
+    )
+    if not desc_upper:
+        return False
+    if desc_upper in _HW_HEADER_ONLY:
+        return False
+    if re.fullmatch(r"(?:DOOR\s+HARDWARE\s+)?(?:HARDWARE\s+)?(SET|GROUP)\s*(?:NO\.?|#)?\s*[A-Z0-9_.-]+", desc_upper):
+        return False
+    if _FAKE_MANUFACTURER_PLACEHOLDERS.fullmatch(manufacturer):
+        return False
+    has_component_word = bool(_HW_COMPONENT_TERMS.search(desc_upper))
+    if _EQUIPMENT_NOISE_TERMS.search(combined_upper):
+        return False
+    if _ACCESS_CONTROL_SCHEDULE_NOISE_TERMS.search(combined_upper) and not has_component_word:
+        return False
+    if _FINISH_SCHEDULE_NOISE_TERMS.search(desc_upper) and not has_component_word:
+        return False
+    if _FINISH_SCHEDULE_NOISE_TERMS.search(combined_upper) and not has_component_word:
+        return False
+    if desc_upper in _ROOM_NAME_DOOR_MARK_NOISE and not has_component_word:
+        return False
+    if re.search(r"\bSIDELIGHTS?\b", desc_upper) and not has_component_word:
+        return False
+    if hw_upper in {"", "?", "HARDWARE", "HARDWARE SCHEDULE", "SCHEDULE"} and not catalog and not manufacturer:
+        if not has_component_word:
+            return False
+    if _HW_NOISE_TERMS.search(desc_upper):
+        return False
+    if _HW_NOISE_TERMS.search(combined_upper):
+        return False
+    if desc_upper.startswith(("SEE ", "REFER ", "NOTE:", "NOTES:", "GENERAL NOTE")):
+        return False
+
+    has_part_evidence = bool(catalog or manufacturer or qty or qty_raw)
+    if not has_component_word and not has_part_evidence:
+        return False
+    return True
+
 def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
     label = clean_hardware_set_label(s.get("hardware_set") or s.get("id"))
     raw_items = s.get("items") if isinstance(s.get("items"), list) else []
@@ -664,9 +881,12 @@ def normalize_set(s: dict[str, Any]) -> dict[str, Any]:
             "finish": it.get("finish"),
             "notes": it.get("notes"),
             "confidence": it.get("confidence") if isinstance(it.get("confidence"), (int, float)) else None,
+            "hardware_set_id": label,
         }
         meaningful = any(str(item.get(field) or "").strip() for field in ("qty", "unit", "desc", "part", "mfr", "finish", "notes"))
         if not meaningful:
+            continue
+        if not is_probable_hardware_component(item):
             continue
         sig = f"{item.get('item_no') or ''}|{str(item.get('desc') or '').strip().lower()}|{str(item.get('part') or '').strip().lower()}"
         if sig in seen:
@@ -985,21 +1205,31 @@ def rescue_door_hardware_fields_from_crops(file_bytes: bytes, logs: list[dict[st
         return [], 0
 
     raw_doors = call["parsed"].get("doors") or call["parsed"].get("rows") or []
-    rescued = [normalize_door(d) for d in raw_doors if isinstance(d, dict)]
+    rescued = [nd for d in raw_doors if isinstance(d, dict) and (nd := normalize_door(d)) is not None]
     _log(logs, "ok", f"Door completeness check recovered {len(rescued)} candidate row(s).", "Door completeness check")
     return rescued, int(call["elapsed"])
 
 
 def should_run_door_field_rescue(file_bytes: bytes, doors: list[dict[str, Any]]) -> bool:
+    text = extract_pdf_text(file_bytes, max_chars=8000)
+    upper = text.upper()
+    has_door_keywords = any(token in upper for token in ("DOOR SCHEDULE", "DOOR SCHED", "OPENING LIST"))
+    
+    if len(doors) == 0:
+        if len(text.strip()) < 200 or has_door_keywords:
+            return True
+        return False
+        
     if len(doors) < 3:
         return False
+        
     missing = [d for d in doors if not d.get("hardware_set")]
     if len(missing) < max(3, len(doors) // 2):
         return False
-    text = extract_pdf_text(file_bytes, max_chars=8000)
+        
     if len(text.strip()) < 200:
         return True
-    upper = text.upper()
+        
     return any(token in upper for token in ("HARDWARE SET", "HW SET", "HARDWARE GROUP", "HDWR SET"))
 
 
@@ -1418,7 +1648,7 @@ def extract_pdf_secure(file_bytes: bytes, filename: str, scope: str, run_rfis: b
             api_key=api_key,
         )
     raw_doors = call1["parsed"].get("doors") or call1["parsed"].get("rows") or call1["parsed"].get("door_analysis") or []
-    doors = [normalize_door(d) for d in raw_doors if isinstance(d, dict)]
+    doors = [nd for d in raw_doors if isinstance(d, dict) and (nd := normalize_door(d)) is not None]
     door_rescue_elapsed = 0
     door_rescue_stats = {"doors_added": 0, "hardware_sets_filled": 0}
     if should_run_door_field_rescue(file_bytes, doors):

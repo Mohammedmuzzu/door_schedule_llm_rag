@@ -759,6 +759,17 @@ _REVERSED_FIXES = {
     "TNEILC": "CLIENT",
     "SETADPU": "UPDATES",
     "XENOCA": "ACONEX",
+    "NOITACOL": "LOCATION",
+    ".ON": "NO.",
+    "SKRAMER": "REMARKS",
+    "EZIS": "SIZE",
+    "THGIEH": "HEIGHT",
+    "DAEH": "HEAD",
+    "BMAJ": "JAMB",
+    "DLOHSERHT": "THRESHOLD",
+    "NOITAVELE": "ELEVATION",
+    "TES ERAWDRAH": "HARDWARE SET",
+    "SETON": "NOTES",
 }
 
 
